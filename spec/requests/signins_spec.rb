@@ -30,7 +30,7 @@ describe "Signins" do
       click_link 'Cancel my account'
       page.should have_content('Bye! Your account was successfully cancelled')
     end
-          #save_and_open_page
+
   end
   
 end

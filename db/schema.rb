@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111101175530) do
+ActiveRecord::Schema.define(:version => 20111102032713) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -23,6 +23,17 @@ ActiveRecord::Schema.define(:version => 20111101175530) do
   end
 
   add_index "authentications", ["user_id"], :name => "index_authentications_on_user_id"
+
+  create_table "orgs", :force => true do |t|
+    t.boolean  "active"
+    t.integer  "parent_id"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "orgs", ["name"], :name => "index_orgs_on_name"
+  add_index "orgs", ["parent_id"], :name => "index_orgs_on_parent_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                                 :default => "", :null => false
