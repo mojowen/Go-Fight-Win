@@ -10,6 +10,16 @@ require 'capybara/rspec'
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
 RSpec.configure do |config|
+  
+  require 'database_cleaner'
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :truncation
+  end
+
+  config.before(:each) do
+    DatabaseCleaner.clean
+  end
+  
   # == Mock Framework
   #
   # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
@@ -29,4 +39,22 @@ RSpec.configure do |config|
   # automatically. This will be the default behavior in future versions of
   # rspec-rails.
   config.infer_base_class_for_anonymous_controllers = false
+  config.include IntegrationSpecHelper, :type => :request
+  
 end
+
+Capybara.default_host = 'http://example.org'
+
+OmniAuth.config.test_mode = true
+OmniAuth.config.add_mock(:twitter, {
+  :uid => '12345',
+  :nickname => 'zapnap'
+})
+OmniAuth.config.add_mock(:facebook, {
+  :uid     => "98765", :facebook => {
+    :email => "foo1@example.com",
+    :gender => "Male",
+    :first_name => "foo",
+    :last_name => "bar"
+}})
+

@@ -1,6 +1,7 @@
 Gfw::Application.routes.draw do
-  devise_for :users
-
-  get "home/index"
+  match '/auth/:provider/callback' => 'authentications#create'
+  resources :authentications
+  devise_for :users, :controllers => { :registrations => 'registrations'}
   root :to => "home#index"
+  
 end
