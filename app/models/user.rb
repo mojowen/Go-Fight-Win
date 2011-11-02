@@ -1,4 +1,9 @@
 class User < ActiveRecord::Base
+  # Membership and org stuff
+  has_many :memberships, :dependent => :destroy
+  has_many :orgs, :through => :memberships, :conditions => {:memberships => { :approved => true }}
+  
+  
   #Devise stuff
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable

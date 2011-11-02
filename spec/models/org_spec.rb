@@ -49,4 +49,21 @@ describe Org do
     Org.find_by_slug(@org.to_param).should.equal? @org
   end
   
+  context 'Testing User to Org via membership' do
+    before :each do 
+      @user = Factory(:user)
+      @org = Factory(:org)
+    end
+    
+    it 'does not haves users if membership not approved' do
+      @org.memberships.new(:org_id => @org.id).save
+      @org.users.first.equal? nil
+    end
+    
+    it 'does have users if membership approved' do 
+      @org.memberships.new(:org_id => @org.id, :approved => true).save
+      @org.users.first.equal? @user
+    end
+    
+  end
 end

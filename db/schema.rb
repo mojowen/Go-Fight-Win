@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111102032713) do
+ActiveRecord::Schema.define(:version => 20111102062352) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -23,6 +23,20 @@ ActiveRecord::Schema.define(:version => 20111102032713) do
   end
 
   add_index "authentications", ["user_id"], :name => "index_authentications_on_user_id"
+
+  create_table "memberships", :force => true do |t|
+    t.integer  "org_id"
+    t.integer  "user_id"
+    t.boolean  "approved",     :default => false
+    t.boolean  "admin",        :default => false
+    t.string   "invite_token"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "memberships", ["invite_token"], :name => "index_memberships_on_invite_token"
+  add_index "memberships", ["org_id"], :name => "index_memberships_on_org_id"
+  add_index "memberships", ["user_id"], :name => "index_memberships_on_user_id"
 
   create_table "orgs", :force => true do |t|
     t.boolean  "active"

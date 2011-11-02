@@ -1,5 +1,7 @@
 class Org < ActiveRecord::Base
   belongs_to :parent, :class_name => "Org", :foreign_key => 'parent_id'
+  has_many :memberships, :dependent => :destroy
+  has_many :users, :through => :memberships, :conditions => {:memberships => { :approved => true }}
   
   def parents
     parent = self.parent
