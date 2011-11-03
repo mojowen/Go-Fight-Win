@@ -16,11 +16,7 @@
 <% else %>
   <p><strong>Sign in through one of these services:</strong></p>
 <% end %>
-<ul>
-	<li><a href="/auth/twitter" class="auth_provider">Twitter</a></li>
-	<li><a href="/auth/facebook" class="auth_provider">Facebook</a></li>
-	<li><a href="/auth/google" class="auth_provider">Google</a></li>
-</ul>
+<%= render :partial => "authentications/links" %>
 
 <% unless user_signed_in? %>
   <p>

@@ -4,6 +4,9 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
 require 'capybara/rspec'
+require "cancan/matchers"
+
+
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -40,6 +43,7 @@ RSpec.configure do |config|
   # rspec-rails.
   config.infer_base_class_for_anonymous_controllers = false
   config.include IntegrationSpecHelper, :type => :request
+  config.include Devise::TestHelpers, :type => :controller
   
 end
 
@@ -49,12 +53,52 @@ OmniAuth.config.test_mode = true
 OmniAuth.config.add_mock(:twitter, {
   :uid => '12345',
   :nickname => 'zapnap'
-})
+});
+
 OmniAuth.config.add_mock(:facebook, {
   :uid     => "98765", :facebook => {
     :email => "foo1@example.com",
     :gender => "Male",
     :first_name => "foo",
     :last_name => "bar"
-}})
+}});
+
+def login_admin(org)
+  org_id = org.nil? ? nil : org.id
+  membership = Factory(:membership,:approved => true, :org_id => org_id, :admin => true )
+  user = membership.user
+  
+  if @request.nil?
+    sign_in_by_hand user
+  else
+    @request.env["devise.mapping"] = Devise.mappings[:user]
+    sign_in user
+  end
+  
+end
+
+def login_user(org = nil )
+  org_id = org.nil? ? nil : org.id
+  membership = Factory(:membership,:approved => true, :org_id => org_id )
+  user = membership.user
+  
+  if @request.nil?
+    sign_in_by_hand user
+  else
+    @request.env["devise.mapping"] = Devise.mappings[:user]
+    sign_in user
+  end
+  return user
+end
+
+def sign_in_by_hand(user)
+  visit new_user_session_path
+  fill_in "user_email", :with => user.email
+  fill_in "user_password", :with => user.password
+  click_button "Sign in"
+end
+
+def sign_out_by_hand
+  click_link 'Sign out'
+end
 

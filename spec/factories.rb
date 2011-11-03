@@ -7,3 +7,9 @@ end
 Factory.define :org do |f|
   f.sequence(:name) {|n| "foo #{n}" }
 end
+
+Factory.define :membership do |f|
+  f.association :user
+  f.association :org
+  f.approved true
+end

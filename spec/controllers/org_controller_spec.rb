@@ -1,11 +1,11 @@
 require 'spec_helper'
 
 describe OrgController do
+  
   describe "GET 'index'" do
     before :each do
       @org = Factory(:org)
       @org.save
-      get 'index'
     end
     
     it 'responds successfully' do
@@ -21,6 +21,7 @@ describe OrgController do
     before :each do
       @org = Factory(:org)
       @org.save
+      login_user(@org)
     end
     
     describe "visiting an org discretely" do

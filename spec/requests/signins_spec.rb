@@ -8,12 +8,9 @@ describe "Signins" do
     
     it "can sign in and out" do
       user = Factory(:user)
-      visit new_user_session_path
-      fill_in "user_email", :with => user.email
-      fill_in "user_password", :with => user.password
-      click_button "Sign in"
+      sign_in_by_hand(user)
       page.should have_content("Signed in successfully")
-      click_link 'Sign out'
+      sign_out_by_hand
       page.should have_content('Signed out successfully')
     end
     

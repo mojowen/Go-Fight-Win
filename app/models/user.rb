@@ -3,6 +3,22 @@ class User < ActiveRecord::Base
   has_many :memberships, :dependent => :destroy
   has_many :orgs, :through => :memberships, :conditions => {:memberships => { :approved => true }}
   
+  def membership(org)
+    @membership = self.memberships.select{|m| m.org_id = org.id }.first
+    return @membership
+  end
+  
+  def add_membership(membership)
+    @membership = membership
+    if self.memberships.select{|m| m.org_id == @membership.org_id }.empty?
+      @membership[:user_id] = self.id
+      @membership[:invite_token] = nil
+      return @membership.save
+    else
+      return false
+    end
+  end
+  
   
   #Devise stuff
   devise :database_authenticatable, :registerable,
