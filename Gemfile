@@ -46,4 +46,6 @@ group :test do
   gem 'database_cleaner'
   gem "guard-rspec"
   gem 'growl'
+  gem 'jasmine'
+  gem 'guard-jasmine-headless-webkit'
 end
