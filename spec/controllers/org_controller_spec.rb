@@ -33,6 +33,9 @@ describe OrgController do
       it 'should respond with correct org' do
         assigns(:org).should.equal? @org
       end
+      it 'should match org_discrete path' do
+        org_discrete_path(@org.id) == '/'+@org.id.to_s
+      end
     end
     
     describe 'visits an org at it\'s base ' do
@@ -45,6 +48,9 @@ describe OrgController do
       it 'should return the correct org' do
         assigns(:org).should.equal? @org
       end
+      it 'should match org path' do
+         org_path(@org.to_param) == '/'+@org.to_param
+       end
     end
   end  
 

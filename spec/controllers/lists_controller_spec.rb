@@ -20,6 +20,9 @@ describe ListsController do
     it 'responds wiht the orgs' do
       should assigns(@list)
     end
+    it 'matches the route' do
+      list_discrete_path(@org.id, @list.to_param) == '/'+@org.id.to_s+'/'+@list.to_param
+    end
   end
   
   describe "GET 'show' with org name and list name when authenticated" do
@@ -32,6 +35,9 @@ describe ListsController do
     end
     it 'responds with the orgs' do
       should assigns(@list)
+    end
+    it 'matches the route' do
+      list_path(@org.to_param, @list.to_param) == '/'+@org.to_param+'/'+@list.to_param
     end
   end
   

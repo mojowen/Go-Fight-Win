@@ -4,6 +4,11 @@ Factory.define :user do |f|
   f.password_confirmation { |u| u.password }
 end
 
+Factory.define :authentication do |f|
+  f.provider "twitter"
+  f.association :user
+end
+
 Factory.define :org do |f|
   f.sequence(:name) {|n| "foo #{n}" }
 end
