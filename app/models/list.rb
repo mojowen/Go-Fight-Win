@@ -34,7 +34,10 @@ class List < ActiveRecord::Base
     return fields
   end
   
-  #Relationship to item
-  has_many :items, :conditions => ['active = ?', true]
+  #Relationship to item and entry
+  # TO DO: Add some sort of paging function or something to both of these or something
+  
+  has_many :items, :conditions => ['items.active = ?', true] 
+  has_many :entries, :through => :items
   
 end

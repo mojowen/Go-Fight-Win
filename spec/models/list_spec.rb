@@ -56,6 +56,16 @@ describe List do
     Item.last.update_attributes(:active => false)
     List.find(@list).items.include?(Item.last).should be_false
   end
+
+  it 'list grabs entries that are active, and ignores those that are innactive' do 
+    @list.save
+    3.times do
+      @item = Factory(:item, :list => @list)
+      Factory(:entry, :item => @item)
+    end
+    Entry.last.update_attributes(:active => false)
+    List.find(@list).entries.include?(Entry.last).should be_false
+  end
   
   # test "List grabs items that are :active => true" do
   #   assert_not_equal @list.items.count, Item.find_all_by_list_id(@list.id).count, "Grabbed only active items"

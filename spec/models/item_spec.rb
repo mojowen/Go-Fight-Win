@@ -15,4 +15,14 @@ describe Item do
     @child.parent.should.equal? @item
   end
   
+  it 'item grabs entries that are active, and ignores those that are innactive' do 
+    @item.save
+    3.times do
+      Factory(:entry, :item => @item)
+    end
+    Entry.last.update_attributes(:active => false)
+    Item.find(@item).entries.include?(Entry.last).should be_false
+  end
+
+  
 end

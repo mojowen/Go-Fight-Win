@@ -71,5 +71,17 @@ describe ListsController do
       should assigns(@items)
     end
   end
+
+  describe "GET show calls up the items associated with the list" do 
+    it 'should assign all the lists items' do
+      @entries = []
+      5.times do
+        @item = Factory(:item, :list => @list)
+        @entries.push( Factory(:entry, :item => @item) )
+      end
+      get 'show', :org_id => @org.id, :list_name => @list.to_param
+      should assigns(@entries)
+    end
+  end
   
 end

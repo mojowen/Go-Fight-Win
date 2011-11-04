@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111104055101) do
+ActiveRecord::Schema.define(:version => 20111104070859) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -23,6 +23,18 @@ ActiveRecord::Schema.define(:version => 20111104055101) do
   end
 
   add_index "authentications", ["user_id"], :name => "index_authentications_on_user_id"
+
+  create_table "entries", :force => true do |t|
+    t.integer  "item_id"
+    t.integer  "field_id"
+    t.string   "data"
+    t.boolean  "active",     :default => true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "entries", ["field_id"], :name => "index_entries_on_field_id"
+  add_index "entries", ["item_id"], :name => "index_entries_on_item_id"
 
   create_table "fields", :force => true do |t|
     t.string   "field_type",    :default => "text"
@@ -45,7 +57,7 @@ ActiveRecord::Schema.define(:version => 20111104055101) do
     t.datetime "updated_at"
   end
 
-  add_index "items", ["list_id", "id"], :name => "index_items_on_list_id_and_id"
+  add_index "items", ["list_id", "id"], :name => "index_items_on_list_id_and_id", :unique => true
   add_index "items", ["list_id"], :name => "index_items_on_list_id"
   add_index "items", ["parent_id"], :name => "index_items_on_parent_id"
 

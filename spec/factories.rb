@@ -36,3 +36,11 @@ Factory.define :item do |f|
   f.active true
   f.association :list
 end
+
+Factory.define :entry do |f|
+  f.active true
+  f.association :item
+  f.association :field
+  f.sequence(:data) {|n| "data biatchs #{n}" }
+end
+  

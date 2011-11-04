@@ -8,7 +8,7 @@ class CreateItems < ActiveRecord::Migration
       t.timestamps
     end
     add_index :items, :list_id
-    add_index :items, [:list_id, :id]
+    add_index :items, [:list_id, :id], :unique => true
     add_index :items, :parent_id
   end
 end

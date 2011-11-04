@@ -1,6 +1,5 @@
 Gfw::Application.routes.draw do
 
- 
   # For authentication and logging in
   services = %w[twitter google facebook ~]
   # For services that orgs can't overwrige
@@ -26,7 +25,7 @@ Gfw::Application.routes.draw do
   #List management routes
   match '/:org_id/:list_name' => 'lists#show', :constraints => {:org_id => /\d+/}, :as => 'list_discrete'
   match '/:org_name/:list_name' => 'lists#show', :constraints => lambda{|req| !services.include?(req.params[:list_name]) }, :as => 'list'
-
+  
   
   
 end
