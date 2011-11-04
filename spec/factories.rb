@@ -26,3 +26,8 @@ Factory.define :field do |f|
   f.active true
   f.field_type 'text'
 end
+
+Factory.define :item do |f|
+  f.active true
+  f.association :list
+end

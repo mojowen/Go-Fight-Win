@@ -34,4 +34,7 @@ class List < ActiveRecord::Base
     return fields
   end
   
+  #Relationship to item
+  has_many :items, :conditions => ['active = ?', true]
+  
 end

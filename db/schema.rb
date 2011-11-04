@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111104034011) do
+ActiveRecord::Schema.define(:version => 20111104055101) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -36,6 +36,18 @@ ActiveRecord::Schema.define(:version => 20111104034011) do
 
   add_index "fields", ["list_id"], :name => "index_fields_on_list_id"
   add_index "fields", ["name", "list_id"], :name => "index_fields_on_name_and_list_id", :unique => true
+
+  create_table "items", :force => true do |t|
+    t.integer  "list_id"
+    t.boolean  "active",     :default => true
+    t.integer  "parent_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "items", ["list_id", "id"], :name => "index_items_on_list_id_and_id"
+  add_index "items", ["list_id"], :name => "index_items_on_list_id"
+  add_index "items", ["parent_id"], :name => "index_items_on_parent_id"
 
   create_table "lists", :force => true do |t|
     t.string   "name"
