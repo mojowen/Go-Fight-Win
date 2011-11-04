@@ -2,6 +2,7 @@ class Org < ActiveRecord::Base
   belongs_to :parent, :class_name => "Org", :foreign_key => 'parent_id'
   has_many :memberships, :dependent => :destroy
   has_many :users, :through => :memberships, :conditions => {:memberships => { :approved => true }}
+  has_many :lists
   
   def parents
     parent = self.parent
@@ -26,9 +27,19 @@ class Org < ActiveRecord::Base
   def to_param
     self.name.downcase.gsub(' ','_')
   end
-  
-  def self.find_by_slug(slug)
-    self.find_by_name(slug.gsub('_',' ').split(' ').map {|w| w.capitalize }.join(' '))
+
+  def self.find_smart(find, args = {} )
+    if /\b\d+\b/ === find
+      self.find(find, args)
+    else
+      self.find_by_slug(find, args)
+    end
   end
+    
+  def self.find_by_slug(slug, args = {})
+    self.find_by_name(slug.gsub('_',' ').split(' ').map {|w| w.capitalize }.join(' '), args)
+  end
+  
+
   
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111102062352) do
+ActiveRecord::Schema.define(:version => 20111103212305) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -23,6 +23,20 @@ ActiveRecord::Schema.define(:version => 20111102062352) do
   end
 
   add_index "authentications", ["user_id"], :name => "index_authentications_on_user_id"
+
+  create_table "lists", :force => true do |t|
+    t.string   "name"
+    t.boolean  "active",     :default => true
+    t.string   "fate"
+    t.integer  "org_id"
+    t.integer  "parent_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "lists", ["name", "org_id"], :name => "index_lists_on_name_and_org_id", :unique => true
+  add_index "lists", ["org_id"], :name => "index_lists_on_org_id"
+  add_index "lists", ["parent_id"], :name => "index_lists_on_parent_id"
 
   create_table "memberships", :force => true do |t|
     t.integer  "org_id"

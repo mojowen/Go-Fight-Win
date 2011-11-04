@@ -13,3 +13,9 @@ Factory.define :membership do |f|
   f.association :org
   f.approved true
 end
+
+Factory.define :list do |f|
+  f.sequence(:name) {|n| "list biatch #{n}" }
+  f.association :org
+  f.active true
+end

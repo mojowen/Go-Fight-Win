@@ -20,7 +20,6 @@ describe OrgController do
   describe "GET 'show'" do
     before :each do
       @org = Factory(:org)
-      @org.save
       login_user(@org)
     end
     
