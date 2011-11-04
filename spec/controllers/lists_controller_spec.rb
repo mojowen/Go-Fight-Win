@@ -30,7 +30,7 @@ describe ListsController do
     it 'responds successfully' do
       response.should be_success
     end
-    it 'responds wiht the orgs' do
+    it 'responds with the orgs' do
       should assigns(@list)
     end
   end
@@ -44,6 +44,15 @@ describe ListsController do
     end
   end
   
-
+  describe "GET show calls up the fields associated with the list" do 
+    it 'should assign all the lists fields' do
+      @fields = []
+      5.times do
+        @fields.push( Factory(:field, :list_id => @list.id) )
+      end
+      get 'show', :org_id => @org.id, :list_name => @list.to_param
+      should assigns(@fields)
+    end
+  end
   
 end

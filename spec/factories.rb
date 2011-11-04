@@ -19,3 +19,10 @@ Factory.define :list do |f|
   f.association :org
   f.active true
 end
+
+Factory.define :field do |f|
+  f.sequence(:name) {|n| "field biatchs #{n}" }
+  f.association :list
+  f.active true
+  f.field_type 'text'
+end

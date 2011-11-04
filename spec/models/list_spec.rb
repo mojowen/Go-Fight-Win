@@ -28,6 +28,26 @@ describe List do
     @child.parent.should.equal? @list
   end
   
+  it 'list grabs fields that are active, and ignores those that are innactive' do 
+    @list.save
+    3.times do
+      Factory(:field, :list => @list)
+    end
+    Field.last.update_attributes(:active => false)
+    List.find(@list).fields.include?(Field.last).should be_false
+  end
+  
+  it 'returns all of parents fields using all lists' do
+    @child = Factory(:list, :parent => @list)
+    @grandchild = Factory(:list, :parent => @child)
+    3.times do
+      Factory(:field, :list => @list)
+      Factory(:field, :list => @child)
+      Factory(:field, :list => @grandchild)
+    end
+    @grandchild.all_fields.count.should.equal? 9
+  end
+  
   # test "List grabs items that are :active => true" do
   #   assert_not_equal @list.items.count, Item.find_all_by_list_id(@list.id).count, "Grabbed only active items"
   # end
