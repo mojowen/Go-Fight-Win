@@ -43,4 +43,4 @@ Factory.define :entry do |f|
   f.association :field
   f.sequence(:data) {|n| "data biatchs #{n}" }
 end
-  
+

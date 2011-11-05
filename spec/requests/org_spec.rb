@@ -3,6 +3,7 @@ require 'spec_helper'
 describe 'An orgs routes and permissions' do
   before :each do
     @org = Factory(:org)
+    @org.save
     @user = login_user(@org)
   end
 
@@ -44,6 +45,7 @@ describe 'An orgs routes and permissions' do
   
   it 'users can access org\'s children of org' do
     @child = Factory(:org, :parent_id => @org)
+    @child.save
     visit org_discrete_path(@child.id)
     page.should have_content(@child.name)
   end

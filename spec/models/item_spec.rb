@@ -23,6 +23,21 @@ describe Item do
     Entry.last.update_attributes(:active => false)
     Item.find(@item).entries.include?(Entry.last).should be_false
   end
-
+  
+  it 'all_entries returns all of an item and all of its parents entries' do
+    @child = Factory(:item, :parent => @item)
+    @grandchild = Factory(:item, :parent => @child)
+    3.times do
+      Factory(:entry, :item => @item)
+      Factory(:entry, :item => @child)
+      Factory(:entry, :item => @grandchild)
+    end
+    @grandchild.entries.count.should.should.equal? 9
+  end
+  
+  it 'can create new Entry through entries method' do
+    @entry = @item.entries.new(:field_id => 1, :data => 'hello')
+    @entry.save.should be_true
+  end
   
 end

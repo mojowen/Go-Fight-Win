@@ -1,7 +1,7 @@
 class ListsController < ApplicationController
 
   def show
-    @list = List.find_by_org_and_slug(params[:org_id] || Org.find_by_slug(params[:org_name]).id, params[:list_name], :include => [:fields, :items, :entries] )
+    @list = List.find_by_org_and_slug(params[:org_id] || Org.find_by_slug(params[:org_name]).id, params[:list_name], :include => :items )
     #TODO: Add some sort of paging function when querying rows via a sort
     
     authorize! :show, @list.org, :message => 'You don\'t have access to that List'
