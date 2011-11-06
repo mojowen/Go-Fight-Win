@@ -103,12 +103,24 @@ describe Row do
         end
         it 'When saving a row will create parent item that connects to parent list' do
           Row.new(:list => @child, fields.first.name => 'thing thing').save
+          @list.save
+          puts Entry.last.item.list_id
+          puts @list.id
           Entry.last.item.list_id.should.equal? @list.id
         end
         it 'When saving a row will create child item that connects to parent item' do
           Row.new(:list => @child, fields.first.name => 'thing thing').save
           @child.items.last.parent.should.equal? @list.items.last
         end
+        it 'Saving a row with a parent creates two items' do
+          Row.new(:list => @child).save
+          Item.all.count.should.equal? 2
+        end
+        it 'Saving a row with a parent creates two items, one of which is the parent of the other' do
+          Row.new(:list => @child).save
+          Item.first.parent.should.equal? Item.last
+        end
+        
       end
       
     end

@@ -193,35 +193,38 @@ describe List do
     end
   end
   
-  it 'using the rows method with sort will return rows sorted by grandparent field in correct order' do
-    @child = Factory(:list, :parent => @list)
-    @grandchild = Factory(:list, :parent => @child )
-    fields = []
-    items = []
-    5.times do
-      fields.push(Factory(:field, :list => @child ))
-      fields.push(Factory(:field, :list => @list ))
-      items.push(Factory(:item, :list => @list))
-      items.push(Factory(:item, :list=> @child, :parent => items.last) )
-      items.push(Factory(:item, :list=> @grandchild, :parent => items.last) )
-    end
-    @sortable = Factory(:field, :list => @list )
-    vals = ['a','z','Z','y','9','a','00','3','23','AA','d','a','00','3','23','AA','d']
-    x = 0
-    items.each do |i|
-      fields.each do |f|
-        Factory(:entry, :item => i, :field => f).save
+  describe 'using the rows method with sort' do
+    before :each do
+      @child = Factory(:list, :parent => @list)
+      @grandchild = Factory(:list, :parent => @child )
+      fields = []
+      items = []
+      5.times do
+        fields.push(Factory(:field, :list => @child ))
+        fields.push(Factory(:field, :list => @list ))
+        items.push(Factory(:item, :list => @list))
+        items.push(Factory(:item, :list=> @child, :parent => items.last) )
+        items.push(Factory(:item, :list=> @grandchild, :parent => items.last) )
       end
-      Factory(:entry, :item => i, :field => @sortable, :data => vals[x] )
-      x+=1
+      @sortable = Factory(:field, :list => @list )
+      @vals = ['a','z','Z','y','9','a','00','3','23','AA','d','a','00','3','23','AA','d']
+      x = 0
+      items.each do |i|
+        fields.each do |f|
+          Factory(:entry, :item => i, :field => f).save
+        end
+        Factory(:entry, :item => i, :field => @sortable, :data => @vals[x] )
+        x+=1
+      end
+      @vals = @vals.sort {|x,y| x.upcase <=> y.upcase }
     end
-    vals = vals.sort {|x,y| x.upcase <=> y.upcase }
-    x = 0
-    @grandchild.rows(:sort => @sortable.name).each do |r|
-      r[@sortable.name].should.equal? vals[x]
-      x += 1
+    it 'will return rows sorted by grandparents with nil at the end ' do
+      x = 0
+      @row_save = Row.new(:list => @grandchild).save
+      @grandchild.rows(:sort => @sortable.name).last.key.should == @row_save[:key]
     end
   end
+  
   
 
 end

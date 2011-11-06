@@ -56,53 +56,68 @@ class List < ActiveRecord::Base
     parents = self.parents
     # preload fields, we'll need this anyway
     fields = self.fields(parents)
-    # If no arguments, just load as normal
-    if args.empty?
-      lookup = self.items
-    else
-      #Checks if there is a sort argument
-      if args[:sort]
-        # If there is, checks to see if it's a hash or just a field name
-        if args[:sort].class.name == 'Hash'
-          # If it is a hash, check the sorting field, if it is a number assign that otherwise gotta look it up in the already loaded fields
-          field = args[:sort][:field].class.name == 'Fixnum' ? args[:sort][:field] : fields.select{|f| f.name == args[:sort][:field]}.first.id
-          # If no direction, assume assending
-          direction = args[:sort][:direction].nil? ? 'ASC' : args[:sort][:direction]
-        else
-          field = args[:sort].class.name == 'Fixnum' ? args[:sort] : fields.select{|f| f.name == args[:sort]}.first.id
-          direction = 'ASC'
+    
+    offset = args[:page] || 0
+    limit = args[:limit] || 200
+    limit = 1000 if limit > 1000
+    lookup = []
+    skip = []
+    
+    #Checks if there is a sort argument
+    if args[:sort]
+      # If there is, checks to see if it's a hash or just a field name
+      if args[:sort].class.name == 'Hash'
+        # If it is a hash, check the sorting field, if it is a number assign that otherwise gotta look it up in the already loaded fields
+        field = args[:sort][:field].class.name == 'Fixnum' ? args[:sort][:field] : fields.select{|f| f.name == args[:sort][:field]}.first.id
+        # If no direction, assume assending
+        direction = args[:sort][:direction].nil? ? 'ASC' : args[:sort][:direction]
+      else
+        field = args[:sort].class.name == 'Fixnum' ? args[:sort] : fields.select{|f| f.name == args[:sort]}.first.id
+        direction = 'ASC'
+      end
+      # Figures out how extended a family member this is
+      ancestory = parents.index( fields.select{|f| f.id == field}.first.list_id )
+      
+      unless ancestory == 0  
+        # Function to create the join table
+        stuffer = :parent
+        ancestory - 1.times do
+          stuff = { :parent => stuffer}
+          stuffer = stuff
         end
-        # Figures out how extended a family member this is
-        ancestory = parents.index( fields.select{|f| f.id == field}.first.list_id )
-        unless ancestory == 0
+        suffix = ancestory > 1 ? '_'+ancestory.to_s : ''
+        stuffer = ancestory > 1 ? stuffer : :parent
           
-          # Function to create the join table
-          stuffer = :children
-          ancestory - 1.times do
-            stuff = { :children => stuffer}
-            stuffer = stuff
-          end
-          suffix = ancestory > 1 ? '_'+ancestory.to_s : ''
-          stuffer = ancestory > 1 ? stuffer : :children
-          
-          # Lookup function when the criteria is nested
-          lookup = Item.joins( stuffer ).where('children_items'+suffix+'.list_id =?',self.id).joins(:entries).where('entries.field_id =?',field).order('upper(entries.data) '+direction)
-        else
-          # Lookup when not nested
-          lookup = Item.where('items.list_id =?',self.id).joins(:entries).where('entries.field_id =?',field).order('upper(entries.data) '+direction)
-        end
-        # TO DO: - sort by more than just one field
-        # Some ideas about multi sort (sorta) http://archives.postgresql.org/pgsql-sql/1998-09/msg00119.php will need to learn more sql. very tired now
-        # TO DO: - filter by one or many conditions and fields
-        # TO DO: - group by one or two field values
+        # Lookup function when the criteria is nested
+        lookup.concat( Item.limit(limit).offset(offset).joins( stuffer ).where('parents_items'+suffix+'.list_id =?',self.id).joins(:entries).where('entries.field_id =?',field).order('upper(entries.data) '+direction) )
+        skip = Item.joins( stuffer ).where('parents_items'+suffix+'.list_id =?',self.id).joins(:entries).where('entries.field_id =?',field).order('upper(entries.data) '+direction) if lookup.count < limit
+      else
+        # Lookup when not nested
+        lookup.concat(Item.limit(limit).offset(offset).where('items.list_id =?',self.id).joins(:entries).where('entries.field_id =?',field).order('upper(entries.data) '+direction) )
+        skip = Item.where('items.list_id =?',self.id).joins(:entries).where('entries.field_id =?',field).order('upper(entries.data) '+direction) if lookup.count < limit
       end
     end
+    
+    if skip.empty?
+      items = Item.where('items.list_id =?',self.id ).offset(offset).limit(limit).includes(:entries)
+    else
+      items = Item.where('items.list_id =? AND items.id NOT IN(?)',self.id, skip.map{ |i| i.id} ).offset( offset - skip.count ).limit(limit - lookup.count).includes(:entries)
+    end
+    lookup.concat( items )
+    
+    
+    # TO DO relatively soon is a query arg method for auto-completes
+    # TO DO: - sort by more than just one field
+    # Some ideas about multi sort (sorta) http://archives.postgresql.org/pgsql-sql/1998-09/msg00119.php will need to learn more sql. very tired now
+    # TO DO: - filter by one or many conditions and fields
+    # TO DO: - group by one or two field values
+    
+    
     
     lookup.each do |item|
       rows.push( Row.new( {:item => item, :list => self, :fields => fields } ) )
     end
     
-    # Reverse the rows as push will add them out of order
-    return rows.reverse
+    return rows
   end
 end

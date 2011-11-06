@@ -1,14 +1,14 @@
 class Item < ActiveRecord::Base
   belongs_to :list
   belongs_to :parent, :class_name => "Item", :foreign_key => 'parent_id'
-  has_many :children, :class_name => "Item", :foreign_key => 'parent_id' 
   
   # Defining entires here to include all fields that are related to this list or any other lists
   has_many :entries, :conditions => ['entries.active =?', true]
 
   def parents
     parent = self.parent
-    parents = [ self ]
+    parents = []
+    parents.push(self)
     until parent.nil? do
       parents.push(parent)
       parent = parent.parent

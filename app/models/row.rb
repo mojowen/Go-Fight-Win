@@ -4,6 +4,7 @@ class Row
   def self.clean
     @@fields = nil
     @@list = nil
+    @@list_parents = nil
   end
   
   def initialize(attrs)
@@ -22,12 +23,14 @@ class Row
     
     # Seeting global variables which saves on reloading the list and the lists fields
     @@list ||= @list
-    @@fields ||= @list.fields
+    @@list_parents ||= @list.parents
+    @@fields ||= @list.fields(@@list_parents)
     
     if @@list != @list
       # Resets class variables if the list has changed
-      @@fields ||= @list.fields
       @@list = @list
+      @@list_parents = @list.parents
+      @@fields = @list.fields(@@list_parents)
     end
     
     @fields = @@fields
@@ -62,9 +65,26 @@ class Row
     
     success = true
     errors = []
+    if @item.new_record? || !@changed_fields.empty?
+      @@list_parents.count.times do |i|
+        @parents[i] ||= Item.new(:list_id => @@list_parents[i] )
+      end
+      @parents.reverse.each do |item|
+          item.parent = @parents[@parents.index(item)+1] unless @parents[@parents.index(item)+1].nil?
+          save = item.save
+          success = success & save
+          errors.push( {:message => 'Couldn\'t save to '+item.list_id.to_s+' #list'} ) if !save
+      end
+    end
     @changed_fields.each do |f|
       the_item = @parents.select{|i| i.list_id == f.list_id }.first
-      save = Entry.new( :item => the_item, :field => f[:field], :data => f[:new_value] ).save
+      data = f[:new_value].strip.empty? ? nil : f[:new_value]
+      unless data.nil?
+        save = Entry.new( :item => the_item, :field => f[:field], :data => data ).save
+      else
+        Entry.find_by_item_id_and_field_id_and_active(the_item.id, f[:field].id, true).delete
+        save = true
+      end
       success = success & save
       errors.push( {:field => f[:field].name, :value => f[:new_value], :message => 'DB Error on saving'} ) if !save
     end
