@@ -4,8 +4,11 @@ describe "Lists" do
   
   before :each do 
     @org = Factory(:org)
+    @org.save
     @list = Factory(:list, :org_id => @org.id )
+    @list.save
   end
+
   describe 'visiting a list as a user' do
     before :each do
       @user = login_user(@org)

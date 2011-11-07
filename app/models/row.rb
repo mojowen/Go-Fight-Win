@@ -43,7 +43,7 @@ class Row
     @fields.each do |f|
       #Initalizing the new methods for each field
       field_name = new_var f.name, nil, f.id
-      
+      f[:field_name] = field_name
       # Populates the Row with entry data
       entry = @entries.select{ |entry| entry.field_id == f.id }.first
       @row[field_name] = entry.data unless entry.nil?
@@ -51,10 +51,10 @@ class Row
       # If no other variables were passed with the initializing, ignores this
       if attrs.class.name == 'Hash'
         # Only fills in new values if the fields value was passed when initializing AND it's different then the exsiting data
-        if !attrs[field_name].nil? && attrs[field_name] != @row[field_name]
-          @row[field_name] = attrs[field_name]
+        if ( !attrs[field_name].nil? || !attrs[field_name.to_s.gsub('_',' ')].nil? ) && attrs[field_name] != @row[field_name]
+          @row[field_name] = attrs[field_name] || attrs[field_name.to_s.gsub('_',' ')] 
           # Taking note of the changed fields, this will be used when saving
-          @changed_fields.push({:field => f, :new_value => attrs[field_name]} )
+          @changed_fields.push( {:field => f, :new_value => @row[field_name]} )
         end
       end
     end
@@ -77,7 +77,7 @@ class Row
       end
     end
     @changed_fields.each do |f|
-      the_item = @parents.select{|i| i.list_id == f.list_id }.first
+      the_item = @parents.select{ |i| i.list_id == f[:field].list_id }.first
       data = f[:new_value].strip.empty? ? nil : f[:new_value]
       unless data.nil?
         save = Entry.new( :item => the_item, :field => f[:field], :data => data ).save
@@ -89,7 +89,7 @@ class Row
       errors.push( {:field => f[:field].name, :value => f[:new_value], :message => 'DB Error on saving'} ) if !save
     end
     ready = { :key => @item.id, :success => success, :list => self['list'], :error => errors }
-    # Will need to return the _tempkey
+    # Will need to return the _tempkey if the tempkey was passed to it
     ready[:_tempkey] = @tempkey unless @tempkey.nil?
     return ready
   end
@@ -101,7 +101,7 @@ class Row
   def new_var(name, init = nil, key = nil)
     # Will make sure not to duplicate methods or values
     key ||= 0
-    safe_name = name
+    safe_name = name.gsub(' ','_')
     while @row.include?(safe_name.to_sym) do
       safe_name = name+'_'+key.to_s
       key += 1
@@ -143,7 +143,11 @@ class Row
   end
 
   def [](iv)
-      send iv
+      if  iv.class.name == 'Fixnum' 
+        send @fields.select{|f| f.id == iv }.first[:field_name]
+      else 
+        send iv.gsub(' ','_')
+      end
   end
 
  

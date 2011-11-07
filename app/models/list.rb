@@ -55,69 +55,168 @@ class List < ActiveRecord::Base
     # preload parents, we'll need this anyway
     parents = self.parents
     # preload fields, we'll need this anyway
-    fields = self.fields(parents)
+    @fields = self.fields(parents)
     
     offset = args[:page] || 0
     limit = args[:limit] || 200
     limit = 1000 if limit > 1000
-    lookup = []
-    skip = []
+    
+    # Figures out how extended a family member this is
+    ancestory = parents.count
+    
+    # Function to create the includes table
+    stuffer = [:entries]
+    ancestory.times do
+      stuff = [ :entries, :parent => stuffer ]
+      stuffer = stuff
+    end
+    stuffer = ancestory > 0 ? stuffer : [:entries, :parent]
+    
+    items = Item.where('items.list_id = ?',self.id).includes(stuffer)
+    items.each do |item|
+      rows.push( Row.new( {:item => item, :list => self, :fields => fields } ) )
+    end
+    
+    
+    if args[:filter]
+      conditions = []
+      if args[:filter].class.name == 'Array'
+        conditions = args[:filter].map{ |s| make_filter(s) }
+      else
+        conditions[0] = make_filter( args[:filter] )
+      end
+      rows = rows.select{ |r| eval( conditions.join('&&') ) }
+    end
     
     #Checks if there is a sort argument
     if args[:sort]
-      # If there is, checks to see if it's a hash or just a field name
-      if args[:sort].class.name == 'Hash'
-        # If it is a hash, check the sorting field, if it is a number assign that otherwise gotta look it up in the already loaded fields
-        field = args[:sort][:field].class.name == 'Fixnum' ? args[:sort][:field] : fields.select{|f| f.name == args[:sort][:field]}.first.id
-        # If no direction, assume assending
-        direction = args[:sort][:direction].nil? ? 'ASC' : args[:sort][:direction]
+      conditions = []
+      if args[:sort].class.name == 'Array'
+        conditions = args[:sort].map{ |s| make_sort(s) }
       else
-        field = args[:sort].class.name == 'Fixnum' ? args[:sort] : fields.select{|f| f.name == args[:sort]}.first.id
-        direction = 'ASC'
+        conditions[0] = make_sort( args[:sort] )
       end
-      # Figures out how extended a family member this is
-      ancestory = parents.index( fields.select{|f| f.id == field}.first.list_id )
-      
-      unless ancestory == 0  
-        # Function to create the join table
-        stuffer = :parent
-        ancestory - 1.times do
-          stuff = { :parent => stuffer}
-          stuffer = stuff
-        end
-        suffix = ancestory > 1 ? '_'+ancestory.to_s : ''
-        stuffer = ancestory > 1 ? stuffer : :parent
-          
-        # Lookup function when the criteria is nested
-        lookup.concat( Item.limit(limit).offset(offset).joins( stuffer ).where('parents_items'+suffix+'.list_id =?',self.id).joins(:entries).where('entries.field_id =?',field).order('upper(entries.data) '+direction) )
-        skip = Item.joins( stuffer ).where('parents_items'+suffix+'.list_id =?',self.id).joins(:entries).where('entries.field_id =?',field).order('upper(entries.data) '+direction) if lookup.count < limit
-      else
-        # Lookup when not nested
-        lookup.concat(Item.limit(limit).offset(offset).where('items.list_id =?',self.id).joins(:entries).where('entries.field_id =?',field).order('upper(entries.data) '+direction) )
-        skip = Item.where('items.list_id =?',self.id).joins(:entries).where('entries.field_id =?',field).order('upper(entries.data) '+direction) if lookup.count < limit
-      end
+      rows = rows.sort!{ |x,y| eval( '['+conditions.map{|s| s[:left] }.join(',')+']' ) <=> eval( '['+conditions.map{|s| s[:right] }.join(',')+']' )  }
     end
     
-    if skip.empty?
-      items = Item.where('items.list_id =?',self.id ).offset(offset).limit(limit).includes(:entries)
-    else
-      items = Item.where('items.list_id =? AND items.id NOT IN(?)',self.id, skip.map{ |i| i.id} ).offset( offset - skip.count ).limit(limit - lookup.count).includes(:entries)
-    end
-    lookup.concat( items )
-    
-    
-    # TO DO relatively soon is a query arg method for auto-completes
-    # TO DO: - sort by more than just one field
-    # Some ideas about multi sort (sorta) http://archives.postgresql.org/pgsql-sql/1998-09/msg00119.php will need to learn more sql. very tired now
-    # TO DO: - filter by one or many conditions and fields
     # TO DO: - group by one or two field values
     
     
+    rows = rows.slice(offset,limit)
     
-    lookup.each do |item|
-      rows.push( Row.new( {:item => item, :list => self, :fields => fields } ) )
+    rows.instance_eval do
+      def new(args ={} )
+        args[:list] = @@list
+        return Row.new(args)
+      end
     end
     
     return rows
   end
+  
+  
+  def make_sort(sort)
+    sorts ={}
+    # If there is, checks to see if it's a hash or just a field name
+    if sort.class.name == 'Hash'
+      field = find_field(sort[:field])
+      # If no direction, assume assending
+      direction = sort[:direction].nil? ? 'ASC' : sort[:direction]
+    else
+      field = find_field(sort)
+      direction = 'ASC'
+    end
+    if direction == 'DESC'
+      sorts[:left] = 'y['+field.to_s+']'
+      sorts[:right] = 'x['+field.to_s+']'
+    else 
+      sorts[:left] = 'x['+field.to_s+']'
+      sorts[:right] = 'y['+field.to_s+']'
+    end
+    return sorts
+  end
+  
+  def make_filter(filter)
+    condition = ''
+    if filter.class.name == 'Hash'
+      field = find_field(filter[:field])
+      condition ||= filter[:condition]
+      operator = make_operator(filter[:operator],condition)
+    else
+      filter = filter.gsub(/"(.*?)"/) { |s| s.gsub(' ','_')}.split(' ')
+      field = find_field(filter.shift)
+      condition = filter.pop.gsub('_',' ').gsub('"','')
+      condition = '' if condition == 'empty' && filter[0] == 'is' || condition == 'blank' && filter[0] == 'is'
+      operator = make_operator(filter.join(' '), condition)
+    end
+    # Will probably want to do something here when redoing field types, right now evaluating every condition as a string (should translate, when valid, into a date or fixnum)
+    return 'r['+field.to_s+'] '+operator+' "'+condition+'"'
+  end
+  
+  def find_field(field)
+    case field.class.name
+    when 'Fixnum'
+      return field
+    when 'Field'
+      return field.id
+    else
+      return field.to_i if /^[-+]?[0-9]+$/ === field
+      if field.index('_')
+        last = field.split('_').last
+        return last.to_i if /^[-+]?[0-9]+$/ === last && @fields.select{ |f| f.id == last.to_i }.count == 1
+      end
+      field = field.gsub('_',' ')
+      find_by_name = @fields.select{ |f| f.name == field }
+      return find_by_name.first.id
+    end
+  end
+  
+  def make_operator(operator,condition = nil)
+
+    operator = operator.gsub(' to','')
+    
+    return '==' if operator == '=='
+    return '==' if operator == 'equal'
+    return '==' if operator == 'equals'
+    return '==' if operator == 'is'
+    return '==' if operator == '='
+    
+    return '.starts_with?("'+condition+'") && "'+condition+'" ==' if operator == 'starts with'
+    return '.reverse.starts_with?("'+condition.reverse+'") && "'+condition+'" ==' if operator == 'ends with'
+    
+    return '!=' if operator == '!='
+    return '!=' if operator == 'isn\'t'
+    return '!=' if operator == '<>'
+    return '!=' if operator == 'not'
+    return '!=' if operator == 'is not'
+    return '!=' if operator == 'not equal'
+
+    return '>' if operator == '>'
+    return '>' if operator == 'greater than'
+    return '>' if operator == 'more than'
+    return '>' if operator == 'bigger than'
+    return '>' if operator == 'after'
+
+    return '<' if operator == '<'
+    return '<' if operator == 'before'
+    return '<' if operator == 'less than'
+    return '<' if operator == 'smaller than'
+    return '<' if operator == 'fewer than'
+
+    return '>=' if operator == '>='
+    return '>=' if operator == 'greater than or equal'
+    return '>=' if operator == 'more than or equal'
+    return '>=' if operator == 'bigger than or equal'
+    return '>=' if operator == 'after or equal'
+
+    return '<=' if operator == '<='
+    return '<=' if operator == 'before or equal'
+    return '<=' if operator == 'less than or equal'
+    return '<=' if operator == 'smaller than or equal'
+    return '<=' if operator == 'fewer than or equal'
+        
+    
+  end
+  
+
 end

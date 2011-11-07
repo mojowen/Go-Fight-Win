@@ -14,16 +14,16 @@ Gfw::Application.routes.draw do
   root :to => "org#index", :constraints => lambda{|req| !req.session['warden.user.user.key'].blank?}
   
   # Allows for discrete and non-discrete linking to orgs
-  match '/:org_id' => 'org#show', :constraints => {:org_id => /\d+/}, :as => 'org_discrete'
+  match '/:org_id' => 'org#show', :constraints => lambda {|req| /^[-+]?[0-9]+$/ === req.params[:org_id]}, :as => 'org_discrete'
   match '/:org_name' => 'org#show', :constraints => lambda{|req| !administrative.include?(req.params[:org_name]) }, :as => 'org'
 
   # Membership management routes
-  match '/:org_id/~/:membership/destroy' => 'memberships#destroy', :constraints => {:org_id => /\d+/}, :as => 'destroy_membership'
-  match '/:org_id/~/:membership/update' => 'memberships#update', :constraints => {:org_id => /\d+/}, :as => 'update_membership'
-  match '/:org_id/~/invite/:invite_token' => 'memberships#invite', :constraints => {:org_id => /\d+/}, :as => 'invite_membership'
+  match '/:org_id/~/:membership/destroy' => 'memberships#destroy', :constraints => lambda {|req| /^[-+]?[0-9]+$/ === req.params[:org_id]}, :as => 'destroy_membership'
+  match '/:org_id/~/:membership/update' => 'memberships#update', :constraints => lambda {|req| /^[-+]?[0-9]+$/ === req.params[:org_id]}, :as => 'update_membership'
+  match '/:org_id/~/invite/:invite_token' => 'memberships#invite', :constraints => lambda {|req| /^[-+]?[0-9]+$/ === req.params[:org_id]}, :as => 'invite_membership'
 
   #List management routes
-  match '/:org_id/:list_name' => 'lists#show', :constraints => {:org_id => /\d+/}, :as => 'list_discrete'
+  match '/:org_id/:list_name' => 'lists#show', :constraints => lambda {|req| /^[-+]?[0-9]+$/ === req.params[:org_id]}, :as => 'list_discrete'
   match '/:org_name/:list_name' => 'lists#show', :constraints => lambda{|req| !services.include?(req.params[:list_name]) }, :as => 'list'
   
   
