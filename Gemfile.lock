@@ -77,6 +77,10 @@ GEM
     guard-jasmine-headless-webkit (0.3.2)
       guard (>= 0.4.0)
       jasmine-headless-webkit (>= 0.7.0)
+    guard-rails-assets (0.1.2)
+      guard
+      rails (>= 3.1.1)
+      rake
     guard-rspec (0.5.1)
       guard (>= 0.8.4)
     hike (1.2.1)
@@ -251,6 +255,7 @@ DEPENDENCIES
   factory_girl_rails
   growl
   guard-jasmine-headless-webkit
+  guard-rails-assets
   guard-rspec
   jasmine
   jquery-rails

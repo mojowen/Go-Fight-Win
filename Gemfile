@@ -48,4 +48,5 @@ group :test do
   gem 'growl'
   gem 'jasmine'
   gem 'guard-jasmine-headless-webkit'
+  gem 'guard-rails-assets'
 end

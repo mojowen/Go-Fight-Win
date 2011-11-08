@@ -11,12 +11,13 @@
 #   - dist/**/*.js
 #
 src_files:
-  - public/javascripts/prototype.js
-  - public/javascripts/effects.js
-  - public/javascripts/controls.js
-  - public/javascripts/dragdrop.js
-  - public/javascripts/application.js
-  - public/javascripts/**/*.js
+#  - public/javascripts/prototype.js
+#  - public/javascripts/effects.js
+#  - public/javascripts/controls.js
+#  - public/javascripts/dragdrop.js
+#  - public/javascripts/application.js
+#  - public/javascripts/**/*.js
+   - public/assets/application.js
 
 # stylesheets
 #
@@ -43,6 +44,7 @@ stylesheets:
 #   - helpers/**/*.js
 #
 helpers:
+  - factories.js
   - helpers/**/*.js
 
 # spec_files
