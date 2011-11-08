@@ -1,13 +1,6 @@
 describe("savingRows", function() {
 	beforeEach(function() {
-		fields.removeAll();
-		rows.removeAll();
-		for (var i=0; i < 4; i++) {
-			fields.push(factoryField());
-		};
-		for (var i=0; i < 10; i++) {
-			rows.push(factoryRow());
-		};
+		factoryList();
 	});
   	it("collects all the rows with a dirty flag", function() {
 		for (var i=0; i < 10; i += 3) {

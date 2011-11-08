@@ -11,6 +11,7 @@ function factoryField(info) {
 	if( data.field_type !== undefined ) { field.field_type = data.field_type; }
 	if( data.field_options !== undefined ) { field.field_options = data.field_options; }
 
+	factoryfields.push(field);
 	return new fieldModel(field);
 }
 
@@ -27,4 +28,15 @@ function factoryRow(info) {
 
 	factoryrows.push(row);
 	return new rowModel(row);
+}
+
+function factoryList() {
+	fields.removeAll();
+	rows.removeAll();
+	for (var i=0; i < 4; i++) {
+		fields.push(factoryField());
+	};
+	for (var i=0; i < 10; i++) {
+		rows.push(factoryRow());
+	};
 }

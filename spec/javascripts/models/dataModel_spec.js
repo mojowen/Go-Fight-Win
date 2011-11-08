@@ -1,20 +1,17 @@
 /** 
 	Ways to attack this:
-		- Need to test rows object
-
 		- Need to test dependent variables
+
 		- Need to test jquery plugins
+
 		- Need to test custom functions (make part of dataModel?)
-			- grouping
 			- sorting
-			- filtering
 		- Need to test flagging for saving
 
 		- Need to test AJAX response for
 			- Saving rows
 			- Saving views
 			- Loading rows
-
 
 		- Need to test template rendering (can jasmine do this? - maybe need to use selenium)
 			- Edit template
@@ -23,6 +20,8 @@
 
 		- Need to test Bindings
 			- Regular row update
+			- New row
+			- View functions
 			- Date update
 			- Number update
 

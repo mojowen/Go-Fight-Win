@@ -15,7 +15,6 @@ describe("Flatrows, a dependent observable", function() {
   });
 
   it("totally flattens the observables", function() {
-	console.log(dataModel.flatRows()[0]);
     expect( typeof dataModel.flatRows()[0][ fields()[0].name ] ).toEqual('string');
   });
 
