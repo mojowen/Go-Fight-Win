@@ -1,5 +1,5 @@
 function rowModel(data) {
-
+	data = typeof data == 'undefined' ? new Object : data;
 	// Determining if vars are added in row object or directly
 	if( data.Row || data.row ) { var row = data.row || data.Row; }
 	else { var row = data; }
