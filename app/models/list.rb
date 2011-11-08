@@ -181,7 +181,7 @@ class List < ActiveRecord::Base
     return '==' if operator == 'is'
     return '==' if operator == '='
     
-    return '.starts_with?("'+condition+'") && "'+condition+'" ==' if operator == 'starts with'
+    return '.starts_with?("'+condition+'") && "'+condition+'" ==' if operator == 'starts with' || operator == 'begins with'
     return '.reverse.starts_with?("'+condition.reverse+'") && "'+condition+'" ==' if operator == 'ends with'
     
     return '!=' if operator == '!='

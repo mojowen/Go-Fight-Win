@@ -12,5 +12,5 @@
 //= require_tree ./bindings
 
 window.onload=function(){
-	ko.applyBindings(viewModel);
+	ko.applyBindings(dataModel);
 }

@@ -1,4 +1,4 @@
-viewModel.flatRows = ko.dependentObservable({ 
+dataModel.flatRows = ko.dependentObservable({ 
 	read: function() {
 		return ko.utils.arrayMap( rows(), 
 			function(row) {
@@ -9,4 +9,5 @@ viewModel.flatRows = ko.dependentObservable({
 		);
 	},
 	deferEvaluation: true 
-}, viewModel);
+}, 
+dataModel);

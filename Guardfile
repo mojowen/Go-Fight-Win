@@ -51,6 +51,7 @@ spec_location = "spec/javascripts/%s_spec"
 
 guard 'jasmine-headless-webkit' do
   watch(%r{^spec/javascripts/**/(.*)_spec\..*}) { |m| newest_js_file(spec_location % m[1]) }
+  watch(%r{^app/assets/javascripts/**/*.js$}) { |m| newest_js_file(spec_location % m[1]) }
   watch(%r{^spec/javascripts/helpers/factories.js$})
   watch(%r{^public/assets/.*\.js$})
 end

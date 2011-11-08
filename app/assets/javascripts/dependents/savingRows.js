@@ -1,6 +1,6 @@
-viewModel.savingRows = ko.dependentObservable(
+dataModel.savingRows = ko.dependentObservable(
 	{ read: function() {
-			return ko.utils.arrayFilter(viewModel.flatRows(), 
+			return ko.utils.arrayFilter(dataModel.flatRows(), 
 				function(row) {
 					return row.isDirty || row._destroy;
 				}
@@ -8,4 +8,4 @@ viewModel.savingRows = ko.dependentObservable(
 	}, 
 	deferEvaluation: true
 },
-viewModel);
+dataModel);

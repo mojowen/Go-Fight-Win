@@ -11,12 +11,12 @@ describe("Flatrows, a dependent observable", function() {
   });
 
   it("returns the correct number of rows", function() {
-    expect(viewModel.flatRows().length).toEqual(10);
+    expect(dataModel.flatRows().length).toEqual(10);
   });
 
   it("totally flattens the observables", function() {
-	console.log(viewModel.flatRows()[0]);
-    expect( typeof viewModel.flatRows()[0][ fields()[0].name ] ).toEqual('string');
+	console.log(dataModel.flatRows()[0]);
+    expect( typeof dataModel.flatRows()[0][ fields()[0].name ] ).toEqual('string');
   });
 
 
@@ -25,7 +25,7 @@ describe("Flatrows, a dependent observable", function() {
 		var js_row = ko.toJS(rows()[i]);
 		js_row.isDirty = rows()[i].dirtyFlag.isDirty() ? true : false;
 		
-    	expect( viewModel.flatRows()[i] ).toEqual( js_row );
+    	expect( dataModel.flatRows()[i] ).toEqual( js_row );
 	};
 
   });
