@@ -6,4 +6,11 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require_tree .
+//= require knockout-latest.debug
+//= require_tree ./models
+//= require_tree ./dependents
+//= require_tree ./bindings
+
+window.onload=function(){
+	ko.applyBindings(viewModel);
+}
