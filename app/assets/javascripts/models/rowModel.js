@@ -1,0 +1,41 @@
+function rowModel(data) {
+
+	// Determining if vars are added in row object or directly
+	if( data.Row || data.row ) { var row = data.row || data.Row; }
+	else { var row = data; }
+
+	// Setting up key properties
+	if( typeof row.key == 'undefined' || typeof row.list == 'undefined' ) { throw new Error("mising some vital row data"); }
+	this.key = ko.observable( row.key );
+	this.list = row.list;
+
+	for( var i = 0; i < fields().length; i++ ) {
+		var field = fields()[i].name;
+		if( typeof row[field] != 'undefined' ) {
+			this[field] = ko.observable( row[field] );
+		} else {
+			this[field] = ko.observable('');
+		}
+	}
+
+// number assign  if( this.field_type == 'number' ) { self[field_name] = ko.observable( parseInt( row[field_name] ) ); } 
+// date assign    else if( this.field_type == 'date' ) { self[field_name] = row[field_name].length != 0 ? ko.observable( new Date(row[field_name]) ) : ko.obervable(''); } 
+	var initDirty = this.key() == 'new'
+	this.dirtyFlag = new ko.dirtyFlag(this, initDirty);
+	if( initDirty ) {
+		this._tempkey = rows().filter( function(el) { return el._tempkey }).length;
+	}
+	return this;
+}
+
+function flattenRow(data, return_type) {
+	var return_as = return_type || '';
+	var init = ko.toJS(data);
+	var changed_fields = new Object;
+	for (var i=0; i < fields().length; i++) {
+		var field_name = fields()[i].name;
+		changed_fields[ field_name ] = init[field_name];
+	};
+	if( return_as.toLowerCase() == 'json' ) {changed_fields = ko.toJSON(changed_fields);}
+	return changed_fields;
+}
