@@ -81,55 +81,9 @@ viewModel.groupedRows = ko.dependentObservable(
 			};
 			return { rows: grouped.rows, unique: uniques};
 		} else {
-			return _rows;
+			return { rows: _rows};
 		}
 	}, 
 	deferEvaluation: true
 },
 viewModel);
-
-/************
-
-- should have some sort of 'available groups' dependent in the view model (cause built off of fields, right? but its dependent on the view models grouping)
-
-***********/
-
-
-// function grouper(rows, field_value, parent ) {
-// 
-// 	unique = ko.utils.arrayGetDistinctValues( ko.utils.arrayMap( rows, 
-// 		function(item){ 
-// 			if( item[ field_value ] != null && item[ field_value ] != undefined  ) return item[ field_value ];
-// 			else if ( item[ field_value ] == null ) return '';
-// 		})
-// 	); 
-// 	var grouped = ko.utils.arrayMap( unique, function(item) {
-// 		var returnable = {};
-// 		if( parent != null ) {
-// 			returnable.parent = parent;
-// 		}
-// 		returnable.value = item;
-// 		
-// 		returnable.display = returnable.value instanceof Date ? returnable.value.toDateString() : returnable.value;
-// 		returnable.display = returnable.value == '' ? '(blank)' : returnable.value;
-// 
-// 		returnable.rows = [];
-// 		for( var i = 0; i < rows.length; i++ ) {
-// 			if( rows[i][field_value] == undefined || rows[i][field_value] == null ) { rows[i][field_value] = ''; } 
-// 			if( rows[i][field_value] == item ) {
-// 				returnable.rows.push( rows[i] ); 
-
-
-
-
-// 				
-// 			}
-// 		}
-// 		// Computing the average and the unique counts
-// 		for( var k in returnable ) {
-
-// 		}
-// 		return returnable;
-// 	});
-// 	return grouped;
-// }

@@ -23,7 +23,7 @@ describe("rows for editing after a single or double grouping", function() {
 		rows()[3][ field_3 ]('bb');
 	});
 	it("returns rows if nothing has been set", function() {
-		expect(viewModel.groupedRows()).toEqual(rows())
+		expect(viewModel.groupedRows().rows).toEqual(rows())
 	});
 	it("returns uniques when grouped by one", function() {
 		currentView.groups()[0].field(field_1);
