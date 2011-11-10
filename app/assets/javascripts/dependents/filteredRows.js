@@ -1,14 +1,15 @@
 dataModel.filteredRows = ko.dependentObservable(
 	{ read: function() {
 		var filters = currentView.filters();
+		var flat_fields = fields().map( function(field) { return field.name});
+		var flat_filters = filters.map( function(filters) { return filters.field});
 		var _rows = rows();
-		if( filters.length > 0 ) {
+		if(  flat_fields.filter( function(filter) { return flat_fields.indexOf(filter) > -1; } ).length > 0 ) {
 			var filtered_rows = ko.utils.arrayFilter(_rows, function(row) {
 				var passes = true;
-				if( row.key() == false ) { return true; }
 				for( var i = 0; i < filters.length; i++ ) {
 					var field = filters[i].field(), operator = filters[i].operator(), filter = filters[i].filter();
-					if ( typeof field != 'undefined' ) {
+					if ( typeof field != 'undefined' && flat_fields.indexOf(field) > -1 ) {
 						var value = row[ field ]();
 						value = value == undefined ? '' : value;
 						if( filter != undefined ) {
@@ -55,9 +56,3 @@ dataModel.filteredRows = ko.dependentObservable(
 	deferEvaluation: true
 },
 dataModel);
-
-/*
-if( this.filters().length > 0 ) {
-	var filters = this.filters();
- 
-}*/

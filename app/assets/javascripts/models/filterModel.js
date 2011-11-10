@@ -11,9 +11,9 @@ function filterModel(data) {
 		filter = filter || data.pop();
 		operator = data.join(' ');
 	} else {
-		field = data.field;
-		operator = data.operator;
-		filter = data.filter;
+		field = data.field || '';
+		operator = data.operator || '';
+		filter = data.filter || '';
 	}
 	
 	this.field = ko.observable(field);
