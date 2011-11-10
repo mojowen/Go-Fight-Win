@@ -1,4 +1,4 @@
-dataModel.filteredRows = ko.dependentObservable(
+viewModel.filteredRows = ko.dependentObservable(
 	{ read: function() {
 		var filters = currentView.filters();
 		var flat_fields = fields().map( function(field) { return field.name});
@@ -55,4 +55,4 @@ dataModel.filteredRows = ko.dependentObservable(
 	}, 
 	deferEvaluation: true
 },
-dataModel);
+viewModel);

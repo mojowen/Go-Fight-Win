@@ -1,4 +1,4 @@
-dataModel.groupedRows = ko.dependentObservable(
+viewModel.groupedRows = ko.dependentObservable(
 	{ read: function() {
 		var groups = currentView.groups();
 		var flat_fields = fields().map( function(field) { return field.name});
@@ -86,7 +86,7 @@ dataModel.groupedRows = ko.dependentObservable(
 	}, 
 	deferEvaluation: true
 },
-dataModel);
+viewModel);
 
 /************
 
