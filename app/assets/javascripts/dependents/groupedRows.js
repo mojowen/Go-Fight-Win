@@ -3,7 +3,7 @@ viewModel.groupedRows = ko.dependentObservable(
 		var groups = currentView.groups();
 		var flat_fields = fields().map( function(field) { return field.name});
 		var flat_groups = groups.map( function(groups) { return groups.field()});
-		var _rows = rows();
+		var _rows = viewModel.filteredRows();
 		if(  flat_groups.filter( function(group) { return flat_fields.indexOf(group) > -1; } ).length > 0 ) {
 
 			var grouped = { rows: [] }, uniques = []; 

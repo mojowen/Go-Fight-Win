@@ -4,6 +4,11 @@ function viewModel( data ) {
 	if( data.View || data.view ) { var view = data.View || data.view; }
 	else { var view = data }
 
+	var visible = parseInt(data.visible) || 50, paged = parseInt(data.paged) || 0;
+	if( isNaN(paged) ) { paged = 0; }
+	if( isNaN(visible) || visible > 200 ) { visible = 50; }
+	this.paged = ko.observable(paged);
+	this.visible = ko.observable(visible);
 
 	this.filters = ko.observableArray([]);
 	this.addFilter = function(filter) {
