@@ -1,7 +1,6 @@
 var factoryfields = [];
 var factoryrows = [];
 
-
 function factoryField(info) {
 
 	var data = info || new Object, field = new Object;
@@ -15,7 +14,6 @@ function factoryField(info) {
 	factoryfields.push(field);
 	return new fieldModel(field);
 }
-
 function factoryRow(info) {
 	var data = info || new Object, row = new Object;
 	row.key = data.key || factoryrows.length+1;

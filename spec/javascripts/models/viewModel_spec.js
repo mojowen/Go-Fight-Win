@@ -7,7 +7,6 @@ describe("vieModel can be initalized ", function() {
     var view = new viewModel();
 	expect(view.name).toBeDefined();
   });
-
 	describe("Interactions with filterModel object", function() {
 	  it("creates a new filter if none are defined", function() {
 	    var view = new viewModel();
@@ -29,7 +28,6 @@ describe("vieModel can be initalized ", function() {
 		}
 	  });  
 	});
-
 	describe("interactions with groupModel object", function() {
 	  it("creates a new group if none are defined", function() {
 	    var view = new viewModel();
@@ -74,4 +72,48 @@ describe("vieModel can be initalized ", function() {
 	    expect(view.paged()).toEqual(0);
 	  });
 	});
+	describe("sorting", function() {
+		it("creates sorts when passed sort array and assumes direction", function() {
+			var view = viewModel({sorts: [ 'field' ] });
+			expect(view.sorts()[0].field() ).toEqual('field');
+			expect(view.sorts()[0].direction() ).toEqual('ASC');
+		});
+		it("creates sorts when passed sort array and direction ", function() {
+			var view = viewModel({sorts: [ {field: 'field', direction: 'DESC'} ] });
+			expect(view.sorts()[0].field() ).toEqual('field');
+			expect(view.sorts()[0].direction() ).toEqual('DESC');
+		});
+		it("creates sorts when passed sort string", function() {
+			var view = viewModel({sorts: 'field' });
+			expect(view.sorts()[0].field() ).toEqual('field');
+		});
+	
+		describe("actualy sorting", function() {
+			var field_1, field_2
+		    beforeEach(function() {
+		      	factoryList();
+				field_1 = fields()[0].name;
+				field_2 = fields()[1].name;
+				rows()[0][ field_1 ]('a');
+				rows()[1][ field_1 ]('b');
+				rows()[2][ field_1 ]('z');
+				rows()[3][ field_1 ]('z');
+				rows()[2][ field_2 ]('2');
+				rows()[3][ field_2 ]('1');
+		    });
+			it("sorts some fucking rows by one field", function() {
+				currentView.sorts()[0].field(field_1);
+				currentView.sorts()[0].direction('DESC');
+				currentView.sortRows();
+				expect( viewModel.renderingRows()[0][field_1]() ).toEqual('z');
+			});
+			it("sorts some fucking rows by two fields", function() {
+				currentView.sorts()[0].field(field_1);
+				currentView.sorts()[0].direction('DESC');
+				currentView.addSort(field_2)
+				currentView.sortRows();
+				expect( viewModel.renderingRows()[0][field_2]() ).toEqual('1');
+			});
+		});
+	});	
 });
