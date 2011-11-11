@@ -18,7 +18,7 @@ end
 
 gem 'jquery-rails'
 gem 'devise'
-gem 'omniauth'
+gem 'omniauth', '~> 0.3.2'
 gem 'cancan'
 
 # To use ActiveModel has_secure_password
@@ -47,6 +47,7 @@ group :test do
   gem "guard-rspec"
   gem 'growl'
   gem 'jasmine'
-  gem 'guard-jasmine-headless-webkit'
+  gem 'jasmine-headless-webkit', :git => 'https://github.com/johnbintz/jasmine-headless-webkit.git'
+  gem 'guard-jasmine-headless-webkit', :git => 'git://github.com/johnbintz/guard-jasmine-headless-webkit.git'
   gem 'guard-rails-assets'
 end
