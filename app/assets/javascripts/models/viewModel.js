@@ -97,10 +97,28 @@ function viewModel( data ) {
 	}
 
 	if( typeof view.name == 'undefined' ) {
-		this.name = 'unsaved view'
+		this.name = ko.observable('unsaved view');
+		this.id = 'new'
 	} else {
-		this.name = view.name
+		this.name = ko.observable(view.name)
+		this.id = view.id
 	}
+	
+	this._flatten = function(return_type) {
+		var returnable = new Object;
+		returnable.name = this.name;
+		returnable.id = this.id;
+		returnable.visible = this.visible;
+		returnable.paged = this.paged;
+
+		returnable.groups = this.groups;
+		returnable.sorts = this.sorts;
+		returnable.filters = this.filters;
+		return ko.toJSON( returnable );
+	}
+
+	var initDirty = this.id == 'new'
+	this.dirtyFlag = new ko.dirtyFlag(this, initDirty);
 
 	return this;
 }

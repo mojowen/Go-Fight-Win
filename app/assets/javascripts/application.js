@@ -7,11 +7,12 @@
 //= require jquery
 //= require jquery_ujs
 //= require knockout-latest.debug
+//= require_tree ./lib
 //= require_tree ./models
 //= require_tree ./dependents
 //= require_tree ./bindings
 
 window.onload=function(){
-	currentView = new viewModel();
+	load();
 	ko.applyBindings(dataModel);
 }

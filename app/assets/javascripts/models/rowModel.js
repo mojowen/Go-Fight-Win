@@ -18,6 +18,18 @@ function rowModel(data) {
 		}
 	}
 
+	this._flatten = function(return_type) {
+		var return_as = return_type || '';
+		var init = ko.toJS(this);
+		var changed_fields = new Object;
+		for (var i=0; i < fields().length; i++) {
+			var field_name = fields()[i].name;
+			changed_fields[ field_name ] = init[field_name];
+		};
+		if( return_as.toLowerCase() == 'json' ) {changed_fields = ko.toJSON(changed_fields);}
+		return changed_fields;
+	}
+
 // number assign  if( this.field_type == 'number' ) { self[field_name] = ko.observable( parseInt( row[field_name] ) ); } 
 // date assign    else if( this.field_type == 'date' ) { self[field_name] = row[field_name].length != 0 ? ko.observable( new Date(row[field_name]) ) : ko.obervable(''); } 
 	var initDirty = this.key() == 'new'
@@ -25,17 +37,7 @@ function rowModel(data) {
 	if( initDirty ) {
 		this._tempkey = rows().filter( function(el) { return el._tempkey }).length;
 	}
+
 	return this;
 }
 
-function flattenRow(data, return_type) {
-	var return_as = return_type || '';
-	var init = ko.toJS(data);
-	var changed_fields = new Object;
-	for (var i=0; i < fields().length; i++) {
-		var field_name = fields()[i].name;
-		changed_fields[ field_name ] = init[field_name];
-	};
-	if( return_as.toLowerCase() == 'json' ) {changed_fields = ko.toJSON(changed_fields);}
-	return changed_fields;
-}

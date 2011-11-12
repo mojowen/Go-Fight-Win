@@ -11,3 +11,5 @@ dataModel.flatRows = ko.dependentObservable({
 	deferEvaluation: true 
 }, 
 dataModel);
+
+// I should put flatten in here

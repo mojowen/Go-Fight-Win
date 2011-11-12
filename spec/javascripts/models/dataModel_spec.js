@@ -1,21 +1,13 @@
 /** 
 	Ways to attack this:
-		- Need to test dependent variables
-
 		- Need to test jquery plugins
-
-		- Need to test custom functions (make part of dataModel?)
-			- sorting
-		- Need to test flagging for saving
-
 		- Need to test AJAX response for
 			- Saving rows
 			- Saving views
 			- Loading rows
 
-		- Need to test template rendering (can jasmine do this? - maybe need to use selenium)
+		- Need to test template rendering
 			- Edit template
-			- Grouped template
 			- Pivot table
 
 		- Need to test Bindings
@@ -99,6 +91,16 @@ describe("dataModel set ups", function() {
 		  expect(rows()[0].name_1()).toEqual('thing');
 		});
 
+	});
+	describe("changing between views and such", function() {
+	  it("sets currentView to a blank viewModel if nothing is set", function() {
+	    expect(ko.toJSON( currentView ) ).toEqual( ko.toJSON( new viewModel() ) );
+	  });
+	  it("can set views to replace the current view", function() {
+	    view = new viewModel({name: 'better view'});
+		setCurrentView(view);
+		expect( currentView.name() ).toEqual('better view');
+	  });
 	});
 
 });

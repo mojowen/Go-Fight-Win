@@ -21,4 +21,7 @@ describe("savingRows", function() {
 		};		
 		expect( dataModel.savingRows().length ).toEqual(4);
   	});
+
+// Missing add new row 
+
 });

@@ -1,12 +1,37 @@
 describe("vieModel can be initalized ", function() {
   it("returns a name when created", function() {
     var view = new viewModel({name: 'a name'});
-	expect(view.name).toEqual('a name');
+	expect(view.name()).toEqual('a name');
   });
   it("creates a name if one isn't passed", function() {
     var view = new viewModel();
-	expect(view.name).toBeDefined();
+	expect(view.name()).toBeDefined();
   });
+  it("new views have a dirtyFlag set to true", function() {
+    var view = new viewModel();
+	expect(view.dirtyFlag.isDirty() ).toBeTruthy();
+  });
+  it("initializing a new view with an id doesn't have true dirty flag", function() {
+    var view = new viewModel({id: 1, name:'thing'});
+	expect(view.dirtyFlag.isDirty()).toBeFalsy();
+  });
+  it("expects a non-dirty flag to become dirty upon changing", function() {
+    var view = new viewModel({id: 1, name:'thing'});
+	expect(view.dirtyFlag.isDirty()).toBeFalsy();
+	view.name('hey changing');
+	expect(view.dirtyFlag.isDirty()).toBeTruthy();
+  });
+  it("it resets the view if passed the current object", function() {
+	var view = new viewModel();
+	var old_flat = ko.toJS(view);
+	view.name('different');
+	var new_flat = ko.toJS(view);
+	view.dirtyFlag.reset(old_flat);
+	expect(view.dirtyFlag.isDirty()).toBeTruthy();
+	view.dirtyFlag.reset(new_flat);
+	expect(view.dirtyFlag.isDirty()).toBeFalsy();
+  });
+
 	describe("Interactions with filterModel object", function() {
 	  it("creates a new filter if none are defined", function() {
 	    var view = new viewModel();
