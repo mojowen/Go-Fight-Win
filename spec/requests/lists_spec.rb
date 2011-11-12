@@ -17,6 +17,10 @@ describe "Lists" do
       visit list_path(@org.to_param, @list.to_param)
       page.should have_content(@list.name)
     end
+    ## Should have something about rendering to JSON
+    ## - rows 
+    ## - fields
+    ## - views
   end
       
 end

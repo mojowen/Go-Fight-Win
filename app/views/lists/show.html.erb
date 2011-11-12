@@ -1,2 +1,9 @@
-<h2><%= @list.name %></h2>
+<script type="text/javascript">
+	var _fields = <%= raw @list.fields.to_json %>;
+	var _rows = <%= raw @list.rows().to_json %>;
+</script>
+
+<h2 id="thing"><%= @list.name %></h2>
+
+<%= render :partial => 'table' %>
 

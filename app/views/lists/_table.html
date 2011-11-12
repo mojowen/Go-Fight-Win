@@ -1,0 +1,16 @@
+<table id="editor" border="0" cellspacing="5" cellpadding="5">
+	<thead>
+		<tr data-bind="foreach: fields">
+			<th>
+				<span data-bind="text: $data.name"></span>
+			</th>
+		</tr>
+	</thead>
+	<tbody data-bind="foreach: viewModel.renderingRows">
+		<tr data-bind="foreach: fields">
+			<td>
+				<input data-bind="value: $parent[$data.name]">
+			</td>
+		</tr>
+	</tbody>
+</table>
