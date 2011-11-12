@@ -6,7 +6,7 @@ describe 'An orgs routes and permissions' do
     @org.save
     @user = login_user(@org)
   end
-
+  
   
   it 'user in org can visit an org and it\'s path and assigns org' do
     visit org_path(@org.to_param)
@@ -70,5 +70,16 @@ describe 'An orgs routes and permissions' do
     @child = Factory(:org, :parent_id => @org.id)
     ability = Ability.new(@user)
     ability.should be_able_to(:manage, @child)
+  end
+  
+  it 'user visits an org and sees lists' do
+    lists = []
+    3.times do
+      lists.push(Factory(:list, :org => @org));
+    end
+    visit org_path(@org.to_param)
+    lists.each do |l|
+      page.should have_content(l.name)
+    end
   end
 end

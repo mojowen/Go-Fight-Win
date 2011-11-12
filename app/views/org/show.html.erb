@@ -26,6 +26,16 @@
 		<% end %>
 	</ul>
 <% end %>
+<% unless @org.lists.empty? %>
+	<h2>Users</h2>
+	<ul>
+		<% @org.lists.each do |list| %>
+		<li>
+			<%= link_to list.name, list_path(@org.to_param, list.to_param) %>
+		</li>
+		<% end %>
+	</ul>
+<% end %>
 
 
 <% unless @invites.empty? %>
