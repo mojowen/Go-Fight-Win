@@ -341,5 +341,12 @@ describe List do
       @list.rows(:filter => [Field.first.to_param+' is "farting is good"']).first.key.should == @row[:key]
     end
   end
+  
+  describe 'List has many views' do
+    it 'has many views' do
+      @view = @list.views.new(:name => 'a view')
+      @view.save.should be_true
+    end
+  end
 
 end

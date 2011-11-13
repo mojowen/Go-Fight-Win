@@ -23,9 +23,10 @@ Gfw::Application.routes.draw do
   match '/:org_id/~/invite/:invite_token' => 'memberships#invite', :constraints => lambda {|req| /^[-+]?[0-9]+$/ === req.params[:org_id]}, :as => 'invite_membership'
 
   #List management routes
-  match '/:org_id/:list_name' => 'lists#show', :constraints => lambda {|req| /^[-+]?[0-9]+$/ === req.params[:org_id]}, :as => 'list_discrete'
   match '/:org_name/:list_name' => 'lists#show', :constraints => lambda{|req| !services.include?(req.params[:list_name]) }, :as => 'list'
   
-  
+  #Views with list
+  match '/:org_id/:list_id/:view_slug' => 'lists#show', :constraints => lambda {|req| /^[-+]?[0-9]+$/ === req.params[:org_id] && /^[-+]?[0-9]+$/ === req.params[:list_id] }, :as => 'view_discrete'
+  match '/:org_name/:list_name/:view_name' => 'lists#show', :constraints => lambda{|req| !services.include?(req.params[:list_name]) }, :as => 'view'
   
 end

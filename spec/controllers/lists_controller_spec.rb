@@ -7,21 +7,20 @@ describe ListsController do
     @org.save
     @list = Factory(:list, :org => @org )
     @list.save
+    @view = Factory(:view, :list => @list)
+    @view.save
   end
   
   describe "GET 'show' with org id when logged in" do
     before :each do
       login_user(@org)
-      get 'show', :org_id => @org.id, :list_name => @list.to_param
+      get 'show', :org_name => @org.to_param, :list_name => @list.to_param
     end
     it 'responds successfully' do
       response.should be_success
     end
     it 'responds wiht the orgs' do
       should assigns(@list)
-    end
-    it 'matches the route' do
-      list_discrete_path(@org.id, @list.to_param) == '/'+@org.id.to_s+'/'+@list.to_param
     end
   end
   
@@ -43,7 +42,7 @@ describe ListsController do
   
   describe "GET 'show' with org id when not logged in" do
     before :each do
-      get 'show', :org_id => @org.id, :list_name => @list.to_param
+      get 'show', :org_name => @org.to_param, :list_name => @list.to_param
     end
     it 'should redirect to root' do
       response.should redirect_to(root_url)
@@ -56,7 +55,7 @@ describe ListsController do
       5.times do
         @fields.push( Factory(:field, :list_id => @list.id) )
       end
-      get 'show', :org_id => @org.id, :list_name => @list.to_param
+      get 'show', :org_name => @org.to_param, :list_name => @list.to_param
       should assigns(@fields)
     end
   end
@@ -67,7 +66,7 @@ describe ListsController do
       5.times do
         @items.push( Factory(:item, :list_id => @list.id) )
       end
-      get 'show', :org_id => @org.id, :list_name => @list.to_param
+      get 'show', :org_name => @org.to_param, :list_name => @list.to_param
       should assigns(@items)
     end
   end
@@ -79,9 +78,33 @@ describe ListsController do
         @item = Factory(:item, :list => @list)
         @entries.push( Factory(:entry, :item => @item) )
       end
-      get 'show', :org_id => @org.id, :list_name => @list.to_param
+      get 'show', :org_name => @org.to_param, :list_name => @list.to_param
       should assigns(@entries)
     end
   end
   
+  describe 'GET show with a view_slug passed to it' do
+    before :each do
+      login_user(@org)
+      get 'show', :org_id => @org.id, :list_id => @list.id, :view_slug => @view.slug
+    end
+    it 'responds successfully' do
+      response.should be_success
+    end
+    it 'responds with the view' do
+      should assigns(@view)
+    end
+ end
+  describe 'GET show with a view_name passed to it' do
+    before :each do
+      login_user(@org)
+      get 'show', :org_name => @org.to_param, :list_name => @list.to_param, :view_name => @view.to_param
+    end
+    it 'responds successfully' do
+      response.should be_success
+    end
+    it 'responds with the view' do
+      should assigns(@view)
+    end
+ end
 end

@@ -1,4 +1,5 @@
 describe("vieModel can be initalized ", function() {
+
   it("returns a name when created", function() {
     var view = new viewModel({name: 'a name'});
 	expect(view.name()).toEqual('a name');
@@ -7,6 +8,16 @@ describe("vieModel can be initalized ", function() {
     var view = new viewModel();
 	expect(view.name()).toBeDefined();
   });
+
+  it("vew is created with to_param if it isn't new", function() {
+    var view = new viewModel({id: 1, name:'Hey You Guys'});
+	expect(view.to_param).toEqual('hey_you_guys');
+  });
+  it("vew is created with an empty to_param if no id is passed", function() {
+    var view = new viewModel();
+	expect(view.to_param).toEqual('');
+  });
+
   it("new views have a dirtyFlag set to true", function() {
     var view = new viewModel();
 	expect(view.dirtyFlag.isDirty() ).toBeTruthy();
@@ -140,5 +151,5 @@ describe("vieModel can be initalized ", function() {
 				expect( viewModel.renderingRows()[0][field_2]() ).toEqual('1');
 			});
 		});
-	});	
+	});
 });

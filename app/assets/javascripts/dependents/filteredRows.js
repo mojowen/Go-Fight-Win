@@ -12,12 +12,18 @@ viewModel.filteredRows = ko.dependentObservable(
 					if ( typeof field != 'undefined' && flat_fields.indexOf(field) > -1 ) {
 						var value = row[ field ]();
 						value = value == undefined ? '' : value;
+
+						if( operator.trim() != 'is' ) {
+							operator = operator.replace('is ','').trim();
+						} else {
+							operator = operator.trim();
+						}
 						if( filter != undefined ) {
 							switch(operator) {
-								case 'is' || 'equals' || '=' || '==':
+								case 'is' || 'equal' || 'equals' || '=' || '==':
 									passes = value == filter  && passes;
 									break;
-								case 'is not' || 'isn\'t' || 'not equal' || 'not' || '<>' || '!=':
+								case 'not' || "isn't" || 'not equal' || '<>' || '!=':
 									passes = value != filter  && passes;
 									break;
 								case 'greater than' || 'more than' || 'after' || 'bigger than' || '>':

@@ -1,19 +1,18 @@
 /** 
 	Ways to attack this:
 		- Need to test jquery plugins
+
 		- Need to test AJAX response for
 			- Saving rows
 			- Saving views
 			- Loading rows
 
 		- Need to test template rendering
-			- Edit template
 			- Pivot table
 
 		- Need to test Bindings
 			- Regular row update
 			- New row
-			- View functions
 			- Date update
 			- Number update
 
@@ -100,6 +99,44 @@ describe("dataModel set ups", function() {
 	    view = new viewModel({name: 'better view'});
 		setCurrentView(view);
 		expect( currentView.name() ).toEqual('better view');
+	  });
+	  it("cannot set duplicate names for views", function() {
+		view = new viewModel({name: 'better view'});
+		nother_view = new viewModel({name: 'better view'});
+	    addView( view );
+	    expect( addView(nother_view) ).toBeFalsy();
+	  });
+	  describe("dependent variables are shifted when currentView shifts", function() {
+		var field_1, field_2
+
+		beforeEach(function() {
+			factoryList();
+			field_1 = fields()[0].name;
+			field_2 = fields()[1].name;
+			rows()[0][ field_1 ]('a');
+			rows()[1][ field_1 ]('b');
+			rows()[2][ field_1 ]('z');
+			rows()[3][ field_1 ]('z');
+			rows()[2][ field_2 ]('2');
+			rows()[3][ field_2 ]('1');
+			rows()[1][ field_2 ]('5');
+		});
+		it("changes sort when changing views", function() {
+			view = new viewModel( {sorts: [{field: field_1, direction: 'DESC'}] });
+			nother_view = new viewModel({sorts: [{field: field_2, direction: 'DESC'}] });
+			setCurrentView( view );
+			expect( viewModel.renderingRows()[0][field_1]() ).toEqual('z');
+			setCurrentView(nother_view);
+			expect( viewModel.renderingRows()[0][field_1]() ).toEqual('b');
+		});
+		it("changes filters when changing views", function() {
+			view = new viewModel( {filters: field_1+' is b' });
+			nother_view = new viewModel({filters: [field_2+' greater than 1',field_2+' is less than 4'] });
+			setCurrentView( view );
+			expect( viewModel.renderingRows()[0][field_1]() ).toEqual('b');
+			setCurrentView(nother_view);
+			expect( viewModel.renderingRows()[0][field_1]() ).toEqual('z');
+		});		
 	  });
 	});
 

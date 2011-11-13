@@ -7,3 +7,6 @@ beforeEach(function() {
 	factoryrows =[]
 });
 
+function bl (argument) {
+	console.log(ko.toJS(argument));
+}

@@ -27,7 +27,7 @@ describe("Rows after a filter has been applied", function() {
      expect( viewModel.filteredRows() ).toEqual(rows());
    });
   it("filters rows with is not", function() {	
-	currentView.addFilter(field_1+' is not a')
+	currentView.addFilter(field_1+' is not a');
 	for ( var i=0; i < viewModel.filteredRows().length; i++ ) {
 		expect( viewModel.filteredRows()[i][field_1]() ).not.toEqual('a');
 	};

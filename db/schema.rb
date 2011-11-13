@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111104070859) do
+ActiveRecord::Schema.define(:version => 20111112074311) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -117,5 +117,23 @@ ActiveRecord::Schema.define(:version => 20111104070859) do
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+
+  create_table "views", :force => true do |t|
+    t.string   "name"
+    t.string   "slug"
+    t.text     "description"
+    t.integer  "list_id"
+    t.text     "sorts"
+    t.text     "groups"
+    t.text     "filters"
+    t.text     "columns"
+    t.boolean  "active",      :default => true
+    t.boolean  "public",      :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "views", ["list_id", "name"], :name => "index_views_on_list_id_and_name", :unique => true
+  add_index "views", ["list_id"], :name => "index_views_on_list_id"
 
 end

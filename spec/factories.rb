@@ -44,3 +44,9 @@ Factory.define :entry do |f|
   f.sequence(:data) {|n| "data biatchs #{n}" }
 end
 
+Factory.define :view do |f|
+  f.active true
+  f.sequence(:name) {|n| "view biatchs #{n}" }
+  f.association :list
+end
+

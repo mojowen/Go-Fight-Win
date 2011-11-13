@@ -104,6 +104,14 @@ function viewModel( data ) {
 		this.id = view.id
 	}
 	
+	if( this.id != 'new' ) {
+		this.to_param = view.name.replace(/ /g,'_').toLowerCase();
+	} else {
+		this.to_param = '';
+	}
+	
+	this.slug = view.slug
+	
 	this._flatten = function(return_type) {
 		var returnable = new Object;
 		returnable.name = this.name;

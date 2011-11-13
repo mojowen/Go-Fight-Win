@@ -11,7 +11,7 @@ class List < ActiveRecord::Base
   
   def to_param
     self.name.downcase.gsub(' ','_')
-  end  
+  end
   def self.find_by_org_and_slug(org_id, slug, args = {})
     self.find_by_org_id_and_name(org_id, slug.gsub('_',' ').split(' ').map {|w| w.capitalize }.join(' '), args)
   end
@@ -215,8 +215,10 @@ class List < ActiveRecord::Base
     return '<=' if operator == 'smaller than or equal'
     return '<=' if operator == 'fewer than or equal'
         
-    
   end
+  
+  ## Views
+  has_many :views, :conditions => ['views.active = ?', true] 
   
 
 end
