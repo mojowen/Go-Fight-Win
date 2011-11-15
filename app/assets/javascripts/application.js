@@ -13,6 +13,9 @@
 //= require_tree ./bindings
 
 window.onload=function(){
-	load();
-	ko.applyBindings(dataModel);
+	if( typeof _list != 'undefined' ) {
+		load();
+		setBindings();
+		ko.applyBindings(dataModel);
+	}
 }

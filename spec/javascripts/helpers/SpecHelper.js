@@ -5,6 +5,7 @@ beforeEach(function() {
 	views.removeAll();
 	factoryfields =[]
 	factoryrows =[]
+	_list = 'Test';
 });
 
 function bl (argument) {

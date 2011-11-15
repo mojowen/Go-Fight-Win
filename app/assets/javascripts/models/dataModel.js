@@ -2,6 +2,7 @@ function appDataModel() {
 	rows = ko.observableArray([]);
 	fields = ko.observableArray([]);
 	views = ko.observableArray([]);
+	newRows = ko.observableArray([]);
 
 	load = function() {
 		if( typeof _fields != 'undefined' ) { 
@@ -43,5 +44,13 @@ function appDataModel() {
 			views.push(newView);
 		}
 	}
+	addRow = function(rowData) {
+		if( rowData.constructor.name == 'rowModel' ) {
+			rows.push( rowData );
+			// This is where deduplicating methods, etc, could fit
+			currentView.sortRows();
+		}
+	};
+	// Should write an updateRow method that'll update a row on key or _tempkey (whichever is present)
 }
 var dataModel = new appDataModel();

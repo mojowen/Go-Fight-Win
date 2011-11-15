@@ -30,6 +30,7 @@ function factoryRow(info) {
 }
 
 function factoryList() {
+	_list = 'Test';
 	fields.removeAll();
 	rows.removeAll();
 	for (var i=0; i < 4; i++) {

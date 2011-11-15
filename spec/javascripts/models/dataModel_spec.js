@@ -139,6 +139,28 @@ describe("dataModel set ups", function() {
 		});		
 	  });
 	});
+	describe("adding rows", function() {
+		beforeEach(function() {
+			factoryList();
+			field_1 = fields()[0].name;
+			field_2 = fields()[1].name;
+			rows()[0][ field_1 ]('a');
+			rows()[1][ field_1 ]('b');
+			rows()[2][ field_1 ]('z');
+			rows()[3][ field_1 ]('z');
+			rows()[2][ field_2 ]('2');
+			rows()[3][ field_2 ]('1');
+			rows()[1][ field_2 ]('5');
+		});
+		it("can add a new row to rows and have it sorted", function() {
+			view = new viewModel({sorts: [{field: field_2, direction: 'DESC'}] });
+			setCurrentView( view );
+			var row = new rowModel({ key: 'new', list: 'Test' });
+			row[field_2](10);
+			addRow(row);
+			expect( viewModel.renderingRows()[0][field_2]() ).toEqual(10);
+		});
+	});
 
 });
 

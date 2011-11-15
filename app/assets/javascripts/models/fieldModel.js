@@ -4,7 +4,7 @@ function fieldModel(data) {
 	else { var field = data; }
 
 	// Setting up key properties
-	if( typeof field.list == 'undefined' ||typeof field.id == 'undefined' ||typeof field.name == 'undefined' ) { throw new Error("mising some vital field data"); }
+	if( typeof field.id == 'undefined' ||typeof field.name == 'undefined' ) { throw new Error("mising some vital field data"); }
 	this.list = field.list;
 	this.name = field.name;
 	this.id = field.id;

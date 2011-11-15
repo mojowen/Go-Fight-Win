@@ -9,7 +9,7 @@
 	<tbody data-bind="foreach: viewModel.renderingRows">
 		<tr data-bind="foreach: fields">
 			<td>
-				<input data-bind="value: $parent[$data.name]">
+				<textarea data-bind="value: $parent[$data.name], valueUpdate: 'afterkeydown'"></textarea>
 			</td>
 		</tr>
 	</tbody>

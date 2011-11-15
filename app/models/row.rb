@@ -134,9 +134,9 @@ class Row
     self.class.send(:define_method, name, &block)
   end
 
-  def as_json(options={})
-    return @row.prep
-  end
+  # def as_json(options={})
+  #   return @row.to_json
+  # end
 
   def to_s
     return 'Row('+@row.to_s+')'

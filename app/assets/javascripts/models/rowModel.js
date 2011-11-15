@@ -35,7 +35,7 @@ function rowModel(data) {
 	var initDirty = this.key() == 'new'
 	this.dirtyFlag = new ko.dirtyFlag(this, initDirty);
 	if( initDirty ) {
-		this._tempkey = rows().filter( function(el) { return el._tempkey }).length;
+		this._tempkey = rows().filter( function(el) { return typeof el._tempkey != 'undefined' }).length + newRows().length;
 	}
 
 	return this;

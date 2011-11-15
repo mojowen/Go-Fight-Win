@@ -1,6 +1,11 @@
 <script type="text/javascript">
-	var _fields = <%= raw @list.fields.to_json %>;
-	var _rows = <%= raw @list.rows().to_json %>;
+	var _fields = <%= raw @fields.to_json %>;
+	var _rows = <%= raw @rows.to_json %>;
+	var _list = <%= raw @list.name.to_json %>;
+	var _views = <%= raw @views.to_json %>;
+	<% unless @current_view.nil? %>
+	var currentView = <%= raw @currentView %>;
+	<% end %>
 </script>
 
 <h2 id="thing"><%= @list.name %></h2>
@@ -9,3 +14,4 @@
 
 <%= render :partial => 'table' %>
 
+<%= render :partial => 'newRow' %>

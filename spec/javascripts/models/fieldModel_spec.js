@@ -3,9 +3,6 @@ describe("fieldModel", function() {
 	field = new fieldModel({ list: 'Test', field_type: 'text', id: 9, name: 'name' });
     expect(field).toBeDefined();
   });
-	it("throws an error when forgetting list", function() {
-	  expect(function() { var field = new fieldModel( { id: 9, name: 'name' } ); }).toThrow();
-	});
 	it("throws an error when forgetting name", function() {
 	  expect(function() { var field = new fieldModel( { id: 9, list: 'name' } ); }).toThrow();
 	});

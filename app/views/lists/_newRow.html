@@ -1,0 +1,29 @@
+<table border="0" cellspacing="5" cellpadding="5">
+	<thead>
+		<tr>
+			<!-- ko foreach: fields -->
+			<th>
+				<span data-bind="text: $data.name"></span>
+			</th>
+			<!-- /ko -->
+			<th></th>
+		</tr>
+	</thead>
+	<tbody id="new_row" data-bind="foreach: newRows">
+		<tr>
+			<!-- ko foreach: fields -->
+			<td>
+				<textarea class="number" data-bind="value: $parent[$data.name], valueUpdate: 'afterkeydown'"></textarea>
+			</td>
+			<!-- /ko -->
+			<td>
+				<span class="add">
+					Add
+				</span>
+				<span class="remove">
+					Discard
+				</span>
+			</td>
+		</tr>
+	</tbody>
+</table>
