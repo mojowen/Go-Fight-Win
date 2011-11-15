@@ -41,10 +41,10 @@ function newRow_template() {
 
 function addNewRow( row ) {
 	addRow( row );
+	newRows.remove(row);
 	if( newRows().length == 0 ) {
 		newRows.push( new rowModel({key: 'new', list: _list})  );
 	}
-	newRows.remove(row);
 	$('#new_row tr:last textarea:first').focus();
 }
 function removeNewRow(row) {

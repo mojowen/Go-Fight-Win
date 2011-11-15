@@ -1,14 +1,11 @@
 describe("Testing the row template", function() {
   beforeEach(function() {
-
 	factoryList();
 	loadFixtures("views/lists/_newRow.html");
-
 	_list = 'test';
 	load();
 	setBindings();
 	ko.applyBindings(dataModel);
-
   });
 
   it("renders the fields", function() {
@@ -16,10 +13,16 @@ describe("Testing the row template", function() {
   });
 
   it("adds the new row to rows() when submitted", function() {
-	var rows_length = rows().length;
 	var row = newRows()[0];
-	addNewRow( newRows()[0] );
-	expect( rows().length ).toEqual( rows_length + 1);
+	spyOn(window,'addNewRow');
+	$('#new_row .add').click();
+	expect(addNewRow).toHaveBeenCalledWith(row);
+  });
+
+  it("adds the new row to rows() when submitted", function() {
+	expect(rows().length).toEqual(10);
+	addNewRow( newRows()[0] )
+	expect(rows().length).toEqual(11);
   });
 
   it("adds a row will move valeus into new row", function() {
