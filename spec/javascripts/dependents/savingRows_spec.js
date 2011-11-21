@@ -21,7 +21,9 @@ describe("savingRows", function() {
 		};		
 		expect( dataModel.savingRows().length ).toEqual(4);
   	});
-
-// Missing add new row 
+	it("adds a new row and shows up ", function() {
+	  	addRow( new rowModel({key: 'new', list: _list}) );
+		expect( dataModel.savingRows().length ).toEqual( 1 );
+	});
 
 });

@@ -161,6 +161,11 @@ describe("dataModel set ups", function() {
 			expect( viewModel.renderingRows()[0][field_2]() ).toEqual(10);
 		});
 	});
-
+	describe("adding views", function() {
+	  // it("cannot add a duplicate name", function() {
+	  //   var new_view = new viewModel({id: 'new', name: 'new name'});
+	  //   var nother_view = new viewModel({id: 'new', name: 'new name'});
+	  // });
+	});
 });
 

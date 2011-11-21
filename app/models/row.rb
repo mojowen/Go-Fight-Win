@@ -14,11 +14,18 @@ class Row
     unless attrs.class.name == 'Hash'
       assign_key(attrs)
     else
-      @tempkey ||= attrs[:_tempkey]
+      @tempkey ||= attrs[:_tempkey] || attrs["_tempkey"]
       @item ||= attrs[:item]
       @list ||= attrs[:list]
       @@fields ||= attrs[:fields]
-      assign_key( attrs[:item]  || attrs[:item_id] || attrs[:key] || attrs[:list]  )
+      attrs[:key] = nil if attrs[:key] == 'new'
+      attrs['key'] = nil if attrs['key'] == 'new'
+      assign_key( attrs[:item]  || attrs[:item_id] || attrs[:key] || attrs['key'] || attrs[:list] || attrs['list']  )
+      @destroy = true if !attrs['_destroy'].nil?
+    end
+    
+    if @item.nil?
+      return { :success => false, :errors => ['could not find key']}
     end
     
     # Seeting global variables which saves on reloading the list and the lists fields
@@ -38,7 +45,7 @@ class Row
     @entries = @item.entries(@parents)
     
     @changed_fields = []
-
+    
     #Creates an function for each field and then stores any entry data and intializing values as part of that field
     @fields.each do |f|
       #Initalizing the new methods for each field
@@ -51,8 +58,8 @@ class Row
       # If no other variables were passed with the initializing, ignores this
       if attrs.class.name == 'Hash'
         # Only fills in new values if the fields value was passed when initializing AND it's different then the exsiting data
-        if ( !attrs[field_name].nil? || !attrs[field_name.to_s.gsub('_',' ')].nil? ) && attrs[field_name] != @row[field_name]
-          @row[field_name] = attrs[field_name] || attrs[field_name.to_s.gsub('_',' ')] 
+        if ( !attrs[field_name.to_s].nil? || !attrs[field_name].nil? || !attrs[field_name.to_s.gsub('_',' ')].nil? ) && attrs[field_name] != @row[field_name]
+          @row[field_name] = attrs[field_name.to_s] ||  attrs[field_name] || attrs[field_name.to_s.gsub('_',' ')]
           # Taking note of the changed fields, this will be used when saving
           @changed_fields.push( {:field => f, :new_value => @row[field_name]} )
         end
@@ -61,6 +68,15 @@ class Row
   end
   
   def save
+    if @item.nil?
+      return { :success => false, :errors => ['could not find key']}
+    end
+    
+    if @destroy
+      @item.delete
+      return {:key => @item.id, :success => true, :list => self['list'], :_destroy => true}
+    end
+    
     # not sure if this is right, but should be able to add blank fields right? I dunno
     
     success = true
@@ -82,13 +98,14 @@ class Row
       unless data.nil?
         save = Entry.new( :item => the_item, :field => f[:field], :data => data ).save
       else
-        Entry.find_by_item_id_and_field_id_and_active(the_item.id, f[:field].id, true).delete
+        @entry = Entry.find_by_item_id_and_field_id_and_active(the_item.id, f[:field].id, true)
+        @entry.delete unless @entry.nil?
         save = true
       end
       success = success & save
       errors.push( {:field => f[:field].name, :value => f[:new_value], :message => 'DB Error on saving'} ) if !save
     end
-    ready = { :key => @item.id, :success => success, :list => self['list'], :error => errors }
+    ready = { :key => @item.id, :success => success, :list => self['list'], :error => errors, :updated => @changed_fields.map{ |f| {:field => f[:field].name, :value => f[:new_value]} } }
     # Will need to return the _tempkey if the tempkey was passed to it
     ready[:_tempkey] = @tempkey unless @tempkey.nil?
     return ready
@@ -116,14 +133,24 @@ class Row
    case attrs.class.name
    when 'Fixnum'
      new_var 'key', attrs
-     @item ||= Item.find(attrs)
+     @item ||= Item.find_by_id(attrs)
    when 'Item'
      @item ||= attrs
      new_var 'key', @item.id
    when 'List'
      @list ||= attrs
      @item ||= @list.items.new
-   end    
+   when 'String'
+     if  /^[-+]?[0-9]+$/ === attrs
+       @item ||= Item.find_by_id(attrs)
+     else
+       @list = List.find_by_name(attrs)
+       @item = @list.items.new
+     end
+   end
+   if @item.nil?
+     return { :success => false, :errors => ['could not find key']}
+   end
    @list ||= @item.list
    new_var 'list', @list.name
    new_var 'created_at', @item.created_at
@@ -134,9 +161,9 @@ class Row
     self.class.send(:define_method, name, &block)
   end
 
-  # def as_json(options={})
-  #   return @row.to_json
-  # end
+  def as_json(options={})
+    return @row
+  end
 
   def to_s
     return 'Row('+@row.to_s+')'

@@ -29,7 +29,7 @@ describe Row do
     end
     it 'returns field value if passed when creating field named key' do
       field_name = @field.name+'_'+@field.id.to_s
-      @row = Row.new(:key => @item, field_name => 'ooga')      
+      @row = Row.new(:item => @item, field_name => 'ooga')      
       @row[field_name].should.equal? 'ooga'
     end
   end
@@ -41,7 +41,7 @@ describe Row do
       @item = Factory(:item, :list => @list)
     end
     it 'returns field value if passed a non weird name' do
-      @row = Row.new(:key => @item, @field.name => 'ooga')      
+      @row = Row.new(:item => @item, @field.name => 'ooga')      
       @row[@field.name].should.equal? 'ooga'
     end
   end

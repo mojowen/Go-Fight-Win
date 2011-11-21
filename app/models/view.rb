@@ -11,7 +11,7 @@ class View < ActiveRecord::Base
   def to_param
     self.name.downcase.gsub(' ','_')
   end
-
+  
   
   serialize :sorts
   serialize :groups

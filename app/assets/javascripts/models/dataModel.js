@@ -1,8 +1,14 @@
 function appDataModel() {
 	rows = ko.observableArray([]);
+	rows.find = function(search) { var results = seek(search, dataModel.flatRows(),'key'); return results === -1 ? false : rows()[results]; }
+	rows.find_temp = function(search) { var results = seek(search, dataModel.flatRows(),'_tempkey'); return results === -1 ? false : rows()[results]; }
+	newRows = ko.observableArray([]);
+
 	fields = ko.observableArray([]);
 	views = ko.observableArray([]);
-	newRows = ko.observableArray([]);
+	views.find = function(search) {var flat_views = views().map( function(elem) { return  ko.toJS(elem); }); var results = seek(search, flat_views, 'name'); return results === -1 ? false : views()[results]; }
+
+
 
 	load = function() {
 		if( typeof _fields != 'undefined' ) { 
@@ -38,10 +44,10 @@ function appDataModel() {
 		}
 	}
 	addView = function(newView) {
-		if( views().map(function(elem) {elem.name();}).indexOf( newView.name() ) === -1 ) {
-			return false
-		} else {
+		if( views().map( function(elem) { return elem.name(); }).indexOf( newView.name() ) === -1 ) {
 			views.push(newView);
+		} else {
+			return false;
 		}
 	}
 	addRow = function(rowData) {
@@ -51,6 +57,10 @@ function appDataModel() {
 			currentView.sortRows();
 		}
 	};
+	seek = function(search, array, term) {
+		var term = typeof term == 'undefined' ? 'key' : term;
+		return array.map( function(elem) { return elem[term]; }).indexOf(search);
+	}
 	// Should write an updateRow method that'll update a row on key or _tempkey (whichever is present)
 }
 var dataModel = new appDataModel();

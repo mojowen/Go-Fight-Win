@@ -15,7 +15,7 @@ function viewModel( data ) {
 		filter = typeof filter == 'undefined' ? {filter: '', field: '', operator: 'is'} : filter;
 		this.filters.push( new filterModel( filter ) );
 	}
-	if( typeof view.filters != 'undefined' ) {
+	if( typeof view.filters != 'undefined' && view.filters != null ) {
 		if( typeof view.filters == 'object' ) {
 			for (var i=0; i < view.filters.length; i++) {
 				this.filters.push( new filterModel( view.filters[i] ) );
@@ -32,7 +32,7 @@ function viewModel( data ) {
 		group = typeof group == 'undefined' ? '' : group
 		this.groups.push( new groupModel( group ) );
 	}
-	if( typeof view.groups != 'undefined' ) {
+	if( typeof view.groups != 'undefined' && view.groups != null ) {
 		if( typeof view.groups == 'object' ) {
 			for (var i=0; i < view.groups.length; i++) {
 				this.groups.push( new groupModel( view.groups[i] ) );
@@ -84,7 +84,7 @@ function viewModel( data ) {
 		sort = typeof sort == 'string' ? {field: ko.observable(sort), direction: ko.observable('ASC') } : {field: ko.observable(sort.field), direction: ko.observable(sort.direction) };
 		this.sorts.push(sort);
 	}
-	if( typeof view.sorts != 'undefined' ) {
+	if( typeof view.sorts != 'undefined' && view.sorts != null ) {
 		if( typeof view.sorts == 'string' ) {
 			this.addSort(view.sorts)
 		} else {
@@ -96,18 +96,19 @@ function viewModel( data ) {
 		this.addSort('');
 	}
 
-	if( typeof view.name == 'undefined' ) {
+	if( typeof view.name == 'undefined' && view.name == null ) {
 		this.name = ko.observable('unsaved view');
 		this.id = 'new'
 	} else {
 		this.name = ko.observable(view.name)
 		this.id = view.id
 	}
-	
-	if( this.id != 'new' ) {
-		this.to_param = view.name.replace(/ /g,'_').toLowerCase();
-	} else {
-		this.to_param = '';
+	this.to_param = function () {
+		if( this.id != 'new' ) {
+			return view.name.replace(/ /g,'_').toLowerCase();
+		} else {
+			return ''
+		}
 	}
 	
 	this.slug = view.slug
@@ -119,10 +120,11 @@ function viewModel( data ) {
 		returnable.visible = this.visible;
 		returnable.paged = this.paged;
 
-		returnable.groups = this.groups;
-		returnable.sorts = this.sorts;
-		returnable.filters = this.filters;
-		return ko.toJSON( returnable );
+		if( typeof this.groups == 'function' ) { returnable.groups = this.groups().filter(function(elem){ return elem.field() != '' }); } else { returnable.groups = this.groups.filter(function(elem){ return elem.field != '' }); }
+		if( typeof this.sorts == 'function' ) { returnable.sorts = this.sorts().filter(function(elem){ return elem.field() != '' }); } else { returnable.sorts = this.sorts.filter(function(elem){ return elem.field != '' }); }
+		if( typeof this.filters == 'function' ){returnable.filters = this.filters().filter(function(elem){ return elem.field() != '' });} else { returnable.filters = this.filters.filter(function(elem){ return elem.field != '' }); }
+		if( return_type == 'json' ) {return ko.toJSON( returnable );}
+		else { return ko.toJS( returnable ); }
 	}
 
 	var initDirty = this.id == 'new'

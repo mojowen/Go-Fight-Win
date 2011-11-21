@@ -5,7 +5,7 @@ dataModel.savingViews = ko.dependentObservable(
 					return view.dirtyFlag.isDirty() || view._destroy;
 				}
 			);
-			return changed_views.map( function(view) { return view._flatten });
+			return changed_views.map( function(view) { return view._flatten() });
 	}, 
 	deferEvaluation: true
 },

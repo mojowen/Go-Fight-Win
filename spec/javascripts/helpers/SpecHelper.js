@@ -6,6 +6,7 @@ beforeEach(function() {
 	factoryfields =[]
 	factoryrows =[]
 	_list = 'Test';
+	saving = true;
 });
 
 function bl (argument) {

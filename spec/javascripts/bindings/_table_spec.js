@@ -5,7 +5,7 @@ describe("Testing the row template", function() {
 	ko.applyBindings(dataModel);
   });
   it("renders the fields", function() {
-    expect( $('thead th').length ).toEqual( fields().length );
+    expect( $('thead th').length ).toEqual( fields().length + 1 );
   });
   it("renders the rows", function() {
 	expect( $('tbody tr').length).toEqual( rows().length );

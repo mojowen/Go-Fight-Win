@@ -7,20 +7,12 @@ describe "Lists" do
     @org.save
     @list = Factory(:list, :org_id => @org.id )
     @list.save
+    @user = login_user(@org)
   end
 
-  describe 'visiting a list as a user' do
-    before :each do
-      @user = login_user(@org)
-    end
-    it 'user a list and sees the name of the list' do
-      visit list_path(@org.to_param, @list.to_param)
-      page.should have_content(@list.name)
-    end
-    ## Should have something about rendering to JSON
-    ## - rows 
-    ## - fields
-    ## - views
+  it 'user a list and sees the name of the list' do
+    visit list_path(@org.to_param, @list.to_param)
+    page.should have_content(@list.name)
   end
-      
+
 end
