@@ -9,18 +9,6 @@
 			<th></th>
 		</tr>
 	</thead>
-	<tbody id="edit_rows" data-bind="foreach: viewModel.renderingRows">
-		<tr>
-			<!-- ko foreach: fields -->
-			<td>
-				<textarea class="number" data-bind="value: $parent[$data.name], valueUpdate: 'afterkeydown'"></textarea>
-			</td>
-			<!-- /ko -->
-			<td>
-				<span class="remove">
-					Delete
-				</span>
-			</td>
-		</tr>
+	<tbody id="edit_rows" data-bind="template: {name: 'row', foreach: viewModel.renderingRows }">
 	</tbody>
 </table>

@@ -1,7 +1,7 @@
 describe("Testing the row template", function() {
   beforeEach(function() {
 	factoryList();
-	loadFixtures("views/lists/_newRow.html");
+	loadFixtures("views/lists/_row.html","views/lists/_newRow.html");
 	_list = 'test';
 	load();
 	setBindings();

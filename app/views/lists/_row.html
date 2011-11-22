@@ -1,0 +1,47 @@
+<script type="text/html" id="row">
+
+	<!-- ko if: typeof $data != 'undefined' -->
+
+		<!-- ko if: $data.constructor.name == 'rowModel' -->
+			<tr>
+				<!-- ko foreach: fields -->
+				<td>
+					<textarea class="number" data-bind="value: $parent[$data.name], valueUpdate: 'afterkeydown'"></textarea>
+				</td>
+				<!-- /ko -->
+				<td data-bind="template: {name: $data._menu}">
+				</td>
+			</tr>
+		<!-- /ko -->
+
+		<!-- ko ifnot: $data.constructor.name == 'rowModel' -->
+
+			<tr>
+				<td data-bind="attr: { colspan: fields().length }">
+					<span data-bind="text: $data._value"></span>
+				</td>
+			</tr>
+
+			<!-- ko template: {name: 'rowTemplate', foreach: $data.rows} -->
+			<!-- /ko -->
+
+		<!-- /ko -->
+
+	<!-- /ko -->
+
+</script>
+
+<script type="text/html" id="newRowMenu">
+	<span class="add">
+		Add
+	</span>
+	<span class="remove">
+		Discard
+	</span>
+</script>
+
+<script type="text/html" id="rowMenu">
+	<span class="remove">
+		Delete
+	</span>
+</script>

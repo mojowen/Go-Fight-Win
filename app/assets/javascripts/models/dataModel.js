@@ -3,7 +3,6 @@ function appDataModel() {
 	rows.find = function(search) { var results = seek(search, dataModel.flatRows(),'key'); return results === -1 ? false : rows()[results]; }
 	rows.find_temp = function(search) { var results = seek(search, dataModel.flatRows(),'_tempkey'); return results === -1 ? false : rows()[results]; }
 	newRows = ko.observableArray([]);
-
 	fields = ko.observableArray([]);
 	views = ko.observableArray([]);
 	views.find = function(search) {var flat_views = views().map( function(elem) { return  ko.toJS(elem); }); var results = seek(search, flat_views, 'name'); return results === -1 ? false : views()[results]; }

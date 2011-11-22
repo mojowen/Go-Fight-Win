@@ -1,5 +1,5 @@
 function newRow_template() {
-	newRows.push( new rowModel({key: 'new', list: _list})  );
+	newRows.push( new rowModel({key: 'new', list: _list, _menu: 'newRowMenu'})  );
 
 	$('#new_row textarea').live('paste', function (e) {
 		var the = $(this)
@@ -8,13 +8,12 @@ function newRow_template() {
 			var start = the.index('#new_row textarea')
 			for (var i=0; i < data.length; i++) {
 				if( data[i].length > 0 ) {
-					if( typeof newRows()[i] == 'undefined' ) { newRows.push( new rowModel({key: 'new', list: _list})  ); }
+					if( typeof newRows()[i] == 'undefined' ) { newRows.push( new rowModel({key: 'new', list: _list, _menu: 'newRowMenu'})  ); }
 					fillRow( data[i], start,i);
 				}
 			};
 			$('#new_row tr:last textarea:first').focus();
 		}, 0);
-		
 	});
 
 	$('#new_row textarea').live('keypress', function (e) {
@@ -24,7 +23,7 @@ function newRow_template() {
 				addRow( newRows()[i] )
 			};
 			newRows.removeAll();
-			newRows.push( new rowModel({key: 'new', list: _list})  );
+			newRows.push( new rowModel({key: 'new', list: _list, _menu: 'newRowMenu'})  );
 			$('#new_row tr:last textarea:first').focus();
 		}
 	});
@@ -40,17 +39,18 @@ function newRow_template() {
 }
 
 function addNewRow( row ) {
+	row._menu = 'rowMenu';
 	addRow( row );
 	newRows.remove(row);
 	if( newRows().length == 0 ) {
-		newRows.push( new rowModel({key: 'new', list: _list})  );
+		newRows.push( new rowModel({key: 'new', list: _list, _menu: 'newRowMenu'})  );
 	}
 	$('#new_row tr:last textarea:first').focus();
 }
 function removeNewRow(row) {
 	newRows.remove(row);
 	if( newRows().length == 0 ) {
-		newRows.push( new rowModel({key: 'new', list: _list})  );
+		newRows.push( new rowModel({key: 'new', list: _list, _menu: 'newRowMenu'})  );
 	}
 }
 
