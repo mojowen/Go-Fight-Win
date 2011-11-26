@@ -1,3 +1,6 @@
+<div id="current_view" data-bind="with: currentView">
+	<input data-bind="value: name">
+</div>
 <div id="views" data-bind="foreach: views">
-	<span data-bind="text: $data.name"></span>
+	<span class="views" data-bind="text: $data.name"></span>
 </div>

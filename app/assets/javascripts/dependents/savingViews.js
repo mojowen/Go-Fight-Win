@@ -1,6 +1,6 @@
 dataModel.savingViews = ko.dependentObservable(
 	{ read: function() {
-			var changed_views = ko.utils.arrayFilter(views(), 
+			var changed_views = ko.utils.arrayFilter(dataModel.views(), 
 				function(view) {
 					return view.dirtyFlag.isDirty() || view._destroy;
 				}
