@@ -26,6 +26,7 @@ function rowModel(data) {
 			var field_name = fields()[i].name;
 			changed_fields[ field_name ] = init[field_name];
 		};
+		if( typeof this._destroy != 'undefined' ) { changed_fields._destroy = true; }
 		if( return_as.toLowerCase() == 'json' ) {changed_fields = ko.toJSON(changed_fields);}
 		return changed_fields;
 	}

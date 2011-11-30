@@ -4,12 +4,50 @@ function viewModel( data ) {
 	if( data.View || data.view ) { var view = data.View || data.view; }
 	else { var view = data }
 
-	var visible = parseInt(data.visible) || 50, paged = parseInt(data.paged) || 0;
+
+// Paging and Visible
+	var visible = parseInt(data.visible) || 30, paged = parseInt(data.paged) || 0;
 	if( isNaN(paged) ) { paged = 0; }
-	if( isNaN(visible) || visible > 200 ) { visible = 50; }
-	this.paged = ko.observable(paged);
+	if( isNaN(visible) || visible > 200 ) { visible = 30; }
+	this.paged = ko.observable(0);
 	this.visible = ko.observable(visible);
 
+	this.page = function(loc) {
+		var loc = parseInt(loc);
+		if( isNaN(loc) ) { this.paged(0); return false; }		
+		if( loc < 0 ) { 
+			this.paged(0);
+			return false;
+		} else if ( loc > dataModel.rowSize() ) {
+			this.paged( dataModel.rowSize() - this.visible() );
+			return false;
+		} else {
+			this.paged( loc );
+			return true
+		}
+	}
+
+	this.move = function(dir) {
+		switch(dir) {
+			case 'left' || 'down' :
+				this.page( this.paged() - this.visible() );
+				break;
+			case 'right' || 'up' :
+				this.page( this.paged() + this.visible() );
+				break;
+			case 'start' || 'far left' || 'beginning':
+				this.page(-1);
+				break;
+			case 'end' || 'far right' || 'finish':
+				this.page(100000000000000000000);
+				break;
+		}
+	}
+	
+	this.page(paged);
+
+
+// Filtering
 	this.filters = ko.observableArray([]);
 	this.addFilter = function(filter) {
 		filter = typeof filter == 'undefined' ? {filter: '', field: '', operator: 'is'} : filter;
@@ -27,6 +65,7 @@ function viewModel( data ) {
 		this.addFilter();
 	}
 
+// Grouping
 	this.groups = ko.observableArray([]);
 	this.addGroup = function(group) {
 		group = typeof group == 'undefined' ? '' : group
@@ -40,25 +79,39 @@ function viewModel( data ) {
 		} else if ( typeof view.groups == 'string' ) {
 			this.groups.push( new groupModel( view.groups ) );
 		}
-	} else {
-		this.addGroup();
+	} 
+	this.availableGroupsRender = function(field) {
+		var returnme = [];
+		
+		if( field() == undefined || field() == '' ) {
+			returnme = viewModel.availableGroups();
+		} else {
+			returnme = [field].concat(viewModel.availableGroups());
+		}
+		return returnme.sort();
 	}
+
+
+// Sorting
 	this.sorts = ko.observableArray([]);
-	this.sortRows = function() {
-		var sorts = this.sorts();
+	this.sortRows = function(temp_field) {
+		var _sorts = ko.toJS( this.sorts() );
+		if( typeof temp_field != 'undefined' ) { 
+			_sorts.push( { field: temp_field, direction: 'ASC' } ); 
+		}
 		var flat_fields = fields().map(function(elem) { return elem.name;} );
-		var sort_match = sorts.filter( function(elem) { return flat_fields.indexOf( elem.field() ) > -1; });
+		var sort_match = _sorts.filter( function(elem) { return flat_fields.indexOf( elem.field ) > -1; });
 		if( sort_match.length > 0 ) {
 			rows().sort(
 				function(a,b) {
-					for( var i = 0; i < sorts.length; i++ ) {
-						var sort_field = sorts[i]['field'](), sort_direction = sorts[i]['direction']();
+					for( var i = 0; i < sort_match.length; i++ ) {
+						var sort_field = sort_match[i]['field'], sort_direction = sort_match[i]['direction'];
 						// Something to look up and reference when the field type is something weird would be helpful
 						a_val = a[ sort_field ]() == undefined ? '' : a[ sort_field ]();
 						b_val = b[ sort_field ]() == undefined ? '' : b[ sort_field ]();
 						a_val = typeof a_val == 'string' ? a_val.toLowerCase() : a_val;
 						b_val = typeof b_val == 'string' ? b_val.toLowerCase() : b_val;
-			
+							
 						if( sort_field == 'key' ){
 							if( a_val == 'new' && b['key']() == 'new' ) { 
 								a_val = a['_tempkey'], b_val = b['_tempkey']; 
@@ -96,6 +149,7 @@ function viewModel( data ) {
 		this.addSort('');
 	}
 
+// Naming
 	if( typeof view.name == 'undefined' && view.name == null ) {
 		this.name = ko.observable('unsaved view');
 		this.id = 'new'
@@ -110,23 +164,24 @@ function viewModel( data ) {
 			return ''
 		}
 	}
-	
 	this.slug = view.slug
-	
+
+
+// Flatten and Dirty Flag
 	this._flatten = function(return_type) {
 		var returnable = new Object;
 		returnable.name = this.name;
 		returnable.id = this.id;
 		returnable.visible = this.visible;
 		returnable.paged = this.paged;
+		if( typeof this._destroy != 'undefined' ) { returnable._destroy = true; }
 
-		if( typeof this.groups == 'function' ) { returnable.groups = this.groups().filter(function(elem){ return elem.field() != '' }); } else { returnable.groups = this.groups.filter(function(elem){ return elem.field != '' }); }
-		if( typeof this.sorts == 'function' ) { returnable.sorts = this.sorts().filter(function(elem){ return elem.field() != '' }); } else { returnable.sorts = this.sorts.filter(function(elem){ return elem.field != '' }); }
-		if( typeof this.filters == 'function' ){returnable.filters = this.filters().filter(function(elem){ return elem.field() != '' });} else { returnable.filters = this.filters.filter(function(elem){ return elem.field != '' }); }
+		if( typeof this.groups == 'function' ) { returnable.groups = this.groups().filter(function(elem){ return elem.field() != '' && elem.field() != undefined }); } else { returnable.groups = this.groups.filter(function(elem){ return elem.field != '' }); }
+		if( typeof this.sorts == 'function' ) { returnable.sorts = this.sorts().filter(function(elem){ return elem.field() != '' && elem.field() != undefined }); } else { returnable.sorts = this.sorts.filter(function(elem){ return elem.field != '' }); }
+		if( typeof this.filters == 'function' ){returnable.filters = this.filters().filter(function(elem){ return elem.field() != '' && elem.field() != undefined });} else { returnable.filters = this.filters.filter(function(elem){ return elem.field != '' }); }
 		if( return_type == 'json' ) {return ko.toJSON( returnable );}
 		else { return ko.toJS( returnable ); }
 	}
-
 	var initDirty = this.id == 'new'
 	this.dirtyFlag = new ko.dirtyFlag(this, initDirty);
 

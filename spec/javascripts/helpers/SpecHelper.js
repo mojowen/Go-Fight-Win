@@ -1,14 +1,21 @@
+var _size = 0, _list = 'Test', _url = document.location.href;
+
 beforeEach(function() {
-	currentView = new viewModel();
+	currentView(new viewModel());
 	rows.removeAll();
+	newRows.removeAll();
 	fields.removeAll();
 	views.removeAll();
 	factoryfields =[]
 	factoryrows =[]
-	_list = 'Test';
-	saving = true;
+	saving = ko.observable(true);
 });
 
 function bl (argument) {
-	console.log(ko.toJS(argument));
+	try { 
+		ko.toJS(argument); 
+		console.log(ko.toJS(argument)); 
+	} catch(e) { 
+		console.log(argument); 
+	};
 }

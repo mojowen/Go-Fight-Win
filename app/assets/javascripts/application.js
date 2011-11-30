@@ -15,7 +15,8 @@
 window.onload=function(){
 	if( typeof _list != 'undefined' ) {
 		load();
-		setBindings();
 		ko.applyBindings(dataModel);
+		setBindings();
+		$('select').change();
 	}
 }

@@ -8,7 +8,6 @@ describe("vieModel can be initalized ", function() {
     var view = new viewModel();
 	expect(view.name()).toBeDefined();
   });
-
   it("vew is created with to_param if it isn't new", function() {
     var view = new viewModel({id: 1, name:'Hey You Guys'});
 	expect(view.to_param()).toEqual('hey_you_guys');
@@ -65,10 +64,6 @@ describe("vieModel can be initalized ", function() {
 	  });  
 	});
 	describe("interactions with groupModel object", function() {
-	  it("creates a new group if none are defined", function() {
-	    var view = new viewModel();
-		expect(view.groups().length).toEqual(1);    
-	  });
 	  it("creates a group if the values are defined if defined as string", function() {
 	    var view = new viewModel({ groups: 'hey' });
 		expect(ko.toJS(view.groups()[0])).toEqual( ko.toJS(new groupModel('hey')) );    
@@ -85,26 +80,31 @@ describe("vieModel can be initalized ", function() {
 	});
 
 	describe("paged and visible observables", function() {
-	  it("autopopulates to visible 50, paged 0 if not set", function() {
+	  it("autopopulates to visible 30, paged 0 if not set", function() {
 	    var view = new viewModel();
 		expect(view.paged()).toEqual(0);
-		expect(view.visible()).toEqual(50);
+		expect(view.visible()).toEqual(30);
 	  });
 	  it("can set visible", function() {
 	    var view = new viewModel({visible: 15 });
 	    expect(view.visible()).toEqual(15);
 	  });
 	  it("can set visible", function() {
-	    var view = new viewModel({paged: 100 });
+		// Spofing the dataModel.rowSize dependent variable for a sec
+		_temp = dataModel.rowSize;
+		dataModel.rowSize = function() { return 500; };
+		var view = new viewModel({paged: 100 });
 	    expect(view.paged()).toEqual(100);
+		// Back to normal
+		dataModel.rowSize = _temp;
 	  });
 	  it("can't set visible to over 500", function() {
 	    var view = new viewModel({visible: 500 });
-	    expect(view.visible()).toEqual(50);
+	    expect(view.visible()).toEqual(30);
 	  });
 	  it("passing non-numbers to either vibisble nor page sets to defaults", function() {
 	    var view = new viewModel({visible: 'f', paged: 'd' });
-	    expect(view.visible()).toEqual(50);
+	    expect(view.visible()).toEqual(30);
 	    expect(view.paged()).toEqual(0);
 	  });
 	});
@@ -138,16 +138,16 @@ describe("vieModel can be initalized ", function() {
 				rows()[3][ field_2 ]('1');
 		    });
 			it("sorts some fucking rows by one field", function() {
-				currentView.sorts()[0].field(field_1);
-				currentView.sorts()[0].direction('DESC');
-				currentView.sortRows();
+				currentView().sorts()[0].field(field_1);
+				currentView().sorts()[0].direction('DESC');
+				currentView().sortRows();
 				expect( viewModel.renderingRows()[0][field_1]() ).toEqual('z');
 			});
 			it("sorts some fucking rows by two fields", function() {
-				currentView.sorts()[0].field(field_1);
-				currentView.sorts()[0].direction('DESC');
-				currentView.addSort(field_2)
-				currentView.sortRows();
+				currentView().sorts()[0].field(field_1);
+				currentView().sorts()[0].direction('DESC');
+				currentView().addSort(field_2)
+				currentView().sortRows();
 				expect( viewModel.renderingRows()[0][field_2]() ).toEqual('1');
 			});
 		});

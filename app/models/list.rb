@@ -2,8 +2,6 @@ class List < ActiveRecord::Base
   belongs_to :org
   belongs_to :parent, :class_name => "List", :foreign_key => 'parent_id'
   
-  
-  
   # Name and find paramters and scope
   before_validation :fix_name
   validates_uniqueness_of :name, :scope => :org_id  
@@ -58,8 +56,8 @@ class List < ActiveRecord::Base
     @fields = self.fields(parents)
     
     offset = args[:page] || 0
-    limit = args[:limit] || 200
-    limit = 1000 if limit > 1000
+    limit = args[:limit] || 5000
+    # limit = 1000 if limit > 1000
     
     # Figures out how extended a family member this is
     ancestory = parents.count
@@ -101,7 +99,7 @@ class List < ActiveRecord::Base
     
     # TO DO: - group by one or two field values
     
-    
+    size = rows.length
     rows = rows.slice(offset,limit)
     
     rows.instance_eval do
@@ -111,7 +109,7 @@ class List < ActiveRecord::Base
       end
     end
     
-    return rows
+    return {:rows => rows, :size => size}
   end
   
   

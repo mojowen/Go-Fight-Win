@@ -4,12 +4,12 @@ function appDataModel() {
 	fields = ko.observableArray([]),
 	views = ko.observableArray([]),
 	currentView = ko.observable({});
+	saving = ko.observable(true);
+	this.loaded = false;
 
 	views.find = function(search) {var flat_views = views().map( function(elem) { return  ko.toJS(elem); }); var results = seek(search, flat_views, 'name'); return results === -1 ? false : views()[results]; }
 	rows.find = function(search) { var results = seek(search, dataModel.flatRows(),'key'); return results === -1 ? false : rows()[results]; }
 	rows.find_temp = function(search) { var results = seek(search, dataModel.flatRows(),'_tempkey'); return results === -1 ? false : rows()[results]; }
-
-
 
 	load = function() {
 		if( typeof _fields != 'undefined' ) { 
@@ -31,17 +31,21 @@ function appDataModel() {
 			_views = null;
 		}
 		if( typeof _currentView == 'undefined' ) { 
-			currentView = new viewModel(); 
+			setCurrentView( new viewModel() );
+			if( document.location.href != _url ) { try{ window.history.pushState('', "Title", _url); } catch(e) { document.location = _url; } }
 		} else { 
-			currentView = new viewModel(_currentView); 
+			setCurrentView( views()[_currentView] ); 
 			_currentView = null;
 		}
+		if( rows().length >= _size ) { dataModel.loaded = true; }
+		else { loadAll(); }
 	}
 	setCurrentView = function(newView) {
 		if( newView.constructor.name == 'viewModel' ) {
-			currentView = newView;
+			if( newView.groups().length == 0 ) { newView.addGroup(); }
+			currentView(newView);
 			rows.valueHasMutated();
-			currentView.sortRows();
+			currentView().sortRows();
 		}
 	}
 	addView = function(newView) {
@@ -55,7 +59,7 @@ function appDataModel() {
 		if( rowData.constructor.name == 'rowModel' ) {
 			rows.push( rowData );
 			// This is where deduplicating methods, etc, could fit
-			currentView.sortRows();
+			currentView().sortRows();
 		}
 	};
 	seek = function(search, array, term) {
@@ -63,5 +67,6 @@ function appDataModel() {
 		return array.map( function(elem) { return elem[term]; }).indexOf(search);
 	}
 	// Should write an updateRow method that'll update a row on key or _tempkey (whichever is present)
+	// Ooops I didn't, just sits inside of saveAll()
 }
 var dataModel = new appDataModel();

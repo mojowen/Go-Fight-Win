@@ -26,26 +26,26 @@ describe("Rows that are currently being displated, representing the list's curre
 		expect(viewModel.renderingRows()).toEqual(rows());
     });
 	it("slices rows if visible set to lower value", function() {
-		currentView.visible(1)
+		currentView().visible(1)
 		expect( viewModel.renderingRows().length ).toEqual(1);
 	});
 	it("pages rows successfully", function() {
-	   currentView.visible(1);
-	   currentView.paged(1);
+	   currentView().visible(1);
+	   currentView().paged(1);
 	   expect( ko.toJS(viewModel.renderingRows()[0] ) ).toEqual( ko.toJS(rows()[1]) );
 	});
 	it("pages rows when filtered", function() {
-	   currentView.visible(1);
-	   currentView.paged(1);
-	   currentView.filters()[0].field(field_1);
-	   currentView.filters()[0].operator('is not');
-	   currentView.filters()[0].filter('z');
+	   currentView().visible(1);
+	   currentView().paged(1);
+	   currentView().filters()[0].field(field_1);
+	   currentView().filters()[0].operator('is not');
+	   currentView().filters()[0].filter('z');
 	   expect( ko.toJS(viewModel.renderingRows()[0] ) ).toEqual( ko.toJS(rows()[3]) );
 	});
 	it("pages rows when grouped", function() {
-	   currentView.visible(1);
-	   currentView.paged(1);
-	   currentView.groups()[0].field(field_1);
+	   currentView().visible(1);
+	   currentView().paged(1);
+	currentView().addGroup(field_1);
 	   expect( ko.toJS(viewModel.renderingRows()[0]._value ) ).toEqual( 'z' );
 	});
 });

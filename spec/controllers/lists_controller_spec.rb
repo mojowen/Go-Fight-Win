@@ -143,9 +143,9 @@ describe ListsController do
          {"key":"new","list":"'+@list.name+'"},
          {"key":"new","list":"'+@list.name+'"}
     ]'
-     before = @list.rows().length
+     before = @list.rows()[:rows].length
      post 'update',  :org_name => @org.to_param, :list_name => @list.to_param, :rows => @rows, :format => :json
-     before.should == @list.rows().length - 3
+     before.should == @list.rows()[:rows].length - 3
    end
    it 'creates new rows if passed "new" for the row key, also saving the new values' do
      @rows = '[
@@ -184,8 +184,8 @@ describe ListsController do
      post 'update',  :org_name => @org.to_param, :list_name => @grandchild.to_param, :rows => @rows, :format => :json
      
      Item.all.count.should == 6
-     first = @grandchild.rows().first
-     last = @grandchild.rows().last
+     first = @grandchild.rows()[:rows].first
+     last = @grandchild.rows()[:rows].last
      
      first[@list.fields[0].to_param].should == 'a value'
      first[@grandchild.fields[1].to_param].should == 'grandchild value'
@@ -252,7 +252,7 @@ describe ListsController do
      post 'update',  :org_name => @org.to_param, :list_name => @list.to_param, :rows => @rows, :format => :json
      @response = JSON.parse(response.body)['rows']
 
-     @response.count.should == @grandchild.rows().length
+     @response.count.should == @grandchild.rows()[:rows].length
      
      @response.each do |r|
        r["success"].should be_true

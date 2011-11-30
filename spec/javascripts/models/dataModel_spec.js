@@ -93,12 +93,12 @@ describe("dataModel set ups", function() {
 	});
 	describe("changing between views and such", function() {
 	  it("sets currentView to a blank viewModel if nothing is set", function() {
-	    expect(ko.toJSON( currentView ) ).toEqual( ko.toJSON( new viewModel() ) );
+	    expect(ko.toJSON( currentView() ) ).toEqual( ko.toJSON( new viewModel() ) );
 	  });
 	  it("can set views to replace the current view", function() {
 	    view = new viewModel({name: 'better view'});
 		setCurrentView(view);
-		expect( currentView.name() ).toEqual('better view');
+		expect( currentView().name() ).toEqual('better view');
 	  });
 	  it("cannot set duplicate names for views", function() {
 		view = new viewModel({name: 'better view'});
@@ -142,15 +142,15 @@ describe("dataModel set ups", function() {
 	describe("adding rows", function() {
 		beforeEach(function() {
 			factoryList();
-			field_1 = dataModel.fields()[0].name;
-			field_2 = dataModel.fields()[1].name;
-			dataModel.rows()[0][ field_1 ]('a');
-			dataModel.rows()[1][ field_1 ]('b');
-			dataModel.rows()[2][ field_1 ]('z');
-			dataModel.rows()[3][ field_1 ]('z');
-			dataModel.rows()[2][ field_2 ]('2');
-			dataModel.rows()[3][ field_2 ]('1');
-			dataModel.rows()[1][ field_2 ]('5');
+			field_1 = fields()[0].name;
+			field_2 = fields()[1].name;
+			rows()[0][ field_1 ]('a');
+			rows()[1][ field_1 ]('b');
+			rows()[2][ field_1 ]('z');
+			rows()[3][ field_1 ]('z');
+			rows()[2][ field_2 ]('2');
+			rows()[3][ field_2 ]('1');
+			rows()[1][ field_2 ]('5');
 		});
 		it("can add a new row to rows and have it sorted", function() {
 			view = new viewModel({sorts: [{field: field_2, direction: 'DESC'}] });

@@ -1,13 +1,3 @@
-<script type="text/javascript">
-	var _fields = <%= raw @fields.to_json %>;
-	var _rows = <%= raw @rows.to_json %>;
-	var _list = <%= raw @list.name.to_json %>;
-	var _views = <%= raw @views.to_json %>;
-	<% unless @current_view.nil? %>
-	var currentView = <%= raw @currentView %>;
-	<% end %>
-</script>
-
 <h2 id="thing"><%= @list.name %></h2>
 
 <%= render :partial => 'row' %>
@@ -17,3 +7,15 @@
 <%= render :partial => 'table' %>
 
 <%= render :partial => 'newRow' %>
+
+<script type="text/javascript">
+	var _fields = <%= raw @fields.to_json %>;
+	var _rows = <%= raw @rows.to_json %>;
+	var _size = <%= raw @size.to_json %>;
+	var _list = <%= raw @list.name.to_json %>;
+	var _url = '<%= '/'+@list.org.to_param+'/'+@list.to_param %>';
+	var _views = <%= raw @views.to_json %>;
+	<% unless @current_view.nil? %>
+	var _currentView = <%= raw @current_view.to_json %>;
+	<% end %>
+</script>

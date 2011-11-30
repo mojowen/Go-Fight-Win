@@ -10,12 +10,12 @@ describe("description", function() {
 	expect( viewModel.availableGroups().length ).toEqual(4);
   });
   it("successfully removes grouped field", function() {
-	currentView.groups()[0].field(field_1);
+	currentView().addGroup(field_1);
 	expect(viewModel.availableGroups()[0]).not.toEqual(field_1);
   });
   it("successfully removes second grouped field", function() {
-    currentView.groups()[0].field(field_1);
-	currentView.addGroup(field_3);
+	currentView().addGroup(field_1);
+	currentView().addGroup(field_3);
 	for (var i=0; i < viewModel.availableGroups().length; i++) {
 		expect(viewModel.availableGroups()[i]).not.toEqual(field_1);
 		expect(viewModel.availableGroups()[i]).not.toEqual(field_3);

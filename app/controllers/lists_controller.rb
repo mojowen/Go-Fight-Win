@@ -11,9 +11,11 @@ class ListsController < ApplicationController
       @list = List.find_by_org_and_slug(org, params[:list_name], :include => @to_include )
     end
     
-    @currentView = @list.views.select{|v| v.name.to_param == params[:view_name] || v.slug == params[:view_slug] }.first
+    @current_view = @list.views.index{|v| v.name.to_param == params[:view_name] || v.slug == params[:view_slug] }
     @fields = @list.fields
-    @rows = @list.rows()
+    @query = @list.rows()
+    @rows = @query[:rows]
+    @size = @query[:size]
     @views = @list.views
 
     #TODO: Add some sort of paging function when querying rows via a sort

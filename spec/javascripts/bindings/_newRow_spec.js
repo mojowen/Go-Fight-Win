@@ -7,11 +7,9 @@ describe("Testing the row template", function() {
 	setBindings();
 	ko.applyBindings(dataModel);
   });
-
   it("renders the fields", function() {
     expect( $('#new_row textarea').length ).toEqual( fields().length );
   });
-
   it("adds the new row to rows() when submitted", function() {
 	var row = newRows()[0];
 	spyOn(window,'addNewRow');

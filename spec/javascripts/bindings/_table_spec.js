@@ -1,6 +1,7 @@
 describe("Testing the row template", function() {
   beforeEach(function() {
 	factoryList();
+	
 	loadFixtures("views/lists/_row.html","views/lists/_table.html");
 	ko.applyBindings(dataModel);
   });

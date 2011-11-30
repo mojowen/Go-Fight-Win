@@ -1,21 +1,19 @@
 function saveAll (args) {
 	var args = typeof args == 'undefined' ? {} : args;
-	saving = true;
 	var _rows = dataModel.savingRows();
 	var _views = dataModel.savingViews();
 
-	if( _rows.length + _views.length > 0 && saving ) {
-		saving = false;
+	if( _rows.length + _views.length > 0 && saving() ) {
+		saving(false);
 		$.post(
-			document.location+'/update',
+			_url+'/update',
 			"rows="+ko.toJSON(_rows)+"&views="+ko.toJSON(_views),
 			function(data) {
-				var response = JSON.parse(data);
+				var response = data;
 				var _rows = response.rows || [];
-				var _views = response.views || [];				
-
+				var _views = response.views || [];
 				if( typeof _rows.success != 'undefined'  ) {
-					// Some sort of notication for failed save					
+					// Some sort of notication for failed save
 				} else {
 					for (var i=0; i < _rows.length; i++) {
 						if( typeof _rows[i]['_destroy'] != 'undefined' ) {
@@ -36,6 +34,7 @@ function saveAll (args) {
 							row.dirtyFlag.reset( flat );
 						}
 					};
+
 					for (var i=0; i < _views.length; i++) {
 						var view = views.find( _views[i].name );
 						if( typeof _views[i]['_destroy'] != 'undefined' ) {
@@ -49,13 +48,9 @@ function saveAll (args) {
 					};
 
 					// needs to check if currentView = new view and sets the URL if so
-					// 
 				}
-				saving = true;
+				saving(true);
 				if( !args['once'] ) { saveAll(); }
-			},
-			function(jqXHR, textStatus, errorThrown) {
-				// Come back to this
 			}
 		);
 	}

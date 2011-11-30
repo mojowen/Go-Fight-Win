@@ -1,6 +1,6 @@
 viewModel.filteredRows = ko.dependentObservable(
 	{ read: function() {
-		var filters = currentView.filters();
+		var filters = currentView().filters();
 		var flat_fields = fields().map( function(field) { return field.name});
 		var flat_filters = filters.map( function(filters) { return filters.field});
 		var _rows = rows();
