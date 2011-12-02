@@ -1,0 +1,32 @@
+<table border="0" cellspacing="5" cellpadding="5" >
+	<thead>
+		<tr>
+			<!-- ko foreach: viewModel.groupedFields -->
+
+			<th>
+				<!-- ko if: $data.report != '_val' -->
+					<span data-bind="text: $data.name, css: {'group_field': $data.constructor.name == 'fieldModel' }"></span>
+				<!-- /ko -->
+			</th>
+
+			<!-- /ko -->
+		</tr>
+	</thead>
+
+		<!-- ko template: {name: 'groupedRow', foreach: viewModel.groupedRows().rows} -->
+		<!-- /ko -->
+
+	<tfooter>
+		<tr>
+			<!-- ko foreach: viewModel.groupedFields -->
+				<td>
+					<!-- ko if: $data.report != '_val' -->
+						<span data-bind="text: viewModel.groupedRows()[$data.name][$data.report]"></span>
+					<!-- /ko -->
+				</td>
+			<!-- /ko -->
+		</tr>
+	</tfooter>
+	
+
+</table>

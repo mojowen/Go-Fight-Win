@@ -43,10 +43,6 @@ describe("vieModel can be initalized ", function() {
   });
 
 	describe("Interactions with filterModel object", function() {
-	  it("creates a new filter if none are defined", function() {
-	    var view = new viewModel();
-		expect(view.filters().length).toEqual(1);    
-	  });
 	  it("passes filters if they are passed one value in an array", function() {
 	    var view = new viewModel({ filters: ['a is b'] });
 	    expect( ko.toJS(view.filters()[0]) ).toEqual( ko.toJS(new filterModel('a is b')) );
@@ -138,14 +134,12 @@ describe("vieModel can be initalized ", function() {
 				rows()[3][ field_2 ]('1');
 		    });
 			it("sorts some fucking rows by one field", function() {
-				currentView().sorts()[0].field(field_1);
-				currentView().sorts()[0].direction('DESC');
+				currentView().addSort({field: field_1, direction: 'DESC'});
 				currentView().sortRows();
 				expect( viewModel.renderingRows()[0][field_1]() ).toEqual('z');
 			});
 			it("sorts some fucking rows by two fields", function() {
-				currentView().sorts()[0].field(field_1);
-				currentView().sorts()[0].direction('DESC');
+				currentView().addSort({field: field_1, direction: 'DESC'});
 				currentView().addSort(field_2)
 				currentView().sortRows();
 				expect( viewModel.renderingRows()[0][field_2]() ).toEqual('1');

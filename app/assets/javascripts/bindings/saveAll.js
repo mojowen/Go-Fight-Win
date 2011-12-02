@@ -9,6 +9,8 @@ function saveAll (args) {
 			_url+'/update',
 			"rows="+ko.toJSON(_rows)+"&views="+ko.toJSON(_views),
 			function(data) {
+				var t = new Date();
+				dataModel.flatRows = rows().map( function(elem) { return {key: elem.key() }; });
 				var response = data;
 				var _rows = response.rows || [];
 				var _views = response.views || [];
@@ -51,6 +53,8 @@ function saveAll (args) {
 				}
 				saving(true);
 				if( !args['once'] ) { saveAll(); }
+					var d = new Date();
+					console.log('saving: '+(d-t));
 			}
 		);
 	}

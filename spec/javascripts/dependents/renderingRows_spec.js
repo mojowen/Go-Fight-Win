@@ -37,15 +37,13 @@ describe("Rows that are currently being displated, representing the list's curre
 	it("pages rows when filtered", function() {
 	   currentView().visible(1);
 	   currentView().paged(1);
-	   currentView().filters()[0].field(field_1);
-	   currentView().filters()[0].operator('is not');
-	   currentView().filters()[0].filter('z');
+	   currentView().addFilter(field_1+' not z')
 	   expect( ko.toJS(viewModel.renderingRows()[0] ) ).toEqual( ko.toJS(rows()[3]) );
 	});
-	it("pages rows when grouped", function() {
-	   currentView().visible(1);
-	   currentView().paged(1);
-	currentView().addGroup(field_1);
-	   expect( ko.toJS(viewModel.renderingRows()[0]._value ) ).toEqual( 'z' );
-	});
+	// it("pages rows when grouped", function() {
+	//    currentView().visible(1);
+	//    currentView().paged(1);
+	//    currentView().addGroup(field_1);
+	//    expect( ko.toJS(viewModel.renderingRows()[0]._value ) ).toEqual( 'z' );
+	// });
 });

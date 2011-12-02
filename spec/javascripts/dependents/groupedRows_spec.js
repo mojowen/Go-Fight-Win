@@ -22,14 +22,11 @@ describe("rows for editing after a single or double grouping", function() {
 		rows()[2][ field_3 ]('ba');
 		rows()[3][ field_3 ]('bb');
 	});
-	it("returns rows if nothing has been set", function() {
-		expect(viewModel.groupedRows().rows).toEqual(rows())
-	});
 	it("returns uniques when grouped by one", function() {
 		currentView().addGroup(field_1);
 		field_1_vals = ['a','z','']
-		for (var i=0; i < viewModel.groupedRows().unique[0].length; i++) {
-			expect( viewModel.groupedRows().unique[0][i].value ).toEqual( field_1_vals[i] );
+		for (var i=0; i < viewModel.groupedRows()._uniques[0].length; i++) {
+			expect( viewModel.groupedRows()._uniques[0][i].value ).toEqual( field_1_vals[i] );
 		};
 	});
 	it("returns uniques when grouped by two fields", function() {
@@ -37,9 +34,9 @@ describe("rows for editing after a single or double grouping", function() {
 		currentView().addGroup(field_2)
 		field_1_vals = ['a','z','']
 		field_2_vals = [1,2,5,'']
-		for (var i=0; i < viewModel.groupedRows().unique[0].length; i++) {
-			expect( viewModel.groupedRows().unique[0][i].value ).toEqual( field_1_vals[i] );
-			expect( viewModel.groupedRows().unique[1][i].value ).toEqual( field_2_vals[i] );
+		for (var i=0; i < viewModel.groupedRows()._uniques[0].length; i++) {
+			expect( viewModel.groupedRows()._uniques[0][i].value ).toEqual( field_1_vals[i] );
+			expect( viewModel.groupedRows()._uniques[1][i].value ).toEqual( field_2_vals[i] );
 		};
 	
 	});

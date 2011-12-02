@@ -3,4 +3,5 @@ function setBindings (argument) {
 	newRow_template();
 	views_template();
 	keyboardShortcuts();
+	groups_template();
 }

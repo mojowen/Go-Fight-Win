@@ -39,7 +39,7 @@ function viewModel( data ) {
 				this.page(-1);
 				break;
 			case 'end' || 'far right' || 'finish':
-				this.page(100000000000000000000);
+				this.page( rows().length + 1);
 				break;
 		}
 	}
@@ -62,7 +62,7 @@ function viewModel( data ) {
 			this.filters.push( new filterModel( view.filters ) );
 		}
 	} else {
-		this.addFilter();
+		// this.addFilter();
 	}
 
 // Grouping
@@ -95,6 +95,7 @@ function viewModel( data ) {
 // Sorting
 	this.sorts = ko.observableArray([]);
 	this.sortRows = function(temp_field) {
+		var t = new Date();
 		var _sorts = ko.toJS( this.sorts() );
 		if( typeof temp_field != 'undefined' ) { 
 			_sorts.push( { field: temp_field, direction: 'ASC' } ); 
@@ -131,6 +132,8 @@ function viewModel( data ) {
 				}
 			);
 			rows.valueHasMutated();
+			var d = new Date();
+			console.log('sorting: '+(d-t))
 		}
 	}
 	this.addSort = function(sort) {
@@ -146,7 +149,7 @@ function viewModel( data ) {
 			};
 		}
 	} else {
-		this.addSort('');
+		// this.addSort('');
 	}
 
 // Naming

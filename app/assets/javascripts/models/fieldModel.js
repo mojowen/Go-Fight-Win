@@ -12,5 +12,6 @@ function fieldModel(data) {
 	this.field_type = field.field_type || 'text';
 	this.field_options = field.field_options || '';
 
+	this.report = 'count';
 	return this;
 }

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>demo</title>
+	<style type="text/css" media="screen">
+		body {
+			margin: 0;
+		}
+		.inside {
+			border: 2px dotted red;
+			-moz-box-sizing: border-box;
+			-webkit-box-sizing: border-box;
+		    box-sizing: border-box;
+			height: 100%;
+			width: 4%;
+		}
+		.open {
+			width: 96%;
+		}
+		#outside {
+			border: 3px solid blue;
+			width: 100%;
+			height: 3000px;
+		}
+		#left {
+			float: left;
+		}
+		#right {
+			float: right;
+		}
+		#right .opener {
+			float: left;
+		}
+		#left .opener {
+			float: right;
+		}
+		.open .opener {
+			display: none;
+		}
+		.opener {
+			height: 100%;
+			width: 30px;
+			background-color: #333;
+		}
+		#header {
+			position: fixed;
+			height: 30px;
+			width: 100%;
+			border: 3px solid green;
+			background-color: #DDD;
+		}
+		.expander {
+			height: 30%;
+			margin-top: 20px;
+			width: 100%;
+			background-color: #333;
+		}
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" charset="utf-8">
+		(function() {
+			$('.opener').live('click',function() {
+				var $this = $(this);
+				$('.open').toggleClass('open','normal');
+				$this.parent().toggleClass('open','normal');
+			});
+		})()
+	</script>
+</head>
+<body>
+	
+	<div id="header">
+		<div class="expander"></div>
+	</div>
+	<div id="outside">
+		<div id="left" class="inside open">
+			left
+			<div class="opener"></div>
+		</div>
+		<div id="right" class="inside">
+			<div class="opener"></div>
+			right
+		</div>
+	</div>
+	
+</body>
+</html>
