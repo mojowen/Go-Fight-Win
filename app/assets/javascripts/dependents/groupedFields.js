@@ -4,23 +4,16 @@ viewModel.groupedFields = ko.dependentObservable({
 
 		var _fields = fields(), grouped_fields = currentView().groups().map(function(elem) {return elem.field(); });
 
+		_fields = grouped_fields.map(function(elem) { return {name: elem, report: "_val" }; }).concat(_fields.filter(function(elem) { return  grouped_fields.indexOf(elem.name) === -1; }));
 
-		_fields = grouped_fields.map(function(elem) {return {name: elem, report: "_val" }; }).concat(_fields.filter(function(elem) { return  grouped_fields.indexOf(elem.name) === -1; }));
-
-		// switch(grouped_fields.length) {
-		// 	case 1:
-		// 		_fields = [{name: grouped_fields[0], report: '_val'} ].concat(_fields.filter(function(elem) { return elem.name != grouped_fields[0] }));
-		// 		break;
-		// 	case 1:
-		// 		_fields = [{name: grouped_fields[0], report: '_val'} ].concat(_fields.filter(function(elem) { return elem.name != grouped_fields[0] }));
-		// 		break;
-		// 	
-		// }
 
 		var d = new Date();
 		console.log('groupedFields: '+(d-t));
 
-		return _fields;
+		if( pivot() && typeof viewModel.groupedRows()._uniques[1] != 'undefined' ) { 
+			var _adjusted = [ {name: currentView().groups()[0].field(), report: "_val" } ].concat(viewModel.groupedRows()._uniques[1].map( function(elem) { return { name: elem.display, report: 'all' } }) );
+			return  _adjusted.concat( [{name: 'Totals', report: "_val" }] )
+		} else { return _fields; }
 
 	},
 	deferEvaluation: true 

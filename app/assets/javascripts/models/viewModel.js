@@ -4,6 +4,9 @@ function viewModel( data ) {
 	if( data.View || data.view ) { var view = data.View || data.view; }
 	else { var view = data }
 
+//  For the pivot talbe
+	this.reportOn = ko.observable();
+
 
 // Paging and Visible
 	var visible = parseInt(data.visible) || 30, paged = parseInt(data.paged) || 0;

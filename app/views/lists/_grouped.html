@@ -1,3 +1,10 @@
+<select data-bind="
+	value: currentView().reportOn,
+	options: viewModel.pivotedRows(),
+	optionsText: 'label',
+	optionsCaption: '-- select your report',
+	visible: viewModel.pivotedRows().length > 0 "></select>
+
 <table border="0" cellspacing="5" cellpadding="5" >
 	<thead>
 		<tr>
@@ -20,8 +27,14 @@
 		<tr>
 			<!-- ko foreach: viewModel.groupedFields -->
 				<td>
-					<!-- ko if: $data.report != '_val' -->
+					<!-- ko if: $data.report != '_val' && !pivot() -->
 						<span data-bind="text: viewModel.groupedRows()[$data.name][$data.report]"></span>
+					<!-- /ko -->
+					<!-- ko if: $data.report == 'all' && pivot() && currentView().reportOn() != undefined -->
+						<span data-bind="text: viewModel.groupedRows()._uniques[1][viewModel.groupedFields().indexOf($data)-1][currentView().reportOn().name][currentView().reportOn().report]"></span>
+					<!-- /ko -->
+					<!-- ko if: $data.name == 'Totals' && currentView().reportOn() != undefined -->
+					<span data-bind="text: viewModel.groupedRows()[currentView().reportOn().name][currentView().reportOn().report]"></span>
 					<!-- /ko -->
 				</td>
 			<!-- /ko -->

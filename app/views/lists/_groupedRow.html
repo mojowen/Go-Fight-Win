@@ -2,7 +2,7 @@
 
 	<!-- ko if: typeof $data != 'undefined' -->
 	
-	<!-- ko if: $data.rows.length !=  0 -->
+	<!-- ko if: $data.rows.length !=  0 && !pivot() -->
 			<tr>
 				<!-- ko if: typeof $data._value != 'undefined' -->
 				<td data-bind="attr: {'rowspan': $data.rows.filter(function(elem) { return elem != undefined; }).length + 1 } ">
@@ -18,7 +18,7 @@
 				<!-- ko foreach: viewModel.groupedFields -->
 					<!-- ko if: $data.name == $parent._field -->
 					<td colspan="2">
-						TOTALS:
+						TOTAL:
 					</td>
 					<!-- /ko -->
 					<!-- ko if: $data.constructor.name == 'fieldModel' -->
@@ -30,7 +30,7 @@
 			</tr>
 	<!-- /ko -->
 
-	<!-- ko if: $data.rows.length ==  0 -->
+	<!-- ko if: $data.rows.length ==  0 || pivot() -->
 		<tr>
 
 			<!-- ko if: typeof $data._value != 'undefined' -->
@@ -45,6 +45,22 @@
 					<span data-bind="text: $parent[$data.name][$data.report]"></span>
 				</td>
 				<!-- /ko -->
+
+				<!-- ko if: $data.report == 'all' && pivot() -->
+				<td>
+						<!-- ko if: $parent.rows[viewModel.groupedFields().indexOf($data)-1] != undefined && currentView().reportOn() != undefined -->
+						<span data-bind="text: $parent.rows[viewModel.groupedFields().indexOf($data)-1][currentView().reportOn().name][currentView().reportOn().report] "></span>
+						<!-- /ko -->
+				</td>
+				<!-- /ko -->
+				
+				<!-- ko if: $data.name == 'Totals' && currentView().reportOn() != undefined -->
+				<td>
+					<span data-bind="text: $parent[currentView().reportOn().name][currentView().reportOn().report], visible: iiii = $parents "></span>
+				</td>
+				<!-- /ko -->
+				
+
 			<!-- /ko -->
 		</tr>
 		

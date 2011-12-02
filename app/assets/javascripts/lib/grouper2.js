@@ -31,7 +31,9 @@ function grouper (_rows) {
 				new_unique = {value: value, display: value};
 				pos = uniques[ii].push(new_unique)-1
 			}
-		
+
+			uniques[ii][pos] = computer(uniques[ii][pos], row);
+
 			// creating nested objects
 			positions.push(pos);
 			var depth = '['+positions.join('].rows[')+']';
