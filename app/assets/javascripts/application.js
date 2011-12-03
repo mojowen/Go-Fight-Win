@@ -13,7 +13,7 @@
 //= require_tree ./bindings
 console.log('--------------------------------');
 var stop = ko.observable(true);
-var pivot =  ko.observable(true);
+var pivot =  ko.observable(false);
 window.onload=function() {
 	if( typeof _list != 'undefined' ) {
 		var t = new Date();

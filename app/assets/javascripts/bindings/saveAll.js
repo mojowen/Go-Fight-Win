@@ -12,6 +12,7 @@ function saveAll (args) {
 				var t = new Date();
 				dataModel.flatRows = rows().map( function(elem) { return {key: elem.key() }; });
 				var response = data;
+				console.log(response);
 				var _rows = response.rows || [];
 				var _views = response.views || [];
 				if( typeof _rows.success != 'undefined'  ) {
@@ -39,6 +40,7 @@ function saveAll (args) {
 
 					for (var i=0; i < _views.length; i++) {
 						var view = views.find( _views[i].name );
+						console.log(_views[i].name);
 						if( typeof _views[i]['_destroy'] != 'undefined' ) {
 							views.remove( view );
 						} else {

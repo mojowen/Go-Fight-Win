@@ -1,11 +1,15 @@
 viewModel.groupedRows = ko.dependentObservable(
 	{ read: function() {
 		var t = new Date();
-		var results = stop() ? grouper(ko.toJS(viewModel.filteredRows)) : [];
+		if( stop()  ) {
+			var results = grouper(ko.toJS(viewModel.filteredRows));
+		} else {
+			var results = {rows:[]};
+			results = computer(results,{} )
+		}
 		var d = new Date();
 		console.log("grouped: "+(d-t));
 		return results;
-
 	}, 
 	deferEvaluation: true
 },

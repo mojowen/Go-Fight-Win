@@ -1,7 +1,7 @@
 <script type="text/html" id="groupedRow">
 
 	<!-- ko if: typeof $data != 'undefined' -->
-	
+
 	<!-- ko if: $data.rows.length !=  0 && !pivot() -->
 			<tr>
 				<!-- ko if: typeof $data._value != 'undefined' -->
@@ -23,7 +23,12 @@
 					<!-- /ko -->
 					<!-- ko if: $data.constructor.name == 'fieldModel' -->
 					<td>
-						<span data-bind="text: $parent[$data.name][$data.report]"></span>
+						<!-- ko if: $data.report().name != currentView().goal.field() || !currentView().goal.label() -->
+							<span data-bind="text: $parent[$data.name][$data.report().report]"></span>
+						<!-- /ko -->
+						<!-- ko if: $data.report().name == currentView().goal.field() && currentView().goal.label() -->
+							<span data-bind="text: ( $parent[currentView().goal.field()][ currentView().goal().field().report] + '/' + currentView().goal().value() + ' (' + Math.round($parent[currentView().goal.field()][ currentView().goal().field().report] / currentView().goal().value() * 1000 ) / 10 ) + '%)' "></span>
+						<!-- /ko -->
 					</td>
 					<!-- /ko -->
 				<!-- /ko -->
@@ -40,23 +45,41 @@
 			<!-- /ko -->
 
 			<!-- ko foreach: viewModel.groupedFields -->
-				<!-- ko if: $data.constructor.name == 'fieldModel' -->
+				<!-- ko if: $data.id != undefined -->
 				<td>
-					<span data-bind="text: $parent[$data.name][$data.report]"></span>
+					<!-- ko if: $data.report().name != currentView().goal.field() || !currentView().goal.label() -->
+						<span data-bind="text: $parent[$data.name][$data.report().report]"></span>
+					<!-- /ko -->
+					<!-- ko if: $data.report().name == currentView().goal.field() && currentView().goal.label() -->
+						<span data-bind="text: ( $parent[currentView().goal.field()][ currentView().goal().field().report] + '/' + currentView().goal().value() + ' (' + Math.round($parent[currentView().goal.field()][ currentView().goal().field().report] / currentView().goal().value() * 1000 ) / 10 ) + '%)' "></span>
+					<!-- /ko -->
 				</td>
 				<!-- /ko -->
 
 				<!-- ko if: $data.report == 'all' && pivot() -->
 				<td>
 						<!-- ko if: $parent.rows[viewModel.groupedFields().indexOf($data)-1] != undefined && currentView().reportOn() != undefined -->
-						<span data-bind="text: $parent.rows[viewModel.groupedFields().indexOf($data)-1][currentView().reportOn().name][currentView().reportOn().report] "></span>
+							
+						<!-- ko if: currentView().reportOn().label != 'goal' -->
+							<span data-bind="text: $parent.rows[viewModel.groupedFields().indexOf($data)-1][currentView().reportOn().name][currentView().reportOn().report] "></span>
+						<!-- /ko -->
+						<!-- ko if: currentView().reportOn().label == 'goal' -->
+							<span data-bind="text: ( $parent.rows[viewModel.groupedFields().indexOf($data)-1][currentView().reportOn().name][currentView().reportOn().report] + '/' + currentView().goal().value() + ' (' + Math.round($parent.rows[viewModel.groupedFields().indexOf($data)-1][currentView().reportOn().name][currentView().reportOn().report] / currentView().goal().value() * 1000 ) / 10 ) + '%)' "></span>
+						<!-- /ko -->
+						
 						<!-- /ko -->
 				</td>
 				<!-- /ko -->
 				
 				<!-- ko if: $data.name == 'Totals' && currentView().reportOn() != undefined -->
 				<td>
-					<span data-bind="text: $parent[currentView().reportOn().name][currentView().reportOn().report], visible: iiii = $parents "></span>
+					<!-- ko if: currentView().reportOn().label != 'goal' -->
+						<span data-bind="text: $parent[currentView().reportOn().name][currentView().reportOn().report] "></span>
+					<!-- /ko -->
+					<!-- ko if: currentView().reportOn().label == 'goal' -->
+						<span data-bind="text: ( $parent[currentView().reportOn().name][currentView().reportOn().report] + '/' + currentView().goal().value() + ' (' + Math.round($parent[currentView().reportOn().name][currentView().reportOn().report] / currentView().goal().value() * 1000 ) / 10 ) + '%)' "></span>
+					<!-- /ko -->
+					
 				</td>
 				<!-- /ko -->
 				
