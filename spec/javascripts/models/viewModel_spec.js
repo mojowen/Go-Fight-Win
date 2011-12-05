@@ -36,9 +36,9 @@ describe("vieModel can be initalized ", function() {
 	var old_flat = ko.toJS(view);
 	view.name('different');
 	var new_flat = ko.toJS(view);
-	view.dirtyFlag.reset(old_flat);
+	view.dirtyFlag.reset( new viewModel(old_flat));
 	expect(view.dirtyFlag.isDirty()).toBeTruthy();
-	view.dirtyFlag.reset(new_flat);
+	view.dirtyFlag.reset( new viewModel(new_flat));
 	expect(view.dirtyFlag.isDirty()).toBeFalsy();
   });
 

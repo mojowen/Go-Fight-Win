@@ -16,7 +16,7 @@ viewModel.graph = ko.dependentObservable(
 				]
 			}
 		}
-		if( currentView().groups().length > 0 ) {
+		if( currentView().groups().length > 0 && currentView().groups.on() ) {
 			var max = 0, report = currentView().reportOn(), bars = [], uniques = [], key = false;
 			var goal =  currentView().reportOn() != undefined && currentView().reportOn().label == 'goal'
 

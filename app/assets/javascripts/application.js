@@ -12,18 +12,13 @@
 //= require_tree ./dependents
 //= require_tree ./bindings
 console.log('--------------------------------');
-var stop = ko.observable(true);
-var pivot =  ko.observable(false);
 window.onload=function() {
 	if( typeof _list != 'undefined' ) {
-		var t = new Date();
+var t = new Date();
 		load();
 		ko.applyBindings(dataModel);
 		setBindings();
-		var d = new Date();
-		console.log('load: '+(d-t));
-		currentView().goal().field(viewModel.pivotedRows()[2]);
-		currentView().goal().value(20);
-		draw();
+var d = new Date();
+console.log('load: '+(d-t));
 	}
 }

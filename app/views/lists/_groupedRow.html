@@ -2,7 +2,7 @@
 
 	<!-- ko if: typeof $data != 'undefined' -->
 
-	<!-- ko if: $data.rows.length !=  0 && !pivot() -->
+	<!-- ko if: $data.rows.length !=  0 && !currentView().groups.pivot() -->
 			<tr>
 				<!-- ko if: typeof $data._value != 'undefined' -->
 				<td data-bind="attr: {'rowspan': $data.rows.filter(function(elem) { return elem != undefined; }).length + 1 } ">
@@ -35,7 +35,7 @@
 			</tr>
 	<!-- /ko -->
 
-	<!-- ko if: $data.rows.length ==  0 || pivot() -->
+	<!-- ko if: $data.rows.length ==  0 || currentView().groups.pivot() -->
 		<tr>
 
 			<!-- ko if: typeof $data._value != 'undefined' -->
@@ -56,7 +56,7 @@
 				</td>
 				<!-- /ko -->
 
-				<!-- ko if: $data.report == 'all' && pivot() -->
+				<!-- ko if: $data.report == 'all' && currentView().groups.pivot() -->
 				<td>
 						<!-- ko if: $parent.rows[viewModel.groupedFields().indexOf($data)-1] != undefined && currentView().reportOn() != undefined -->
 							

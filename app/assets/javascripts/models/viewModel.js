@@ -4,50 +4,7 @@ function viewModel( data ) {
 	if( data.View || data.view ) { var view = data.View || data.view; }
 	else { var view = data }
 
-//  For the pivot talbe and groups
-	this.reportOn = ko.observable();
-	this.goal = ko.observable({field: ko.observable(''), value: ko.observable('')});
-
-	this.goal.label = ko.dependentObservable({ 
-		read: function() {
-			if( currentView().goal().field() == undefined || currentView().goal().value() == '' || currentView().goal().value() <= 0 || isNaN(parseInt(currentView().goal().value())) ) {
-				return false;
-			} else {
-				return currentView().goal().field().label+' '+currentView().goal().value()
-			}
-		},
-		deferEvaluation: true 
-	}, 
-	this);
-	this.goal.field = ko.dependentObservable({ 
-		read: function() {
-			if( currentView().goal().field() == undefined ) {
-				return '';
-			} else {
-				return currentView().goal().field().name;
-			}
-		},
-	deferEvaluation: true 
-	}, 
-	this);
-	this.pivotValues = ko.dependentObservable({ 
-		read: function() {
-			if( currentView().goal.label() ) { 
-				var select = ko.toJS(currentView().goal().field);
-				select.label = 'goal'
-				select.long_label = select.label+': '+select.name
-				return [ select ].concat(viewModel.pivotedRows());
-			} else { 
-				return viewModel.pivotedRows()
-			} 
-		},
-	deferEvaluation: true 
-	}, 
-	this);
-	
-	
-
-// Paging and Visible
+	// Paging and Visible
 	var visible = parseInt(data.visible) || 30, paged = parseInt(data.paged) || 0;
 	if( isNaN(paged) ) { paged = 0; }
 	if( isNaN(visible) || visible > 200 ) { visible = 30; }
@@ -56,7 +13,7 @@ function viewModel( data ) {
 
 	this.page = function(loc) {
 		var loc = parseInt(loc);
-		if( isNaN(loc) ) { this.paged(0); return false; }		
+		if( isNaN(loc) ) { this.paged(0); return false; }
 		if( loc < 0 ) { 
 			this.paged(0);
 			return false;
@@ -103,9 +60,7 @@ function viewModel( data ) {
 		} else if ( typeof data.filters == 'string' ) {
 			this.filters.push( new filterModel( view.filters ) );
 		}
-	} else {
-		// this.addFilter();
-	}
+	} 
 
 // Grouping
 	this.groups = ko.observableArray([]);
@@ -126,7 +81,6 @@ function viewModel( data ) {
 	} 
 	this.availableGroupsRender = function(field) {
 		var returnme = [];
-		
 		if( field() == undefined || field() == '' ) {
 			returnme = viewModel.availableGroups();
 		} else {
@@ -134,6 +88,10 @@ function viewModel( data ) {
 		}
 		return returnme.sort();
 	}
+	var pivot = typeof view.pivot == 'undefined' ? false : view.pivot;
+	this.groups.pivot = ko.observable(pivot);
+	var groups_on = typeof view.groups_on == 'undefined' ? false : view.groups_on;
+	this.groups.on = ko.observable(groups_on);
 
 
 // Sorting
@@ -156,7 +114,7 @@ function viewModel( data ) {
 						b_val = b[ sort_field ]() == undefined ? '' : b[ sort_field ]();
 						a_val = typeof a_val == 'string' ? a_val.toLowerCase() : a_val;
 						b_val = typeof b_val == 'string' ? b_val.toLowerCase() : b_val;
-							
+
 						if( sort_field == 'key' ){
 							if( a_val == 'new' && b['key']() == 'new' ) { 
 								a_val = a['_tempkey'], b_val = b['_tempkey']; 
@@ -192,8 +150,6 @@ function viewModel( data ) {
 				this.addSort( view.sorts[i] );
 			};
 		}
-	} else {
-		// this.addSort('');
 	}
 
 // Naming
@@ -206,26 +162,83 @@ function viewModel( data ) {
 	}
 	this.to_param = function () {
 		if( this.id != 'new' ) {
-			return view.name.replace(/ /g,'_').toLowerCase();
+			return this.name().replace(/ /g,'_').toLowerCase();
 		} else {
 			return ''
 		}
 	}
 	this.slug = view.slug
 
+//  For the pivot table and groups
+	this.reportOn = ko.observable(view.report_on);
+// Goals
+	this.goal = ko.observable({field: ko.observable(''), value: ko.observable('')});
+	if( typeof view.goal != 'undefined' ) {
+		if(  typeof view.goal.value != 'undefined' && !isNaN(parseInt(view.goal.value)) ) {
+			this.goal().value(view.goal.value);
+		}
+		if(  typeof view.goal.field != 'undefined' ) {
+			this.goal().field(view.goal.field);
+		}
+	}
+
+
+	this.goal.label = ko.dependentObservable({ 
+		read: function() {
+			if( currentView().goal().field() == undefined || currentView().goal().value() == '' || currentView().goal().value() <= 0 || isNaN(parseInt(currentView().goal().value())) ) {
+				return false;
+			} else {
+				return currentView().goal().field().label+' '+currentView().goal().value()
+			}
+		},
+		deferEvaluation: true 
+	}, 
+	this);
+	this.goal.field = ko.dependentObservable({ 
+		read: function() {
+			if( currentView().goal().field() == undefined ) {
+				return '';
+			} else {
+				return currentView().goal().field().name;
+			}
+		},
+	deferEvaluation: true 
+	}, 
+	this);
+	this.pivotValues = ko.dependentObservable({ 
+		read: function() {
+			if( currentView().goal.label() ) { 
+				var select = ko.toJS(currentView().goal().field);
+				select.label = 'goal'
+				select.long_label = select.label+': '+select.name
+				return [ select ].concat(viewModel.pivotedRows());
+			} else { 
+				return viewModel.pivotedRows()
+			} 
+		},
+	deferEvaluation: true 
+	}, 
+	this);
 
 // Flatten and Dirty Flag
 	this._flatten = function(return_type) {
 		var returnable = new Object;
-		returnable.name = this.name;
-		returnable.id = this.id;
-		returnable.visible = this.visible;
-		returnable.paged = this.paged;
-		returnable.goal = this.goal;
-		returnable.reportOn = this.reportOn;
-		
+		returnable.name = this.name,
+			returnable.id = this.id,
+			returnable.visible = this.visible,
+			returnable.paged = this.paged,
+			returnable.report_on = this.reportOn,
+			returnable.pivot = this.groups.pivot,
+			returnable.groups_on = this.groups.on;
+
+
 		if( typeof this._destroy != 'undefined' ) { returnable._destroy = true; }
 
+		if( typeof this.goal == 'function' ) { 
+			returnable.goal = this.goal().value() == '' && ( this.goal().field() == '' ||  this.goal().field() == undefined ) ? '' : this.goal();
+		} else { 
+			returnable.goal = this.goal.value == '' && ( this.goal.field == '' ||  this.goal.field == undefined ) ? '' : this.goal;
+		}
 		if( typeof this.groups == 'function' ) { returnable.groups = this.groups().filter(function(elem){ return elem.field() != '' && elem.field() != undefined }); } else { returnable.groups = this.groups.filter(function(elem){ return elem.field != '' }); }
 		if( typeof this.sorts == 'function' ) { returnable.sorts = this.sorts().filter(function(elem){ return elem.field() != '' && elem.field() != undefined }); } else { returnable.sorts = this.sorts.filter(function(elem){ return elem.field != '' }); }
 		if( typeof this.filters == 'function' ){returnable.filters = this.filters().filter(function(elem){ return elem.field() != '' && elem.field() != undefined });} else { returnable.filters = this.filters.filter(function(elem){ return elem.field != '' }); }

@@ -1,5 +1,6 @@
 <input data-bind="
-	value: currentView().goal().value
+	value: currentView().goal().value,
+	valueUpdate: 'afterkeydown'
 	">
 <select data-bind="
 	value: currentView().goal().field,
@@ -13,9 +14,9 @@
 	options: currentView().pivotValues(),
 	optionsText: 'long_label',
 	optionsCaption: '-- select your report',
-	visible: pivot "></select>
+	visible: currentView().groups.pivot "></select>
 
-<table border="0" cellspacing="5" cellpadding="5" >
+<table border="0" cellspacing="5" cellpadding="5" data-bind="visible: currentView().groups.on">
 	<thead>
 		<tr>
 			<!-- ko foreach: viewModel.groupedFields -->
@@ -47,7 +48,7 @@
 		<tr>
 			<!-- ko foreach: viewModel.groupedFields -->
 				<td>
-					<!-- ko if: $data.report != '_val' && !pivot() && $data.report() != undefined -->
+					<!-- ko if: $data.report != '_val' && !currentView().groups.pivot && $data.report() != undefined -->
 						<!-- ko if: $data.report().name != currentView().goal.field() || !currentView().goal.label() -->
 							<span data-bind="text: viewModel.groupedRows()[$data.name][$data.report().report]"></span>
 						<!-- /ko -->
@@ -55,7 +56,7 @@
 							<span data-bind="text: ( viewModel.groupedRows()[currentView().goal.field()][ currentView().goal().field().report] + '/' + currentView().goal().value() + ' (' + Math.round(viewModel.groupedRows()[currentView().goal.field()][ currentView().goal().field().report] / currentView().goal().value() * 1000 ) / 10 ) + '%)' "></span>
 						<!-- /ko -->
 					<!-- /ko -->
-					<!-- ko if: $data.report == 'all' && pivot() && currentView().reportOn() != undefined -->
+					<!-- ko if: $data.report == 'all' && currentView().groups.pivot() && currentView().reportOn() != undefined -->
 
 						<!-- ko if: currentView().reportOn().label != 'goal' -->
 							<span data-bind="text: viewModel.groupedRows()._uniques[1][viewModel.groupedFields().indexOf($data)-1][currentView().reportOn().name][currentView().reportOn().report]"></span>

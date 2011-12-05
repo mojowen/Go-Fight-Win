@@ -121,22 +121,6 @@ describe("dataModel set ups", function() {
 			rows()[3][ field_2 ]('1');
 			rows()[1][ field_2 ]('5');
 		});
-		it("changes sort when changing views", function() {
-			view = new viewModel( {sorts: [{field: field_1, direction: 'DESC'}] });
-			nother_view = new viewModel({sorts: [{field: field_2, direction: 'DESC'}] });
-			setCurrentView( view );
-			expect( viewModel.renderingRows()[0][field_1]() ).toEqual('z');
-			setCurrentView(nother_view);
-			expect( viewModel.renderingRows()[0][field_1]() ).toEqual('b');
-		});
-		it("changes filters when changing views", function() {
-			view = new viewModel( {filters: field_1+' is b' });
-			nother_view = new viewModel({filters: [field_2+' greater than 1',field_2+' is less than 4'] });
-			setCurrentView( view );
-			expect( viewModel.renderingRows()[0][field_1]() ).toEqual('b');
-			setCurrentView(nother_view);
-			expect( viewModel.renderingRows()[0][field_1]() ).toEqual('z');
-		});		
 	  });
 	});
 	describe("adding rows", function() {

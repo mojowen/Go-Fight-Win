@@ -1,7 +1,7 @@
 viewModel.groupedRows = ko.dependentObservable(
 	{ read: function() {
 		var t = new Date();
-		if( stop()  ) {
+		if( currentView().groups.on()  ) {
 			var results = grouper(ko.toJS(viewModel.filteredRows));
 		} else {
 			var results = {rows:[]};

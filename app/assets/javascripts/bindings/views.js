@@ -3,7 +3,7 @@ function views_template() {
 		var $this = $(this), view = ko.dataFor(this);
 		if( view != currentView() ) {
 			setCurrentView(view);
-			window.history.pushState('', "Title", _url+'/'+view.to_param());
+			try { window.history.pushState('', "Title", _url+'/'+view.to_param()); } catch(e) { }
 		}
 		e.preventDefault();
 	});
@@ -16,6 +16,7 @@ function views_template() {
 	$('.remove_view').live('click',function() { 
 		var view = ko.dataFor(this);
 		views.destroy(view);
+		try { window.history.pushState('', "Title", _url); } catch(e) { }
 	});
 
 

@@ -20,16 +20,19 @@ function appDataModel() {
 			_fields = null;
 		} 
 		if( typeof _rows != 'undefined' ) { 
+			var temp_rows = [];
 			for (var i=0; i < _rows.length; i++) {
-				rows.push( new rowModel(_rows[i]) ); 
+				temp_rows.push( new rowModel(_rows[i]) ); 
 			};
+			rows(temp_rows);
 			_rows = null;
+			temp_rows = null;
 		}
 		if( typeof _views != 'undefined' ) { 
 			for (var i=0; i < _views.length; i++) {
 				views.push( new viewModel(_views[i]) ); 
 			};
-			_views = null;
+			// _views = null;
 		}
 		if( typeof _currentView == 'undefined' ) { 
 			setCurrentView( new viewModel() );
@@ -44,8 +47,8 @@ function appDataModel() {
 	setCurrentView = function(newView) {
 		if( newView.constructor.name == 'viewModel' ) {
 			currentView(newView);
-			rows.valueHasMutated();
-			currentView().sortRows();
+			// rows.valueHasMutated();
+			// currentView().sortRows();
 		}
 	}
 	addView = function(newView) {

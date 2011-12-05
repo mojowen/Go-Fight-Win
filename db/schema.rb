@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111117050449) do
+ActiveRecord::Schema.define(:version => 20111205203933) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -133,6 +133,10 @@ ActiveRecord::Schema.define(:version => 20111117050449) do
     t.datetime "updated_at"
     t.integer  "visible",     :default => 50
     t.integer  "paged",       :default => 0
+    t.string   "goal"
+    t.boolean  "groups_on",   :default => false
+    t.boolean  "pivot",       :default => false
+    t.string   "report_on"
   end
 
   add_index "views", ["list_id", "name"], :name => "index_views_on_list_id_and_name", :unique => true

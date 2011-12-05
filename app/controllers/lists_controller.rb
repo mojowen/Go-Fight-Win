@@ -11,7 +11,7 @@ class ListsController < ApplicationController
       @list = List.find_by_org_and_slug(org, params[:list_name], :include => @to_include )
     end
     
-    @current_view = @list.views.index{|v| v.name.to_param == params[:view_name] || v.slug == params[:view_slug] }
+    @current_view = @list.views.index{|v| v.to_param == params[:view_name] || v.slug == params[:view_slug] }
     @fields = @list.fields
     @query = @list.rows()
     @rows = @query[:rows]
@@ -76,7 +76,7 @@ class ListsController < ApplicationController
                 @view = View.find_by_id_and_list_id(v['id'], @list.id)
                 success = @view.update_attributes(v)
               end
-              @views_results.push( {:id => @view.id, :success => success, :name => @view.name} )
+              @views_results.push( {:id => @view.id, :success => success, :name => @view.name, :slug => @view.slug, :data => @view } )
             end
           rescue
             @error = {}

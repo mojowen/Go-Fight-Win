@@ -9,6 +9,7 @@ beforeEach(function() {
 	factoryfields =[]
 	factoryrows =[]
 	saving = ko.observable(true);
+	currentView().groups.on(true);
 });
 
 function bl (argument) {

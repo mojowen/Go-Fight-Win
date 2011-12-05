@@ -327,16 +327,15 @@ describe ListsController do
    
    it 'saves a new view' do
      @views = '[
-      {"name":"a view","id":"new","visible":50,"paged":0,"groups":[],"sorts":[],"filters":[]}
+      {"name":"a view","id":"new","visible":50,"paged":0,"report_on":{},"pivot":false,"groups_on":false,"goal":{"value":"50"},"groups":[],"sorts":[],"filters":[]}
      ]'
      post 'update',  :org_name => @org.to_param, :list_name => @list.to_param, :views => @views, :format => :json
-          
      View.last.name.should == 'a view'
      
    end
    it 'updates an existing view' do
      @views = '[
-      {"name":"a view","id":"'+@view.id.to_s+'","visible":50,"paged":0,"groups":[],"sorts":[],"filters":[]}
+      {"name":"a view","id":"'+@view.id.to_s+'","visible":50,"paged":0,"report_on":{},"pivot":false,"groups_on":false,"goal":{"value":"50"},"groups":[],"sorts":[],"filters":[]}
      ]'
      post 'update',  :org_name => @org.to_param, :list_name => @list.to_param, :views => @views, :format => :json
      
@@ -344,7 +343,7 @@ describe ListsController do
    end
    it 'deletes a view' do
      @views = '[
-     {"name":"a view","id":"'+@view.id.to_s+'","visible":50,"paged":0,"groups":[],"sorts":[],"filters":[],"_destroy":"true"}
+     {"name":"a view","id":"'+@view.id.to_s+'","visible":50,"paged":0,"report_on":{},"pivot":false,"groups_on":false,"goal":{"value":"50"},"groups":[],"sorts":[],"filters":[],"_destroy":"true"}
      ]'
      
      post 'update',  :org_name => @org.to_param, :list_name => @list.to_param, :views => @views, :format => :json
@@ -366,9 +365,9 @@ describe ListsController do
       @view2.save
       
       @views = '[
-      {"name":"what view","id":"'+@view.id.to_s+'","visible":50,"paged":0,"groups":[],"sorts":[],"filters":[],"_destroy":"true"},
-      {"name":"diff name view","id":"'+@view2.id.to_s+'","visible":50,"paged":0,"groups":[],"sorts":[],"filters":[]},
-      {"name":"a view","id":"new","visible":50,"paged":0,"groups":[],"sorts":[],"filters":[]}
+      {"name":"what view","id":"'+@view.id.to_s+'","visible":50,"paged":0,"report_on":{},"pivot":false,"groups_on":false,"goal":{"value":"50"},"groups":[],"sorts":[],"filters":[],"_destroy":"true"},
+      {"name":"diff name view","id":"'+@view2.id.to_s+'","visible":50,"paged":0,"report_on":{},"pivot":false,"groups_on":false,"goal":{"value":"50"},"groups":[],"sorts":[],"filters":[]},
+      {"name":"a view","id":"new","visible":50,"paged":0,"report_on":{},"pivot":false,"groups_on":false,"goal":{"value":"50"},"groups":[],"sorts":[],"filters":[]}
       ]'
      
       post 'update',  :org_name => @org.to_param, :list_name => @list.to_param, :views => @views, :rows => @rows, :format => :json
@@ -406,8 +405,8 @@ describe ListsController do
       {"key":"new","list":"'+@list.name+'","_tempkey":"7"}
       ]'
       @views = '[
-        {"name":"diff name view","id":"new","visible":50,"paged":0,"groups":[],"sorts":[],"filters":[]},
-        {"name":"what view","id":"bad","visible":50,"paged":0,"groups":[],"sorts":[],"filters":[],"_destroy":"true"}
+        {"name":"diff name view","id":"new","visible":50,"paged":0,"report_on":{},"pivot":false,"groups_on":false,"goal":{"value":"50"},"groups":[],"sorts":[],"filters":[]},
+        {"name":"what view","id":"bad","visible":50,"paged":0,"report_on":{},"pivot":false,"groups_on":false,"goal":{"value":"50"},"groups":[],"sorts":[],"filters":[],"_destroy":"true"}
       ]'
       post 'update',  :org_name => @org.to_param, :list_name => @list.to_param, :views => @views, :rows => @rows, :format => :json
       @returned = JSON.parse(response.body)

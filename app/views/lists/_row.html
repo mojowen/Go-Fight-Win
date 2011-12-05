@@ -6,7 +6,7 @@
 			<tr>
 				<!-- ko foreach: fields -->
 				<td>
-					<textarea data-bind="value: $parent[$data.name]"></textarea>
+					<textarea data-bind="value: $parent[$data.name], valueUpdate: 'afterkeydown'"></textarea>
 				</td>
 				<!-- /ko -->
 				<td data-bind="template: {name: $data._menu}">

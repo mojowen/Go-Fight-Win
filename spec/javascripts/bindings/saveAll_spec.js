@@ -78,7 +78,8 @@ describe("Mocking Ajax Calls", function() {
 		var new_view = new viewModel({id: 'new', name: 'new name'});
 		addView(new_view);
 		saveAll();
-		var returned = '{"rows": [], "views":[{"id":"69","name":"new name","slug":"tstslug" }] }';
+		flat_view = new_view._flatten();
+		var returned = '{"rows": [], "views":[{"id":"69","name":"new name","slug":"tstslug", "data":'+ko.toJSON(flat_view)+' }] }';
 		$.post.mostRecentCall.args[2](JSON.parse(returned));
 		expect(dataModel.savingViews().length).toEqual(0);
 		expect(views()[0].slug).toEqual("tstslug");

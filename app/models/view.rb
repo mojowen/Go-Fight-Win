@@ -17,5 +17,7 @@ class View < ActiveRecord::Base
   serialize :groups
   serialize :filters
   serialize :columns
+  serialize :goal
+  serialize :report_on
   
 end

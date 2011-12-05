@@ -10,9 +10,8 @@ function saveAll (args) {
 			"rows="+ko.toJSON(_rows)+"&views="+ko.toJSON(_views),
 			function(data) {
 				var t = new Date();
-				dataModel.flatRows = rows().map( function(elem) { return {key: elem.key() }; });
+				dataModel.flatRows = rows().map( function(elem) { return {key: elem.key(), _tempkey: elem._tempkey }; });
 				var response = data;
-				console.log(response);
 				var _rows = response.rows || [];
 				var _views = response.views || [];
 				if( typeof _rows.success != 'undefined'  ) {
@@ -37,26 +36,28 @@ function saveAll (args) {
 							row.dirtyFlag.reset( flat );
 						}
 					};
-
 					for (var i=0; i < _views.length; i++) {
 						var view = views.find( _views[i].name );
-						console.log(_views[i].name);
 						if( typeof _views[i]['_destroy'] != 'undefined' ) {
 							views.remove( view );
 						} else {
+							var flat = new viewModel(_views[i].data);
+							view.dirtyFlag.reset( flat );
 							view.id = _views[i].id;
 							view.slug = _views[i].slug;
-							var flat = ko.toJS(view);
-							view.dirtyFlag.reset( flat );
+						}
+						if( view == currentView() ) {
+							window.history.pushState('', "Title", _url+'/'+view.to_param());
 						}
 					};
-
-					// needs to check if currentView = new view and sets the URL if so
+					// needs to check if currentView = new view
+					// + sets the URL if saving a new view
+					// + change the url if the name has changed
 				}
 				saving(true);
 				if( !args['once'] ) { saveAll(); }
-					var d = new Date();
-					console.log('saving: '+(d-t));
+var d = new Date();
+console.log('saving: '+(d-t));
 			}
 		);
 	}
