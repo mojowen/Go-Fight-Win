@@ -22,5 +22,8 @@ window.onload=function() {
 		setBindings();
 		var d = new Date();
 		console.log('load: '+(d-t));
+		currentView().goal().field(viewModel.pivotedRows()[2]);
+		currentView().goal().value(20);
+		draw();
 	}
 }

@@ -4,4 +4,5 @@ function setBindings (argument) {
 	views_template();
 	keyboardShortcuts();
 	groups_template();
+	graph_template();
 }

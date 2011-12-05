@@ -16,7 +16,7 @@ function saveAll (args) {
 				var _rows = response.rows || [];
 				var _views = response.views || [];
 				if( typeof _rows.success != 'undefined'  ) {
-					// Some sort of notication for failed save
+					// Some sort of notication for failed save is needed
 				} else {
 					for (var i=0; i < _rows.length; i++) {
 						if( typeof _rows[i]['_destroy'] != 'undefined' ) {

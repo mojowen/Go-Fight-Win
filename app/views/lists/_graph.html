@@ -1,0 +1,39 @@
+<canvas id="canvas" width="700" height="400" data-bind="visible: viewModel.graph()"></canvas><br />
+<select data-bind="
+	value: currentView().reportOn,
+	options: currentView().pivotValues(),
+	optionsText: 'long_label',
+	optionsCaption: '-- select what to graph',
+	visible: viewModel.graph.need_select() "></select>
+
+<span class='save_graph' data-bind="visible: viewModel.graph()">save graph</span>
+
+<!-- 
+	some things to keep in mind:
+		- dynamic width (can be a lot of bars, could just be one)
+		- what we do we graph if no grouping / no goals
+		- what's the y-scale if only grouped once (maybe force to select?)
+
+
+situations where we're going to use this:
+
+ [x] a goal has been set, no grouping
+	> know the max (either the goal or the value + 5%, whatever is greater)
+	( will need to do some sort of line drawing for the goal, regardless of the scale)
+
+	> know the # of things... it's just one
+
+	- Need to put these into a dependent variable which uses a switch condition or somethin
+
+ [x] there's grouping, no goal has been set
+
+ [x] a goal has been set and there's grouping
+
+ [ ] double grouping!!!!!
+
+ [ ] a pivot on a goal
+ [ ] a pivot not on a goal
+
+ [x] cumulative graphing of a goal
+
+ -->
