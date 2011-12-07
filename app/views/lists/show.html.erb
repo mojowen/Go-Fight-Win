@@ -1,15 +1,31 @@
-<h2 id="thing"><%= @list.name %></h2>
+<% content_for :org do %>
+	<%= link_to @list.org.name, org_path(@list.org.to_param) %>
+<% end %>
+<% content_for :page_title do %>
+	<%= @list.name %>
+<% end %>
+<% content_for :doc_title do %>
+	<% unless @current_view.nil? %>
+		<%= @list.views[@current_view].name.capitalize+' of ' %>
+	<% end %>
+	<%= @list.name %>
+<% end %>
+<% content_for :extra do %>
+	<%= render :partial => 'views' %>
+<% end %>
 
-<%= render :partial => 'row' %>
-<%= render :partial => 'groupedRow' %>
 
-<%= render :partial => 'views' %>
+	<div id="data" data-bind="visible: !currentView().groups.on()" >
+		<%= render :partial => 'table' %>
+		<%= render :partial => 'newRow' %>
+	</div>
+	<div id="analyze" data-bind="visible: currentView().groups.on()">
+		<%= render :partial => 'row' %>
+		<%= render :partial => 'groupedRow' %>
 
-<%= render :partial => 'grouped' %>
-<%= render :partial => 'graph' %>
-<%= render :partial => 'table' %>
-
-<%= render :partial => 'newRow' %>
+		<%= render :partial => 'grouped' %>
+		<%= render :partial => 'graph' %>	
+	</div>
 
 <script type="text/javascript">
 	var _fields = <%= raw @fields.to_json %>;
@@ -22,3 +38,8 @@
 	var _currentView = <%= raw @current_view.to_json %>;
 	<% end %>
 </script>
+
+<% content_for :footer do %>
+	<div id="switch" data-bind="text: viewModel.switchText">
+	</div>
+<% end %>

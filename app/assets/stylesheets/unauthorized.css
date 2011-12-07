@@ -1,0 +1,25 @@
+#unauthorized {
+	margin: 160px auto;
+	width: 500px;
+	text-align: left;
+	border: 2px solid #226;
+	box-shadow: 1px 1px 10px #226;
+}
+
+#unauthorized h1 {
+	background-color: #622;
+	color: white;
+	padding: 4px 10px;
+	margin: 0;
+	cursor: default;
+	text-shadow: 0;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+}
+
+#unauthorized div#content {
+	padding: 10px;
+}

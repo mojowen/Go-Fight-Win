@@ -21,6 +21,18 @@ class MembershipsController < ApplicationController
     
     redirect_to org_path( @org.to_param), :notice =>  @msg
   end
+  
+  def add
+    @org = Org.find( params[:org_id] )
+    authorize! :manage, @org
+    @membership = @org.memberships.new(:approved => true)
+    if @membership.save
+      @msg = 'success!'
+    else
+      @msg = 'faail'
+    end
+    redirect_to org_path(@org.to_param), :notice => @msg
+  end
 
   def destroy
     @org = Org.find( params[:org_id] )

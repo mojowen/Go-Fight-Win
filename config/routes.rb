@@ -20,6 +20,7 @@ Gfw::Application.routes.draw do
   # Membership management routes
   match '/:org_id/~/:membership/destroy' => 'memberships#destroy', :constraints => lambda {|req| /^[-+]?[0-9]+$/ === req.params[:org_id]}, :as => 'destroy_membership'
   match '/:org_id/~/:membership/update' => 'memberships#update', :constraints => lambda {|req| /^[-+]?[0-9]+$/ === req.params[:org_id]}, :as => 'update_membership'
+  match '/:org_id/~/invite/create' => 'memberships#add', :constraints => lambda {|req| /^[-+]?[0-9]+$/ === req.params[:org_id]}, :as => 'add_membership'
   match '/:org_id/~/invite/:invite_token' => 'memberships#invite', :constraints => lambda {|req| /^[-+]?[0-9]+$/ === req.params[:org_id]}, :as => 'invite_membership'
 
   #List management routes

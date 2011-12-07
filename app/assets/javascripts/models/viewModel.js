@@ -170,6 +170,7 @@ function viewModel( data ) {
 	this.slug = view.slug
 
 //  For the pivot table and groups
+	view.report_on = view.report_on == null ? undefined : view.report_on;
 	this.reportOn = ko.observable(view.report_on);
 // Goals
 	this.goal = ko.observable({field: ko.observable(''), value: ko.observable('')});
@@ -207,14 +208,19 @@ function viewModel( data ) {
 	this);
 	this.pivotValues = ko.dependentObservable({ 
 		read: function() {
-			if( currentView().goal.label() ) { 
-				var select = ko.toJS(currentView().goal().field);
-				select.label = 'goal'
-				select.long_label = select.label+': '+select.name
-				return [ select ].concat(viewModel.pivotedRows());
-			} else { 
-				return viewModel.pivotedRows()
-			} 
+			// if( currentView().goal.label() ) { 
+			// 	var select = ko.toJS(currentView().goal().field);
+			// 	select.label = 'goal'
+			// 	select.long_label = select.label+': '+select.name
+			// 	return [ select ].concat(viewModel.pivotedRows());
+			// } else { 
+				
+				var options = viewModel.pivotedRows();
+
+				if( currentView().reportOn() != undefined ) { options.push(currentView().reportOn());}
+				
+				return options;
+			// } 
 		},
 	deferEvaluation: true 
 	}, 
@@ -230,7 +236,6 @@ function viewModel( data ) {
 			returnable.report_on = this.reportOn,
 			returnable.pivot = this.groups.pivot,
 			returnable.groups_on = this.groups.on;
-
 
 		if( typeof this._destroy != 'undefined' ) { returnable._destroy = true; }
 

@@ -39,12 +39,14 @@ function rowModel(data) {
 		this._tempkey = rows().filter( function(el) { return typeof el._tempkey != 'undefined' }).length + newRows().length;
 	}
 
-	if ( typeof data._menu != 'undefined' ) {
-		this._menu = data._menu;
-	} else {
-		this._menu = 'rowMenu';
-	}
-
+	this._menu = ko.dependentObservable(
+		{ read: function() {
+			return this.key() == 'new' ? 'newRowMenu' : 'rowMenu';
+		}, 
+		deferEvaluation: true,
+	},
+	this);
+	
 	return this;
 }
 

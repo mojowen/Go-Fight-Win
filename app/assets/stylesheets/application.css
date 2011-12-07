@@ -5,5 +5,3 @@
  *= require_self
  *= require_tree . 
 */
-
-ko.applyBindings(new viewModel());

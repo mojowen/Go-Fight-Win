@@ -9,7 +9,7 @@
 					<textarea data-bind="value: $parent[$data.name], valueUpdate: 'afterkeydown'"></textarea>
 				</td>
 				<!-- /ko -->
-				<td data-bind="template: {name: $data._menu}">
+				<td data-bind="template: {name: $data._menu()}">
 				</td>
 			</tr>
 		<!-- /ko -->
@@ -32,16 +32,12 @@
 </script>
 
 <script type="text/html" id="newRowMenu">
-	<span class="add">
-		Add
-	</span>
-	<span class="remove">
-		Discard
-	</span>
+	<span class="add clickable">Add</span>
+	<span class="remove clickable">Discard</span>
 </script>
 
 <script type="text/html" id="rowMenu">
-	<span class="remove">
+	<span class="remove clickable">
 		Delete
 	</span>
 </script>

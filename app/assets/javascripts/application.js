@@ -20,5 +20,8 @@ var t = new Date();
 		setBindings();
 var d = new Date();
 console.log('load: '+(d-t));
+	} else {
+		other_bindings();
 	}
+	good_other_bindings();
 }

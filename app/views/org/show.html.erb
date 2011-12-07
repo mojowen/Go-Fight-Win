@@ -1,6 +1,21 @@
-<h1>
+<% content_for :doc_title, @org.name %>
+
+<% content_for :page_title do %>
 	<%= @org.name %>
-</h1>
+<% end %>
+
+
+<% unless @org.lists.empty? %>
+	<h2>Lists</h2>
+	<ul>
+		<% @org.lists.each do |list| %>
+		<li>
+			<%= link_to list.name, list_path(@org.to_param, list.to_param) %>
+		</li>
+		<% end %>
+	</ul>
+<% end %>
+
 
 <% unless @org.users.empty? %>
 	<h2>Users</h2>
@@ -26,26 +41,18 @@
 		<% end %>
 	</ul>
 <% end %>
-<% unless @org.lists.empty? %>
-	<h2>Users</h2>
-	<ul>
-		<% @org.lists.each do |list| %>
-		<li>
-			<%= link_to list.name, list_path(@org.to_param, list.to_param) %>
-		</li>
-		<% end %>
-	</ul>
-<% end %>
 
-
+<% if can? :manage, @org %>
+<h2>Invites</h2>
 <% unless @invites.empty? %>
-	<h2>Active Invites</h2>
 	<ul>
 		<% @invites.each do |invite| %>
 			<li>
-				<%= invite_membership_path @org.id, invite.invite_token %>
+				<input value="<%= root_url+invite_membership_path(@org.id, invite.invite_token).slice(1,100) %>" class="url_select">
 			</li>
 		<% end %>
 	</ul>
+<% end %>
+<%= link_to '+Make', add_membership_path(@org.id) %>
 <% end %>
 

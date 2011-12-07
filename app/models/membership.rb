@@ -1,7 +1,7 @@
 class Membership < ActiveRecord::Base
   belongs_to :org
   belongs_to :user
-  validates_uniqueness_of :user_id, :scope => :org_id
+  validates_uniqueness_of :user_id, :scope => :org_id, :allow_nil => true
   
   before_create :make_invite_token
   

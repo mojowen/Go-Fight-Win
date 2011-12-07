@@ -1,0 +1,26 @@
+/** Layout **/
+
+body {
+	padding: 70px 10px 10px;
+}
+body.big_header {
+	padding-top: 90px;
+}
+#header {
+	position: fixed;
+	width: 100%;
+	padding: 10px 10px 4px;
+	top: 0;
+	left: 0;
+	z-index: 9;
+}
+
+#switch {
+	position: fixed;
+	bottom: 0;
+	right: 20px;
+}
+
+#content {
+	margin: 0 40px;
+}

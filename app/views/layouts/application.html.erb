@@ -1,23 +1,53 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Gfw</title>
+  <title><%=raw yield(:doc_title)+' | ' unless yield(:doc_title).empty? %>Go. Fight. Win.</title>
   <%= stylesheet_link_tag    "application" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
-<body>
-	<div id="user_nav">
-	  <% if user_signed_in? %>
-	    Signed in as <%= current_user.email %>
-	    <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
-	  <% else %>
-	    <%= link_to "Sign up", new_user_registration_path %> or <%= link_to "sign in", new_user_session_path %>
-	  <% end %>
-	</div>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-	<%= yield %>
 
+<body class="<%= 'big_header' unless yield(:extra).empty? %>">
+
+	<% if user_signed_in? %>
+	<div id="header">
+		<div id="user_nav">
+		    <p>
+			problem,
+			<%= link_to 'account', edit_user_registration_path %>,
+		    <%= link_to "sign out", destroy_user_session_path, :method => :delete %>
+			</p>
+		 </div>
+		
+		<%= link_to 'Go. Fight. Win.', root_url, :id => 'logo' %><span class="divider">&raquo;</span>
+		<%=raw '<h3 class="org">org: '+yield(:org)+'</h3>' unless yield(:org).empty? %>
+		
+		<% unless yield(:page_title).empty? %>
+			<h1 class="title"><%=h yield(:page_title) %></h1>
+		<% end %>
+		
+		<%=h yield(:extra) %>
+		<div id="msg">
+			<div id="container">
+				<span class="clear"><%= 'x' if !notice.nil? || !alert.nil? %></span>
+				<p class="notice"><%= notice %></p>
+	    		<p class="alert"><%= alert %></p>
+			</div>
+	    </div>
+	</div>
+	<% else %>
+	<div id="unauthorized">
+		<h1>Go. Fight. Win.</h1>
+	<% end %>
+		<div id="content">
+	<%= yield %>
+		</div>
+	<% if user_signed_in? %>
+	<% else %>
+		</div>
+	<% end %>
+	<div id="footer">
+		<%= yield(:footer) %>
+	</div>
 </body>
 </html>

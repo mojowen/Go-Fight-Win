@@ -1,7 +1,12 @@
-<h1>Org#index</h1>
-<p>Find me in app/views/org/index.html.erb</p>
-<% @orgs.each do |o| %>
-	<p>
-		<%= link_to o.name, org_path(o.to_param)%>
-	</p>
+<% unless @orgs.empty? %>
+<p>To get started, select one of your organizations.</h2>
+	<ul id="org_list">
+		<% @orgs.each do |o| %>
+		<li>
+			<%= link_to o.name, org_path(o.to_param)%>
+		</li>
+		<% end %>
+	</ul>
+<% else %>
+<p>Hmm you don't seem to have any organizations. This will not be a productive visit, will it?</p>
 <% end %>

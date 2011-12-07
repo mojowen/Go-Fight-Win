@@ -6,4 +6,17 @@ function groups_template (argument) {
 		currentView().addGroup(field.name);
 		currentView().addSort(field.name);
 	});
+	$('.remove_group').live('click', function(event) {
+		var group = ko.dataFor(this);
+		currentView().groups.remove(group);
+	});
+	$('.swap').live('click', function(event) {
+		currentView().groups.reverse();
+	});
+	$('.pivot').live('click', function(event) {
+		currentView().groups.pivot(true)
+	});
+	$('.unpivot').live('click', function(event) {
+		currentView().groups.pivot(false)
+	});
 }

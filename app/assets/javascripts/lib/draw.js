@@ -1,4 +1,4 @@
-function draw(w,h) { 
+function draw() { 
 	// setting up
     canvas = document.getElementById("canvas");
 	if( canvas != null ){
@@ -30,13 +30,13 @@ function draw(w,h) {
 
 		if( graph.key ) { right_buffer = 100; }
 		if( graph.title ) { right_buffer = 80; }
-		var graph_height = canvas.height-top_buffer-bottom_buffer,
+		var graph_height = canvas.height-top_buffer-bottom_buffer-graph_inside_top_buffer,
 			graph_width = canvas.width-right_buffer-left_buffer;
 
 		var width = (graph_width-graph_inside_side_buffer)/(3*count);
 		var step = new Object;
 		step.norm = (graph_width - graph_inside_side_buffer - count*width) / (count+1);
-		var groups = viewModel.groupedRows()._uniques != undefined ? viewModel.groupedRows()._uniques[0].length : 0;
+		var groups = typeof viewModel.groupedRows()._uniques != 'undefined' &&  typeof viewModel.groupedRows()._uniques[0] != 'undefined' ? viewModel.groupedRows()._uniques[0].length : 0;
 		step.small = step.norm/2;
 		step.big = (graph_width - graph_inside_side_buffer - count*width - (count-groups)*step.small ) / (groups+1);
 
@@ -75,8 +75,8 @@ function draw(w,h) {
 		// the axises
 		ctx.moveTo(left_buffer, top_buffer);
 		ctx.lineTo(left_buffer, canvas.height);
-		ctx.moveTo(0, canvas.height-bottom_buffer);
-		ctx.lineTo(canvas.width-right_buffer, canvas.height-bottom_buffer);
+		ctx.moveTo(0, top_buffer+graph_inside_top_buffer+graph_height);
+		ctx.lineTo(canvas.width-right_buffer, top_buffer+graph_inside_top_buffer+graph_height);
 		ctx.stroke();
 	
 		// drawing the graph

@@ -1,0 +1,82 @@
+/** Header **/
+
+#header {
+	background-color: #622;
+	box-shadow: 1px 1px 10px #226;
+}
+
+#header a {
+	color: #eee;
+}
+#header a:hover {
+	color: #ddd;
+	text-decoration: underline;
+}
+#user_nav {
+	float: right;
+	margin-right: 30px;
+	color: #fff;
+	text-align: right;
+}
+
+#user_nav p {
+	margin: 0;
+}
+
+a#logo {
+	font-family: 'Tienne', serif;
+	font-weight: bold;
+	letter-spacing: .15em;
+	font-size: 16px;
+	text-decoration: none;
+	color: #fff;
+	float: left;
+}
+
+#msg {
+	position: absolute;
+	top: 10px;
+	width: 100%;
+	text-align: center;
+}
+#msg div#container {
+	background-color: white;
+	border-radius: 4px;
+	width: 200px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 6px;
+}
+#msg div#container p {
+	margin: 0;
+}
+#msg div#container .clear {
+	float: right;
+	font-weight: bold;
+	margin: 0 10px 0 -10px;
+	cursor: pointer;
+}
+#msg div#container .clear:hover {
+	text-decoration: underline;
+}
+
+h1.title {
+	font-size: 26px;
+	color: #fff;
+	display: inline-block;
+}
+
+.divider {
+	color: #747474;
+	font-size: 54px;
+	margin: -26px 10px 0 6px;
+	float: left;
+}
+
+h3.org {
+	float: left;
+	clear: left;
+	color: #747474;
+	margin-top: -22px;
+	width: 150px;
+}

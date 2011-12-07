@@ -4,6 +4,7 @@ function views_template() {
 		if( view != currentView() ) {
 			setCurrentView(view);
 			try { window.history.pushState('', "Title", _url+'/'+view.to_param()); } catch(e) { }
+			document.title = view.name()+' of '+_list+' | Go. Fight. Win';
 		}
 		e.preventDefault();
 	});
@@ -12,6 +13,8 @@ function views_template() {
 		views.push(new_view);
 		setCurrentView(new_view);
 		window.history.pushState('', "Title", _url);
+		$('#current_view_name').select();
+		
 	});
 	$('.remove_view').live('click',function() { 
 		var view = ko.dataFor(this);
@@ -47,5 +50,10 @@ function views_template() {
 	});
 	$('.save_ready').live('click', function() {
 		saveAll();
+	});
+	$('.title').live('click',function() {
+		setCurrentView(new viewModel());
+		try { window.history.pushState('', "Title", _url); } catch(e) { }
+		document.title = _list+' | Go. Fight. Win';
 	});
 }

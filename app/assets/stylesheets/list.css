@@ -1,0 +1,212 @@
+/** Views **/
+
+input#current_view_name {
+	background: none;
+	border: none;
+	color: #fff;
+	font-size: 16px;
+}
+
+input#current_view_name.untracked {
+	color: #747474;
+	font-weight: normal;
+	opacity: .7;
+}
+
+input#current_view_name.unsaved {
+	font-style: italic;
+}
+
+span.add_view, span.new_view {
+	color: #fff;
+	font-weight: bold;
+}
+
+span.save {
+	font-size: 24px;
+	float: right;
+	margin: -23px 30px 0 0;
+	color: white;
+	font-family: 'Tienne', serif;
+}
+span.save_ready {
+	font-style: italic;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+
+#views {
+	display: none;
+	color: #747474;
+	margin-left: 204px;
+}
+
+#views .remove_view {
+	cursor: pointer;
+}
+
+#views h4 {
+	font-family: 'Droid Sans Mono', sans-serif;
+	font-size: 16px;
+	color: #747474;
+	display: inline-block;
+}
+
+#views .view {
+	margin: 0px 8px;
+	color: #fff;
+	cursor: pointer;
+}
+#views .view:hover, #views .new_view:hover {
+	text-decoration: underline;
+}
+#views .current_view {
+	color: #747474;
+	text-decoration: underline;
+}
+#header:hover #views {
+	display: block;
+}
+
+h1.title:hover {
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+
+#switch {
+	background-color: #226;
+	box-shadow: 1px 1px 10px #226;
+	text-align: center;
+	color: white;
+	cursor: pointer;
+	padding: 4px 24px 0;
+	font-size: 30px;
+}
+
+#switch:hover {
+	background-color: #622;
+	text-decoration: underline;
+}
+
+#nav {
+	font-size: 26px;
+	width: 700px;
+	text-align: center;
+	margin-left: -40px;
+}
+
+#nav span {
+	cursor: pointer;
+}
+
+#nav span:hover {
+	color: #747474;
+}
+
+.right, .far_right {
+	margin: 0 40px;
+	float: right;
+}
+
+.left, .far_left {
+	margin: 0 40px;
+	float: left;
+}
+
+th {
+	text-align: center;
+}
+
+.editor textarea {
+	border: none;
+	resize: none;
+	height: 1em;
+	padding: 4px;
+	text-align: center;
+	overflow: hidden;
+	outline: none;
+	background: none;
+}
+
+.editor textarea:focus, #edit_rows textarea:focus {
+	outline: 2px auto white;
+}
+.editor tr:nth-child(even) textarea:focus {
+	outline: 2px auto #ddd;
+}
+.editor tr:nth-child(even):hover textarea:focus {
+	outline: 2px auto #fff;
+}
+
+.editor tr:nth-child(even) td {
+    background-color: #ddd;
+}
+
+.editor tr:hover td {
+    background-color: lightblue;
+}
+
+#new_row {
+	border: 1px dotted #999;
+	opacity: .6;
+	min-width: 166px;
+}
+
+/** Goal **/
+#goal {
+	margin: 30px 0;
+	width: 500px;
+	min-height: 50px;
+}
+
+#goal_box {
+	display: none;
+}
+#goal_box input {
+	width: 50px;
+}
+#goal_box.is_goal {
+	display: block;
+}
+.goal_open {float: left; margin: 0 30px;}
+.goal_open.is_goal, .goal_open.is_goal:hover { cursor: default; text-decoration: none; color: #747474}
+
+/** Grouping **/
+#group {
+	margin: 30px 0;
+}
+#group h2 {
+	float: left;
+	margin: 0 30px;
+}
+#group .menu {
+	margin: 10px 0 10px 150px;
+}
+
+h2.groups_full { cursor: default; text-decoration: none; color: #747474}
+
+table#grouped_table {
+	margin: 0 100px;
+}
+
+table#grouped_table tbody tr.total td:first-child {
+	font-weight: bold;
+	text-align: right;
+}
+
+
+/*** Graph **/
+#graph h2 {
+	float: left;
+	margin: 0 42px 0 30px;
+}
+
+#graph select {
+	margin: 10px 30px;
+}
+
+#graph #canvas {
+	margin: 30px 80px;
+}

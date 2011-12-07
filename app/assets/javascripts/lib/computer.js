@@ -10,7 +10,7 @@ function computer (nested, row) {
 		var v = typeof row[k] == 'function' ? row[k]() : row[k]; 
 		if( typeof(nested[k]['count']) == 'undefined' ) { nested[k]['count'] = 0; }
 		if( typeof(nested[k]['count_int']) == 'undefined' ) { nested[k]['count_int'] = 0; }
-		if( typeof nested[k]['_uniques'] == 'undefined' ) { nested[k]['_uniques'] = []; }
+		if( typeof nested[k]['_uniques'] == 'undefined' ) { nested[k]['_uniques'] = []; nested[k]['unique'] = 0 }
 
 		if ( v != '' ) { 
 

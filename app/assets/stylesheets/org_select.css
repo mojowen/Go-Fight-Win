@@ -1,0 +1,13 @@
+ul#org_list li a {
+	font-size: 32px;
+	font-family: 'Tienne', serif;
+	font-weight: bold;
+	letter-spacing: .15em;
+	margin: 8px;
+}
+
+ul#org_list li {
+	list-style: square;
+	font-size: 20px;
+	color: #226;
+}

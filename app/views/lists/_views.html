@@ -1,34 +1,15 @@
 <div id="current_view" data-bind="with: currentView">
-	<input data-bind="value: name, css:{ 'unsaved' : $data.dirtyFlag.isDirty() } " >
-	<span class="add_view" data-bind="visible: views.indexOf($data) === -1 ">add</span>
-	<!-- <ul>
-		<!-- //ko foreach: groups 
-		<li>
-			<select class="group" data-bind="//
-				value: $data.field, 
-				options: currentView().availableGroupsRender($data.field),
-				optionsCaption: 'Group by', 
-				visible: currentView().availableGroupsRender($data.field).length > 0" 
-			></select>
-			<span class="remove_group" data-bind="//visible: $parent.groups().length > 1">-</span>
-		</li>
-		<!--// /ko 
-		<span class="add_group" data-bind="//visible: groups().length < fields().length">+</span>
-	</ul> -->
+	<span class="add_view" data-bind="visible: views.indexOf($data) === -1, valueUpdate: 'afterkeydown'">+</span>
+	<input id="current_view_name" data-bind="value: name, css:{ 'unsaved' : $data.dirtyFlag.isDirty() && views.indexOf($data) !== -1, 'untracked': views.indexOf($data) === -1  }, disable: views.indexOf($data) === -1 " >
 
-	<span class="far_left">&#x21E4;</span>
-	<span class="left">&#x2190;</span>
-	<span data-bind="text: paged"></span>
-	<span class="right">&#x2192;</span>
-	<span class="far_right">&#x21E5;</span>
-
-	<span class="save" data-bind="text: dataModel.savingState().text, css: {'save_ready': dataModel.savingState().enabled}">Save All</span>
+	
+	<span class="save" data-bind="text: dataModel.savingState().text, css: {'save_ready': dataModel.savingState().enabled && dataModel.savingState().text != 'saved' }">saved</span>
 </div>
-<hr>
 <div id="views">
+	<h4>views:</h4>
+	<span class="new_view">+Add</span>
 	<!-- ko foreach: views -->
 		<span class="view" data-bind="text: $data.name, css: { 'current_view': currentView() == $data, 'unsaved': $data.dirtyFlag.isDirty() }"></span>
 		(<span class="remove_view">–</span>)
 	<!-- /ko -->
-	<span class="new_view">+</span>
 </div>

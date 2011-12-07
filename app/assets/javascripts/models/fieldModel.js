@@ -17,7 +17,6 @@ function fieldModel(data) {
 
 			var options = [];
 			options.push( {label: 'count', name: field.name, report: 'count' } );
-			options.push( {label: 'count #s', name: field.name, report: 'count_int' } );
 			options.push( {label: 'unique', name: field.name, report: 'unique' } );
 
 			switch(field.type) {
