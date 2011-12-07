@@ -12,7 +12,14 @@ function rowModel(data) {
 	for( var i = 0; i < fields().length; i++ ) {
 		var field = fields()[i].name;
 		if( typeof row[field] != 'undefined' ) {
-			this[field] = ko.observable( row[field] );
+			switch( fields()[i].field_type){
+				case 'number':
+					if( !isNaN(parseInt(row[field])) ) { this[field] = ko.observable(parseInt(row[field]) ); }
+					else { this[field] = ko.observable( row[field] ); }
+					break;
+				default:
+					this[field] = ko.observable( row[field] );
+			}
 		} else {
 			this[field] = ko.observable('');
 		}

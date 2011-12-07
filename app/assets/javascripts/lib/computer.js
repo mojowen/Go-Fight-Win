@@ -34,6 +34,7 @@ function computer (nested, row) {
 					nested[k]['average'] = nested[k]['sum'] /  nested[k]['count_int'];
 					nested[k]['min'] = v < nested[k]['min']  ? v : nested[k]['min'];
 					nested[k]['max'] = v > nested[k]['max']  ? v : nested[k]['max']  
+					nested[k]['average'] = Math.round(nested[k]['average']*100)/100
 				}
 			} 
 		}

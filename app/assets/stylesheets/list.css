@@ -130,7 +130,7 @@ th {
 	background: none;
 }
 
-.editor textarea:focus, #edit_rows textarea:focus {
+/*.editor textarea:focus, #edit_rows textarea:focus {
 	outline: 2px auto white;
 }
 .editor tr:nth-child(even) textarea:focus {
@@ -139,7 +139,7 @@ th {
 .editor tr:nth-child(even):hover textarea:focus {
 	outline: 2px auto #fff;
 }
-
+*/
 .editor tr:nth-child(even) td {
     background-color: #ddd;
 }

@@ -19,7 +19,7 @@ function fieldModel(data) {
 			options.push( {label: 'count', name: field.name, report: 'count' } );
 			options.push( {label: 'unique', name: field.name, report: 'unique' } );
 
-			switch(field.type) {
+			switch(field.field_type) {
 				case 'number': 
 					options.push( {label: 'sum', name: field.name, report: 'sum' } );
 					options.push( {label: 'avg', name: field.name, report: 'average' } );

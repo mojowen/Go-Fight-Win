@@ -1,0 +1,28 @@
+.number_controls {
+	position: absolute;
+	margin: -22px 0 0 4px;
+	font-size: 18px;
+	display: none;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+}
+td:hover .number_controls {
+	display: block;
+}
+
+.number_controls span:hover {
+	color: #747474;
+}
+
+.editor, .editor td {
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+}
+

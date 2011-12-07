@@ -6,10 +6,11 @@
 			<tr>
 				<!-- ko foreach: fields -->
 				<td>
-					<textarea data-bind="value: $parent[$data.name], valueUpdate: 'afterkeydown'"></textarea>
+					<!-- ko template: {name: 'row'+$data.field_type } -->
+					<!-- /ko -->
 				</td>
 				<!-- /ko -->
-				<td data-bind="template: {name: $data._menu()}">
+				<td data-bind="template: {name: $data._menu()} ">
 				</td>
 			</tr>
 		<!-- /ko -->
@@ -31,6 +32,14 @@
 
 </script>
 
+<script type="text/html" id="rowtext">
+	<textarea data-bind="value: $parent[$data.name], valueUpdate: 'afterkeydown'"></textarea>
+</script>
+<script type="text/html" id="rownumber">
+	<textarea class="number" data-bind="value: $parent[$data.name], valueUpdate: 'afterkeydown'"></textarea>
+	<div class="number_controls"><span class="number_up">&#x2191;</span><span class="number_down">&#x2193;</span></div>
+</script>
+
 <script type="text/html" id="newRowMenu">
 	<span class="add clickable">Add</span>
 	<span class="remove clickable">Discard</span>
@@ -40,4 +49,6 @@
 	<span class="remove clickable">
 		Delete
 	</span>
+	
 </script>
+
