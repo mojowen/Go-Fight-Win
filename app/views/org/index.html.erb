@@ -3,7 +3,7 @@
 	<ul id="org_list">
 		<% @orgs.each do |o| %>
 		<li>
-			<%= link_to o.name, org_path(o.to_param)%>
+			<%= link_to o.name, org_path(o.to_param) %>
 		</li>
 		<% end %>
 	</ul>

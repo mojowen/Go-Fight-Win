@@ -101,6 +101,6 @@ def sign_in_by_hand(user)
 end
 
 def sign_out_by_hand
-  click_link 'Sign out'
+  click_link 'sign out'
 end
 

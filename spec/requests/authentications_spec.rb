@@ -27,9 +27,9 @@ describe 'Authentications Tests' do
     it 'Signs out and signs back in using auth' do
       login_with_oauth
       visit '/'
-      click_link 'Sign out'
+      click_link 'sign out'
       login_with_oauth
-      page.should have_content("Signed in as "+@user.email)
+      page.should have_content(@user.email)
     end
   end
   
@@ -40,7 +40,7 @@ describe 'Authentications Tests' do
      fill_in "user_email", :with => 'bull@shit.com'
      click_button 'Sign up'
      page.should have_content("Welcome! You have signed up successfully")
-     click_link 'Sign out'
+     click_link 'sign out'
    end
  end
 end

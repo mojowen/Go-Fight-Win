@@ -11,15 +11,16 @@
 //= require_tree ./models
 //= require_tree ./dependents
 //= require_tree ./bindings
-console.log('--------------------------------');
+
+// console.log('--------------------------------');
 window.onload=function() {
 	if( typeof _list != 'undefined' ) {
-var t = new Date();
+// var t = new Date();
 		load();
 		ko.applyBindings(dataModel);
 		setBindings();
-var d = new Date();
-console.log('load: '+(d-t));
+// var d = new Date();
+// console.log('load: '+(d-t));
 	} else {
 		other_bindings();
 	}

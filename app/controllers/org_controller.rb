@@ -1,6 +1,6 @@
 class OrgController < ApplicationController
   def index
-    @orgs = Org.all
+    @orgs = Org.all.select{ |o| can? :read, o }
   end
 
   def show

@@ -39,7 +39,8 @@ class MembershipsController < ApplicationController
     authorize! :manage, @org
     @membership = Membership.find(params[:membership])
     @membership.destroy
-    redirect_to  org_path( @org.to_param), :notice =>  'removed '+@membership.user.email+' from '+@org.name+'. Good riddence, amirite?'
+    @msg = @membership.user.nil? ? 'Delete invite' : 'removed '+@membership.user.email+' from '+@org.name+'. Good riddence, amirite?'
+    redirect_to  org_path( @org.to_param), :notice =>  @msg
   end
 
   def invite

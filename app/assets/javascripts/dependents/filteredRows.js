@@ -1,6 +1,6 @@
 viewModel.filteredRows = ko.dependentObservable(
 	{ read: function() {
-		var t = new Date();
+// var t = new Date();
 		var filters = currentView().filters();
 		var flat_fields = fields().map( function(field) { return field.name});
 		var flat_filters = filters.map( function(filters) { return filters.field});
@@ -55,12 +55,12 @@ viewModel.filteredRows = ko.dependentObservable(
 				}
 				return passes;
 			});
-			var d = new Date();
-			console.log('filtered: '+(d-t));
+// var d = new Date();
+// console.log('filtered: '+(d-t));
 			return filtered_rows;
 		} else {
-			var d = new Date();
-			console.log('filtered: '+(d-t));
+// var d = new Date();
+// console.log('filtered: '+(d-t));
 			return _rows;
 		}
 		

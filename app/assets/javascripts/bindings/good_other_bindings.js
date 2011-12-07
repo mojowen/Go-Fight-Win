@@ -12,7 +12,7 @@ $.fn.msg = function(msg,speed) {
 	// should append the msg
 	var $this = $(this);
 	$this.text(msg);
-	$this.parent().find('.clear').show();
+	$this.parent().find('.clear').text('x').show();
 }
 
 function notify(msg, speed) {

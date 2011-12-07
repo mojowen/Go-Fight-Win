@@ -49,6 +49,8 @@
 		<% @invites.each do |invite| %>
 			<li>
 				<input value="<%= root_url+invite_membership_path(@org.id, invite.invite_token).slice(1,100) %>" class="url_select">
+				(<%= link_to 'x', destroy_membership_path( @org.id, invite.id ) %>)
+				
 			</li>
 		<% end %>
 	</ul>

@@ -14,7 +14,7 @@
 }
 #user_nav {
 	float: right;
-	margin-right: 30px;
+	margin: -10px 30px 0 0;
 	color: #fff;
 	text-align: right;
 }
@@ -31,6 +31,12 @@ a#logo {
 	text-decoration: none;
 	color: #fff;
 	float: left;
+	margin-right: 60px;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-o-user-select: none;
+	user-select: none;
 }
 
 #msg {
@@ -53,7 +59,7 @@ a#logo {
 #msg div#container .clear {
 	float: right;
 	font-weight: bold;
-	margin: 0 10px 0 -10px;
+	margin: 0 10px 0 0;
 	cursor: pointer;
 }
 #msg div#container .clear:hover {

@@ -44,9 +44,9 @@ describe 'An orgs routes and permissions' do
   end
   
   it 'users can access org\'s children of org' do
-    @child = Factory(:org, :parent_id => @org)
+    @child = Factory(:org, :parent_id => @org.id)
     @child.save
-    visit org_discrete_path(@child.id)
+    visit org_path(@child.to_param)
     page.should have_content(@child.name)
   end
   

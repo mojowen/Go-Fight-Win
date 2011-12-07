@@ -38,7 +38,7 @@ describe 'Admin managing memberships of org' do
     @pending = Membership.new(:org_id => @org.id, :approved => true )
     @pending.save
     visit org_path(@org.to_param)
-    page.should have_content(@pending.invite_token)
+    page.should have_selector("input", :value => root_url+@pending.invite_token.slice(1,100))
   end
 end
 
