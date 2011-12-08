@@ -40,6 +40,8 @@
     background-color: #fff
 }
 
+
+/** Date picker specific **/
 .hasDatepicker {
 	width: 220px;
 	font-size: 10px;
@@ -58,3 +60,18 @@
 
 .date_picker .ui-datepicker-calendar tr td.ui-datepicker-today { background-color: #747474; }
 td.ui-datepicker-current-day { border: 1px dashed #333; }
+
+/** Autocomplete **/
+
+ul.ui-autocomplete {
+	background-color: #fff;
+	list-style: square;
+	border: #747474 solid 1px;
+	width: 100px;
+	padding: 10px 0 10px 34px;
+}
+
+ul.ui-autocomplete li.ui-menu-item {
+	cursor: pointer;
+	color: #333;
+}

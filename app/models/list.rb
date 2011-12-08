@@ -182,6 +182,9 @@ class List < ActiveRecord::Base
     return '.starts_with?("'+condition+'") && "'+condition+'" ==' if operator == 'starts with' || operator == 'begins with'
     return '.reverse.starts_with?("'+condition.reverse+'") && "'+condition+'" ==' if operator == 'ends with'
     
+    return '.index("'+condition+'") != nil && "'+condition+'" ==' if operator == 'includes' || operator == 'contains'|| operator == 'has'
+    return '.index("'+condition+'") == nil && "'+condition+'" ==' if operator == 'does not includes' || operator == 'does not contains'|| operator == 'does not have'
+    
     return '!=' if operator == '!='
     return '!=' if operator == 'isn\'t'
     return '!=' if operator == '<>'

@@ -45,6 +45,9 @@
 	<textarea class="date" data-bind="datepicker: $parent[$data.name](), valueUpdate: 'afterkeydown'"></textarea>	
 	<div class="date_controls field_controller"><span class="cal">&#x1f4c5;</span><div class="date_picker"></div></div>
 </script>
+<script type="text/html" id="rowsuggest">
+	<textarea class="suggest" data-bind="value: $parent[$data.name]"></textarea>	
+</script>
 
 <script type="text/html" id="newRowMenu">
 	<span class="add clickable">Add</span>
