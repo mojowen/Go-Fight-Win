@@ -27,7 +27,6 @@
 			<!-- /ko -->
 
 		<!-- /ko -->
-
 	<!-- /ko -->
 
 </script>
@@ -37,7 +36,14 @@
 </script>
 <script type="text/html" id="rownumber">
 	<textarea class="number" data-bind="value: $parent[$data.name], valueUpdate: 'afterkeydown'"></textarea>
-	<div class="number_controls"><span class="number_up">&#x2191;</span><span class="number_down">&#x2193;</span></div>
+	<div class="number_controls field_controller"><span class="number_up">&#x2191;</span><span class="number_down">&#x2193;</span></div>
+</script>
+<script type="text/html" id="rowselect">
+	<select data-bind="value: $parent[$data.name], options: [''].concat($data.field_options)"></select>
+</script>
+<script type="text/html" id="rowdate">
+	<textarea class="date" data-bind="datepicker: $parent[$data.name](), valueUpdate: 'afterkeydown'"></textarea>	
+	<div class="date_controls field_controller"><span class="cal">&#x1f4c5;</span><div class="date_picker"></div></div>
 </script>
 
 <script type="text/html" id="newRowMenu">

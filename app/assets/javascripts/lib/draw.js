@@ -88,7 +88,7 @@ function draw() {
 
 			var value = graph.bars[i].value,
 				xpos = xpos +step[stepper],
-				yheight = (graph_height-graph_inside_top_buffer)*value/max;
+				yheight = (graph_height)*value/max;
 
 			ctx.fillStyle = viewModel.graph.color[graph.bars[i].color ];
 			ctx.lineWidth   = 1;

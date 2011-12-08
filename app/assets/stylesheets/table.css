@@ -1,4 +1,4 @@
-.number_controls {
+.field_controller {
 	position: absolute;
 	margin: -22px 0 0 4px;
 	font-size: 18px;
@@ -10,11 +10,11 @@
 	-o-user-select: none;
 	user-select: none;
 }
-td:hover .number_controls {
+.editor tr:hover .field_controller {
 	display: block;
 }
 
-.number_controls span:hover {
+.field_controller span:hover, .cal.on {
 	color: #747474;
 }
 
@@ -26,3 +26,35 @@ td:hover .number_controls {
 	user-select: none;
 }
 
+.editor select {
+    border: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+	padding: 0 0 0 8px;
+}
+
+.editor tr:hover select {
+    -webkit-appearance: menulist;
+    appearance: menulist;
+    background-color: #fff
+}
+
+.hasDatepicker {
+	width: 220px;
+	font-size: 10px;
+	background-color: white;
+	padding: 4px;
+	border: #747474 solid 1px;
+}
+
+.date_picker .ui-datepicker-calendar { margin: 6px 0;}
+
+.date_picker .ui-datepicker-calendar tr td { background-color: #fff; }
+.date_picker .ui-datepicker-calendar tr:hover td { background-color: #ddd; }
+.date_picker .ui-datepicker-calendar td, .ui-datepicker-title { text-align: center; }
+.ui-datepicker-prev { float: left; }
+.ui-datepicker-next { float: right; }
+
+.date_picker .ui-datepicker-calendar tr td.ui-datepicker-today { background-color: #747474; }
+td.ui-datepicker-current-day { border: 1px dashed #333; }

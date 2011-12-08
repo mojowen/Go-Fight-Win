@@ -144,6 +144,9 @@ th {
     background-color: #ddd;
 }
 
+.editor tr td {
+	width: 120px;
+}
 .editor tr:hover td {
     background-color: lightblue;
 }

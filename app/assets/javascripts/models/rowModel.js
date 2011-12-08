@@ -17,6 +17,11 @@ function rowModel(data) {
 					if( !isNaN(parseInt(row[field])) ) { this[field] = ko.observable(parseInt(row[field]) ); }
 					else { this[field] = ko.observable( row[field] ); }
 					break;
+				case 'date':
+					var attempt = new Date(row[field]);
+					if( attempt == 'Invalid Date' ) { this[field] = ko.observable( row[field] );  }
+					else { this[field] = ko.observable( new Date(attempt) ); }
+					break;
 				default:
 					this[field] = ko.observable( row[field] );
 			}
