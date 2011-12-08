@@ -27,10 +27,12 @@ function fields_template (argument) {
 	//	- can't be slow
 	$('.suggest').live({
 		focusin: function() {
+			var ctx = ko.contextFor(this);
+			var row = ctx.$parent, field = ctx.$data;
 			var $this = $(this);
 			$(this)
 				.autocomplete({
-					source: ko.utils.arrayGetDistinctValues(rows().map( function(elem) { return elem['first']() } )),
+					source: ko.utils.arrayGetDistinctValues(rows().map( function(elem) { return elem[field.name]() } )),
 				});
 		},
 		focusout: function() {

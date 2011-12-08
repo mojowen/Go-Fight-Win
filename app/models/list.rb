@@ -40,7 +40,7 @@ class List < ActiveRecord::Base
         return Field.new(args)
       end
     end
-    return fields
+    return fields.reverse
   end
   
   #Relationship to item and entry
