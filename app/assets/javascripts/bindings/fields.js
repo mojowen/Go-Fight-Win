@@ -6,10 +6,10 @@ ko.bindingHandlers.datepicker = {
 		ko.bindingHandlers.value.update(element, val); 
 	},
 	update: function(element, valueAccessor, allBindingsAccessor) { 
-			var attempt = new Date( valueAccessor() );
-			var val = attempt == 'Invalid Date' ?  valueAccessor : function() { return attempt.toDateString(); } ;
+		var attempt = new Date( valueAccessor() );
+		var val = attempt == 'Invalid Date' ?  valueAccessor : function() { return attempt.toDateString(); } ;
 
-			ko.bindingHandlers.value.update(element, val);
+		ko.bindingHandlers.value.update(element, val);
 	}
 };
 

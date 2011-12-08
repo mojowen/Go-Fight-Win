@@ -23,6 +23,7 @@ function saveAll (args) {
 						} else {
 							if( typeof _rows[i]._tempkey != 'undefined' ) {
 								var row = rows.find_temp( parseInt(_rows[i]._tempkey) );
+								// Creating a comparison to reset the dirty flag
 								var flat = ko.toJS(row);
 								row.key( _rows[i].key );
 								row._tempkey = null;
@@ -31,7 +32,8 @@ function saveAll (args) {
 								var flat = ko.toJS(row);
 							}
 							for (var ii=0; ii < _rows[i].updated.length; ii++) {
-								flat[_rows[i].updated[ii].field] = _rows[i].updated[ii].value
+								// Updating teh comparison to what's returned from teh server
+								flat[_rows[i].updated[ii].field] = prepareValue(_rows[i].updated[ii].value, _rows[i].updated[ii].field_type, {no_ko: true});
 							};
 							row.dirtyFlag.reset( flat );
 						}

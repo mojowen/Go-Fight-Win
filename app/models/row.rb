@@ -94,7 +94,8 @@ class Row
     end
     @changed_fields.each do |f|
       the_item = @parents.select{ |i| i.list_id == f[:field].list_id }.first
-      data = f[:new_value].strip.empty? ? nil : f[:new_value]
+      f[:new_value] = f[:new_value].to_s if f[:new_value].class == Fixnum
+      data = f[:new_value].to_s.strip.empty? ? nil : f[:new_value]
       unless data.nil?
         save = Entry.new( :item => the_item, :field => f[:field], :data => data ).save
       else
@@ -105,7 +106,7 @@ class Row
       success = success & save
       errors.push( {:field => f[:field].name, :value => f[:new_value], :message => 'DB Error on saving'} ) if !save
     end
-    ready = { :key => @item.id, :success => success, :list => self['list'], :error => errors, :updated => @changed_fields.map{ |f| {:field => f[:field].name, :value => f[:new_value]} } }
+    ready = { :key => @item.id, :success => success, :list => self['list'], :error => errors, :updated => @changed_fields.map{ |f| {:field => f[:field].name, :field_type => f[:field].field_type, :value => f[:new_value]} } }
     # Will need to return the _tempkey if the tempkey was passed to it
     ready[:_tempkey] = @tempkey unless @tempkey.nil?
     return ready

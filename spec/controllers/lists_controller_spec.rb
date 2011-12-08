@@ -161,19 +161,23 @@ describe ListsController do
    end
    it 'updates rows if a key is passed to it' do
      @row1 = Row.new( :list => @list, @list.fields[0].name.to_param => 'old value' ).save
-     @row2 = Row.new( :list => @list, @list.fields[2].name.to_param => 'old different value' ).save
-     
+     @row2 = Row.new( :list => @list, @list.fields[2].name.to_param => 2 ).save
+     @row3 = Row.new( :list => @list, @list.fields[1].name.to_param => "2001-11-01T08:00:00.000Z" ).save
+
      Row.new(@row1[:key])[ @list.fields[0].to_param ].should == 'old value'
-     Row.new(@row2[:key])[ @list.fields[2].to_param ].should == 'old different value'
+     Row.new(@row2[:key])[ @list.fields[2].to_param ].should == '2'
+     Row.new(@row3[:key])[ @list.fields[1].to_param ].should == "2001-11-01T08:00:00.000Z"
 
      @rows = '[
-      {"key":"'+@row1[:key].to_s+'","list":"'+@list.name+'","'+@list.fields[0].to_param+'":"new value"},
-      {"key":"'+@row2[:key].to_s+'","list":"'+@list.name+'","'+@list.fields[2].to_param+'":"new different value"}
+      {"key":"'+@row1[:key].to_s+'", "_menu":"rowMenu" , "list":"'+@list.name+'","'+@list.fields[0].to_param+'":"new value"},
+      {"key":"'+@row2[:key].to_s+'", "_menu":"rowMenu" , "list":"'+@list.name+'","'+@list.fields[2].to_param+'": 3 },
+      {"key":"'+@row3[:key].to_s+'", "_menu":"rowMenu" , "list":"'+@list.name+'","'+@list.fields[1].to_param+'": "2011-11-01T08:00:00.000Z" }
      ]'
      post 'update',  :org_name => @org.to_param, :list_name => @list.to_param, :rows => @rows, :format => :json
 
      Row.new(@row1[:key])[ @list.fields[0].to_param ].should == 'new value'
-     Row.new(@row2[:key])[ @list.fields[2].to_param ].should == 'new different value'
+     Row.new(@row2[:key])[ @list.fields[2].to_param ].should == '3'
+     Row.new(@row3[:key])[ @list.fields[1].to_param ].should == "2011-11-01T08:00:00.000Z"
    end
    
    it 'saves new grandchild row and creates parent and grandparent items' do
@@ -431,6 +435,7 @@ describe ListsController do
      @returned['views']['success'].should be_false
      
    end
+
    
  end
 

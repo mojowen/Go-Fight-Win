@@ -8,26 +8,11 @@ function rowModel(data) {
 	if( typeof row.key == 'undefined' || typeof row.list == 'undefined' ) { throw new Error("mising some vital row data"); }
 	this.key = ko.observable( row.key );
 	this.list = row.list;
+	var _fields = ko.toJS(fields);
 
-	for( var i = 0; i < fields().length; i++ ) {
-		var field = fields()[i].name;
-		if( typeof row[field] != 'undefined' ) {
-			switch( fields()[i].field_type){
-				case 'number':
-					if( !isNaN(parseInt(row[field])) ) { this[field] = ko.observable(parseInt(row[field]) ); }
-					else { this[field] = ko.observable( row[field] ); }
-					break;
-				case 'date':
-					var attempt = new Date(row[field]);
-					if( attempt == 'Invalid Date' ) { this[field] = ko.observable( row[field] );  }
-					else { this[field] = ko.observable( new Date(attempt) ); }
-					break;
-				default:
-					this[field] = ko.observable( row[field] );
-			}
-		} else {
-			this[field] = ko.observable('');
-		}
+	for( var i = 0; i < _fields.length; i++ ) {
+		var field = _fields[i].name;
+		this[field] = prepareValue(row[field], _fields[i].field_type)
 	}
 
 	this._flatten = function(return_type) {
