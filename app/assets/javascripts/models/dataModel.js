@@ -1,6 +1,7 @@
 function appDataModel() {
 	rows = ko.observableArray([]),
 	newRows = ko.observableArray([]),
+	defaultRow = ko.observableArray([]),
 	fields = ko.observableArray([]),
 	views = ko.observableArray([]),
 	currentView = ko.observable({});

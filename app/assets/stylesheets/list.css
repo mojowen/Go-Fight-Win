@@ -157,6 +157,19 @@ th {
 	min-width: 166px;
 }
 
+.editor tr.add_rows td {
+	text-align: center;
+	border: none;
+	background-color: #fff;
+	cursor: pointer;
+}
+.editor tr.add_rows:hover td {
+	text-decoration: underline;
+	font-weight: bold;
+}
+
+
+
 /** Goal **/
 #goal {
 	margin: 30px 0;

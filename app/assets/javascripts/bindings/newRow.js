@@ -1,6 +1,15 @@
+newRows.label = ko.dependentObservable(
+	{ read: function() {
+		if( newRows().length > 1 ) { return 'add '+newRows().length+' new rows' }
+		else { return 'add new row' }
+	}, 
+	deferEvaluation: true
+},
+newRows);
+
 function newRow_template() {
 	newRows.push( new rowModel({key: 'new', list: _list, _menu: 'newRowMenu'})  );
-
+	
 	$('#new_row textarea').live('paste', function (e) {
 		var the = $(this)
 		setTimeout(function() {
@@ -26,6 +35,14 @@ function newRow_template() {
 			newRows.push( new rowModel({key: 'new', list: _list, _menu: 'newRowMenu'})  );
 			$('#new_row tr:last textarea:first').focus();
 		}
+	});
+	$('.add_rows').live('click',function() {
+		for (var i=0; i < newRows().length; i++) {
+			addRow( newRows()[i] )
+		};
+		newRows.removeAll();
+		newRows.push( new rowModel({key: 'new', list: _list, _menu: 'newRowMenu'})  );
+		$('#new_row tr:last textarea:first').focus();
 	});
 
 	$('#new_row .add').live('click', function() {

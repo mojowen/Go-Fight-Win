@@ -9,6 +9,13 @@
 			<th></th>
 		</tr>
 	</thead>
+	<tbody id="default_row" data-bind="template: { name: 'row', foreach: defaultRow }">
+	</tbody>
 	<tbody id="new_row" data-bind="template: { name: 'row', foreach: newRows }">
 	</tbody>
+	<tr class="add_rows">
+		<td data-bind="attr: {'colspan':fields().length+1 }" >
+			<span class="add_new_rows clickable" data-bind="text: newRows.label "></span>
+		</td>
+	</tr>
 </table>
