@@ -4,11 +4,11 @@ describe("field factory", function() {
 		expect(field.id).toEqual(1);
   	});
 	it("feld factory produce correct name when named", function() {
-		var field = factoryField({name: 1 });
-		expect(field.name).toEqual(1);
+		var field = factoryField({name: 'aaa' });
+		expect(field.to_param ).toEqual('aaa');
 	});
 	it("produces random name when not named", function() {
 		var field = factoryField();
-		expect( field.name ).toEqual('name_01');
+		expect( field.to_param ).toEqual('name_01');
 	});
 });

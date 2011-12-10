@@ -34,13 +34,14 @@ class List < ActiveRecord::Base
   def fields(loaded_parents = nil)
     parents = loaded_parents.nil? ? self.parents : loaded_parents
     fields = Field.where('fields.list_id IN(?) AND fields.active =?', parents, true)
+    fields.reverse
     fields.instance_eval do
       def new(args ={} )
         args[:list] = @@list
         return Field.new(args)
       end
     end
-    return fields.reverse
+    return fields
   end
   
   #Relationship to item and entry

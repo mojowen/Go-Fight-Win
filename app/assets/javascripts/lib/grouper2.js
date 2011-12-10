@@ -1,6 +1,6 @@
 function grouper (_rows) {
 	var groups = currentView().groups();
-	var flat_fields = fields().map( function(field) { return field.name});
+	var flat_fields = fields().map( function(field) { return field.to_param});
 	var flat_groups = groups.map( function(groups) { return groups.field()}).filter(function(elem) { return elem != undefined && elem != '' });
 
 	var grouped = { rows: [] }, uniques = [];

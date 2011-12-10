@@ -3,8 +3,8 @@ function groups_template (argument) {
 		// if no group()[0] create a new group
 		// probably something to add / change a sort as well. maybe wrap all this in one function setGroup or something
 		var $this = $(this), field = ko.dataFor(this);
-		currentView().addGroup(field.name);
-		currentView().addSort(field.name);
+		currentView().addGroup(field.to_param);
+		currentView().addSort(field.to_param);
 	});
 	$('.remove_group').live('click', function(event) {
 		var group = ko.dataFor(this);

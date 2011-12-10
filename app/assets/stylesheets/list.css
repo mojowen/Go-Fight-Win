@@ -2,7 +2,7 @@
 
 input#current_view_name {
 	background: none;
-	border: none;
+	border: 0;
 	color: #fff;
 	font-size: 16px;
 }
@@ -20,6 +20,7 @@ input#current_view_name.unsaved {
 span.add_view, span.new_view {
 	color: #fff;
 	font-weight: bold;
+	cursor: pointer;
 }
 
 span.save {
@@ -90,11 +91,14 @@ h1.title:hover {
 	text-decoration: underline;
 }
 
+
+
 #nav {
 	font-size: 26px;
-	width: 700px;
+	min-width: 420px;
 	text-align: center;
-	margin-left: -40px;
+	margin-left: -20px;
+	width: 100%;
 }
 
 #nav span {
@@ -106,12 +110,12 @@ h1.title:hover {
 }
 
 .right, .far_right {
-	margin: 0 40px;
+	margin: 0 20px;
 	float: right;
 }
 
 .left, .far_left {
-	margin: 0 40px;
+	margin: 0 20px;
 	float: left;
 }
 
@@ -119,8 +123,10 @@ th {
 	text-align: center;
 }
 
+.editor tr.nav_bar td, .editor tr.nav_bar:hover td{ background-color: #fff; }
+
 .editor textarea {
-	border: none;
+	border: 0;
 	resize: none;
 	height: 1em;
 	padding: 4px;
@@ -129,6 +135,7 @@ th {
 	outline: none;
 	background: none;
 }
+
 
 /*.editor textarea:focus, #edit_rows textarea:focus {
 	outline: 2px auto white;
@@ -150,16 +157,25 @@ th {
 .editor tr:hover td {
     background-color: lightblue;
 }
+.editor tr td textarea:focus, .editor tr td select:focus {
+	background-color: #99C4D2;
+	outline: #99C4D2;
+	color: #fff;
+}
+
 
 #new_row {
-	border: 1px dotted #999;
+	border: 1px solid #999;
 	opacity: .6;
 	min-width: 166px;
 }
 
+#new_row_menu, #new_row_menu tr {
+	border: 0;
+}
 .editor tr.add_rows td {
 	text-align: center;
-	border: none;
+	border: 0;
 	background-color: #fff;
 	cursor: pointer;
 }

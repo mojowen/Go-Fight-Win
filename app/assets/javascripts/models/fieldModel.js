@@ -6,7 +6,8 @@ function fieldModel(data) {
 	// Setting up key properties
 	if( typeof field.id == 'undefined' ||typeof field.name == 'undefined' ) { throw new Error("mising some vital field data"); }
 	this.list = field.list;
-	this.name = field.name;
+	this.name = field.name.capitalize();
+	this.to_param = field.name.replace(/ /,'_');
 	this.id = field.id;
 
 	this.field_type = field.field_type || 'text';

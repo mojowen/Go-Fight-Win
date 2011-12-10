@@ -36,32 +36,37 @@ class ListsController < ApplicationController
     @views_results = []
     
     authorize! :show, @list.org, :message => 'You don\'t have access to that List'
-
-    unless params[:rows].nil? || params[:rows].empty?
-      begin
-        @rows = JSON.parse(params[:rows])
-        @rows.each do |r|
-          begin
-            @rows_results.push( Row.new(r).save )
-          rescue
-            @error = {}
-            @error[:key] = r['key'] || r[:key]
-            @error[:data] = r
-            @error[:success] = false
-            @error[:error] = ['Error on Row save']
-            @rows_results.push( @error )
+    begin
+      params[:rows] = params[:rows].class == String ? JSON.parse(params[:rows]) : params[:rows]
+      unless params[:rows].nil? || params[:rows].empty? 
+          @rows = params[:rows].to_a
+          @rows.each do |a|
+            r = a[1]
+            begin
+              # TO DO: Add something to authorize each row save, right now could sneak in in data in the row data using different list names
+              # IDEAS: pass the authorized org into the save method ? and check the @list.org == @list.org on save to verify no funny business
+              @rows_results.push( Row.new(r).save )
+            rescue
+               @error = {}
+               @error[:key] = r['key'] || r[:key]
+               @error[:e_data] = r
+               @error[:success] = false
+               @error[:error] = ['Error on Row save']
+               @rows_results.push( @error )
+             end
           end
-        end
-      rescue
-        @rows_results = {:success => false, :error => 'Invalid JSON for rows' }
-      end 
-    end
+      end
+    rescue
+      @rows_results = {:success => false, :error => 'Invalid JSON for rows' }
+    end 
     
     unless params[:views].nil? || params[:views].empty?
       begin
-        @views = JSON.parse( params[:views] )
+        params[:views] = params[:views].class == String ? JSON.parse(params[:views]) : params[:views]
+        @views = params[:views].to_a
 
-        @views.each do |v|
+        @views.each do |a|
+          v = a[1]
           begin
             unless v['_destroy'].nil?
               @view = View.find_by_id_and_list_id(v['id'], @list.id)
@@ -81,7 +86,7 @@ class ListsController < ApplicationController
           rescue
             @error = {}
             @error[:id] = v['id'] || v[:id]
-            @error[:data] = v
+            @error[:e_data] = v
             @error[:success] = false
             @error[:error] = ['Error on View save']
             @views_results.push( @error )
@@ -95,7 +100,7 @@ class ListsController < ApplicationController
     
     
     respond_to do |format|
-      format.json { render json: {:rows => @rows_results, :views => @views_results } }
+      format.json { render json: {:rows => @rows_results, :views => @views_results, :sent => @rows } }
     end
 
   end

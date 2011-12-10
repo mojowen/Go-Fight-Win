@@ -7,9 +7,7 @@ describe("Testing the row template", function() {
 	setBindings();
 	ko.applyBindings(dataModel);
   });
-  it("renders the fields", function() {
-    expect( $('#new_row textarea').length ).toEqual( fields().length );
-  });
+
   it("adds the new row to rows() when submitted", function() {
 	var row = newRows()[0];
 	spyOn(window,'addNewRow');
@@ -24,7 +22,7 @@ describe("Testing the row template", function() {
   });
 
   it("adds a row will move valeus into new row", function() {
-	newRows()[0][fields()[0].name]('a value');
+	newRows()[0][fields()[0].to_param]('a value');
 	expect($('#new_row textarea:first') ).toHaveValue('a value');
 	addNewRow( newRows()[0] );
 	expect($('#new_row textarea:first') ).toHaveValue('');
@@ -32,6 +30,8 @@ describe("Testing the row template", function() {
 
   it("can handle paste", function() {
     // Don't know how to watch for this one
+	//	$('#new_row textarea:first').val("11/12/14\n11/12/13").trigger('paste')
+	expect(false).toBeTruthy();
   });
 
 });

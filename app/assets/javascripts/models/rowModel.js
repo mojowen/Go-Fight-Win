@@ -11,7 +11,7 @@ function rowModel(data) {
 	var _fields = ko.toJS(fields);
 
 	for( var i = 0; i < _fields.length; i++ ) {
-		var field = _fields[i].name;
+		var field = _fields[i].to_param;
 		this[field] = prepareValue(row[field], _fields[i].field_type)
 	}
 
@@ -20,7 +20,7 @@ function rowModel(data) {
 		var init = ko.toJS(this);
 		var changed_fields = new Object;
 		for (var i=0; i < fields().length; i++) {
-			var field_name = fields()[i].name;
+			var field_name = fields()[i].to_param;
 			changed_fields[ field_name ] = init[field_name];
 		};
 		if( typeof this._destroy != 'undefined' ) { changed_fields._destroy = true; }
@@ -38,7 +38,11 @@ function rowModel(data) {
 
 	this._menu = ko.dependentObservable(
 		{ read: function() {
-			return this.key() == 'new' ? 'newRowMenu' : 'rowMenu';
+			var val = this.key() == 'new' ? 'newRowMenu' : 'rowMenu';
+			if( val == 'newRowMenu' ) {
+				val = newRows.indexOf(this) === -1 ? 'unsavedRowMenu' : val;
+			} 
+			return val
 		}, 
 		deferEvaluation: true,
 	},

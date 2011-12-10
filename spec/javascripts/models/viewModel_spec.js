@@ -124,8 +124,8 @@ describe("vieModel can be initalized ", function() {
 			var field_1, field_2
 		    beforeEach(function() {
 		      	factoryList();
-				field_1 = fields()[0].name;
-				field_2 = fields()[1].name;
+				field_1 = fields()[0].to_param;
+				field_2 = fields()[1].to_param;
 				rows()[0][ field_1 ]('a');
 				rows()[1][ field_1 ]('b');
 				rows()[2][ field_1 ]('z');

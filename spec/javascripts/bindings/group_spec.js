@@ -6,10 +6,13 @@ describe("group stuff", function() {
 	ko.applyBindings(dataModel);
   });
   
-  	it("goal's field uses em", function() {
-		// currentView().goal().field
-	  expect(true).toBeFalsy();
-	});
+  it("renders the group's options that i specify", function() {
+    expect(true).toBeFalsy();
+  });
+  it("renders the grouping i specify", function() {
+    expect(false).toBeTruthy();
+  });
+
 	/*
 //		- viewModel.pivotedRows() used for currentView().goal().field
 		- currentView().pivotValues() used for currentView().reportOn (for pivot table)

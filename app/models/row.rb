@@ -10,13 +10,14 @@ class Row
   def initialize(attrs)
     # This hash holds all of the variables
     @row = {}
+    @store = attrs
 
-    unless attrs.class.name == 'Hash'
+    if attrs.class == String || attrs.class == Fixnum || attrs.class == Item  || attrs.class == List 
       assign_key(attrs)
     else
       @tempkey ||= attrs[:_tempkey] || attrs["_tempkey"]
-      @item ||= attrs[:item]
-      @list ||= attrs[:list]
+      @item = !attrs[:item].nil? && attrs[:item].class == Item ? attrs[:item] : nil
+      @list = !attrs[:list].nil? && attrs[:list].class == List ? attrs[:list] : nil
       @@fields ||= attrs[:fields]
       attrs[:key] = nil if attrs[:key] == 'new'
       attrs['key'] = nil if attrs['key'] == 'new'
@@ -25,7 +26,7 @@ class Row
     end
     
     if @item.nil?
-      return { :success => false, :errors => ['could not find key']}
+      return { :success => false, :errors => ['could not find key'], :data => @store }
     end
     
     # Seeting global variables which saves on reloading the list and the lists fields
@@ -56,7 +57,8 @@ class Row
       @row[field_name] = entry.data unless entry.nil?
       
       # If no other variables were passed with the initializing, ignores this
-      if attrs.class.name == 'Hash'
+      if attrs.class != String && attrs.class != Fixnum
+        
         # Only fills in new values if the fields value was passed when initializing AND it's different then the exsiting data
         if ( !attrs[field_name.to_s].nil? || !attrs[field_name].nil? || !attrs[field_name.to_s.gsub('_',' ')].nil? ) && attrs[field_name] != @row[field_name]
           @row[field_name] = attrs[field_name.to_s] ||  attrs[field_name] || attrs[field_name.to_s.gsub('_',' ')]
@@ -69,7 +71,7 @@ class Row
   
   def save
     if @item.nil?
-      return { :success => false, :errors => ['could not find key']}
+      return { :success => false, :errors => ['could not find key'], :data => @store, :r => @store['key']}
     end
     
     if @destroy
@@ -106,7 +108,7 @@ class Row
       success = success & save
       errors.push( {:field => f[:field].name, :value => f[:new_value], :message => 'DB Error on saving'} ) if !save
     end
-    ready = { :key => @item.id, :success => success, :list => self['list'], :error => errors, :updated => @changed_fields.map{ |f| {:field => f[:field].name, :field_type => f[:field].field_type, :value => f[:new_value]} } }
+    ready = { :key => @item.id, :success => success, :list => self['list'], :error => errors, :data => self }
     # Will need to return the _tempkey if the tempkey was passed to it
     ready[:_tempkey] = @tempkey unless @tempkey.nil?
     return ready
@@ -143,7 +145,7 @@ class Row
      @item ||= @list.items.new
    when 'String'
      if  /^[-+]?[0-9]+$/ === attrs
-       @item ||= Item.find_by_id(attrs)
+       @item ||= Item.find_by_id(attrs.to_i)
      else
        @list = List.find_by_name(attrs)
        @item = @list.items.new

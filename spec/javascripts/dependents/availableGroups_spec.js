@@ -2,9 +2,9 @@ describe("description", function() {
 	var field_1, field_2, field_3
 	beforeEach(function() {
 		factoryList();
-		field_1 = fields()[0].name
-		field_2 = fields()[1].name
-		field_3 = fields()[2].name
+		field_1 = fields()[0].to_param;
+		field_2 = fields()[1].to_param;
+		field_3 = fields()[2].to_param;
 	});
   it("returns all fields if no grouping is set", function() {
 	expect( viewModel.availableGroups().length ).toEqual(4);

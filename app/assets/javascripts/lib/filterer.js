@@ -1,5 +1,5 @@
 function filterer (filters, _rows, flat_fields) {
-	var flat_fields = flat_fields || fields().map( function(field) { return field.name});
+	var flat_fields = flat_fields || fields().map( function(field) { return field.to_param});
 	return ko.utils.arrayFilter(_rows, function(row) {
 		var passes = true;
 		for( var i = 0; i < filters.length; i++ ) {

@@ -24,7 +24,7 @@
 					<!-- ko if: $data.constructor.name == 'fieldModel' -->
 					<td>
 						<!-- ko if: $data.report().name != currentView().goal.field() || !currentView().goal.label() -->
-							<span data-bind="text: $parent[$data.name][$data.report().report]"></span>
+							<span data-bind="text: $parent[$data.to_param][$data.report().report]"></span>
 						<!-- /ko -->
 						<!-- ko if: $data.report().name == currentView().goal.field() && currentView().goal.label() -->
 							<span data-bind="text: ( $parent[currentView().goal.field()][ currentView().goal().field().report] + '/' + currentView().goal().value() + ' (' + Math.round($parent[currentView().goal.field()][ currentView().goal().field().report] / currentView().goal().value() * 1000 ) / 10 ) + '%)' "></span>
@@ -48,7 +48,7 @@
 				<!-- ko if: $data.id != undefined -->
 				<td>
 					<!-- ko if: $data.report().name != currentView().goal.field() || !currentView().goal.label() -->
-						<span data-bind="text: $parent[$data.name][$data.report().report]"></span>
+						<span data-bind="text: $parent[$data.to_param][$data.report().report]"></span>
 					<!-- /ko -->
 					<!-- ko if: $data.report().name == currentView().goal.field() && currentView().goal.label() -->
 						<span data-bind="text: ( $parent[currentView().goal.field()][ currentView().goal().field().report] + '/' + currentView().goal().value() + ' (' + Math.round($parent[currentView().goal.field()][ currentView().goal().field().report] / currentView().goal().value() * 1000 ) / 10 ) + '%)' "></span>

@@ -8,7 +8,7 @@ dataModel.savingRows = ko.dependentObservable(
 			);
 // var d = new Date();
 // console.log("saving rows: "+(d-t));
-			return results;
+			return ko.toJS(results);
 			
 	}, 
 	deferEvaluation: true

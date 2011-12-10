@@ -3,7 +3,7 @@ viewModel.groupedFields = ko.dependentObservable({
 // var t = new Date();
 
 		var _fields = fields(), grouped_fields = currentView().groups().map(function(elem) {return elem.field(); });
-		_fields = grouped_fields.map(function(elem) { return {name: elem, report: "_val" }; }).concat(_fields.filter(function(elem) { return  grouped_fields.indexOf(elem.name) === -1; }));
+		_fields = grouped_fields.map(function(elem) { return {name: elem, report: "_val" }; }).concat(_fields.filter(function(elem) { return  grouped_fields.indexOf(elem.to_param) === -1; }));
 
 		
 // var d = new Date();

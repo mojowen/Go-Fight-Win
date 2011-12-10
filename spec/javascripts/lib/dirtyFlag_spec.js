@@ -15,18 +15,18 @@ describe("Dirty flag as used with a rowModel object", function() {
   });
 
   it("Is flagged when a field updates", function() {
-	row[ fields()[0].name ]('different thing');
+	row[ fields()[0].to_param ]('different thing');
 	expect(row.dirtyFlag.isDirty()).toBeTruthy();
   });
   it("Can reset when passed a version of the inital state", function() {
-	row[ fields()[0].name ]('different thing');
+	row[ fields()[0].to_param ]('different thing');
 	row.dirtyFlag.reset( row )
 	expect( row.dirtyFlag.isDirty() ).toBeFalsy();
   });
   it("doesn't update if passed a different value then the inital state", function() {
-	row[ fields()[0].name ]('different thing');
+	row[ fields()[0].to_param ]('different thing');
 	var saving_me_now = ko.toJS(row);
-	row[ fields()[0].name ]('different thing entirely!');
+	row[ fields()[0].to_param ]('different thing entirely!');
 	row.dirtyFlag.reset( saving_me_now )
 	expect(row.dirtyFlag.isDirty()).toBeTruthy();
   });

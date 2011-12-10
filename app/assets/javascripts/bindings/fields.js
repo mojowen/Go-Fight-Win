@@ -3,9 +3,6 @@ ko.bindingHandlers.datepicker = {
 		var attempt = new Date( valueAccessor() );
 		var val = attempt == 'Invalid Date' ?  valueAccessor : function() { return valueAccessor().toDateString(); } ;
 		
-		ko.bindingHandlers.value.update(element, val); 
-	},
-	update: function(element, valueAccessor, allBindingsAccessor) { 
 		var attempt = new Date( valueAccessor() );
 		var val = attempt == 'Invalid Date' ?  valueAccessor : function() { return attempt.toDateString(); } ;
 

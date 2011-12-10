@@ -7,7 +7,7 @@ function saveAll (args) {
 		saving(false);
 		$.post(
 			_url+'/update',
-			"rows="+ko.toJSON(_rows)+"&views="+ko.toJSON(_views),
+			{rows: JSON.parse(ko.toJSON(_rows)), views: JSON.parse(ko.toJSON(_views)) },
 			function(data) {
 // var t = new Date();
 				dataModel.flatRows = rows().map( function(elem) { return {key: elem.key(), _tempkey: elem._tempkey }; });
@@ -24,17 +24,13 @@ function saveAll (args) {
 							if( typeof _rows[i]._tempkey != 'undefined' ) {
 								var row = rows.find_temp( parseInt(_rows[i]._tempkey) );
 								// Creating a comparison to reset the dirty flag
-								var flat = ko.toJS(row);
 								row.key( _rows[i].key );
 								row._tempkey = null;
+								_rows[i].data.key = _rows[i].key;
 							} else {
 								var row = rows.find( parseInt(_rows[i].key) );
-								var flat = ko.toJS(row);
 							}
-							for (var ii=0; ii < _rows[i].updated.length; ii++) {
-								// Updating teh comparison to what's returned from teh server
-								flat[_rows[i].updated[ii].field] = prepareValue(_rows[i].updated[ii].value, _rows[i].updated[ii].field_type, {no_ko: true});
-							};
+							var flat = new rowModel(_rows[i].data);
 							row.dirtyFlag.reset( flat );
 						}
 					};

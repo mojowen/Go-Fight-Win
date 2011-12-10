@@ -26,7 +26,7 @@ function appDataModel() {
 				temp_rows.push( new rowModel(_rows[i]) ); 
 			};
 			rows(temp_rows);
-			_rows = null;
+			// _rows = null;
 			temp_rows = null;
 		}
 		if( typeof _views != 'undefined' ) { 

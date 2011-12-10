@@ -2,7 +2,7 @@ function computer (nested, row) {
 	
 	// // calculating this row's values for each field
 	for( var iii = 0; iii < fields().length; iii++ ) {
-		k = fields()[iii].name;
+		k = fields()[iii].to_param;
 	
 		// Creating the grouped row objects to hold meta information
 		if( typeof( nested[k] ) == 'undefined' ) { nested[k] = {}; }

@@ -13,9 +13,11 @@
 	</tbody>
 	<tbody id="new_row" data-bind="template: { name: 'row', foreach: newRows }">
 	</tbody>
-	<tr class="add_rows">
-		<td data-bind="attr: {'colspan':fields().length+1 }" >
-			<span class="add_new_rows clickable" data-bind="text: newRows.label "></span>
-		</td>
-	</tr>
+	<tfoot id="new_row_menu">
+		<tr class="add_rows">
+			<td data-bind="attr: {'colspan':fields().length+1 }" >
+				<span class="add_new_rows clickable" data-bind="text: newRows.label "></span>
+			</td>
+		</tr>
+	</tfoot>
 </table>

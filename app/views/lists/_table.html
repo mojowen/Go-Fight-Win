@@ -1,18 +1,20 @@
-<div id="current_view" data-bind="with: currentView">
-	<div id="nav">
-		<span class="far_left">&#x21E4;</span>
-		<span class="left">&#x2190;</span>
-		<span data-bind="text: paged() +'/'+ dataModel.rowSize()"></span>
-		<span class="far_right">&#x21E5;</span>
-		<span class="right">&#x2192;</span>
-		
-	</div>
-</div>
+
 
 
 
 <table border="0" cellspacing="5" cellpadding="5" class="editor">
 	<thead>
+		<tr class="nav_bar">
+			<td data-bind="with: currentView, attr: {'colspan': fields().length +1 }">
+				<div id="nav">
+					<span class="far_left">&#x21E4;</span>
+					<span class="left">&#x2190;</span>
+					<span data-bind="text: paged() +'/'+ dataModel.rowSize()"></span>
+					<span class="far_right">&#x21E5;</span>
+					<span class="right">&#x2192;</span>
+				</div>
+			</td>
+		</tr>
 		<tr>
 			<!-- ko foreach: fields -->
 			<th>
@@ -24,15 +26,17 @@
 	</thead>
 	<tbody id="edit_rows" data-bind="template: {name: 'row', foreach: viewModel.renderingRows }">
 	</tbody>
+	<tfoot>
+		<tr class="nav_bar">
+			<td id="current_view" data-bind="with: currentView, attr: {'colspan': fields().length +1 }">
+				<div id="nav">
+					<span class="far_left">&#x21E4;</span>
+					<span class="left">&#x2190;</span>
+					<span data-bind="text: paged() +'/'+ dataModel.rowSize()"></span>
+					<span class="far_right">&#x21E5;</span>
+					<span class="right">&#x2192;</span>
+				</div>
+			</td>
+		</tr>
+	</tfoot>
 </table>
-
-<div id="current_view" data-bind="with: currentView">
-	<div id="nav">
-		<span class="far_left">&#x21E4;</span>
-		<span class="left">&#x2190;</span>
-		<span data-bind="text: paged() +'/'+ dataModel.rowSize()"></span>
-		<span class="far_right">&#x21E5;</span>
-		<span class="right">&#x2192;</span>
-		
-	</div>
-</div>

@@ -1,8 +1,6 @@
 .field_controller {
-	position: absolute;
 	margin: -22px 0 0 4px;
 	font-size: 18px;
-	display: none;
 	cursor: pointer;
 	-webkit-user-select: none;
 	-khtml-user-select: none;
@@ -10,15 +8,12 @@
 	-o-user-select: none;
 	user-select: none;
 }
-.editor tr:hover .field_controller {
-	display: block;
-}
 
 .field_controller span:hover, .cal.on {
 	color: #747474;
 }
 
-.editor, .editor td {
+.editor, .editor td, .editor td span, .editor, .editor td select   {
 	-webkit-user-select: none;
 	-khtml-user-select: none;
 	-moz-user-select: none;
@@ -26,8 +21,17 @@
 	user-select: none;
 }
 
+.editor, .editor td textarea{
+	-webkit-user-select: text;
+	-khtml-user-select: text;
+	-moz-user-select: text;
+	-o-user-select: text;
+	user-select: text;
+}
+
+
 .editor select {
-    border: none;
+    border: 0;
     -webkit-appearance: none;
     appearance: none;
     background: transparent;
@@ -41,14 +45,28 @@
 }
 
 
+
+
 /** Date picker specific **/
+.date_picker {
+	display: none;
+}
+
+
 .hasDatepicker {
 	width: 220px;
 	font-size: 10px;
 	background-color: white;
 	padding: 4px;
 	border: #747474 solid 1px;
+	display: block;
+	position: relative;
+	display: block;
+	float: left;
+	margin: 0 -80px -230px 0;
+	z-index: 10;
 }
+
 
 .date_picker .ui-datepicker-calendar { margin: 6px 0;}
 

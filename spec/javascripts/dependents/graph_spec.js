@@ -3,7 +3,7 @@ describe("dependent variable graph", function() {
   beforeEach(function() {
     	factoryList();
 
-		field_1 = fields()[0].name
+		field_1 = fields()[0].to_param;
 
   });
   it("is false if there's nothing to graph", function() {

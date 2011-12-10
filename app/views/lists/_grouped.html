@@ -82,10 +82,10 @@
 					<td>
 						<!-- ko if: $data.report != '_val' && !currentView().groups.pivot() && $data.report() != undefined -->
 							<!-- ko if: $data.report().name != currentView().goal.field() || !currentView().goal.label() -->
-								<span data-bind="text: viewModel.groupedRows()[$data.name][$data.report().report]"></span>
+								<span data-bind="text: viewModel.groupedRows()[$data.to_param][$data.report().report]"></span>
 							<!-- /ko -->
 							<!-- ko if: $data.report().name == currentView().goal().field() && currentView().goal.label() -->
-								<span data-bind="text: ( viewModel.groupedRows()[currentView().goal.field().name][ currentView().goal().field().report] + '/' + currentView().goal().value() + ' (' + Math.round(viewModel.groupedRows()[currentView().goal.field()][ currentView().goal().field().report] / currentView().goal().value() * 1000 ) / 10 ) + '%)' "></span>
+								<span data-bind="text: ( viewModel.groupedRows()[currentView().goal.field().to_param][ currentView().goal().field().report] + '/' + currentView().goal().value() + ' (' + Math.round(viewModel.groupedRows()[currentView().goal.field()][ currentView().goal().field().report] / currentView().goal().value() * 1000 ) / 10 ) + '%)' "></span>
 							<!-- /ko -->
 						<!-- /ko -->
 						<!-- ko if: $data.report == 'all' && currentView().groups.pivot() && currentView().reportOn() != undefined -->

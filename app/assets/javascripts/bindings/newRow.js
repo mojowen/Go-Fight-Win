@@ -8,31 +8,31 @@ newRows.label = ko.dependentObservable(
 newRows);
 
 function newRow_template() {
-	newRows.push( new rowModel({key: 'new', list: _list, _menu: 'newRowMenu'})  );
+	newRows.push( new rowModel({key: 'new', list: _list })  );
 	
 	$('#new_row textarea').live('paste', function (e) {
 		var the = $(this)
 		setTimeout(function() {
 			data = the.val().split(/\n/);
+			the.val('');
 			var start = the.index('#new_row textarea')
 			for (var i=0; i < data.length; i++) {
 				if( data[i].length > 0 ) {
-					if( typeof newRows()[i] == 'undefined' ) { newRows.push( new rowModel({key: 'new', list: _list, _menu: 'newRowMenu'})  ); }
+					if( typeof newRows()[i] == 'undefined' ) { newRows.push( new rowModel({key: 'new', list: _list })  ); }
 					fillRow( data[i], start,i);
 				}
 			};
-			$('#new_row tr:last textarea:first').focus();
 		}, 0);
 	});
 
-	$('#new_row textarea').live('keypress', function (e) {
+	$('#new_row textarea, #new_row select').live('keypress', function (e) {
 		if ( e.keyCode == 13 ) {
 			e.preventDefault();
 			for (var i=0; i < newRows().length; i++) {
 				addRow( newRows()[i] )
 			};
 			newRows.removeAll();
-			newRows.push( new rowModel({key: 'new', list: _list, _menu: 'newRowMenu'})  );
+			newRows.push( new rowModel({key: 'new', list: _list })  );
 			$('#new_row tr:last textarea:first').focus();
 		}
 	});
@@ -41,8 +41,7 @@ function newRow_template() {
 			addRow( newRows()[i] )
 		};
 		newRows.removeAll();
-		newRows.push( new rowModel({key: 'new', list: _list, _menu: 'newRowMenu'})  );
-		$('#new_row tr:last textarea:first').focus();
+		newRows.push( new rowModel({key: 'new', list: _list })  );
 	});
 
 	$('#new_row .add').live('click', function() {
@@ -56,18 +55,17 @@ function newRow_template() {
 }
 
 function addNewRow( row ) {
-	row._menu = 'rowMenu';
 	addRow( row );
 	newRows.remove(row);
 	if( newRows().length == 0 ) {
-		newRows.push( new rowModel({key: 'new', list: _list, _menu: 'newRowMenu'})  );
+		newRows.push( new rowModel({key: 'new', list: _list })  );
 	}
 	$('#new_row tr:last textarea:first').focus();
 }
 function removeNewRow(row) {
 	newRows.remove(row);
 	if( newRows().length == 0 ) {
-		newRows.push( new rowModel({key: 'new', list: _list, _menu: 'newRowMenu'})  );
+		newRows.push( new rowModel({key: 'new', list: _list })  );
 	}
 }
 

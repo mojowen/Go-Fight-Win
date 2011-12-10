@@ -3,7 +3,7 @@ describe("Mocking Ajax Calls", function() {
 	beforeEach(function() {
 			spyOn($, "post")
 			factoryList();
-			field_1 = fields()[0].name
+			field_1 = fields()[0].to_param
 	});
 	it("Shouldn't call values if no change", function() {
 			saveAll();
@@ -27,7 +27,8 @@ describe("Mocking Ajax Calls", function() {
 		rows.destroy( rows()[1] );
 		expect( rows()[1].key() ).toEqual(key);
 		saveAll();
-		var returned = '{"rows": [ {"key": "'+key+'","success": true,"list": "'+_list+'","error": [], "updated":[], "_destroy":"true" } ], "views":[] }';
+		var rdata = JSON.stringify( ko.toJS(rows()[1]) );
+		var returned = '{"rows": [ {"key": "'+key+'","success": true,"list": "'+_list+'","error": [], "data": '+rdata+', "_destroy":"true" } ], "views":[] }';
 		$.post.mostRecentCall.args[2](JSON.parse(returned));
 		expect( rows()[1].key() ).not.toEqual(key);
 	});
@@ -36,7 +37,8 @@ describe("Mocking Ajax Calls", function() {
 		rows()[1][field_1]('different');
 		expect(rows()[1].dirtyFlag.isDirty()).toBeTruthy();
 		saveAll();
-		var returned = '{"rows": [ {"key": "'+key+'","success": true,"list": "'+_list+'","error": [], "updated":[{"field": "'+field_1+'", "value": "different"}] } ], "views":[] }';
+		var rdata = JSON.stringify( ko.toJS(rows()[1]) );
+		var returned = '{"rows": [ {"key": "'+key+'","success": true,"list": "'+_list+'","error": [], "data": '+rdata+' } ], "views":[] }';
 		$.post.mostRecentCall.args[2](JSON.parse(returned));
 		expect(rows()[1].dirtyFlag.isDirty()).toBeFalsy();
 	});
@@ -44,17 +46,19 @@ describe("Mocking Ajax Calls", function() {
 		var key = rows()[1].key()
 		rows()[1][field_1]('different');
 		expect(rows()[1].dirtyFlag.isDirty()).toBeTruthy();
-
+	
 		// Does not reset when passed incorrect value
 		saveAll();
-		var returned = '{"rows": [ {"key": "'+key+'","success": true,"list": "'+_list+'","error": [], "updated":[{"field":"'+field_1+'", "value":"different"}] } ], "views":[] }';
+		var rdata = JSON.stringify( ko.toJS(rows()[1]) );
+		var returned = '{"rows": [ {"key": "'+key+'","success": true,"list": "'+_list+'","error": [], "data": '+rdata+' } ], "views":[] }';
 		rows()[1][field_1]('different again');
 		$.post.mostRecentCall.args[2](JSON.parse(returned));
 		expect(rows()[1].dirtyFlag.isDirty()).toBeTruthy();
 		
 		// When passed correct value, resets
 		saveAll();
-		var returned = '{"rows": [ {"key": "'+key+'","success": true,"list": "'+_list+'","error": [], "updated":[{"field":"'+field_1+'", "value":"different again"}] } ], "views":[] }';
+		var rdata = JSON.stringify( ko.toJS(rows()[1]) );
+		var returned = '{"rows": [ {"key": "'+key+'","success": true,"list": "'+_list+'","error": [], "data": '+rdata+' } ], "views":[] }';
 		$.post.mostRecentCall.args[2](JSON.parse(returned));
 		expect(rows()[1].dirtyFlag.isDirty()).toBeFalsy();
 	});
@@ -62,7 +66,8 @@ describe("Mocking Ajax Calls", function() {
 		var new_row = new rowModel({key: 'new', list: _list});
 		addRow( new_row );
 		saveAll();
-		var returned = '{"rows": [ {"key": "6969","success": true,"list": "'+_list+'","error": [], "updated":[], "_tempkey":"'+new_row._tempkey+'" } ], "views":[] }';
+		var rdata = JSON.stringify( ko.toJS(rows()[1]) );
+		var returned = '{"rows": [ {"key": "6969","success": true,"list": "'+_list+'","error": [], "data": '+rdata+', "_tempkey":"'+new_row._tempkey+'" } ], "views":[] }';
 		$.post.mostRecentCall.args[2](JSON.parse(returned));
 		expect(rows()[rows().length-1].key()).not.toEqual('new');
 		expect(rows()[rows().length-1]._tempkey).toBeNull();
@@ -97,48 +102,54 @@ describe("Mocking Ajax Calls", function() {
 		var key = rows()[1].key()
 		rows()[1][field_1]('different');
 		saveAll();
-		var returned = '{"rows": [ {"key": "'+key+'","success": true,"list": "'+_list+'","error": [], "updated":[{"field":"'+field_1+'", "value":"different"}] } ], "views":[] }';
+		var rdata = JSON.stringify( ko.toJS(rows()[1]) );
+		var returned = '{"rows": [ {"key": "'+key+'","success": true,"list": "'+_list+'","error": [], "data": '+rdata+' } ], "views":[] }';
 		rows()[1][field_1]('different again');
 		var new_view = new viewModel({id: 'new', name: 'new name'});
 		addView(new_view);
 		$.post.mostRecentCall.args[2](JSON.parse(returned));
-		expect($.post.mostRecentCall.args[1].search('different again')).not.toEqual(-1);
-		expect($.post.mostRecentCall.args[1].search('new name')).not.toEqual(-1);
+		expect($.post.mostRecentCall.args[1].rows[0][field_1]).toEqual('different again');
+		expect($.post.mostRecentCall.args[1].views[0]['name']).toEqual('new name');
 	});
-
-
+	
+	
 	// need to write tests
-
+	
 	// returns 500
 	// returns errors
 	// test a timeout?
-
-	// returns 100% great
 	
+	// returns 100% great
 	// ~~~~~~ Still working on thes
 	it("returns an error for row save", function() {
 		var key = rows()[1].key()
 		rows()[1][field_1]('different');
 		saveAll();
-		var returned = '{"rows": [ {"key": "'+key+'","success": true,"list": "'+_list+'","error": [], "updated":[{"field":"'+field_1+'", "value":"different"}] } ], "views":[] }';
+		var rdata = JSON.stringify( ko.toJS(rows()[1]) );
+		var returned = '{"rows": [ {"key": "'+key+'","success": true,"list": "'+_list+'","error": [], "data": '+rdata+' } ], "views":[] }';
 		$.post.mostRecentCall.args[2](JSON.parse(returned)); 
 		// Need to do something here
 	});
-
-
+	
+	
 	it("returns a lot of shit", function() {
 	});
+	
 	it("returns an error for a row save", function() {
 	  // will need to look this one up
 	});
+	
 	it("times out", function() {
+		expect(false).toBeTruthy();
 	});
+	
 	it("posts bad JSON", function() {
 	});
+	
 	it("handles error ", function() {
 	// Need to do something here
 	});
-
-
-
+	
+	
+	
 });

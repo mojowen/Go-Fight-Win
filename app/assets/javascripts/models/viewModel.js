@@ -97,12 +97,12 @@ function viewModel( data ) {
 // Sorting
 	this.sorts = ko.observableArray([]);
 	this.sortRows = function(temp_field) {
-		var t = new Date();
+// var t = new Date();
 		var _sorts = ko.toJS( this.sorts() );
 		if( typeof temp_field != 'undefined' ) { 
 			_sorts.push( { field: temp_field, direction: 'ASC' } ); 
 		}
-		var flat_fields = fields().map(function(elem) { return elem.name;} );
+		var flat_fields = fields().map(function(elem) { return elem.to_param;} );
 		var sort_match = _sorts.filter( function(elem) { return flat_fields.indexOf( elem.field ) > -1; });
 		if( sort_match.length > 0 ) {
 			rows().sort(
@@ -134,8 +134,8 @@ function viewModel( data ) {
 				}
 			);
 			rows.valueHasMutated();
-			var d = new Date();
-			console.log('sorting: '+(d-t))
+// var d = new Date();
+// console.log('sorting: '+(d-t))
 		}
 	}
 	this.addSort = function(sort) {
@@ -200,7 +200,7 @@ function viewModel( data ) {
 			if( currentView().goal().field() == undefined ) {
 				return '';
 			} else {
-				return currentView().goal().field().name;
+				return currentView().goal().field().to_param;
 			}
 		},
 	deferEvaluation: true 
