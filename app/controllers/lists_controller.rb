@@ -24,6 +24,12 @@ class ListsController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @rows }
+      format.xls do
+          render :xls => @rows,
+                         :columns => @fields.map{ |f| f.to_param },
+                         :headers => @fields.map{ |f| f.name }
+        end
+      
     end
 
   end

@@ -3,7 +3,7 @@ Gfw::Application.routes.draw do
   # For authentication and logging in
   services = %w[twitter google facebook ~]
   # For services that orgs can't overwrige
-  administrative = %w[users authentications]
+  administrative = %w[users authentications assets]
   
   match '/auth/:provider/callback' => 'authentications#create', :constraints => lambda{|req| services.include?(req.params[:provider]) },  :as => 'new_auth'
   resources :authentications
@@ -24,11 +24,11 @@ Gfw::Application.routes.draw do
   match '/:org_id/~/invite/:invite_token' => 'memberships#invite', :constraints => lambda {|req| /^[-+]?[0-9]+$/ === req.params[:org_id]}, :as => 'invite_membership'
 
   #List management routes
-  match '/:org_name/:list_name/update' => 'lists#update', :constraints => lambda{|req| !services.include?(req.params[:list_name]) }, :as => 'list_update', :via => [:put, :post]
-  match '/:org_name/:list_name' => 'lists#show', :constraints => lambda{|req| !services.include?(req.params[:list_name]) }, :as => 'list'
+  match '/:org_name/:list_name/update' => 'lists#update', :constraints => lambda{|req| !services.include?(req.params[:list_name]) && !administrative.include?(req.params[:org_name]) }, :as => 'list_update', :via => [:put, :post]
+  match '/:org_name/:list_name' => 'lists#show', :constraints => lambda{|req| !services.include?(req.params[:list_name]) && !administrative.include?(req.params[:org_name])}, :as => 'list'
   
   #Views with list
-  match '/:org_name/:list_name/:view_name' => 'lists#show', :constraints => lambda{|req| !services.include?(req.params[:list_name]) }, :as => 'view'
+  match '/:org_name/:list_name/:view_name' => 'lists#show', :constraints => lambda{|req| !services.include?(req.params[:list_name]) && !administrative.include?(req.params[:org_name])}, :as => 'view'
   match '/:org_id/:list_id/:view_slug' => 'lists#show', :constraints => lambda {|req| /^[-+]?[0-9]+$/ === req.params[:org_id] && /^[-+]?[0-9]+$/ === req.params[:list_id] }, :as => 'view_discrete'
   
 end

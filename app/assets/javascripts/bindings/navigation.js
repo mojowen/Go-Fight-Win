@@ -139,7 +139,9 @@ function keyboardShortcuts (argument) {
 	$('#switch').live('click',function() {
 		notify('Loading...');
 		currentView().groups.on( currentView().groups.on() ? false : true );
-		clear();
+	});
+	$('#xls').live('click',function() {
+		window.open( 	$(this).attr('url'),'_blank','toolbar=1,location=1,directories=1,status=1,menubar=1,scrollbars=1,resizable=1'); 
 	});
 	$('.goal_clear').live('click',function(){
 		currentView().goal().value(undefined);

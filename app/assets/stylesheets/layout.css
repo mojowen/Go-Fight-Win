@@ -15,7 +15,7 @@ body.big_header {
 	z-index: 9;
 }
 
-#switch {
+#footer {
 	position: fixed;
 	bottom: 0;
 	right: 20px;

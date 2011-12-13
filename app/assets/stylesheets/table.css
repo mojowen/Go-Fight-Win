@@ -17,10 +17,13 @@ input#current_view_name.unsaved {
 	font-style: italic;
 }
 
-span.add_view, span.new_view {
+span.add_view, span.new_view, span.clear_view {
 	color: #fff;
 	font-weight: bold;
 	cursor: pointer;
+}
+span.add_view:hover, span.new_view:hover, span.clear_view:hover {
+	color: #226;
 }
 
 span.save {
@@ -76,7 +79,7 @@ h1.title:hover {
 }
 
 
-#switch {
+.f_tab {
 	background-color: #226;
 	box-shadow: 1px 1px 10px #226;
 	text-align: center;
@@ -84,9 +87,11 @@ h1.title:hover {
 	cursor: pointer;
 	padding: 4px 24px 0;
 	font-size: 30px;
+	float: left;
+	margin: 0 10px;
 }
 
-#switch:hover {
+.f_tab:hover {
 	background-color: #622;
 	text-decoration: underline;
 }

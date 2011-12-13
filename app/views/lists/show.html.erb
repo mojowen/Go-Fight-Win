@@ -47,6 +47,6 @@
 </script>
 
 <% content_for :footer do %>
-	<div id="switch" data-bind="text: viewModel.switchText">
-	</div>
+	<div id="switch" class="f_tab" data-bind="text: viewModel.switchText"></div>
+	<div id="xls" class="f_tab" url="<%= list_path(@list.org.to_param, @list.to_param)+'.xls' %>">xls</div>
 <% end %>
