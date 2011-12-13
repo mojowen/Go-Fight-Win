@@ -49,7 +49,7 @@ function views_template() {
 		currentView().move('end');
 	});
 	$('.save_ready').live('click', function() {
-		saveAll();
+		saveAll({once: true});
 	});
 	$('.title').live('click',function() {
 		setCurrentView(new viewModel());

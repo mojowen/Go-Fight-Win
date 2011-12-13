@@ -22,7 +22,7 @@ function grouper (_rows) {
 		var positions = [];
 		for (var ii=0; ii < flat_groups.length; ii++) {
 			var field = flat_groups[ii], value = typeof row[ field ] == 'function' ? row[ field ]() : row[ field ] ;
-			if( value == '' ) { value = '--blank'; }
+			if( value == '' || value == 'null' ) { value = '--'; }
 			if( value.constructor.name == 'Date' ) { value = (value.getMonth()+1)+'/'+value.getDate()+'/'+value.getFullYear().toString().slice(-2); }
 			// creating unique arrays
 			if( typeof uniques[ii] == 'undefined' ) { uniques[ii] = [] }

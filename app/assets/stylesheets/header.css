@@ -61,6 +61,7 @@ a#logo {
 	font-weight: bold;
 	margin: 0 10px 0 0;
 	cursor: pointer;
+	width: 16px;
 }
 #msg div#container .clear:hover {
 	text-decoration: underline;

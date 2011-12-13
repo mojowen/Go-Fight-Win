@@ -146,6 +146,7 @@ class Row
    when 'String'
      if  /^[-+]?[0-9]+$/ === attrs
        @item ||= Item.find_by_id(attrs.to_i)
+       new_var 'key', attrs.to_i
      else
        @list = List.find_by_name(attrs)
        @item = @list.items.new

@@ -9,4 +9,15 @@ function table_template() {
 			rows.remove(row); 
 		}
 	});
+	$('.grid th').live('click',function() {
+		var ctx = ko.contextFor(this);
+		var field = ctx.$data, direction = $(this).data('direction');
+		if( direction == null ) {
+			direction = 'ASC';
+		} else {
+			direction = direction == 'ASC' ? 'DESC' : 'ASC';
+		}
+		$(this).data('direction',direction);
+		currentView().sortRows({field: field.to_param, direction: direction});
+	});
 }

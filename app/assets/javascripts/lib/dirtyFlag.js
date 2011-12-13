@@ -4,7 +4,8 @@ ko.dirtyFlag = function(root, isInitiallyDirty) {
     var _initialState = ko.observable( root._flatten('json') );
     var _isInitiallyDirty = ko.observable(isInitiallyDirty);
 
-    result.isDirty = ko.dependentObservable(function() { 
+    result.isDirty = ko.dependentObservable(function() {
+		// would add to the undo list
         return _isInitiallyDirty() || _initialState() !== root._flatten('json');
     });
 
@@ -14,6 +15,9 @@ ko.dirtyFlag = function(root, isInitiallyDirty) {
 			_isInitiallyDirty(false);
 		}
     };
+	result.undo = function() {
+		console.log(_initialState());
+	}
 
     return result;
 };

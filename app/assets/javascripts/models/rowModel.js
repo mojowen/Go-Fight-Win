@@ -21,6 +21,7 @@ function rowModel(data) {
 		var changed_fields = new Object;
 		for (var i=0; i < fields().length; i++) {
 			var field_name = fields()[i].to_param;
+			if( init[field_name] == 'Invalid Date' ) { init[field_name] = "null"; }
 			changed_fields[ field_name ] = init[field_name];
 		};
 		if( typeof this._destroy != 'undefined' ) { changed_fields._destroy = true; }

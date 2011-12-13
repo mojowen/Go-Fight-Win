@@ -16,8 +16,12 @@
 
 
 	<div id="data" data-bind="visible: !currentView().groups.on()" >
-		<%= render :partial => 'table' %>
-		<%= render :partial => 'newRow' %>
+		<div id="table" class="table">
+			<%= render :partial => 'table' %>
+		</div>
+		<div id="new_rows" class="table">
+			<%= render :partial => 'newRow' %>
+		</div>
 	</div>
 	<div id="analyze" data-bind="visible: currentView().groups.on()">
 		<%= render :partial => 'row' %>

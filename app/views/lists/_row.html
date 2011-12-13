@@ -5,12 +5,12 @@
 		<!-- ko if: $data.constructor.name == 'rowModel' -->
 			<tr>
 				<!-- ko foreach: fields -->
-				<td>
+				<td class="cell">
 					<!-- ko template: {name: 'row'+$data.field_type } -->
 					<!-- /ko -->
 				</td>
 				<!-- /ko -->
-				<td data-bind="template: {name: $data._menu()} ">
+				<td class="menu" data-bind="template: {name: $data._menu()} ">
 				</td>
 			</tr>
 		<!-- /ko -->
@@ -35,14 +35,14 @@
 	<textarea data-bind="value: $parent[$data.to_param], valueUpdate: 'afterkeydown'"></textarea>
 </script>
 <script type="text/html" id="rownumber">
-	<textarea class="number" data-bind="value: $parent[$data.to_param], valueUpdate: 'afterkeydown'"></textarea>
+	<textarea class="number has_controls" data-bind="value: $parent[$data.to_param], valueUpdate: 'afterkeydown'"></textarea>
 	<div class="number_controls field_controller"><span class="number_up">&#x2191;</span><span class="number_down">&#x2193;</span></div>
 </script>
 <script type="text/html" id="rowselect">
 	<select data-bind="value: $parent[$data.to_param], options: [''].concat($data.field_options)"></select>
 </script>
 <script type="text/html" id="rowdate">
-	<textarea class="date" data-bind="datepicker: $parent[$data.to_param](), valueUpdate: 'afterkeydown'"></textarea>	
+	<textarea class="date has_controls" data-bind="datepicker: $parent[$data.to_param](), valueUpdate: 'afterkeydown'"></textarea>	
 	<div class="date_controls field_controller"><span class="cal">&#x1f4c5;</span><div class="date_picker"></div></div>
 </script>
 <script type="text/html" id="rowsuggest">

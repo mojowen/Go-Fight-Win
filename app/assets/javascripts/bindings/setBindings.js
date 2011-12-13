@@ -33,3 +33,15 @@ function writeConsole(content) {
  )
  top.consoleRef.document.close()
 }
+
+// function doublepress(event, callback ) {
+// 	if( doublepress.tracked == event.keyCode ) {
+// 		doublepress.tracked = false;
+// 		console.log('double');
+// 		event.preventDefault();
+// 	} else {
+// 		doublepress.tracked = event.keyCode;
+// 		window.setTimeout(function() { doublepress.tracked = false; console.log('off'); }, 200);
+// 	}
+// }
+// doublepress.tracked = false;

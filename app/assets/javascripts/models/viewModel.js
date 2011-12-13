@@ -17,14 +17,21 @@ function viewModel( data ) {
 		if( loc < 0 ) { 
 			this.paged(0);
 			return false;
-		} else if ( loc > dataModel.rowSize() ) {
-			this.paged( dataModel.rowSize() - this.visible() );
+		} else if ( loc > dataModel.rowSize() - this.visible() ) {
+			this.paged( dataModel.rowSize() - this.visible() > 0 ?  dataModel.rowSize() - this.visible() : 0 );
 			return false;
 		} else {
 			this.paged( loc );
 			return true
 		}
 	}
+	this.top = ko.dependentObservable({ 
+		read: function() {
+			return dataModel.rowSize() < this.visible() ? dataModel.rowSize() : this.visible();
+		},
+		deferEvaluation: true 
+	}, 
+	this);
 
 	this.move = function(dir) {
 		switch(dir) {
@@ -100,20 +107,48 @@ function viewModel( data ) {
 // var t = new Date();
 		var _sorts = ko.toJS( this.sorts() );
 		if( typeof temp_field != 'undefined' ) { 
-			_sorts.push( { field: temp_field, direction: 'ASC' } ); 
+			if( typeof temp_field == 'object' ){
+				if( temp_field.constructor.name == 'Array' ){
+					for (var i = temp_field.length - 1; i >= 0; i--){
+						_sorts.push( temp_field[i] ); 
+					};
+				} else {
+					_sorts.push( { field: temp_field.field, direction: temp_field.direction } ); 
+				}
+			} else {
+				_sorts.push( { field: temp_field, direction: 'ASC' } ); 
+			}
 		}
 		var flat_fields = fields().map(function(elem) { return elem.to_param;} );
-		var sort_match = _sorts.filter( function(elem) { return flat_fields.indexOf( elem.field ) > -1; });
+		var sort_match = _sorts.filter( function(elem) { 
+			var indx = flat_fields.indexOf( elem.field );
+			if( indx > -1 ) { 
+				elem._field = fields()[indx];
+				return true;
+			} else {
+				return false;
+			}
+		});
 		if( sort_match.length > 0 ) {
 			rows().sort(
 				function(a,b) {
 					for( var i = 0; i < sort_match.length; i++ ) {
-						var sort_field = sort_match[i]['field'], sort_direction = sort_match[i]['direction'];
+						var sort_field = sort_match[i]['field'], sort_direction = sort_match[i]['direction'], _field =  sort_match[i]['_field'];
 						// Something to look up and reference when the field type is something weird would be helpful
+
 						a_val = a[ sort_field ]() == undefined ? '' : a[ sort_field ]();
 						b_val = b[ sort_field ]() == undefined ? '' : b[ sort_field ]();
+
 						a_val = typeof a_val == 'string' ? a_val.toLowerCase() : a_val;
 						b_val = typeof b_val == 'string' ? b_val.toLowerCase() : b_val;
+
+						if( _field.field_type == 'date' ){
+							var a_attempt = new Date(a_val), b_attempt = new Date(b_val);
+							a_val =  a_attempt != 'Invalid Date' ? a_attempt :  new Date('1/1/1001');
+							b_val = b_attempt != 'Invalid Date' ? b_attempt : new Date('1/1/1001');
+						}
+						
+						
 
 						if( sort_field == 'key' ){
 							if( a_val == 'new' && b['key']() == 'new' ) { 

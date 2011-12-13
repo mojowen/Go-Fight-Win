@@ -10,9 +10,10 @@ function good_other_bindings (argument) {
 
 $.fn.msg = function(msg,speed) {
 	// should append the msg
-	var $this = $(this);
-	$this.text(msg);
-	$this.parent().find('.clear').text('x').show();
+	var $this = $(this), $clear = $this.parent().find('.clear');
+	$this.text(msg).show();
+	$clear.text('x').show();
+	setTimeout(function() { $this.slideUp('slow');  $clear.text(''); }, 1400);
 }
 
 function notify(msg, speed) {

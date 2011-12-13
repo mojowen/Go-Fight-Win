@@ -1,95 +1,258 @@
-.field_controller {
-	margin: -22px 0 0 4px;
-	font-size: 18px;
-	cursor: pointer;
-	-webkit-user-select: none;
-	-khtml-user-select: none;
-	-moz-user-select: none;
-	-o-user-select: none;
-	user-select: none;
+/** Views **/
+
+input#current_view_name {
+	background: none;
+	border: 0;
+	color: #fff;
+	font-size: 16px;
 }
 
-.field_controller span:hover, .cal.on {
+input#current_view_name.untracked {
 	color: #747474;
+	font-weight: normal;
+	opacity: .7;
 }
 
-.editor, .editor td, .editor td span, .editor, .editor td select   {
-	-webkit-user-select: none;
-	-khtml-user-select: none;
-	-moz-user-select: none;
-	-o-user-select: none;
-	user-select: none;
+input#current_view_name.unsaved {
+	font-style: italic;
 }
 
-.editor, .editor td textarea{
-	-webkit-user-select: text;
-	-khtml-user-select: text;
-	-moz-user-select: text;
-	-o-user-select: text;
-	user-select: text;
+span.add_view, span.new_view {
+	color: #fff;
+	font-weight: bold;
+	cursor: pointer;
 }
 
-
-.editor select {
-    border: 0;
-    -webkit-appearance: none;
-    appearance: none;
-    background: transparent;
-	padding: 0 0 0 8px;
+span.save {
+	font-size: 24px;
+	float: right;
+	margin: -23px 30px 0 0;
+	color: white;
+	font-family: 'Tienne', serif;
 }
-
-.editor tr:hover select {
-    -webkit-appearance: menulist;
-    appearance: menulist;
-    background-color: #fff
+span.save_ready {
+	font-style: italic;
+	text-decoration: underline;
+	cursor: pointer;
 }
 
 
+#views {
+	display: none;
+	color: #747474;
+	margin-left: 204px;
+}
+
+#views .remove_view {
+	cursor: pointer;
+}
+
+#views h4 {
+	font-family: 'Droid Sans Mono', sans-serif;
+	font-size: 16px;
+	color: #747474;
+	display: inline-block;
+}
+
+#views .view {
+	margin: 0px 8px;
+	color: #fff;
+	cursor: pointer;
+}
+#views .view:hover, #views .new_view:hover {
+	text-decoration: underline;
+}
+#views .current_view {
+	color: #747474;
+	text-decoration: underline;
+}
+#header:hover #views {
+	display: block;
+}
+
+h1.title:hover {
+	text-decoration: underline;
+	cursor: pointer;
+}
 
 
-/** Date picker specific **/
-.date_picker {
+#switch {
+	background-color: #226;
+	box-shadow: 1px 1px 10px #226;
+	text-align: center;
+	color: white;
+	cursor: pointer;
+	padding: 4px 24px 0;
+	font-size: 30px;
+}
+
+#switch:hover {
+	background-color: #622;
+	text-decoration: underline;
+}
+
+
+
+#nav {
+	font-size: 26px;
+	min-width: 420px;
+	text-align: center;
+	margin-left: -20px;
+	width: 100%;
+}
+
+#nav .paging {
+	font-size: 10px;
+}
+
+.right, .far_right {
+	margin: 0 20px;
+	float: right;
+}
+
+.left, .far_left {
+	margin: 0 20px;
+	float: left;
+}
+
+th {
+	text-align: center;
+}
+
+.editor tr.nav_bar td, .editor tr.nav_bar:hover td{ background-color: #fff; }
+
+.editor textarea {
+	resize: none;
+	height: 1.2em;
+	padding: 9px 0 25px;
+	text-align: center;
+	overflow: hidden;
+	outline: none;
+	background: none;
+	border: 0;
+	width: 100%;
+	box-sizing: border-box;
+	-o-box-sizing: border-box;
+	-icab-box-sizing: border-box;
+	-khtml-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	cursor: pointer;
+}
+
+/* EXPERIMENT */
+
+.editor tr:hover td.selected, .editor tr td.selected {
+	background-color: #99C4D2 !important;
+}
+
+
+
+/*.editor textarea:focus, #edit_rows textarea:focus {
+	outline: 2px auto white;
+}
+.editor tr:nth-child(even) textarea:focus {
+	outline: 2px auto #ddd;
+}
+.editor tr:nth-child(even):hover textarea:focus {
+	outline: 2px auto #fff;
+}
+*/
+.editor tr:nth-child(even) td {
+    background-color: #ddd;
+}
+
+.editor tr td.cell {
+	width: 160px;
+	padding: 0;
+	height: 38px;
+}
+.editor tr:hover td {
+    background-color: lightblue;
+}
+.editor tr td textarea:focus, .editor tr td select:focus {
+	background-color: white;
+	color: black;
+	margin: 0;
+	width: 100%;
+	border: 1px #99C4D2 dotted;
+	cursor: text;
+}
+
+
+#new_row {
+	border: 1px solid #999;
+	min-width: 166px;
+}
+
+#new_row_menu, #new_row_menu tr {
+	border: 0;
+}
+.editor tr.add_rows td {
+	text-align: center;
+	border: 0;
+	background-color: #fff;
+	cursor: pointer;
+}
+.editor tr.add_rows:hover td {
+	text-decoration: underline;
+	font-weight: bold;
+}
+
+
+/** Goal **/
+#goal {
+	margin: 30px 0;
+	width: 500px;
+	min-height: 50px;
+}
+
+#goal_box {
 	display: none;
 }
-
-
-.hasDatepicker {
-	width: 220px;
-	font-size: 10px;
-	background-color: white;
-	padding: 4px;
-	border: #747474 solid 1px;
+#goal_box input {
+	width: 50px;
+}
+#goal_box.is_goal {
 	display: block;
-	position: relative;
-	display: block;
+}
+.goal_open {float: left; margin: 0 30px;}
+.goal_open.is_goal, .goal_open.is_goal:hover { cursor: default; text-decoration: none; color: #747474}
+
+/** Grouping **/
+#group {
+	margin: 30px 0;
+}
+#group h2 {
 	float: left;
-	margin: 0 -80px -230px 0;
-	z-index: 10;
+	margin: 0 30px;
+}
+#group .menu {
+	margin: 10px 0 10px 150px;
+}
+
+h2.groups_full { cursor: default; text-decoration: none; color: #747474}
+
+table#grouped_table {
+	margin: 0 100px;
+}
+
+table#grouped_table tbody tr.total td:first-child {
+	font-weight: bold;
+	text-align: right;
 }
 
 
-.date_picker .ui-datepicker-calendar { margin: 6px 0;}
-
-.date_picker .ui-datepicker-calendar tr td { background-color: #fff; }
-.date_picker .ui-datepicker-calendar tr:hover td { background-color: #ddd; }
-.date_picker .ui-datepicker-calendar td, .ui-datepicker-title { text-align: center; }
-.ui-datepicker-prev { float: left; }
-.ui-datepicker-next { float: right; }
-
-.date_picker .ui-datepicker-calendar tr td.ui-datepicker-today { background-color: #747474; }
-td.ui-datepicker-current-day { border: 1px dashed #333; }
-
-/** Autocomplete **/
-
-ul.ui-autocomplete {
-	background-color: #fff;
-	list-style: square;
-	border: #747474 solid 1px;
-	width: 100px;
-	padding: 10px 0 10px 34px;
+/*** Graph **/
+#graph h2 {
+	float: left;
+	margin: 0 42px 0 30px;
 }
 
-ul.ui-autocomplete li.ui-menu-item {
-	cursor: pointer;
-	color: #333;
+#graph select {
+	margin: 10px 30px;
+}
+
+#graph #canvas {
+	margin: 30px 80px;
 }

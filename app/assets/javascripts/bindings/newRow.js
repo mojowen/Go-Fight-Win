@@ -6,6 +6,14 @@ newRows.label = ko.dependentObservable(
 	deferEvaluation: true
 },
 newRows);
+newRows.plurl = ko.dependentObservable(
+	{ read: function() {
+		if( newRows().length > 1 ) { return 's' }
+		else { return '' }
+	}, 
+	deferEvaluation: true
+},
+newRows);
 
 function newRow_template() {
 	newRows.push( new rowModel({key: 'new', list: _list })  );
@@ -28,30 +36,32 @@ function newRow_template() {
 	$('#new_row textarea, #new_row select').live('keypress', function (e) {
 		if ( e.keyCode == 13 ) {
 			e.preventDefault();
-			for (var i=0; i < newRows().length; i++) {
-				addRow( newRows()[i] )
-			};
-			newRows.removeAll();
-			newRows.push( new rowModel({key: 'new', list: _list })  );
-			$('#new_row tr:last textarea:first').focus();
+			addAllRows();
+			$('#new_row tr:last td:first').find('textarea, select').focus();
 		}
 	});
 	$('.add_rows').live('click',function() {
-		for (var i=0; i < newRows().length; i++) {
-			addRow( newRows()[i] )
-		};
-		newRows.removeAll();
-		newRows.push( new rowModel({key: 'new', list: _list })  );
+		addAllRows();
 	});
 
 	$('#new_row .add').live('click', function() {
 		var row = ko.dataFor(this);
 		addNewRow( row );
+		notify('one new row added');
 	});
 	$('#new_row .remove').live('click', function() {
 		var row = ko.dataFor(this);
 		removeNewRow(row);
 	});
+	function addAllRows() {
+		var adding = newRows().length;
+		for (var i=0; i < adding; i++) {
+			addRow( newRows()[i] );
+		};
+		newRows.removeAll();
+		newRows.push( new rowModel({key: 'new', list: _list })  );
+		notify(adding+ ' new rows added');
+	}
 }
 
 function addNewRow( row ) {
@@ -60,7 +70,6 @@ function addNewRow( row ) {
 	if( newRows().length == 0 ) {
 		newRows.push( new rowModel({key: 'new', list: _list })  );
 	}
-	$('#new_row tr:last textarea:first').focus();
 }
 function removeNewRow(row) {
 	newRows.remove(row);
@@ -74,7 +83,7 @@ function fillRow(rowData,x,y) {
 	var y = typeof y == 'undefined' ? 0 : y;
 	for (var i=0; i < split.length; i++) {
 		if( typeof fields()[x+i] != 'undefined' ) {
-			newRows()[y][fields()[x+i].name](split[i])
+			newRows()[y][fields()[x+i].to_param](split[i])
 		}
 	};
 }
