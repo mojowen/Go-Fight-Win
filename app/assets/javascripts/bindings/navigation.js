@@ -141,15 +141,9 @@ function keyboardShortcuts (argument) {
 		currentView().groups.on( currentView().groups.on() ? false : true );
 		clear();
 	});
-	$('.goal_open').live('click',function(){
-		$(this).addClass('is_goal');
-		$('#goal_box').show();
-	});
 	$('.goal_clear').live('click',function(){
-		$('#goal_box').hide();
 		currentView().goal().value(undefined);
 		currentView().goal().field(undefined);
-		$('.goal_open').removeClass('is_goal');
 	});
 	
 	

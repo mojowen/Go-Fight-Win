@@ -202,13 +202,9 @@ th {
 
 /** Goal **/
 #goal {
-	margin: 30px 0;
+	margin: 20px 50px 50px;
 	width: 500px;
 	min-height: 50px;
-}
-
-#goal_box {
-	display: none;
 }
 #goal_box input {
 	width: 50px;
@@ -219,40 +215,3 @@ th {
 .goal_open {float: left; margin: 0 30px;}
 .goal_open.is_goal, .goal_open.is_goal:hover { cursor: default; text-decoration: none; color: #747474}
 
-/** Grouping **/
-#group {
-	margin: 30px 0;
-}
-#group h2 {
-	float: left;
-	margin: 0 30px;
-}
-#group .menu {
-	margin: 10px 0 10px 150px;
-}
-
-h2.groups_full { cursor: default; text-decoration: none; color: #747474}
-
-table#grouped_table {
-	margin: 0 100px;
-}
-
-table#grouped_table tbody tr.total td:first-child {
-	font-weight: bold;
-	text-align: right;
-}
-
-
-/*** Graph **/
-#graph h2 {
-	float: left;
-	margin: 0 42px 0 30px;
-}
-
-#graph select {
-	margin: 10px 30px;
-}
-
-#graph #canvas {
-	margin: 30px 80px;
-}

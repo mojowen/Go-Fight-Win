@@ -52,7 +52,6 @@ function viewModel( data ) {
 	
 	this.page(paged);
 
-
 // Filtering
 	this.filters = ko.observableArray([]);
 	this.addFilter = function(filter) {
@@ -76,9 +75,9 @@ function viewModel( data ) {
 		this.groups.push( new groupModel( group ) );
 	}
 	if( typeof view.groups != 'undefined' && view.groups != null ) {
-		if( typeof view.groups == 'object' && view.groups.length > 0) {
+		if( typeof view.groups == 'object' ) {
 			var t_groups = [];
-			for (var i=0; i < view.groups.length; i++) {
+			for (var i in view.groups) {
 				t_groups.push( new groupModel( view.groups[i] ) );
 			};
 			this.groups(t_groups);
@@ -86,15 +85,7 @@ function viewModel( data ) {
 			this.groups.push( new groupModel( view.groups ) );
 		}
 	} 
-	this.availableGroupsRender = function(field) {
-		var returnme = [];
-		if( field() == undefined || field() == '' ) {
-			returnme = viewModel.availableGroups();
-		} else {
-			returnme = [field].concat(viewModel.availableGroups());
-		}
-		return returnme.sort();
-	}
+
 	var pivot = typeof view.pivot == 'undefined' ? false : view.pivot;
 	this.groups.pivot = ko.observable(pivot);
 	var groups_on = typeof view.groups_on == 'undefined' ? false : view.groups_on;
@@ -204,27 +195,25 @@ function viewModel( data ) {
 	}
 	this.slug = view.slug
 
-//  For the pivot table and groups
-	view.report_on = view.report_on == null ? undefined : view.report_on;
-	this.reportOn = ko.observable(view.report_on);
 // Goals
-	this.goal = ko.observable({field: ko.observable(''), value: ko.observable('')});
+	this.goal = ko.observable({field: ko.observable(undefined), value: ko.observable('')});
 	if( typeof view.goal != 'undefined' ) {
 		if(  typeof view.goal.value != 'undefined' && !isNaN(parseInt(view.goal.value)) ) {
 			this.goal().value(view.goal.value);
 		}
 		if(  typeof view.goal.field != 'undefined' ) {
-			this.goal().field(view.goal.field);
+			var pos = viewModel.pivotedRows().map(function(elem) {return elem.label+elem.name}).indexOf( view.goal.field.label+view.goal.field.name);
+			this.goal().field = pos !== -1 ? ko.observable( viewModel.pivotedRows()[pos] ) : ko.observable( undefined ); 
 		}
 	}
 
 
 	this.goal.label = ko.dependentObservable({ 
 		read: function() {
-			if( currentView().goal().field() == undefined || currentView().goal().value() == '' || currentView().goal().value() <= 0 || isNaN(parseInt(currentView().goal().value())) ) {
+			if( this.goal().field() == undefined || this.goal().value() == '' || this.goal().value() <= 0 || isNaN(parseInt(this.goal().value())) ) {
 				return false;
 			} else {
-				return currentView().goal().field().label+' '+currentView().goal().value()
+				return 'goal '+this.goal().field().long_label
 			}
 		},
 		deferEvaluation: true 
@@ -232,34 +221,41 @@ function viewModel( data ) {
 	this);
 	this.goal.field = ko.dependentObservable({ 
 		read: function() {
-			if( currentView().goal().field() == undefined ) {
+			if( this.goal().field() == undefined ) {
 				return '';
 			} else {
-				return currentView().goal().field().to_param;
+				return this.goal().field().to_param;
 			}
 		},
 	deferEvaluation: true 
 	}, 
 	this);
+	
 	this.pivotValues = ko.dependentObservable({ 
 		read: function() {
-			// if( currentView().goal.label() ) { 
-			// 	var select = ko.toJS(currentView().goal().field);
-			// 	select.label = 'goal'
-			// 	select.long_label = select.label+': '+select.name
-			// 	return [ select ].concat(viewModel.pivotedRows());
-			// } else { 
-				
-				var options = viewModel.pivotedRows();
-
-				if( currentView().reportOn() != undefined ) { options.push(currentView().reportOn());}
-				
-				return options;
-			// } 
+			var options = viewModel.pivotedRows();
+			if( this.goal.label() ) {
+				_goal = ko.toJS(this.goal().field() );
+				_goal.long_label = this.goal.label();
+				_goal.label = 'goal';
+				options.push(_goal);
+			}
+			return options; 
 		},
 	deferEvaluation: true 
 	}, 
 	this);
+
+	//  For the pivot table and groups
+	if( view.report_on != null ) {
+		var pos = this.pivotValues().map(function(elem) { return elem.name+elem.label}).indexOf( view.report_on.name+view.report_on.label ),
+			report_on = view.report_on;
+		
+		report_on = pos === -1 ? undefined : this.pivotValues()[pos];
+		this.reportOn = ko.observable(report_on);
+	} else {
+		this.reportOn = ko.observable(undefined);
+	}
 
 // Flatten and Dirty Flag
 	this._flatten = function(return_type) {
@@ -269,8 +265,8 @@ function viewModel( data ) {
 			returnable.visible = this.visible,
 			returnable.paged = this.paged,
 			returnable.report_on = this.reportOn,
-			returnable.pivot = this.groups.pivot,
-			returnable.groups_on = this.groups.on;
+			returnable.pivot = this.groups.pivot(),
+			returnable.groups_on = this.groups.on();
 
 		if( typeof this._destroy != 'undefined' ) { returnable._destroy = true; }
 

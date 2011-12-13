@@ -26,7 +26,7 @@ function appDataModel() {
 				temp_rows.push( new rowModel(_rows[i]) ); 
 			};
 			rows(temp_rows);
-			// _rows = null;
+			_rows = null;
 			temp_rows = null;
 		}
 		if( typeof _views != 'undefined' ) { 
@@ -44,6 +44,10 @@ function appDataModel() {
 		}
 		if( rows().length >= _size ) { dataModel.loaded = true; }
 		else { loadAll(); }
+		// if( typeof _operators != 'undefined' ) {
+		// 	this.operators = _operators;
+		// 	// _operators = null;
+		// }
 	}
 	setCurrentView = function(newView) {
 		if( newView.constructor.name == 'viewModel' ) {

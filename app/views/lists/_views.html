@@ -1,5 +1,6 @@
 <div id="current_view" data-bind="with: currentView">
-	<span class="add_view" data-bind="visible: views.indexOf($data) === -1, valueUpdate: 'afterkeydown'">+</span>
+	<span class="add_view" data-bind="visible: views.indexOf($data) === -1">+</span>
+	<span class="clear_view" data-bind="visible: views.indexOf($data) !== -1">x</span>
 	<input id="current_view_name" data-bind="value: name, css:{ 'unsaved' : $data.dirtyFlag.isDirty() && views.indexOf($data) !== -1, 'untracked': views.indexOf($data) === -1  }, disable: views.indexOf($data) === -1 " >
 
 	

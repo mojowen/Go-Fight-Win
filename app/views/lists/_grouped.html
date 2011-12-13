@@ -1,6 +1,6 @@
 <div id="goal">
-	<h2 class="goal_open clickable" data-bind="css: { 'is_goal' : currentView().goal.label() != false }">+Goal</h2>
-	<div id="goal_box" data-bind="css: { 'is_goal' : currentView().goal.label() != false }">
+	<h2 class="goal_open" >+Goal</h2>
+	<div id="goal_box">
 
 		<input data-bind="
 			value: currentView().goal().value,
@@ -16,28 +16,42 @@
 	</div>
 </div>
 
-<div id="group">
-	<h2 data-bind="css: { 'groups_full' : currentView().groups().length >= 2 }" >+Groups</h2>
-	<h3 >
-		<span data-bind="visible: currentView().groups().length == 0 ">
-			add a grouping by clicking on a field name.
-		</span>		
-		<span data-bind="visible: currentView().groups().length > 0 ">
-			grouped by 
-		</span>
-		<!-- ko foreach: currentView().groups() -->
-			<span data-bind="visible: currentView().groups.indexOf($data) == 1 "> and </span>
+<div id="group" class="area">
+	<h2>+Groups</h2>
 
-			<span data-bind="text: $data.field "></span>
-			(<span class="remove_group clickable">–</span>)
+	<div id="available_groups" data-bind="if: currentView().groups().length > 0">
+
+		<p>
+			<em>grouped by</em>
+		</p>
+
+		<!-- ko foreach: currentView().groups() -->
+			<div class="added_group">
+				<span data-bind="text: $data.name "></span>
+				(<span class="remove_group clickable">–</span>)
+			</div>
 		<!-- /ko -->
-	</h3>
+	</div>
+	
+	<div id="available_groups" data-bind="if: viewModel.availableGroups().length > 0">
+		<p>
+			<em>click to group</em>
+		</p>
+		<!-- ko foreach: viewModel.availableGroups() -->
+
+			<span class="add_group" data-bind="text: $data.name"></span>
+
+		<!-- /ko -->
+	</div>
 	<div class="menu">
-		<span data-bind="visible: currentView().groups().length == 2 && !currentView().groups.pivot()" class="pivot clickable">pivot?</span>
-		<span data-bind="visible: currentView().groups().length == 2 && currentView().groups.pivot()" class="unpivot clickable">unpivot</span>
+		<input type="checkbox" data-bind="checked: currentView().groups.pivot, visible: currentView().groups().length == 2">
+		<span data-bind="visible: currentView().groups().length == 2" >pivot</span>
+
 		<span data-bind="visible: currentView().groups.pivot()">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+
 		<span data-bind="visible: currentView().groups().length == 2 && currentView().groups.pivot()" class="swap clickable">swap</span>
 		<span data-bind="visible: currentView().groups.pivot()">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+
 		<!-- ko if: currentView().pivotValues().length > 0 -->
 		<select data-bind="
 			value: currentView().reportOn,
@@ -47,7 +61,7 @@
 			visible: currentView().groups.pivot"></select>
 		<!-- /ko -->
 	</div>
-
+<!-- css: {'group_field': $data.constructor.name == 'fieldModel', 'clickable' : currentView().groups().length <= 2 } -->
 	<table id="grouped_table" border="0" cellspacing="5" cellpadding="5" data-bind="visible: currentView().groups.on">
 		<thead>
 			<tr>
@@ -55,17 +69,16 @@
 
 				<th>
 					<!-- ko if: $data.report != '_val' -->
-						<span data-bind="text: $data.name, css: {'group_field': $data.constructor.name == 'fieldModel', 'clickable' : currentView().groups().length <= 2 }"></span><br />
-						<!-- ko if: $data.fieldReports != undefined  && ( !currentView().goal.label()|| currentView().goal().field().name != $data.name  ) -->
+						<span data-bind="text: $data.name"></span><br />
+						<!-- ko if: $data.fieldReports != undefined -->
 						<select data-bind="
 							value: $data.report,
 							options: $data.fieldReports,
 							optionsText: 'label',
-							optionsVal: 'report'
+							optionsVal: 'report',
+							visible: $data.fieldReports().length > 1
 							"></select>
-						<!-- /ko -->
-						<!-- ko if: currentView().goal.label() && ( currentView().goal().field() == undefined || currentView().goal().field().name == $data.name )   -->
-							<span data-bind="text: 'goal: '+currentView().goal.label() "></span>
+						<span data-bind="text: '('+$data.fieldReports()[0].label +')', visible: $data.fieldReports().length == 1"></span>
 						<!-- /ko -->
 					<!-- /ko -->
 				</th>
@@ -81,32 +94,14 @@
 				<!-- ko foreach: viewModel.groupedFields -->
 					<td>
 						<!-- ko if: $data.report != '_val' && !currentView().groups.pivot() && $data.report() != undefined -->
-							<!-- ko if: $data.report().name != currentView().goal.field() || !currentView().goal.label() -->
 								<span data-bind="text: viewModel.groupedRows()[$data.to_param][$data.report().report]"></span>
-							<!-- /ko -->
-							<!-- ko if: $data.report().name == currentView().goal().field() && currentView().goal.label() -->
-								<span data-bind="text: ( viewModel.groupedRows()[currentView().goal.field().to_param][ currentView().goal().field().report] + '/' + currentView().goal().value() + ' (' + Math.round(viewModel.groupedRows()[currentView().goal.field()][ currentView().goal().field().report] / currentView().goal().value() * 1000 ) / 10 ) + '%)' "></span>
-							<!-- /ko -->
 						<!-- /ko -->
 						<!-- ko if: $data.report == 'all' && currentView().groups.pivot() && currentView().reportOn() != undefined -->
-
-							<!-- ko if: currentView().reportOn().label != 'goal' -->
 								<span data-bind="text: viewModel.groupedRows()._uniques[1][viewModel.groupedFields().indexOf($data)-1][currentView().reportOn().name][currentView().reportOn().report]"></span>
-							<!-- /ko -->
-							<!-- ko if: currentView().reportOn().label == 'goal' -->
-								<span data-bind="text: ( viewModel.groupedRows()._uniques[1][viewModel.groupedFields().indexOf($data)-1][currentView().reportOn().name][currentView().reportOn().report] + '/' + currentView().goal().value() + ' (' + Math.round(viewModel.groupedRows()._uniques[1][viewModel.groupedFields().indexOf($data)-1][currentView().reportOn().name][currentView().reportOn().report] / currentView().goal().value() * 1000 ) / 10 ) + '%)' "></span>
-							<!-- /ko -->
-
 						<!-- /ko -->
+
 						<!-- ko if: $data.name == 'Totals' && currentView().reportOn() != undefined -->
-
-						<!-- ko if: currentView().reportOn().label != 'goal' -->
 							<span data-bind="text: viewModel.groupedRows()[currentView().reportOn().name][currentView().reportOn().report]"></span>
-						<!-- /ko -->
-						<!-- ko if: currentView().reportOn().label == 'goal' -->
-							<span data-bind="text: ( viewModel.groupedRows()[currentView().reportOn().name][currentView().reportOn().report] + '/' + currentView().goal().value() + ' (' + Math.round(viewModel.groupedRows()[currentView().reportOn().name][currentView().reportOn().report] / currentView().goal().value() * 1000 ) / 10 ) + '%)' "></span>
-						<!-- /ko -->
-
 						<!-- /ko -->
 					</td>
 				<!-- /ko -->

@@ -41,6 +41,9 @@
 	<% unless @current_view.nil? %>
 	var _currentView = <%= raw @current_view.to_json %>;
 	<% end %>
+	<% unless @list.operators.nil? %>
+	var _operators = <%= raw @list.operators.to_json %>;
+	<% end %>
 </script>
 
 <% content_for :footer do %>

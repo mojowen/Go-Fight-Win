@@ -22,11 +22,6 @@ function views_template() {
 		try { window.history.pushState('', "Title", _url); } catch(e) { }
 	});
 
-
-	$('.add_group').live('click', function() {
-		console.log('happne');
-		if( currentView().groups().length < fields().length ) { currentView().addGroup(); }
-	});
 	$('.remove_group').live('click',function() { 
 		var group = ko.dataFor(this);
 		currentView().groups.remove(group);

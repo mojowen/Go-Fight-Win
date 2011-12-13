@@ -7,6 +7,8 @@ class List < ActiveRecord::Base
   validates_uniqueness_of :name, :scope => :org_id  
   validates_presence_of :name
   
+  serialize :operators
+  
   def to_param
     self.name.downcase.gsub(' ','_')
   end

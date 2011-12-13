@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111205203933) do
+ActiveRecord::Schema.define(:version => 20111213063610) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -69,6 +69,7 @@ ActiveRecord::Schema.define(:version => 20111205203933) do
     t.integer  "parent_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "operators"
   end
 
   add_index "lists", ["name", "org_id"], :name => "index_lists_on_name_and_org_id", :unique => true

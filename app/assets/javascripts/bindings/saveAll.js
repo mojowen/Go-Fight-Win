@@ -31,7 +31,12 @@ function saveAll (args) {
 								var row = rows.find( parseInt(_rows[i].key) );
 							}
 							var flat = new rowModel(_rows[i].data);
-							row.dirtyFlag.reset( flat );
+							if( !row.dirtyFlag.reset( flat ) ) {
+								console.log('flat row')
+								console.log(flat._flatten('json'))
+								console.log('row row')
+								console.log(row._flatten('json'))
+							};
 						}
 					};
 					for (var i=0; i < _views.length; i++) {
@@ -40,7 +45,12 @@ function saveAll (args) {
 							views.remove( view );
 						} else {
 							var flat = new viewModel(_views[i].data);
-							view.dirtyFlag.reset( flat );
+							if( !view.dirtyFlag.reset( flat ) ) {
+								console.log('flat view')
+								console.log(flat._flatten('json'))
+								console.log('view view')
+								console.log(view._flatten('json'))
+							}
 							view.id = _views[i].id;
 							view.slug = _views[i].slug;
 						}

@@ -1,7 +1,5 @@
 function grouper (_rows) {
-	var groups = currentView().groups();
-	var flat_fields = fields().map( function(field) { return field.to_param});
-	var flat_groups = groups.map( function(groups) { return groups.field()}).filter(function(elem) { return elem != undefined && elem != '' });
+	var groups = ko.toJS(currentView().groups());
 
 	var grouped = { rows: [] }, uniques = [];
 
@@ -20,10 +18,33 @@ function grouper (_rows) {
 		grouped = computer(grouped, row);
 		
 		var positions = [];
-		for (var ii=0; ii < flat_groups.length; ii++) {
-			var field = flat_groups[ii], value = typeof row[ field ] == 'function' ? row[ field ]() : row[ field ] ;
+		for (var ii=0; ii < groups.length; ii++) {
+			var field = groups[ii]['field'], 
+				value = typeof row[ field ] == 'function' ? row[ field ]() : row[ field ],
+				options = groups[ii]['options'],
+				option = groups[ii]['option'],
+				field_type = groups[ii]['field_type'];
 			if( value == '' || value == 'null' ) { value = '--'; }
 			if( value.constructor.name == 'Date' ) { value = (value.getMonth()+1)+'/'+value.getDate()+'/'+value.getFullYear().toString().slice(-2); }
+			
+			if( field_type == 'date' ) {
+				var the_date = new Date(value);
+				switch( option ) {
+					case 'day': 
+						val = the_date.toDateString();
+						break;
+					case 'week': 
+						val = 'Week of '+new Date(the_date.getFullYear(), the_date.getMonth(), the_date.getDate() - the_date.getDay() ).toDateString();
+						break;
+					case 'month': 
+						val = $.datepicker._defaults.monthNamesShort[the_date.getMonth()]+the_date.getFullYear().toString().slice(-2);
+						break;
+					case 'year': 
+						val = the_date.getFullYear().toString();
+						break;
+				}
+			}
+
 			// creating unique arrays
 			if( typeof uniques[ii] == 'undefined' ) { uniques[ii] = [] }
 		
@@ -43,7 +64,7 @@ function grouper (_rows) {
 				eval('grouped.rows'+depth+'= {_value: value, rows: [], _field: field}');
 				nested = eval('grouped.rows'+depth);
 			} 
-			if( ii == flat_groups.length ) {
+			if( ii == groups.length ) {
 				nested.rows.push(row);
 			}
 			nested = computer(nested, row);

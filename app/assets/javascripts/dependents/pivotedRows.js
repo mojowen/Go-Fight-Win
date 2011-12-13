@@ -1,33 +1,29 @@
 viewModel.pivotedRows = ko.dependentObservable({ 
 	read: function() {
-			// var flat_groups = currentView().groups().map( function(groups) { return groups.field()}).filter(function(elem) { return elem != undefined && elem != '' });
-			// var _fields = fields().filter(function(elem) { return flat_groups.indexOf(elem.name ) === -1;  });
 
 				var _fields = fields();
 				var options = [];
-				if( currentView().goal().field() != undefined ) { options.push(currentView().goal().field());}
+
 				for (var i=0; i < _fields.length; i++) {
-					options = options.concat(_fields[i].fieldReports())
+					var _field = _fields[i];
+					if( typeof _operators != 'undefined' && typeof _operators.goalables != 'undefined' ) {
+						var pos = _operators.computables.map(function(elem) {return elem.field }).indexOf(_field.to_param);
+						if( pos !== -1 ) {
+							for (var i=0; i < _operators.goalables[pos].operations.length; i++) {
+								var report = _operators.goalables[pos].operations[i].report,
+									label = _operators.goalables[pos].operations[i].label == undefined ? report : _operators.goalables[pos].operations[i].label;
+								options.push( {label: label, name: _field.to_param, report: report } );
+							};
+						}
+						for (var i=0; i < options.length; i++) {
+							options[i]['long_label'] = options[i].label+' '+options[i].name.replace(/_/g, ' ')+'s';
+							options[i]['long_label'] = options[i]['long_label'].toLowerCase();
+						};
+					} else {
+						options = options.concat(_field.fieldReports())
+					}
 				};
 
-			// if(  currentView().goal().field() != '' && currentView().goal().field() != undefined &&  options.indexOf(currentView().goal().field()) === -1  ){
-			// 	var options_mapped = options.map(function(elem) { return elem.long_label; });
-			// 	var pos = options_mapped.indexOf(currentView().goal().field().long_label);
-			// 	if( pos !== -1 ){
-			// 		currentView().goal().field( options[ pos ] );
-			// 	} else {
-			// 		options.push( currentView().goal().field() );
-			// 	}
-			// }
-			// if(  currentView().reportOn() != undefined && options.indexOf(currentView().reportOn()) === -1  ){
-			// 	var options_mapped = options.map(function(elem) { return elem.long_label; });
-			// 	var pos = options_mapped.indexOf(currentView().reportOn().long_label);
-			// 	if( pos !== -1 ){
-			// 		currentView().reportOn( options[ pos ] );
-			// 	} else {
-			// 		options.push( currentView().reportOn() );
-			// 	}
-			// }
 			return options;
 	},
 	deferEvaluation: true 

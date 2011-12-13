@@ -1,5 +1,5 @@
-<div id="graph">
-	<h2 data-bind="css: { 'groups_full' : viewModel.graph() && viewModel.graph.need_select() }" >+Graph</h2>
+<div id="graph" class="area">
+	<h2 >+Graph</h2>
 	<h3 data-bind="visible: !viewModel.graph()">nothing to graph, add a goal or group to see something</h3>
 	<!-- ko if: currentView().pivotValues().length > 0 -->
 	<select data-bind="

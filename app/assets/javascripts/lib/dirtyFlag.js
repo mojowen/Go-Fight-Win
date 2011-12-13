@@ -13,10 +13,13 @@ ko.dirtyFlag = function(root, isInitiallyDirty) {
 		if ( now._flatten('json') === root._flatten('json') ) {
 			_initialState( root._flatten('json') );
 			_isInitiallyDirty(false);
+			return true;
+		} else {
+			return false;
 		}
     };
 	result.undo = function() {
-		console.log(_initialState());
+		// console.log(_initialState());
 	}
 
     return result;

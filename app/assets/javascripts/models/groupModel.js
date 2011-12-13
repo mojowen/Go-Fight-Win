@@ -1,16 +1,24 @@
 function groupModel(data) {
-	var field, options;
+	var field, option, options = [];
 	
 	if( typeof data == 'string' ) {
 		field = data;
 		options = '';
 	} else {
 		field = data.field || '';
-		options = data.options || '';
+		option = data.option || '';
 	}
+	var pos = fields().map( function(el) { return el.to_param }).indexOf(field),
+		_field = pos !== -1 ? fields()[pos] : '';
+	
+	// if( _field.field_type == 'date' ) {
+	// 	this.options = ['day','week','month','year'];
+	// }
 
 	this.field = ko.observable(field);
-	this.options = ko.observable(options);
+	this.name = _field.name;
+	this.field_type = _field.field_type;
+	this.option = this.options != undefined && this.options != [] ? ko.observable( this.options[this.options.indexOf(option)] ) : ko.observable(option);
 
 	return this;
 

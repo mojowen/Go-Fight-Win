@@ -1,0 +1,98 @@
+/** Grouping **/
+#group {
+	margin: 30px 0;
+}
+#group h2 {
+	float: left;
+	margin: 0 30px;
+}
+#group .menu {
+	padding: 40px 0 0 0;
+	margin: 0 0 40px 100px;
+	clear: both;
+	font-size: 16px;
+	color: #747474;
+	font-weight: bold;
+}
+
+h2.groups_full { cursor: default; text-decoration: none; color: #747474}
+
+table#grouped_table {
+	margin: 0 100px;
+}
+
+table#grouped_table tbody tr.total td:first-child {
+	font: italic;
+	text-align: right;
+	border: none;
+}
+/*** Graph **/
+#graph h2 {
+	float: left;
+	margin: 0 42px 0 30px;
+}
+
+#graph select {
+	margin: 10px 30px;
+}
+
+#graph #canvas {
+	margin: 30px 80px;
+}
+
+.add_group {
+	border: #226 2px solid;
+	border-radius: 4px;
+	padding: 4px;
+	color: white;
+	background-color: #226;
+	cursor: pointer;
+	font-size: 16px;
+	margin: 10px;
+}
+
+#available_groups {
+	margin: 50px 0 50px 100px;
+}
+
+.add_group:hover {
+	background-color: lightblue;
+	border: lightblue 2px solid;
+	color: #333;
+}
+
+.added_group {
+	width: auto;
+	padding: 10px;
+	font-size: 20px;
+	color: white;
+	border: 2px #622 solid;
+	border-radius: 4px;
+	background-color: #622;
+	text-align: center;
+	margin: 10px;
+	float: left;
+	cursor: default;
+}
+
+
+table#grouped_table {
+	padding: 4px;
+	text-align: center;
+	font-size: 14px;
+}
+
+table#grouped_table td {
+	border: #ddd 2px solid;
+}
+
+
+table#grouped_table td.label {
+	border: #fff 2px solid;
+	border-right: #ddd 2px solid;
+	font-weight: bold;
+}
+
+table#grouped_table tfoot td, table#grouped_table td.total {
+	border: #fff 2px solid;
+}

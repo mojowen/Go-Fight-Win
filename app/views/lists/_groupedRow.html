@@ -5,7 +5,7 @@
 	<!-- ko if: $data.rows.length !=  0 && !currentView().groups.pivot() -->
 			<tr>
 				<!-- ko if: typeof $data._value != 'undefined' -->
-				<td data-bind="attr: {'rowspan': $data.rows.filter(function(elem) { return elem != undefined; }).length + 1 } ">
+				<td class="label label_first" data-bind="attr: {'rowspan': $data.rows.filter(function(elem) { return elem != undefined; }).length + 1 } ">
 					<span data-bind="text: $data._value"></span>
 				</td>
 				<!-- /ko -->
@@ -39,7 +39,7 @@
 		<tr>
 
 			<!-- ko if: typeof $data._value != 'undefined' -->
-			<td >
+			<td class="label">
 				<span data-bind="text: $data._value"></span>
 			</td>
 			<!-- /ko -->
@@ -72,7 +72,7 @@
 				<!-- /ko -->
 				
 				<!-- ko if: $data.name == 'Totals' && currentView().reportOn() != undefined -->
-				<td>
+				<td class="total">
 					<!-- ko if: currentView().reportOn().label != 'goal' -->
 						<span data-bind="text: $parent[currentView().reportOn().name][currentView().reportOn().report] "></span>
 					<!-- /ko -->
