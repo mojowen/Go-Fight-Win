@@ -7,6 +7,11 @@ function fieldModel(data) {
 	if( typeof field.id == 'undefined' ||typeof field.name == 'undefined' ) { throw new Error("mising some vital field data"); }
 	this.list = field.list;
 	this.name = field.name.capitalize();
+	if( typeof field.plural != 'undefined' ) {
+		this.plural = field.plural.capitalize();
+	} else {
+		this.plural = field.name.capitalize();
+	}
 	this.to_param = field.name.replace(/ /,'_');
 	this.id = field.id;
 
@@ -41,7 +46,7 @@ function fieldModel(data) {
 				}
 			}
 			for (var i=0; i < options.length; i++) {
-				options[i]['long_label'] = options[i].label+' '+options[i].name+'s';
+				options[i]['long_label'] = options[i].label+' '+this.plural;
 			};
 			return options;
 

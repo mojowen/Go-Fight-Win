@@ -46,7 +46,7 @@ class List < ActiveRecord::Base
   def fields(loaded_parents = nil)
     parents = loaded_parents.nil? ? self.parents : loaded_parents
     fields = Field.where('fields.list_id IN(?) AND fields.active =?', parents, true)
-    fields.reverse
+    fields.each{ |f| f[:plural] = f.name.pluralize }.reverse
     fields.instance_eval do
       def new(args ={} )
         args[:list] = @@list

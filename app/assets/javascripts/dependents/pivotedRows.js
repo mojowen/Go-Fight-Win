@@ -9,15 +9,15 @@ viewModel.pivotedRows = ko.dependentObservable({
 					if( typeof _operators != 'undefined' && typeof _operators.goalables != 'undefined' ) {
 						var pos = _operators.goalables.map(function(elem) {return elem.field }).indexOf(_field.to_param);
 						if( pos !== -1 ) {
-							for (var i=0; i < _operators.goalables[pos].operations.length; i++) {
-								var report = _operators.goalables[pos].operations[i].report,
-									label = _operators.goalables[pos].operations[i].label == undefined ? report : _operators.goalables[pos].operations[i].label;
+							for (var ii=0; ii < _operators.goalables[pos].operations.length; ii++) {
+								var report = _operators.goalables[pos].operations[ii].report,
+									label = _operators.goalables[pos].operations[ii].label == undefined ? report : _operators.goalables[pos].operations[ii].label;
 								options.push( {label: label, name: _field.to_param, report: report } );
 							};
 						}
-						for (var i=0; i < options.length; i++) {
-							options[i]['long_label'] = options[i].label+' '+options[i].name.replace(/_/g, ' ')+'s';
-							options[i]['long_label'] = options[i]['long_label'].toLowerCase();
+						for (var ii=0; ii < options.length; ii++) {
+							options[ii]['long_label'] = options[ii].label+' '+_field.plural;
+							options[ii]['long_label'] = options[ii]['long_label'].toLowerCase();
 						};
 					} else {
 						options = options.concat(_field.fieldReports())
