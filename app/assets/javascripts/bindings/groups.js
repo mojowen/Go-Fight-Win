@@ -13,7 +13,7 @@ function groups_template (argument) {
 	$('.remove_group').live('click', function(event) {
 		var group = ko.dataFor(this);
 		currentView().groups.remove(group);
-		var sort = currentView().sorts().filter(function(elem) { return elem.field == group.filed })[0];
+		var sort = currentView().sorts().filter(function(elem) { return elem.field == group.field })[0];
 		currentView().sorts.remove(sort);
 	});
 	$('.swap').live('click', function(event) {

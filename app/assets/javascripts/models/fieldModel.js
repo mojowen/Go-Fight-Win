@@ -47,6 +47,7 @@ function fieldModel(data) {
 			}
 			for (var i=0; i < options.length; i++) {
 				options[i]['long_label'] = options[i].label+' '+this.plural;
+				options[i]['long_label'] = options[i]['long_label'].capitalize();
 			};
 			return options;
 

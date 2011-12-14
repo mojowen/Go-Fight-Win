@@ -14,7 +14,7 @@ viewModel.pivotedRows = ko.dependentObservable({
 									label = _operators.goalables[pos].operations[ii].label == undefined ? report : _operators.goalables[pos].operations[ii].label;
 
 									var long_label = label+' '+_field.plural;
-									long_label = long_label.toLowerCase();
+									long_label = long_label.capitalize();
 									options.push( {label: label, name: _field.to_param, report: report, long_label: long_label } );
 							};
 						}
