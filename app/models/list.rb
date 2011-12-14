@@ -19,6 +19,10 @@ class List < ActiveRecord::Base
   def fix_name
     self.name = self.name.split(' ').map {|w| w.capitalize }.join(' ') unless self.name.nil?
   end
+  def has_children
+    children = List.find_all_by_parent_id(self.id)
+    return children.empty? ? false : children
+  end
   
     
   # Defining fields here to include all fields that are related to this list or any other lists
@@ -43,6 +47,7 @@ class List < ActiveRecord::Base
         return Field.new(args)
       end
     end
+    fields.push( Field.new(:name => 'children', :field_type => 'children' ) ) if self.has_children
     return fields
   end
   

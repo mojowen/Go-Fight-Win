@@ -5,6 +5,7 @@ class Row
     @@fields = nil
     @@list = nil
     @@list_parents = nil
+    @@list_has_children = false
   end
   
   def initialize(attrs)
@@ -31,20 +32,27 @@ class Row
     
     # Seeting global variables which saves on reloading the list and the lists fields
     @@list ||= @list
+    
     @@list_parents ||= @list.parents
     @@fields ||= @list.fields(@@list_parents)
+    @@list_has_children ||=  @list.has_children
     
     if @@list != @list
       # Resets class variables if the list has changed
       @@list = @list
       @@list_parents = @list.parents
       @@fields = @list.fields(@@list_parents)
+      @@list_has_children = @list.has_children
     end
     
+
+    if @@list_has_children
+      new_var 'children', @item.grab_children(@@list_has_children)
+      # @fields.pop
+    end
     @fields = @@fields
     @parents = @item.parents
     @entries = @item.entries(@parents)
-    
     @changed_fields = []
     
     #Creates an function for each field and then stores any entry data and intializing values as part of that field

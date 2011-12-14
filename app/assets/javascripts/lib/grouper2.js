@@ -26,7 +26,7 @@ function grouper (_rows) {
 				field_type = groups[ii]['field_type'];
 			if( value == '' || value == 'null' ) { value = '--'; }
 			if( value.constructor.name == 'Date' ) { value = (value.getMonth()+1)+'/'+value.getDate()+'/'+value.getFullYear().toString().slice(-2); }
-			
+			if( field_type == 'children' && value != '--' ) { value = value.map(function(elem){ return elem.name; }).join(', '); }
 			if( field_type == 'date' ) {
 				var the_date = new Date(value);
 				if( the_date != 'Invalid Date' ) {

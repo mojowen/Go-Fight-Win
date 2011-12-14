@@ -29,5 +29,15 @@ class Item < ActiveRecord::Base
     return entries
   end
   
+  def grab_children(list_children)
+    children = Item.find_all_by_parent_id(self.id)
+
+    unless children.empty?
+      return children.map{ |i| {:address => '/'+list_children.select{|l| l == i.list }[0].org.to_param+'/'+i.list.to_param, :name => i.list.name } }
+    else
+      return ''
+    end
+
+  end
   
 end

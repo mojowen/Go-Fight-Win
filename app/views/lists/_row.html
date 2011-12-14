@@ -32,21 +32,26 @@
 </script>
 
 <script type="text/html" id="rowtext">
-	<textarea data-bind="value: $parent[$data.to_param], valueUpdate: 'afterkeydown'"></textarea>
+	<textarea data-bind="value: $parent[$data.to_param], valueUpdate: 'afterkeydown'" class="data"></textarea>
 </script>
 <script type="text/html" id="rownumber">
-	<textarea class="number has_controls" data-bind="value: $parent[$data.to_param], valueUpdate: 'afterkeydown'"></textarea>
+	<textarea class="number has_controls data" data-bind="value: $parent[$data.to_param], valueUpdate: 'afterkeydown'"></textarea>
 	<div class="number_controls field_controller"><span class="number_up">&#x2191;</span><span class="number_down">&#x2193;</span></div>
 </script>
 <script type="text/html" id="rowselect">
-	<select data-bind="value: $parent[$data.to_param], options: [''].concat($data.field_options)"></select>
+	<select data-bind="value: $parent[$data.to_param], options: [''].concat($data.field_options)" class="data"></select>
 </script>
 <script type="text/html" id="rowdate">
-	<textarea class="date has_controls" data-bind="datepicker: $parent[$data.to_param](), valueUpdate: 'afterkeydown'"></textarea>	
+	<textarea class="date has_controls data" data-bind="datepicker: $parent[$data.to_param](), valueUpdate: 'afterkeydown'"></textarea>	
 	<div class="date_controls field_controller"><span class="cal">&#x1f4c5;</span><div class="date_picker"></div></div>
 </script>
 <script type="text/html" id="rowsuggest">
-	<textarea class="suggest" data-bind="value: $parent[$data.to_param]"></textarea>	
+	<textarea class="suggest data " data-bind="value: $parent[$data.to_param]"></textarea>	
+</script>
+<script type="text/html" id="rowchildren">
+	<div data-bind="foreach: $parent[$data.to_param]" class="data children">
+		<a target="_blank" class="child_row" data-bind="text: $data.name, attr: {'href': $data.address }"></a>
+	</div>	
 </script>
 
 <script type="text/html" id="newRowMenu">
