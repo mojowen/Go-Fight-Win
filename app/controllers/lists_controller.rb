@@ -48,6 +48,7 @@ class ListsController < ApplicationController
           @rows = params[:rows].to_a
           @rows.each do |a|
             r = a[1]
+            r[:list] = @list
             begin
               # TO DO: Add something to authorize each row save, right now could sneak in in data in the row data using different list names
               # IDEAS: pass the authorized org into the save method ? and check the @list.org == @list.org on save to verify no funny business

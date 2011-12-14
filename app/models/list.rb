@@ -7,7 +7,6 @@ class List < ActiveRecord::Base
   before_create :copy_parent
   validates_uniqueness_of :name, :scope => :org_id  
   validates_presence_of :name
-  before_save :re_json
   serialize :operators
   
   def to_param
