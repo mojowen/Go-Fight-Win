@@ -3,11 +3,13 @@ class List < ActiveRecord::Base
   belongs_to :parent, :class_name => "List", :foreign_key => 'parent_id'
   
   # Name and find paramters and scope
+  before_validation :fix_name
   before_create :copy_parent
   validates_uniqueness_of :name, :scope => :org_id  
   validates_presence_of :name
   before_save :re_json
-    
+  serialize :operators
+  
   def to_param
     self.name.downcase.gsub(' ','_')
   end
