@@ -53,6 +53,7 @@ table#grouped_table tbody tr.total td:first-child {
 
 #available_groups {
 	margin: 50px 0 50px 100px;
+	clear: both;
 }
 
 .add_group:hover {
@@ -74,7 +75,9 @@ table#grouped_table tbody tr.total td:first-child {
 	float: left;
 	cursor: default;
 }
-
+.added_group select {
+	display: block;
+}
 
 table#grouped_table {
 	padding: 4px;

@@ -19,7 +19,7 @@
 <div id="group" class="area">
 	<h2>+Groups</h2>
 
-	<div id="available_groups" data-bind="if: currentView().groups().length > 0">
+	<div id="available_groups" data-bind="if: currentView().groups().length > 0, visible: currentView().groups().length > 0">
 
 		<p>
 			<em>grouped by</em>
@@ -27,13 +27,14 @@
 
 		<!-- ko foreach: currentView().groups() -->
 			<div class="added_group">
-				<span data-bind="text: $data.name "></span>
-				(<span class="remove_group clickable">–</span>)
+				<span data-bind="text: $data.name "></span>&nbsp;&nbsp;&nbsp;&nbsp;(<span class="remove_group clickable">–</span>)
+				
+				<select data-bind="value: $data.option, options: $data.options, visible: $data.options.length > 0"></select>
 			</div>
 		<!-- /ko -->
 	</div>
 	
-	<div id="available_groups" data-bind="if: viewModel.availableGroups().length > 0">
+	<div id="available_groups" data-bind="if: viewModel.availableGroups().length > 0, visible: viewModel.availableGroups().length > 0">
 		<p>
 			<em>click to group</em>
 		</p>
@@ -43,7 +44,7 @@
 
 		<!-- /ko -->
 	</div>
-	<div class="menu">
+	<div class="menu" data-bind="visible: currentView().groups().length == 2">
 		<input type="checkbox" data-bind="checked: currentView().groups.pivot, visible: currentView().groups().length == 2">
 		<span data-bind="visible: currentView().groups().length == 2" >pivot</span>
 

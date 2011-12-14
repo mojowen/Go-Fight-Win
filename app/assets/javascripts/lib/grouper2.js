@@ -22,26 +22,28 @@ function grouper (_rows) {
 			var field = groups[ii]['field'], 
 				value = typeof row[ field ] == 'function' ? row[ field ]() : row[ field ],
 				options = groups[ii]['options'],
-				option = groups[ii]['option'],
+				option = currentView().groups()[ii]['option'](),
 				field_type = groups[ii]['field_type'];
 			if( value == '' || value == 'null' ) { value = '--'; }
 			if( value.constructor.name == 'Date' ) { value = (value.getMonth()+1)+'/'+value.getDate()+'/'+value.getFullYear().toString().slice(-2); }
 			
 			if( field_type == 'date' ) {
 				var the_date = new Date(value);
-				switch( option ) {
-					case 'day': 
-						val = the_date.toDateString();
-						break;
-					case 'week': 
-						val = 'Week of '+new Date(the_date.getFullYear(), the_date.getMonth(), the_date.getDate() - the_date.getDay() ).toDateString();
-						break;
-					case 'month': 
-						val = $.datepicker._defaults.monthNamesShort[the_date.getMonth()]+the_date.getFullYear().toString().slice(-2);
-						break;
-					case 'year': 
-						val = the_date.getFullYear().toString();
-						break;
+				if( the_date != 'Invalid Date' ) {
+					switch( option ) {
+						case 'day': 
+							value = the_date.toDateString();
+							break;
+						case 'week': 
+							value = 'Week of '+new Date(the_date.getFullYear(), the_date.getMonth(), the_date.getDate() - the_date.getDay() ).toDateString();
+							break;
+						case 'month': 
+							value = $.datepicker._defaults.monthNamesShort[the_date.getMonth()]+' '+the_date.getFullYear().toString();
+							break;
+						case 'year': 
+							value = the_date.getFullYear().toString();
+							break;
+					}
 				}
 			}
 

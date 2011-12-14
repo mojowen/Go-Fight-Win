@@ -45,14 +45,14 @@ function saveAll (args) {
 							views.remove( view );
 						} else {
 							var flat = new viewModel(_views[i].data);
+							view.id = _views[i].id;
+							view.slug = _views[i].slug;
 							if( !view.dirtyFlag.reset( flat ) ) {
 								console.log('flat view')
 								console.log(flat._flatten('json'))
 								console.log('view view')
 								console.log(view._flatten('json'))
 							}
-							view.id = _views[i].id;
-							view.slug = _views[i].slug;
 						}
 						if( view == currentView() ) {
 							window.history.pushState('', "Title", _url+'/'+view.to_param());

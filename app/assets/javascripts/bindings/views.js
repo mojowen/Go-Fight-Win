@@ -19,12 +19,21 @@ function views_template() {
 	$('.remove_view').live('click',function() { 
 		var view = ko.dataFor(this);
 		views.destroy(view);
+		setCurrentView(new viewModle() );
 		try { window.history.pushState('', "Title", _url); } catch(e) { }
+		document.title = _list+' | Go. Fight. Win';
+	});
+	$('.clear_view').live('click',function() { 
+		setCurrentView(new viewModel());
+		try { window.history.pushState('', "Title", _url); } catch(e) { }
+		document.title = _list+' | Go. Fight. Win';
 	});
 
 	$('.remove_group').live('click',function() { 
 		var group = ko.dataFor(this);
 		currentView().groups.remove(group);
+		var sort = currentView().sorts().filter(function(elem) {return elem.field == group.field;})
+		currentView().sorts.remove(sort);
 	});
 
 	$('.add_view').live('click',function() {

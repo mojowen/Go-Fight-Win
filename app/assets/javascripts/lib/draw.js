@@ -1,4 +1,39 @@
 function draw() { 
+	function printAtWordWrap( context , text, x, y, lineHeight, fitWidth)
+	{
+	    fitWidth = fitWidth || 0;
+
+	    if (fitWidth <= 0)
+	    {
+	        context.fillText( text, x, y );
+	        return;
+	    }
+	    var words = text.split(' ');
+	    var currentLine = 0;
+	    var idx = 1;
+	    while (words.length > 0 && idx <= words.length)
+	    {
+	        var str = words.slice(0,idx).join(' ');
+	        var w = context.measureText(str).width;
+	        if ( w > fitWidth )
+	        {
+	            if (idx==1)
+	            {
+	                idx=2;
+	            }
+	            context.fillText( words.slice(0,idx-1).join(' '), x, y + (lineHeight*currentLine) );
+	            currentLine++;
+	            words = words.splice(idx-1);
+	            idx = 1;
+	        }
+	        else
+	        {idx++;}
+	    }
+	    if  (idx > 0)
+	        context.fillText( words.join(' '), x, y + (lineHeight*currentLine) );
+	}
+
+
 	// setting up
     canvas = document.getElementById("canvas");
 	if( canvas != null ){
@@ -13,13 +48,13 @@ function draw() {
 		var max = graph.max, count = (graph.bars.length) > 0 ? graph.bars.length : 1;
 
 		var top_buffer = 0,
-			bottom_buffer = 20, 
+			bottom_buffer = 60, 
 		
 			graph_inside_top_buffer = 20,
 			graph_inside_side_buffer = 40, 
 		
 			label_side_buffer = 50,
-			label_bottom_buffer = 18;
+			label_bottom_buffer = 56;
 			notch_offset = 6,
 		
 			right_buffer = 0,
@@ -50,7 +85,7 @@ function draw() {
 	
 		ctx.fillStyle = 'black';
 
-		ctx.fillText('0', 50, canvas.height-8);
+		ctx.fillText('0', label_side_buffer, canvas.height - label_bottom_buffer+6);
 
 		// top val
 		ctx.fillText(max, label_side_buffer, top_buffer+graph_inside_top_buffer);
@@ -109,8 +144,8 @@ function draw() {
 			ctx.textAlign = 'center';
 			ctx.textBaseline = 'top';
 			ctx.fillStyle = '#333';
-			ctx.fillText(graph.bars[i].label, xpos+width/2, canvas.height - label_bottom_buffer);
-
+			// ctx.fillText(graph.bars[i].label, xpos+width/2, canvas.height - label_bottom_buffer);
+			printAtWordWrap(ctx, graph.bars[i].label, xpos+width/2, canvas.height - label_bottom_buffer, 15, width*2)
 			// Need to add the width of the graph
 			xpos += width;
 		};

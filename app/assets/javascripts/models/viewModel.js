@@ -60,7 +60,7 @@ function viewModel( data ) {
 	}
 	if( typeof view.filters != 'undefined' && view.filters != null ) {
 		if( typeof view.filters == 'object' ) {
-			for (var i=0; i < view.filters.length; i++) {
+			for (var i in view.filters) {
 				this.filters.push( new filterModel( view.filters[i] ) );
 			};
 		} else if ( typeof data.filters == 'string' ) {
@@ -168,14 +168,15 @@ function viewModel( data ) {
 		sort = typeof sort == 'string' ? {field: ko.observable(sort), direction: ko.observable('ASC') } : {field: ko.observable(sort.field), direction: ko.observable(sort.direction) };
 		this.sorts.push(sort);
 	}
-	if( typeof view.sorts != 'undefined' && view.sorts != null ) {
+	if( typeof view.sorts != 'undefined' ) {
 		if( typeof view.sorts == 'string' ) {
-			this.addSort(view.sorts)
+			this.addSort(view.sorts);
 		} else {
-			for (var i=0; i < view.sorts.length; i++) {
+			for (var i in view.sorts ) {
 				this.addSort( view.sorts[i] );
 			};
 		}
+		this.sortRows();
 	}
 
 // Naming
