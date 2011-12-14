@@ -236,7 +236,7 @@ function viewModel( data ) {
 	
 	this.pivotValues = ko.dependentObservable({ 
 		read: function() {
-			var options = viewModel.pivotedRows();
+			var options = ko.toJS(viewModel.pivotedRows());
 			if( this.goal.label() ) {
 				_goal = ko.toJS(this.goal().field() );
 				_goal.long_label = this.goal.label();
