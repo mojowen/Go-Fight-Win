@@ -125,6 +125,7 @@ th {
 }
 
 .editor tr.nav_bar td, .editor tr.nav_bar:hover td{ background-color: #fff; }
+.editor thead tr.nav_bar td, .editor thead tr.nav_bar:hover td{ background-color: #fff; }
 
 .editor textarea {
 	resize: none;
@@ -182,6 +183,16 @@ th {
 	width: 100%;
 	border: 1px #99C4D2 dotted;
 	cursor: text;
+}
+
+.search_bar {
+	text-align: left;
+}
+.search_bar select {
+	-webkit-appearance: menulist;
+	appearance: menulist;
+	margin: 0;
+	padding: 0;
 }
 
 

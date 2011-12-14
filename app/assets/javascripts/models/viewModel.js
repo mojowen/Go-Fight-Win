@@ -66,7 +66,9 @@ function viewModel( data ) {
 		} else if ( typeof data.filters == 'string' ) {
 			this.filters.push( new filterModel( view.filters ) );
 		}
-	} 
+	} else {
+		this.addFilter('');
+	}
 
 // Grouping
 	this.groups = ko.observableArray([]);
@@ -278,7 +280,7 @@ function viewModel( data ) {
 		}
 		if( typeof this.groups == 'function' ) { returnable.groups = this.groups().filter(function(elem){ return elem.field() != '' && elem.field() != undefined }); } else { returnable.groups = this.groups.filter(function(elem){ return elem.field != '' }); }
 		if( typeof this.sorts == 'function' ) { returnable.sorts = this.sorts().filter(function(elem){ return elem.field() != '' && elem.field() != undefined }); } else { returnable.sorts = this.sorts.filter(function(elem){ return elem.field != '' }); }
-		if( typeof this.filters == 'function' ){returnable.filters = this.filters().filter(function(elem){ return elem.field() != '' && elem.field() != undefined });} else { returnable.filters = this.filters.filter(function(elem){ return elem.field != '' }); }
+		// if( typeof this.filters == 'function' ){returnable.filters = this.filters().filter(function(elem){ return elem.field() != '' && elem.field() != undefined });} else { returnable.filters = this.filters.filter(function(elem){ return elem.field != '' }); }
 		if( return_type == 'json' ) {return ko.toJSON( returnable );}
 		else { return ko.toJS( returnable ); }
 	}
