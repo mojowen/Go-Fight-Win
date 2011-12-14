@@ -46,7 +46,14 @@
 	<% end %>
 </script>
 
+<% content_for :overlay do %>
+	<%= render :partial => 'bug' %>
+	<%= render :partial => 'help' %>
+<% end %>
+
 <% content_for :footer do %>
 	<div id="switch" class="f_tab" data-bind="text: viewModel.switchText"></div>
-	<div id="xls" class="f_tab" url="<%= list_path(@list.org.to_param, @list.to_param)+'.xls' %>">xls</div>
+	<div id="xls" class="f_tab" url="<%= list_path(@list.org.to_param, @list.to_param)+'.xls' %>">Export</div>
+	<div id="bug" class="f_tab overlayer">Bug</div>
+	<div id="help" class="f_tab overlayer">?</div>
 <% end %>

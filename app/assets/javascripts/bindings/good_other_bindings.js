@@ -5,7 +5,40 @@ function good_other_bindings (argument) {
 		$this.parent().find('p').text('')
 		$this.hide();
 	});
+	$('.overlayer').live('click', function() {
+		var $this = $(this);
+		$('#overlay, #overlay div:visible').hide();
+		if( !$this.hasClass('on') ) {
+			$('#'+$(this).attr('id')+'_overlay').show().parent().show()
+		}
+		$this.toggleClass('on');
+	});
+	$('.overlay_close').live('click', function() {
+		$('.overlayer').removeClass('on');
+		$('#overlay, #overlay div:visible').hide();
+	});
 	
+	$('#bug_form').live('submit',function(e){
+		$this = $(this);
+		$.post(
+			'https://docs.google.com/spreadsheet/formResponse?formkey=dHRzYnZYUUd2Zy1yMHRWNGxBa0RwMkE6MQ&ifq',
+			{
+				'entry.0.single': $('#email',$this).val(),
+				'entry.1.single':  $('#bug_msg',$this).val(),
+				'entry.5.single': $('#session_data',$this).val(),
+				'entry.2.single':  $('#current_user',$this).val(),
+				'entry.4.single': ko.toJSON(rows),
+				'entry.3.single': ko.toJSON(views),
+				'entry.6.single': ko.toJSON($.browser),
+				'submit': 'submit'
+			},
+			function(){
+				
+			}
+		);
+		$this.html('<p><strong style="color:yellow;">THANKS!</strong></p><p>get back atcha soon</p>')
+		e.preventDefault();
+	});
 }
 
 $.fn.msg = function(msg,speed) {

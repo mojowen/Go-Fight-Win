@@ -11,6 +11,7 @@ function keyboardShortcuts (argument) {
 		if( $target.parents('.hasDatepicker').length < 1 && !$target.is('.hasDatepicker') ) {
 			$('.hasDatepicker').datepicker('destroy').prev('.cal').removeClass('on');
 		}
+
 	});
 
 	window.onbeforeunload = function() { 
@@ -47,49 +48,45 @@ function keyboardShortcuts (argument) {
 			if( [37, 38, 39, 40, 13, 9].indexOf(e.keyCode) !== -1 && $('.grid .selected').length > 0 ) { 
 				e.preventDefault(); 
 				switch(e.keyCode){
-					// add hotkeys for command / control
-					// select to copy many?
-					// exit to exit out of row mode
 					case 37:
-						if( extra ) { $selected.parent().find('td.cell:first').find('textarea, select').focus(); }
-						else { $selected.prev('td.cell').find('textarea, select').focus(); }
+						if( extra ) { $selected.parent().find('td.cell:first').find('.data').click(); }
+						else { $selected.prev('td.cell').find('.data').click(); }
 						rowScroll();
 						break;
 					case 38:
-						if( extra ) { $selected.parents('tbody').find('tr:first td.cell:eq('+pos+')').find('textarea, select').focus(); }
-						else { $selected.parent().prev('tr').find('td.cell:eq('+pos+')').find('textarea, select').focus(); }
+						if( extra ) { $selected.parents('tbody').find('tr:first td.cell:eq('+pos+')').find('.data').click(); }
+						else { $selected.parent().prev('tr').find('td.cell:eq('+pos+')').find('.data').click(); }
 						rowScroll();
 						break;
 					case 39: 
-						if( extra ) { $selected.parent().find('td.cell:last').find('textarea, select').focus(); }
-						else { $selected.next('td.cell').find('textarea, select').focus(); }
+						if( extra ) { $selected.parent().find('td.cell:last').find('.data').click(); }
+						else { $selected.next('td.cell').find('.data').click(); }
 						rowScroll();
 
 						break;
 					case 40:
-						if( extra ) { $selected.parents('tbody').find('tr:last td.cell:eq('+pos+')').find('textarea, select').focus(); }
-						else { $selected.parent().next('tr').find('td.cell:eq('+pos+')').find('textarea, select').focus(); }
+						if( extra ) { $selected.parents('tbody').find('tr:last td.cell:eq('+pos+')').find('.data').click(); }
+						else { $selected.parent().next('tr').find('td.cell:eq('+pos+')').find('.data').click(); }
 						rowScroll();
 
 						break;
 					case 9:
 						if( e.shiftKey ) {
 							if( pos == 0 ) {
-								$selected.parent().prev('tr').find('td.cell:eq('+($selected.parent().find('td.cell').length-1)+')').find('textarea, select').focus();
+								$selected.parent().prev('tr').find('td.cell:eq('+($selected.parent().find('td.cell').length-1)+')').find('.data').click();
 							} else {
-								$selected.prev('td.cell').find('textarea, select').focus();
+								$selected.prev('td.cell').find('.data').click();
 							}
 						} else {
 							if( pos +1 == $selected.parent().find('td.cell').length ) {
-								$selected.parent().next('tr').find('td.cell:eq(0)').find('textarea, select').focus();
+								$selected.parent().next('tr').find('td.cell:eq(0)').find('.data').click();
 							} else {
-								$selected.next('td.cell').find('textarea, select').focus();
+								$selected.next('td.cell').find('.data').click();
 							}
 						}
 
 						break;
 					case 13:
-						console.log('asdfas');
 						if( $selected.find('textarea, select').hasClass('open') ) {
 							// $selected.find('textarea, select').removeClass('open').blur();
 						} else {
@@ -103,11 +100,40 @@ function keyboardShortcuts (argument) {
 				case 83:
 					if( extra) { e.preventDefault(); saveAll({once: true});}
 					break;
+				case 74:
+					if( $(':focus').length == 0 ) { $('.left').css('color','#747474'); }
+					break;
+				case 75:
+					if( $(':focus').length == 0 ) { $('.right').css('color','#747474'); }
+					break;
 				default:
 					// console.log(e.keyCode);
 			}
+	}).keyup( function(e) {
+		switch(e.keyCode) {
+			case 74:
+				if( $(':focus').length == 0 && !currentView().groups.on() ) { 
+					currentView().move('left');
+					$('.left').css('color','#333');
+				}
+				break;
+			case 75:
+				if( $(':focus').length == 0 && !currentView().groups.on()) { 
+					currentView().move('right');
+					$('.right').css('color','#333');
+				}
+				break;
+			case 191:
+				if( $(':focus').length == 0 && !currentView().groups.on()) { 
+					$('.search_bar').find('select:first')
+				}
+				break;
+			default:
+				// console.log(e.keyCode);
+		}
 	});
-	$('.grid td.cell textarea, .grid td.cell select').live({
+	
+	$('.grid td.cell .data').live({
 		click: function(e) {
 			var $this = $(this);
 			$('.selected').removeClass('selected');
@@ -147,6 +173,6 @@ function keyboardShortcuts (argument) {
 		currentView().goal().value(undefined);
 		currentView().goal().field(undefined);
 	});
-	
+
 	
 }

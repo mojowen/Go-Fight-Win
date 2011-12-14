@@ -15,7 +15,6 @@
 		<div id="user_nav">
 		    <p>
 			<strong><%= current_user.email %></strong><br />
-			problem,
 			<%= link_to 'account', edit_user_registration_path %>,
 		    <%= link_to "sign out", destroy_user_session_path, :method => :delete %>
 			</p>
@@ -55,6 +54,10 @@
 	<% else %>
 		</div>
 	<% end %>
+	<div id="overlay">
+		<span class="overlay_close clickable">x</span>
+		<%= yield(:overlay) %>
+	</div>
 	<div id="footer">
 		<%= yield(:footer) %>
 	</div>

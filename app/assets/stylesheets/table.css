@@ -86,16 +86,15 @@ h1.title:hover {
 	color: white;
 	cursor: pointer;
 	padding: 4px 24px 0;
-	font-size: 30px;
+	font-size: 18px;
 	float: left;
 	margin: 0 10px;
 }
 
-.f_tab:hover {
+.f_tab:hover, .f_tab.on {
 	background-color: #622;
 	text-decoration: underline;
 }
-
 
 
 #nav {
@@ -124,7 +123,6 @@ th {
 	text-align: center;
 }
 
-.editor tr.nav_bar td, .editor tr.nav_bar:hover td{ background-color: #fff; }
 .editor thead tr.nav_bar td, .editor thead tr.nav_bar:hover td{ background-color: #fff; }
 
 .editor textarea {
@@ -180,7 +178,6 @@ th {
 	background-color: white;
 	color: black;
 	margin: 0;
-	width: 100%;
 	border: 1px #99C4D2 dotted;
 	cursor: text;
 }

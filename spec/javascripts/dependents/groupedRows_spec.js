@@ -27,7 +27,7 @@ describe("rows for editing after a single or double grouping", function() {
 		currentView().addGroup(field_1);
 		field_1_vals = ['a','z','']
 		for (var i=0; i < viewModel.groupedRows()._uniques[0].length; i++) {
-			field_1_vals[i] = field_1_vals[i] == '' ? '--blank' : field_1_vals[i];
+			field_1_vals[i] = field_1_vals[i] == '' ? '--' : field_1_vals[i];
 			expect( viewModel.groupedRows()._uniques[0][i].value ).toEqual( field_1_vals[i] );
 		};
 	});
@@ -37,8 +37,8 @@ describe("rows for editing after a single or double grouping", function() {
 		field_1_vals = ['a','z','']
 		field_2_vals = [1,2,5,'']
 		for (var i=0; i < viewModel.groupedRows()._uniques[0].length; i++) {
-			field_1_vals[i] = field_1_vals[i] == '' ? '--blank' : field_1_vals[i];
-			field_2_vals[i] = field_2_vals[i] == '' ? '--blank' : field_2_vals[i];
+			field_1_vals[i] = field_1_vals[i] == '' ? '--' : field_1_vals[i];
+			field_2_vals[i] = field_2_vals[i] == '' ? '--' : field_2_vals[i];
 			expect( viewModel.groupedRows()._uniques[0][i].value ).toEqual( field_1_vals[i] );
 			expect( viewModel.groupedRows()._uniques[1][i].value ).toEqual( field_2_vals[i] );
 		};

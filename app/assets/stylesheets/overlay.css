@@ -1,0 +1,66 @@
+#overlay {
+	top: 100px;
+	position: absolute;
+	background-color: #333;
+	width: 70%;
+	height: auto;
+	margin: 0 5%;
+	color: white;
+	padding: 5% 10%;
+	border-radius: 4px;
+	font-size: 24px;
+	opacity: .95;
+	display: none;
+}
+#overlay div {
+	display: none;
+}
+
+
+#overlay span.overlay_close {
+	position: absolute;
+	top: 8px;
+	left: 16px;
+}
+
+#help_overlay th {
+	color: yellow;
+	width: 230px;
+	text-align: right;
+	padding: 4px 20px;
+}
+#help_overlay td, #help_overlay td {
+	padding: 4px;
+}
+#help_overlay td {
+	width: 600px;
+}
+#help_overlay .header {
+	text-align: center;
+}
+#help_overlay table {
+	margin: 30px 0;
+}
+
+#bug_overlay form label {
+	color: yellow;
+}
+#bug_overlay form textarea{ 
+	width: 500px;
+	height: 300px;
+}
+#bug_overlay form input[type=submit]:hover {
+	background-color: #622;
+	border: #622 solid 2px;
+}
+#bug_overlay form input[type=submit] {
+	background-color: #226;
+	border: #226 solid 2px;
+	border-radius: 4px;
+	color: white;
+	padding: 2px 20px;
+}
+#bug_overlay form * {
+	display: block;
+	margin: 4px 10px;
+}

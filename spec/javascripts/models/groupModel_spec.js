@@ -8,8 +8,4 @@ describe("groupModel", function() {
 	var group = new groupModel( field.name );
     expect(group.field()).toEqual(field.name);
   });
-  it("can create a group model and give it options", function() {
-	var group = new groupModel( {field: field.name, options: 'hey an option'} );
-	expect(group.options()).toEqual('hey an option');
-  });
 });
