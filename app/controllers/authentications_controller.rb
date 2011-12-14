@@ -10,7 +10,7 @@ class AuthenticationsController < ApplicationController
   def create
     omniauth = request.env["omniauth.auth"].except('extra')
     authentication = Authentication.find_by_provider_and_uid(omniauth['provider'], omniauth['uid'])
-    if authentication
+    if authentication && authentication.user.present?
       sign_in_and_redirect(:user, authentication.user)
     elsif current_user
       current_user.authentications.create(:provider => omniauth ['provider'], :uid => omniauth['uid'])
