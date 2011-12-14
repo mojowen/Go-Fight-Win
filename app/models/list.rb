@@ -4,6 +4,7 @@ class List < ActiveRecord::Base
   
   # Name and find paramters and scope
   before_validation :fix_name
+  before_create :copy_parent
   validates_uniqueness_of :name, :scope => :org_id  
   validates_presence_of :name
   
@@ -18,6 +19,11 @@ class List < ActiveRecord::Base
 
   def fix_name
     self.name = self.name.split(' ').map {|w| w.capitalize }.join(' ') unless self.name.nil?
+  end
+  def copy_parent
+    if !self.parent_id.nil? && self.operators.nil?
+      self.operators = self.parent.operators
+    end
   end
   def has_children
     children = List.find_all_by_parent_id(self.id)

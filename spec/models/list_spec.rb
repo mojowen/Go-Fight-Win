@@ -24,9 +24,16 @@ describe List do
     @dif_list.save.should be_false
   end
   
-  it 'lists has a parent through other orgs' do
-    @child = Factory(:list, :parent_id => @list)
+  it 'lists has a parent through other list' do
+    @child = Factory(:list, :parent => @list)
     @child.parent.should.equal? @list
+  end
+  it 'copies a parents operators if its are not set ' do
+    @list.operators = 'wa wa wa wa waaaaa'
+    @list.save
+    @child = Factory(:list, :parent => @list)
+    @child.operators.should.equal? @child.parent.operators
+    @child.operators.should.equal? @list.operators
   end
   
   it 'list grabs fields that are active, and ignores those that are innactive' do 
