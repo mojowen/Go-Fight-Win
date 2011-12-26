@@ -123,7 +123,10 @@ th {
 	text-align: center;
 }
 
+.editor thead th { min-width: 160px; }
+
 .editor thead tr.nav_bar td, .editor thead tr.nav_bar:hover td{ background-color: #fff; }
+
 
 .editor textarea {
 	resize: none;

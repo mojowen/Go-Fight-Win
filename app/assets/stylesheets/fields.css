@@ -88,6 +88,9 @@
 .date_picker .ui-datepicker-calendar tr td.ui-datepicker-today { background-color: #747474; }
 td.ui-datepicker-current-day { border: 1px dashed #333; }
 
+.editor .ui-datepicker thead th {
+	min-width: 0;
+}
 /** Autocomplete **/
 
 ul.ui-autocomplete {
@@ -106,20 +109,15 @@ ul.ui-autocomplete li.ui-menu-item {
 /*** Children  ***/
 
 div.children {
-	padding: 4px 10px;
-	text-align: center;
+	padding: 4px;
 }
 div.children a.child_row {
-	padding: 4px 8px;
-	border: 2px solid #622;
 	border-radius: 4px;
 	color: white;
 	background-color: #622;
-	margin: 0 auto;
 	cursor: pointer;
+	font-size: 10px;
 }
 div.children a.child_row:hover {
-	border: 2px solid #226;
 	background-color: #226;
-	
 }

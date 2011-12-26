@@ -11,6 +11,8 @@ class ListsController < ApplicationController
       @list = List.find_by_org_and_slug(org, params[:list_name], :include => @to_include )
     end
     
+    authorize! :show, @list.org, :message => 'You don\'t have access to that List'
+
     @current_view = @list.views.index{|v| v.to_param == params[:view_name] || v.slug == params[:view_slug] }
     @fields = @list.fields
     @query = @list.rows()

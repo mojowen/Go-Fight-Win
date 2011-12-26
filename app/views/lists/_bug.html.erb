@@ -4,10 +4,10 @@
 	<p>Pull up a <span style="text-decoration: line-through;">chair</span> form and tell me your troubles.</p>
 	<form id="bug_form">
 		<label>Your Email</label>
-		<input type="text" id="email" value="<%= current_user.email %>">
+		<input type="text" id="email" value="<%= current_user.email unless current_user.nil? %>">
 		<label>Your Beef</label>
 		<textarea id="bug_msg"></textarea>
-		<input type="hidden" value="<%= current_user.id %>" id="current_user">
+		<input type="hidden" value="<%= current_user.id unless current_user.nil? %>" id="current_user">
 		<input type="hidden" value="<%= session %>" id="session_data">
 		<input type="submit" value="talk to me">
 	</form>

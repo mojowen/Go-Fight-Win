@@ -35,7 +35,8 @@ function grouper (_rows) {
 							value = the_date.toDateString();
 							break;
 						case 'week': 
-							value = 'Week of '+new Date(the_date.getFullYear(), the_date.getMonth(), the_date.getDate() - the_date.getDay() ).toDateString();
+							var d = new Date(the_date.getFullYear(), the_date.getMonth(), the_date.getDate() - the_date.getDay() );
+							value = 'Week of '+(d.getMonth()+1)+'/'+d.getDate()+'/'+d.getFullYear().toString().slice(-2);
 							break;
 						case 'month': 
 							value = $.datepicker._defaults.monthNamesShort[the_date.getMonth()]+' '+the_date.getFullYear().toString();
