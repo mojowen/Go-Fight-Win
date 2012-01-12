@@ -8,7 +8,7 @@ function keyboardShortcuts (argument) {
 			$target.parents('td.cell').addClass('selected');
 		}
 		//  removes datpicker if so
-		if( $target.parents('.hasDatepicker').length < 1 && !$target.is('.hasDatepicker') ) {
+		if( $target.parents('.hasDatepicker') && !$target.is('.hasDatepicker') && !$target.is('textarea.date')) {
 			$('.hasDatepicker').datepicker('destroy').prev('.cal').removeClass('on');
 		}
 
