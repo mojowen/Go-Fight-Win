@@ -184,6 +184,9 @@ th {
 	border: 1px #99C4D2 dotted;
 	cursor: text;
 }
+.editor tr td select:focus {
+	margin: 0 0 0 40px;
+}
 
 .search_bar {
 	text-align: left;

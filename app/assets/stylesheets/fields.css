@@ -70,7 +70,7 @@
 	position: relative;
 	display: block;
 	float: left;
-	margin: 0.7em -80px -230px -4px;
+	margin: 3.3em -80px -230px -4px;
 	z-index: 10;
 }
 
@@ -96,9 +96,15 @@ td.ui-datepicker-current-day { border: 1px dashed #333; }
 ul.ui-autocomplete {
 	background-color: #fff;
 	list-style: square;
+	padding: 0 20px 0 0;
 	border: #747474 solid 1px;
 	width: 100px;
 	padding: 10px 0 10px 34px;
+	max-height: 100px;
+	overflow-y: auto;
+	/* prevent horizontal scrollbar */
+	overflow-x: hidden;
+	/* add padding to account for vertical scrollbar */
 }
 
 ul.ui-autocomplete li.ui-menu-item {
