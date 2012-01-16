@@ -22,6 +22,10 @@ describe("the bindings on fields with the table editor", function() {
 				expect( $(this).val() ).toEqual( '--' );
 			});
 		});
+		it("opens the calendar when clicking on the calendar icon, places cursor in text box", function() {
+			$('.cal:first').click();
+			expect( $('.data:first').next('div') ).toContain('div.ui-datepicker-inline');
+		});
 		describe("calendar is opened", function() {
 			var t = new Date();
 			beforeEach(function() {
@@ -64,9 +68,7 @@ describe("the bindings on fields with the table editor", function() {
 				expect( $('div.ui-datepicker-inline').length ).toBe(0);
 				expect( new Date(rows()[0][field_1.to_param]()).getDate() ).toEqual( day );
 			});
-
 		});
-		
 		describe("changing the value if already set", function() {
 			var val = '5/3/2001', t = new Date(val);
 			beforeEach(function() {
