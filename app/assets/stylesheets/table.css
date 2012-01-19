@@ -123,21 +123,20 @@ th {
 	text-align: center;
 }
 
-.editor thead th { min-width: 160px; }
+/*.editor thead th { min-width: 80px; }*/
 
 .editor thead tr.nav_bar td, .editor thead tr.nav_bar:hover td{ background-color: #fff; }
 
 
 .editor textarea {
 	resize: none;
-	height: 1.2em;
-	padding: 9px 0 25px;
 	text-align: center;
 	overflow: hidden;
-	outline: none;
-	background: none;
+	vertical-align: middle;
+	height: 2em;
 	border: 0;
-	width: 100%;
+	background: none;
+	width: 120px;
 	box-sizing: border-box;
 	-o-box-sizing: border-box;
 	-icab-box-sizing: border-box;
@@ -154,26 +153,10 @@ th {
 }
 
 
-
-/*.editor textarea:focus, #edit_rows textarea:focus {
-	outline: 2px auto white;
-}
-.editor tr:nth-child(even) textarea:focus {
-	outline: 2px auto #ddd;
-}
-.editor tr:nth-child(even):hover textarea:focus {
-	outline: 2px auto #fff;
-}
-*/
-.editor tr:nth-child(even) td {
-    background-color: #ddd;
-}
-
 .editor tr td.cell {
-	width: 160px;
 	padding: 0;
-	height: 38px;
 	text-align: center;
+	border: 1px #ddd solid;
 }
 .editor tr:hover td {
     background-color: lightblue;
@@ -196,7 +179,7 @@ th {
 	padding: 0;
 }
 
-
+/* New Row */
 #new_row {
 	border: 1px solid #999;
 	min-width: 166px;

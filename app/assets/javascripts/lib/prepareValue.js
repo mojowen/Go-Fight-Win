@@ -11,7 +11,7 @@ function prepareValue (value, field_type, args) {
 			case 'date':
 				var attempt = new Date(value);
 				if( attempt == 'Invalid Date' ) { returning = value;  }
-				else { returning = attempt.toDateString(); }
+				else { returning = attempt }
 				break;
 			default:
 				returning = value;

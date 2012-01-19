@@ -9,30 +9,30 @@ function date_fields (argument) {
 	function openDateBox(textbox){
 		// textbox var should be a jquery object of the textarea we're wanting to mess with
 		var $this = textbox;
+		if( $this.hasClass('open') ) {
+			var ctx = ko.contextFor($this[0]);
+			var row = ctx.$parent, field = ctx.$data;
+			var val = row[field.to_param](), observable = row[field.to_param];
 
-		var ctx = ko.contextFor($this[0]);
-		var row = ctx.$parent, field = ctx.$data;
-		var val = row[field.to_param](), observable = row[field.to_param];
-
-		$('.hasDatepicker').datepicker('destroy').prev('.cal').removeClass('on');
-		$this.next('.date_controls').find('.cal').addClass('on').next('.date_picker')
-		.datepicker(
-			{ 
-				dateFormat: 'D M dd yy',
-				altField: $this,
-				closeText: 'X',
-				showButtonPanel: true
-			}
-		)
-		.datepicker('setDate', new Date(val) )
-		.click(
-			function(e) {
-					 if( $(e.target).is('a') ) { $.datepicker.updateKnockout( $this, ctx ); }
-			}
-		);
-		if( testDate(val) ) { $this.val('--') }
-		$this.addClass('open').focus();
-
+			$('.hasDatepicker').datepicker('destroy').prev('.cal').removeClass('on');
+			$this.next('.date_controls').find('.cal').addClass('on').next('.date_picker')
+			.datepicker(
+				{ 
+					dateFormat: 'D M dd yy',
+					altField: $this,
+					closeText: 'X',
+					showButtonPanel: true
+				}
+			)
+			.datepicker('setDate', new Date(val) )
+			.click(
+				function(e) {
+						 if( $(e.target).is('a') ) { $.datepicker.updateKnockout( $this, ctx ); }
+				}
+			);
+			if( testDate(val) ) { $this.val('--') }
+			$this.focus();
+		}
 	}
 
 	/** Date **/

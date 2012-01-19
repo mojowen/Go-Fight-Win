@@ -5,3 +5,22 @@
  *= require_self
  *= require_tree . 
 */
+
+@font-face {
+  font-family: 'Tienne';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Tienne Bold'), local('Tienne-Bold'), url('5fHbVDiXad81I5Iv1FUPbrO3LdcAZYWl9Si6vvxL-qU.woff') format('woff');
+}
+@font-face {
+  font-family: 'Tienne';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Tienne Regular'), local('Tienne-Regular'), url('VXypd3k44URZYt2LYxU_4evvDin1pK8aKteLpeZ5c0A.woff') format('woff');
+}
+@font-face {
+  font-family: 'Droid Sans Mono';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Droid Sans Mono'), local('DroidSansMono'), url('ns-m2xQYezAtqh7ai59hJaH0X__W3S3MJL29bc5CWfs.woff') format('woff');
+}

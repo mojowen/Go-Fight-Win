@@ -45,31 +45,38 @@ function keyboardShortcuts (argument) {
 				extra = e.ctrlKey || e.metaKey;
 				
 			// need to do a check when this is ok
-			if( [37, 38, 39, 40, 13, 9].indexOf(e.keyCode) !== -1 && $('.grid .selected').length > 0 ) { 
+			if( [37, 38, 39, 40, 13, 9].indexOf(e.keyCode) !== -1 && $('.grid .selected').length > 0 && $('.open').length < 1 ) { 
 				e.preventDefault(); 
 				switch(e.keyCode){
 					case 37:
+						// Left
 						if( extra ) { $selected.parent().find('td.cell:first').find('.data').click(); }
 						else { $selected.prev('td.cell').find('.data').click(); }
 						rowScroll();
 						break;
 					case 38:
+						// Up
 						if( extra ) { $selected.parents('tbody').find('tr:first td.cell:eq('+pos+')').find('.data').click(); }
 						else { $selected.parent().prev('tr').find('td.cell:eq('+pos+')').find('.data').click(); }
 						rowScroll();
 						break;
 					case 39: 
+						// Right
 						if( extra ) { $selected.parent().find('td.cell:last').find('.data').click(); }
 						else { $selected.next('td.cell').find('.data').click(); }
 						rowScroll();
-
 						break;
 					case 40:
+						// Down
 						if( extra ) { $selected.parents('tbody').find('tr:last td.cell:eq('+pos+')').find('.data').click(); }
 						else { $selected.parent().next('tr').find('td.cell:eq('+pos+')').find('.data').click(); }
 						rowScroll();
-
 						break;
+					}
+				}
+				if (  [13, 9].indexOf(e.keyCode) !== -1 && $('.grid .selected').length > 0 ) {
+					e.preventDefault(); 
+					switch(e.keyCode){
 					case 9:
 						if( e.shiftKey ) {
 							if( pos == 0 ) {
@@ -84,11 +91,10 @@ function keyboardShortcuts (argument) {
 								$selected.next('td.cell').find('.data').click();
 							}
 						}
-
 						break;
 					case 13:
 						if( $selected.find('textarea, select').hasClass('open') ) {
-							// $selected.find('textarea, select').removeClass('open').blur();
+							$selected.find('textarea, select').removeClass('open').blur();
 						} else {
 							$selected.find('textarea, select').addClass('open').focus();
 						}
@@ -145,7 +151,7 @@ function keyboardShortcuts (argument) {
 		},
 		dblclick: function(e) {
 			var $this = $(this);
-			$this.addClass('open').focus();
+			$this.addClass('open').focus().parent('td').addClass('selected');
 		},
 		focusout: function(e) {
 			$(this).removeClass('open');

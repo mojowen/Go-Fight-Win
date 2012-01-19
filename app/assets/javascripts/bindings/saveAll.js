@@ -32,10 +32,10 @@ function saveAll (args) {
 							}
 							var flat = new rowModel(_rows[i].data);
 							if( !row.dirtyFlag.reset( flat ) ) {
-								console.log('flat row')
-								console.log(flat._flatten('json'))
-								console.log('row row')
-								console.log(row._flatten('json'))
+								// console.log('flat row')
+								// console.log(flat._flatten('json'))
+								// console.log('row row')
+								// console.log(row._flatten('json'))
 							};
 						}
 					};
@@ -48,10 +48,10 @@ function saveAll (args) {
 							view.id = _views[i].id;
 							view.slug = _views[i].slug;
 							if( !view.dirtyFlag.reset( flat ) ) {
-								console.log('flat view')
-								console.log(flat._flatten('json'))
-								console.log('view view')
-								console.log(view._flatten('json'))
+								// console.log('flat view')
+								// console.log(flat._flatten('json'))
+								// console.log('view view')
+								// console.log(view._flatten('json'))
 							}
 						}
 						if( view == currentView() ) {

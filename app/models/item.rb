@@ -40,7 +40,7 @@ class Item < ActiveRecord::Base
         list = list_children.nil? ? i.list : list_children.select{|l| l == i.list }[0]
         org = list.nil? ? nil : list.org
         org_param = org.nil? ? '' : '/'+org.to_param
-        obj[:name] = org.nil? || org == self.list.org ? i.list.name : org.name + ' > '+i.list.name
+        obj[:name] = org.nil? || org == self.list.org ? i.list.name : org.name
         obj[:address] = org_param+'/'+i.list.to_param
         returning.push(obj)
       end

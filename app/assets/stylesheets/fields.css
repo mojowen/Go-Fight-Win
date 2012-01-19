@@ -1,5 +1,5 @@
 .field_controller {
-	margin: -32px 0 0 4px;
+	margin: -1.4em 8px 0 0;
 	font-size: 18px;
 	cursor: pointer;
 	-webkit-user-select: none;
@@ -7,28 +7,12 @@
 	-moz-user-select: none;
 	-o-user-select: none;
 	user-select: none;
-	text-align: left;
-}
-
-.field_controller span:hover, .cal.on {
-	color: #747474;
-}
-
-.editor tr td textarea.has_controls:focus {
-	margin-top: -8px;
+	text-align: right;
 }
 
 
-.editor, .editor td, .editor td span, .editor, .editor td select   {
-	-webkit-user-select: none;
-	-khtml-user-select: none;
-	-moz-user-select: none;
-	-o-user-select: none;
-	user-select: none;
-}
 
-.editor, .editor td textarea{
-	margin-top: -8px;
+.editor, .editor td, .editor td span, .editor, .editor td select, .editor td textarea{
 	-webkit-user-select: text;
 	-khtml-user-select: text;
 	-moz-user-select: text;
@@ -37,20 +21,31 @@
 }
 
 
-.editor select {
+.editor tbody select {
     border: 0;
     background: transparent;
-/*	padding: 0 0 0 20px;
-	margin: 0 0 0 40px;
-*/}
+	width: 100px;
+	margin: 0 10px;
+}
 
 
+/** Number **/
+.editor tr td.cell textarea.number, .editor tr td.cell textarea.number:focus {
+	width: 50px;
+	margin-right: 36px;
+}
 
 
 /** Date picker specific **/
 .date_picker {
 	display: none;
 }
+
+.editor tr td.cell textarea.date, .editor tr td.cell textarea.date:focus {
+	width: 130px;
+	margin-right: 36px;
+}
+
 
 
 .hasDatepicker {
@@ -63,7 +58,7 @@
 	position: relative;
 	display: block;
 	float: left;
-	margin: 3.3em -80px -230px -4px;
+	margin: 2.60em -9999px -9999px 0;
 	z-index: 8;
 }
 
@@ -84,6 +79,13 @@ td.ui-datepicker-current-day { border: 1px dashed #333; }
 .editor .ui-datepicker thead th {
 	min-width: 0;
 }
+
+
+.field_controller span:hover, .cal.on {
+	color: #747474;
+}
+
+
 /** Autocomplete **/
 
 ul.ui-autocomplete {
@@ -108,14 +110,37 @@ ul.ui-autocomplete li.ui-menu-item {
 /*** Children  ***/
 
 div.children {
-	padding: 4px;
+	padding: 2px;
+	height: 18px;
+	overflow: hidden;
+	text-align: left;
+	width: 120px;
+}
+td.selected div.children.empty { 
+	border: none;
+	background: none;
+}
+td.selected div.children {
+	overflow: visible;
+	background: white;
+	border: 1px solid black;
+	position: relative;
+	display: block;
+	float: left;
+	margin: -1em 0 -999px 0;
+	z-index: 8;
+	height: 100%;
+	width: 118px;
 }
 div.children a.child_row {
 	border-radius: 4px;
 	color: white;
 	background-color: #622;
 	cursor: pointer;
-	font-size: 10px;
+	font-size: 9px;
+	padding: 1px 2px 3px;
+	line-height: 2em;
+	text-transform: lowercase;
 }
 div.children a.child_row:hover {
 	background-color: #226;

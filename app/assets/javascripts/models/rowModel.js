@@ -12,7 +12,7 @@ function rowModel(data) {
 
 	for( var i = 0; i < _fields.length; i++ ) {
 		var field = _fields[i].to_param;
-		this[field] = prepareValue(row[field], _fields[i].field_type)
+		this[field] = prepareValue(row[field], _fields[i].field_type);
 	}
 
 	this._flatten = function(return_type) {
@@ -22,7 +22,7 @@ function rowModel(data) {
 		for (var i=0; i < fields().length; i++) {
 			var field_name = fields()[i].to_param;
 			if( init[field_name] == 'Invalid Date' ) { init[field_name] = "null"; }
-			changed_fields[ field_name ] = init[field_name];
+			changed_fields[ field_name ] = prepareValue(init[field_name], fields()[i].field_type);
 		};
 		if( typeof this._destroy != 'undefined' ) { changed_fields._destroy = true; }
 		if( return_as.toLowerCase() == 'json' ) {changed_fields = ko.toJSON(changed_fields);}
