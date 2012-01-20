@@ -276,177 +276,177 @@ describe ListsController do
      end
    
    end
-   # it 'saves a non-exsistant row and returns an error' do
-   #   @rows = '{
-   #    "1": {"key":"23","list":"'+@grandchild.name+'","'+@list.fields[0].to_param+'":"old value"},
-   #    "2": {"key":"new","list":"'+@grandchild.name+'","'+@list.fields[0].to_param+'":"old value"}
-   #   }'
-   #   
-   #   post 'update',  :org_name => @org.to_param, :list_name => @list.to_param, :rows => @rows, :format => :json
-   #   
-   #   @response = JSON.parse(response.body)['rows']
-   #   @response[0]['success'].should be_false
-   #   @response[1]['success'].should be_true
-   # end
-   # it 'saves _tempkeys and it returns new keys and tempkeys' do
-   #   @rows = '{
-   #    "1": {"key":"new","list":"'+@grandchild.name+'","_tempkey":"7"}
-   #   }'
-   #   
-   #   post 'update',  :org_name => @org.to_param, :list_name => @list.to_param, :rows => @rows, :format => :json
-   #   
-   #   @response = JSON.parse(response.body)['rows']
-   #   @response[0]['_tempkey'].should == '7'
-   #   @response[0]['key'].should_not be_nil
-   #   
-   # end
-   # it 'deletes data if there is empty data passed back' do
-   #   @row1 = Row.new( :list => @grandchild, @list.fields[0].name.to_param => 'old value' ).save
-   #   @row2 = Row.new( :list => @grandchild, @list.fields[2].name.to_param => 'old different value' ).save
-   #   
-   #   @rows = '{
-   #    "6": {"key":"new","list":"'+@grandchild.name+'"},
-   #    "5": {"key":"'+@row1[:key].to_s+'","list":"'+@grandchild.name+'","'+@list.fields[0].to_param+'":""},
-   #    "4": {"key":"new","list":"'+@grandchild.name+'"},
-   #    "3": {"key":"'+@row2[:key].to_s+'","list":"'+@grandchild.name+'","'+@list.fields[2].to_param+'":""}
-   #   }'
-   #   
-   #   post 'update',  :org_name => @org.to_param, :list_name => @list.to_param, :rows => @rows, :format => :json
-   #   
-   #   Row.new(@row1[:key])[@list.fields[0].to_param].should == ''
-   #   Row.new(@row2[:key])[@list.fields[2].to_param].should == ''
-   #   
-   # end
-   # it 'deletes some rows, updates some rows, and creates some rows, return data makes sense' do
-   #   @row1 = Row.new( :list => @list, @list.fields[0].name.to_param => 'old value' ).save
-   #   @row2 = Row.new( :list => @list, @list.fields[0].name.to_param => 'old value' ).save
-   # 
-   #   @rows = '{
-   #    "3": {"key":"'+@row1[:key].to_s+'","list":"'+@list.name+'","'+@list.fields[0].to_param+'":"new value"},
-   #    "4": {"key":"new","list":"'+@list.name+'","_tempkey":"7"},
-   #    "5": {"key":"'+@row2[:key].to_s+'","list":"'+@list.name+'","'+@list.fields[0].to_param+'":"old value", "_destroy":"true"}
-   #    }'
-   #    
-   #    post 'update',  :org_name => @org.to_param, :list_name => @list.to_param, :rows => @rows, :format => :json
-   #    
-   #    @response = JSON.parse(response.body)['rows']
-   #    @response[0]['key'].should == @row1[:key]
-   #    Row.new( @row1[:key] )[@list.fields[0].name.to_param ].should == "new value"
-   # 
-   #    @response[1]['_tempkey'] == '7'
-   #    @response[1]['key'].should_not be_nil
-   #    Item.find_by_id(@response[1]['key']).should_not be_nil
-   #    
-   #    @response[2]['_destroy'].should be_true
-   #    Item.find_by_id(@response[2]['key']).should be_nil
-   #    
-   # end
-   # 
-   # it 'saves a new view' do
-   #   @views = '{
-   #    "4": {"name":"a view","id":"new","visible":50,"paged":0,"report_on":{},"pivot":false,"groups_on":false,"goal":{"value":"50"},"groups":[],"sorts":[],"filters":[]}
-   #   }'
-   #   post 'update',  :org_name => @org.to_param, :list_name => @list.to_param, :views => @views, :format => :json
-   #   View.last.name.should == 'a view'
-   #   
-   # end
-   # it 'updates an existing view' do
-   #   @views = '{
-   #    "3":{"name":"a view","id":"'+@view.id.to_s+'","visible":50,"paged":0,"report_on":{},"pivot":false,"groups_on":false,"goal":{"value":"50"},"groups":[],"sorts":[],"filters":[]}
-   #   }'
-   #   post 'update',  :org_name => @org.to_param, :list_name => @list.to_param, :views => @views, :format => :json
-   #   
-   #   View.find(@view.id).name.should == 'a view'
-   # end
-   # it 'deletes a view' do
-   #   @views = '{
-   #   "3":{"name":"a view","id":"'+@view.id.to_s+'","visible":50,"paged":0,"report_on":{},"pivot":false,"groups_on":false,"goal":{"value":"50"},"groups":[],"sorts":[],"filters":[],"_destroy":"true"}
-   #   }'
-   #   
-   #   post 'update',  :org_name => @org.to_param, :list_name => @list.to_param, :views => @views, :format => :json
-   #   
-   #   View.find_by_id(@view.id).should be_nil
-   # end
-   # it 'saves both views and rows, returns correct shit' do
-   #   @row1 = Row.new( :list => @list, @list.fields[0].name.to_param => 'old value' ).save
-   #   @row2 = Row.new( :list => @list, @list.fields[0].name.to_param => 'old value' ).save
-   # 
-   #   @rows = '{
-   #    "5":{"key":"'+@row1[:key].to_s+'","list":"'+@list.name+'","'+@list.fields[0].to_param+'":"new value"},
-   #    "4":{"key":"new","list":"'+@list.name+'","_tempkey":"7"},
-   #    "3":{"key":"'+@row2[:key].to_s+'","list":"'+@list.name+'","'+@list.fields[0].to_param+'":"old value", "_destroy":"true"}
-   #    }'
-   # 
-   #    @view2 = Factory(:view, :list => @list)
-   #    @view2.save
-   #    
-   #    @views = '{
-   #    "1":{"name":"what view","id":"'+@view.id.to_s+'","visible":50,"paged":0,"report_on":{},"pivot":false,"groups_on":false,"goal":{"value":"50"},"groups":[],"sorts":[],"filters":[],"_destroy":"true"},
-   #    "4":{"name":"diff name view","id":"'+@view2.id.to_s+'","visible":50,"paged":0,"report_on":{},"pivot":false,"groups_on":false,"goal":{"value":"50"},"groups":[],"sorts":[],"filters":[]},
-   #    "3":{"name":"a view","id":"new","visible":50,"paged":0,"report_on":{},"pivot":false,"groups_on":false,"goal":{"value":"50"},"groups":[],"sorts":[],"filters":[]}
-   #    }'
-   #   
-   #    post 'update',  :org_name => @org.to_param, :list_name => @list.to_param, :views => @views, :rows => @rows, :format => :json
-   # 
-   #    @returned = JSON.parse(response.body)
-   #    @response = @returned['rows']
-   #    @response[0]['key'].should == @row1[:key]
-   #    Row.new( @row1[:key] )[@list.fields[0].name.to_param ].should == "new value"
-   # 
-   #    @response[1]['_tempkey'] == '7'
-   #    @response[1]['key'].should_not be_nil
-   #    Item.find_by_id(@response[1]['key']).should_not be_nil
-   #    
-   #    @response[2]['_destroy'].should be_true
-   #    Item.find_by_id(@response[2]['key']).should be_nil
-   #    
-   #    @response = @returned['views']
-   # 
-   #    @response[0]['_destroy'].should be_true
-   #    @response[0]['id'].should == @view.id
-   #    View.find_by_id(@response[0]['id']).should be_nil
-   # 
-   #    @response[1]['name'] == 'diff name view'
-   #    @response[1]['id'].should_not be_nil
-   #    View.find_by_id(@response[1]['id']).should_not be_nil
-   #    
-   #    @response[2]['id'].should == View.last.id
-   #    @response[2]['name'].should == 'a view'
-   #    View.last.name.should == 'a view'
-   # end
-   # 
-   # it 'successfully saves some rows even when error' do
-   #   @rows = '{
-   #    "6":{"key":"bad","list":"'+@list.name+'"},
-   #    "4":{"key":"new","list":"'+@list.name+'","_tempkey":"7"}
-   #    }'
-   #    @views = '{
-   #      "5":{"name":"diff name view","id":"new","visible":50,"paged":0,"report_on":{},"pivot":false,"groups_on":false,"goal":{"value":"50"},"groups":[],"sorts":[],"filters":[]},
-   #      "3":{"name":"what view","id":"bad","visible":50,"paged":0,"report_on":{},"pivot":false,"groups_on":false,"goal":{"value":"50"},"groups":[],"sorts":[],"filters":[],"_destroy":"true"}
-   #    }'
-   #    post 'update',  :org_name => @org.to_param, :list_name => @list.to_param, :views => @views, :rows => @rows, :format => :json
-   #    @returned = JSON.parse(response.body)
-   #    
-   #    @returned['rows'][0]['success'].should be_false
-   #    @returned['rows'][0]['key'].should == 'bad'
-   #    @returned['rows'][1]['success'].should be_true
-   #    
-   #    @returned['views'][1]['success'].should be_false
-   #    @returned['views'][1]['id'].should == 'bad'
-   #    @returned['views'][0]['success'].should be_true
-   # end
-   # it 'returns errors when passed bad JSON' do
-   # 
-   #   @rows = 'asdfasda//qw""'
-   #   @views = '[]]]'
-   # 
-   #   post 'update',  :org_name => @org.to_param, :list_name => @list.to_param, :views => @views, :rows => @rows, :format => :json
-   #   @returned  = JSON.parse(response.body)
-   # 
-   #   @returned['rows']['success'].should be_false
-   #   @returned['views']['success'].should be_false
-   #   
-   # end
+   it 'saves a non-exsistant row and returns an error' do
+     @rows = '{
+      "1": {"key":"23","list":"'+@grandchild.name+'","'+@list.fields[0].to_param+'":"old value"},
+      "2": {"key":"new","list":"'+@grandchild.name+'","'+@list.fields[0].to_param+'":"old value"}
+     }'
+     
+     post 'update',  :org_name => @org.to_param, :list_name => @list.to_param, :rows => @rows, :format => :json
+     
+     @response = JSON.parse(response.body)['rows']
+     @response[0]['success'].should be_false
+     @response[1]['success'].should be_true
+   end
+   it 'saves _tempkeys and it returns new keys and tempkeys' do
+     @rows = '{
+      "1": {"key":"new","list":"'+@grandchild.name+'","_tempkey":"7"}
+     }'
+     
+     post 'update',  :org_name => @org.to_param, :list_name => @list.to_param, :rows => @rows, :format => :json
+     
+     @response = JSON.parse(response.body)['rows']
+     @response[0]['_tempkey'].should == '7'
+     @response[0]['key'].should_not be_nil
+     
+   end
+   it 'deletes data if there is empty data passed back' do
+     @row1 = Row.new( :list => @grandchild, @list.fields[0].name.to_param => 'old value' ).save
+     @row2 = Row.new( :list => @grandchild, @list.fields[2].name.to_param => 'old different value' ).save
+     
+     @rows = '{
+      "6": {"key":"new","list":"'+@grandchild.name+'"},
+      "5": {"key":"'+@row1[:key].to_s+'","list":"'+@grandchild.name+'","'+@list.fields[0].to_param+'":""},
+      "4": {"key":"new","list":"'+@grandchild.name+'"},
+      "3": {"key":"'+@row2[:key].to_s+'","list":"'+@grandchild.name+'","'+@list.fields[2].to_param+'":""}
+     }'
+     
+     post 'update',  :org_name => @org.to_param, :list_name => @list.to_param, :rows => @rows, :format => :json
+     
+     Row.new(@row1[:key])[@list.fields[0].to_param].should == ''
+     Row.new(@row2[:key])[@list.fields[2].to_param].should == ''
+     
+   end
+   it 'deletes some rows, updates some rows, and creates some rows, return data makes sense' do
+     @row1 = Row.new( :list => @list, @list.fields[0].name.to_param => 'old value' ).save
+     @row2 = Row.new( :list => @list, @list.fields[0].name.to_param => 'old value' ).save
+   
+     @rows = '{
+      "3": {"key":"'+@row1[:key].to_s+'","list":"'+@list.name+'","'+@list.fields[0].to_param+'":"new value"},
+      "4": {"key":"new","list":"'+@list.name+'","_tempkey":"7"},
+      "5": {"key":"'+@row2[:key].to_s+'","list":"'+@list.name+'","'+@list.fields[0].to_param+'":"old value", "_destroy":"true"}
+      }'
+      
+      post 'update',  :org_name => @org.to_param, :list_name => @list.to_param, :rows => @rows, :format => :json
+      
+      @response = JSON.parse(response.body)['rows']
+      @response[0]['key'].should == @row1[:key]
+      Row.new( @row1[:key] )[@list.fields[0].name.to_param ].should == "new value"
+   
+      @response[1]['_tempkey'] == '7'
+      @response[1]['key'].should_not be_nil
+      Item.find_by_id(@response[1]['key']).should_not be_nil
+      
+      @response[2]['_destroy'].should be_true
+      Item.find_by_id(@response[2]['key']).should be_nil
+      
+   end
+   
+   it 'saves a new view' do
+     @views = '{
+      "4": {"name":"a view","id":"new","visible":50,"paged":0,"report_on":{},"pivot":false,"groups_on":false,"goal":{"value":"50"},"groups":[],"sorts":[],"filters":[]}
+     }'
+     post 'update',  :org_name => @org.to_param, :list_name => @list.to_param, :views => @views, :format => :json
+     View.last.name.should == 'a view'
+     
+   end
+   it 'updates an existing view' do
+     @views = '{
+      "3":{"name":"a view","id":"'+@view.id.to_s+'","visible":50,"paged":0,"report_on":{},"pivot":false,"groups_on":false,"goal":{"value":"50"},"groups":[],"sorts":[],"filters":[]}
+     }'
+     post 'update',  :org_name => @org.to_param, :list_name => @list.to_param, :views => @views, :format => :json
+     
+     View.find(@view.id).name.should == 'a view'
+   end
+   it 'deletes a view' do
+     @views = '{
+     "3":{"name":"a view","id":"'+@view.id.to_s+'","visible":50,"paged":0,"report_on":{},"pivot":false,"groups_on":false,"goal":{"value":"50"},"groups":[],"sorts":[],"filters":[],"_destroy":"true"}
+     }'
+     
+     post 'update',  :org_name => @org.to_param, :list_name => @list.to_param, :views => @views, :format => :json
+     
+     View.find_by_id(@view.id).should be_nil
+   end
+   it 'saves both views and rows, returns correct shit' do
+     @row1 = Row.new( :list => @list, @list.fields[0].name.to_param => 'old value' ).save
+     @row2 = Row.new( :list => @list, @list.fields[0].name.to_param => 'old value' ).save
+   
+     @rows = '{
+      "5":{"key":"'+@row1[:key].to_s+'","list":"'+@list.name+'","'+@list.fields[0].to_param+'":"new value"},
+      "4":{"key":"new","list":"'+@list.name+'","_tempkey":"7"},
+      "3":{"key":"'+@row2[:key].to_s+'","list":"'+@list.name+'","'+@list.fields[0].to_param+'":"old value", "_destroy":"true"}
+      }'
+   
+      @view2 = Factory(:view, :list => @list)
+      @view2.save
+      
+      @views = '{
+      "1":{"name":"what view","id":"'+@view.id.to_s+'","visible":50,"paged":0,"report_on":{},"pivot":false,"groups_on":false,"goal":{"value":"50"},"groups":[],"sorts":[],"filters":[],"_destroy":"true"},
+      "4":{"name":"diff name view","id":"'+@view2.id.to_s+'","visible":50,"paged":0,"report_on":{},"pivot":false,"groups_on":false,"goal":{"value":"50"},"groups":[],"sorts":[],"filters":[]},
+      "3":{"name":"a view","id":"new","visible":50,"paged":0,"report_on":{},"pivot":false,"groups_on":false,"goal":{"value":"50"},"groups":[],"sorts":[],"filters":[]}
+      }'
+     
+      post 'update',  :org_name => @org.to_param, :list_name => @list.to_param, :views => @views, :rows => @rows, :format => :json
+   
+      @returned = JSON.parse(response.body)
+      @response = @returned['rows']
+      @response[0]['key'].should == @row1[:key]
+      Row.new( @row1[:key] )[@list.fields[0].name.to_param ].should == "new value"
+   
+      @response[1]['_tempkey'] == '7'
+      @response[1]['key'].should_not be_nil
+      Item.find_by_id(@response[1]['key']).should_not be_nil
+      
+      @response[2]['_destroy'].should be_true
+      Item.find_by_id(@response[2]['key']).should be_nil
+      
+      @response = @returned['views']
+   
+      @response[0]['_destroy'].should be_true
+      @response[0]['id'].should == @view.id
+      View.find_by_id(@response[0]['id']).should be_nil
+   
+      @response[1]['name'] == 'diff name view'
+      @response[1]['id'].should_not be_nil
+      View.find_by_id(@response[1]['id']).should_not be_nil
+      
+      @response[2]['id'].should == View.last.id
+      @response[2]['name'].should == 'a view'
+      View.last.name.should == 'a view'
+   end
+   
+   it 'successfully saves some rows even when error' do
+     @rows = '{
+      "6":{"key":"bad","list":"'+@list.name+'"},
+      "4":{"key":"new","list":"'+@list.name+'","_tempkey":"7"}
+      }'
+      @views = '{
+        "5":{"name":"diff name view","id":"new","visible":50,"paged":0,"report_on":{},"pivot":false,"groups_on":false,"goal":{"value":"50"},"groups":[],"sorts":[],"filters":[]},
+        "3":{"name":"what view","id":"bad","visible":50,"paged":0,"report_on":{},"pivot":false,"groups_on":false,"goal":{"value":"50"},"groups":[],"sorts":[],"filters":[],"_destroy":"true"}
+      }'
+      post 'update',  :org_name => @org.to_param, :list_name => @list.to_param, :views => @views, :rows => @rows, :format => :json
+      @returned = JSON.parse(response.body)
+      
+      @returned['rows'][0]['success'].should be_false
+      @returned['rows'][0]['key'].should == 'bad'
+      @returned['rows'][1]['success'].should be_true
+      
+      @returned['views'][1]['success'].should be_false
+      @returned['views'][1]['id'].should == 'bad'
+      @returned['views'][0]['success'].should be_true
+   end
+   it 'returns errors when passed bad JSON' do
+   
+     @rows = 'asdfasda//qw""'
+     @views = '[]]]'
+   
+     post 'update',  :org_name => @org.to_param, :list_name => @list.to_param, :views => @views, :rows => @rows, :format => :json
+     @returned  = JSON.parse(response.body)
+   
+     @returned['rows']['success'].should be_false
+     @returned['views']['success'].should be_false
+     
+   end
 
    
  end
