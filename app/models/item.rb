@@ -30,9 +30,11 @@ class Item < ActiveRecord::Base
   end
   
   def grab_children(list_children)
-    children = Item.find_all_by_parent_id(self.id)
     returning = []
+    # If it's a new record, just dumps everything out
+    return returning if self.id.nil?
     
+    children = Item.find_all_by_parent_id(self.id)
     unless children.empty?
       
       children.each do |i|

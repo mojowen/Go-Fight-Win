@@ -39,5 +39,10 @@ describe Item do
     @entry = @item.entries.new(:field_id => 1, :data => 'hello')
     @entry.save.should be_true
   end
+  it 'can grab child items when needed and matches correctly if not in the same org' do
+    @child = Factory(:item, :parent => @item)
+    @child.save
+    @item.grab_children( [ @child.list]  ).should == [{:name=> @child.list.org.name , :address=> '/'+@child.list.org.to_param+'/'+@child.list.to_param }]
+  end
   
 end

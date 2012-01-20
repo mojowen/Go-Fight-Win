@@ -45,16 +45,18 @@ class Row
       @@list_has_children = @list.has_children
     end
     
+    @fields = @@fields
 
     if @@list_has_children
       new_var 'children', @item.grab_children(@@list_has_children)
-      # @fields.pop
+      @fields = @fields.select{ |f| f.name != 'children' }
     end
-    @fields = @@fields
+
     @parents = @item.parents
     @entries = @item.entries(@parents)
     @changed_fields = []
-    
+
+
     #Creates an function for each field and then stores any entry data and intializing values as part of that field
     @fields.each do |f|
       #Initalizing the new methods for each field
@@ -179,6 +181,9 @@ class Row
 
   def to_s
     return 'Row('+@row.to_s+')'
+  end
+  def count
+    return @row.count
   end
 
   def [](iv)

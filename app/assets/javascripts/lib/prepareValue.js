@@ -2,7 +2,6 @@ function prepareValue (value, field_type, args) {
 	var returning = '';
 	var args = args || new Object;
 	if( value != undefined ) {
-	
 		switch( field_type ){
 			case 'number':
 				if( !isNaN(parseInt(value)) ) { returning = parseInt(value); }
@@ -15,6 +14,13 @@ function prepareValue (value, field_type, args) {
 				break;
 			default:
 				returning = value;
+				break;
+		}
+	} else {
+		switch( field_type ){
+			case 'children':
+				returning = [];
+				break;
 		}
 	}
 	
