@@ -1,16 +1,18 @@
 /** Layout **/
 
-body {
+body.site {
+	width: 960px;
+	margin: 0 auto;
+	background-color: #ddd;
 }
 body.big_header {
-
 }
 #header {
 	position: fixed;
-	width: 100%;
-	padding: 10px 10px 4px;
+	width: 960px;
+	padding: 6px 40px 4px;
 	top: 0;
-	left: 0;
+
 	z-index: 9;
 }
 
@@ -21,4 +23,9 @@ body.big_header {
 }
 
 #content {
+	background-color: #fff;
+	padding: 100px 40px 80px;
+	width: 960px;
+	box-shadow: 1px 0px 30px #333;
 }
+

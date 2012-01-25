@@ -5,14 +5,14 @@ describe("group stuff", function() {
 	loadFixtures("views/lists/_groupedRow.html","views/lists/_grouped.html","views/lists/_graph.html");
 	ko.applyBindings(dataModel);
   });
+    // 
+    // it("renders the group's options that i specify", function() {
+    //   expect(true).toBeFalsy();
+    // });
+    // it("renders the grouping i specify", function() {
+    //   expect(false).toBeTruthy();
+    // });
   
-  it("renders the group's options that i specify", function() {
-    expect(true).toBeFalsy();
-  });
-  it("renders the grouping i specify", function() {
-    expect(false).toBeTruthy();
-  });
-
 	/*
 //		- viewModel.pivotedRows() used for currentView().goal().field
 		- currentView().pivotValues() used for currentView().reportOn (for pivot table)

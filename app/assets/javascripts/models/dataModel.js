@@ -6,12 +6,11 @@ function appDataModel() {
 	views = ko.observableArray([]),
 	currentView = ko.observable({});
 	saving = ko.observable(true);
-	flatRows = [];
 	this.loaded = false;
 
 	views.find = function(search) { var flat_views = views().map( function(elem) { return  ko.toJS(elem); }); var results = seek(search, flat_views, 'name'); return results === -1 ? false : views()[results]; }
-	rows.find = function(search) { var results = seek(search, dataModel.flatRows,'key'); return results === -1 ? false : rows()[results]; }
-	rows.find_temp = function(search) { var results = seek(search, dataModel.flatRows,'_tempkey'); return results === -1 ? false : rows()[results]; }
+	rows.find = function(search) { var flat_rows = rows().map( function(elem) { return  ko.toJS(elem); }); var results = seek(search, flat_rows,'key'); return results === -1 ? false : rows()[results]; }
+	rows.find_temp = function(search) { var flat_rows = rows().map( function(elem) { return  ko.toJS(elem); });  var results = seek(search, flat_rows,'_tempkey'); return results === -1 ? false : rows()[results]; }
 
 	load = function() {
 		if( typeof _fields != 'undefined' ) { 

@@ -23,4 +23,11 @@
 #unauthorized div#content {
 	padding: 10px;
 	margin: 0;
+	width: 480px;
 }
+
+.inauth #msg {
+	top: 162px;
+	margin-left: -110px;
+}
+

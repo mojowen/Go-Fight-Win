@@ -11,7 +11,6 @@ function keyboardShortcuts (argument) {
 		if( $target.parents('.hasDatepicker') && !$target.is('.hasDatepicker') && !$target.is('textarea.date') && !$target.is('.cal') ) {
 			$('.hasDatepicker').datepicker('destroy').prev('.cal').removeClass('on');
 		}
-
 	});
 
 	window.onbeforeunload = function() { 
@@ -46,6 +45,7 @@ function keyboardShortcuts (argument) {
 				
 			// need to do a check when this is ok
 			if( [37, 38, 39, 40, 13, 9].indexOf(e.keyCode) !== -1 && $('.grid .selected').length > 0 && $('.open').length < 1 ) { 
+				$('.hovered').removeClass('hovered');
 				e.preventDefault(); 
 				switch(e.keyCode){
 					case 37:
@@ -165,6 +165,13 @@ function keyboardShortcuts (argument) {
 					$this.next('.date_controls').find('.date_picker').datepicker("destroy").prev('.cal').removeClass('on');
 					break;
 			}
+		},
+		mouseover: function(e) {
+			// if( $('.selected').length == 0 ) {  }
+			$(this).parents('tr').addClass('hovered');
+		}, 
+		mouseout: function(e) {
+			$(this).parents('tr').removeClass('hovered');
 		}
 	});
 

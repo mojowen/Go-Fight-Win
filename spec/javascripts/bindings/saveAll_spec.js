@@ -23,14 +23,28 @@ describe("Mocking Ajax Calls", function() {
 		expect(saving()).toBeTruthy();
 	});
 	it("It sucessfully removes destroyed rows", function() {
-		var key = rows()[1].key();
+		var key1 = rows()[1].key(),
+			key2 = rows()[2].key(),
+			key3 = rows()[3].key();
 		rows.destroy( rows()[1] );
-		expect( rows()[1].key() ).toEqual(key);
+		rows.destroy( rows()[2] );
+		rows.destroy( rows()[3] );
+		expect( rows()[1].key() ).toEqual(key1);
+		expect( rows()[2].key() ).toEqual(key2);
+		expect( rows()[3].key() ).toEqual(key3);
+
 		saveAll();
-		var rdata = JSON.stringify( ko.toJS(rows()[1]) );
-		var returned = '{"rows": [ {"key": "'+key+'","success": true,"list": "'+_list+'","error": [], "data": '+rdata+', "_destroy":"true" } ], "views":[] }';
+		var rdata1 = JSON.stringify( ko.toJS(rows()[1]) ),
+			rdata2 = JSON.stringify( ko.toJS(rows()[2]) ),
+			rdata3 = JSON.stringify( ko.toJS(rows()[3]) );
+		var returned = '{"rows": [ {"key": "'+key1+'","success": true,"list": "'+_list+'","error": [], "data": '+rdata1+', "_destroy":"true" },{"key": "'+key2+'","success": true,"list": "'+_list+'","error": [], "data": '+rdata2+', "_destroy":"true" },{"key": "'+key3+'","success": true,"list": "'+_list+'","error": [], "data": '+rdata3+', "_destroy":"true" } ], "views":[] }';
 		$.post.mostRecentCall.args[2](JSON.parse(returned));
-		expect( rows()[1].key() ).not.toEqual(key);
+
+		expect( rows()[1].key() ).not.toEqual(key1);
+		expect( rows()[1].key() ).not.toEqual(key2);
+		expect( rows()[1].key() ).not.toEqual(key3);
+		expect(saving()).toBeTruthy();
+
 	});
 	
 	it("It sucessfully resets changed rows", function() {
@@ -74,6 +88,10 @@ describe("Mocking Ajax Calls", function() {
 		expect(rows()[rows().length-1].key()).not.toEqual('new');
 		expect(rows()[rows().length-1]._tempkey).toBeNull();
 		expect(rows()[rows().length-1].dirtyFlag.isDirty()).toBeFalsy();
+		
+		bl( dataModel.savingRows )
+		
+		expect(false).toBeTruthy();
 	});
 	
 	// it("adding a view calls post", function() {

@@ -157,9 +157,10 @@ th {
 	text-align: center;
 	border: 1px #ddd solid;
 }
-.editor tr:hover td {
+.editor tr.hovered td {
     background-color: lightblue;
 }
+
 .editor tr td textarea:focus, .editor tr td select:focus {
 	background-color: white;
 	color: black;

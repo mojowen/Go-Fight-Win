@@ -2,7 +2,6 @@ function saveAll (args) {
 	var args = typeof args == 'undefined' ? {} : args;
 	var _rows = dataModel.savingRows();
 	var _views = dataModel.savingViews();
-
 	if( _rows.length + _views.length > 0 && saving() ) {
 		saving(false);
 		$.post(
@@ -31,11 +30,11 @@ function saveAll (args) {
 								var row = rows.find( parseInt(_rows[i].key) );
 							}
 							var flat = new rowModel(_rows[i].data);
-							if( !row.dirtyFlag.reset( flat ) ) {
-								// console.log('flat row')
-								// console.log(flat._flatten('json'))
-								// console.log('row row')
-								// console.log(row._flatten('json'))
+							if( !row.dirtyFlag.reset( flat ) && false ) {
+								console.log('flat row')
+								console.log(flat._flatten('json'))
+								console.log('row row')
+								console.log(row._flatten('json'))
 							};
 						}
 					};

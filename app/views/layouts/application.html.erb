@@ -7,20 +7,25 @@
   <%= csrf_meta_tags %>
 </head>
 
-<body class="<%= 'big_header' unless yield(:extra).empty? %>">
+<body class="
+	<%= 'big_header' unless yield(:extra).empty? %>
+	site
+	<%= user_signed_in? ? 'authed' : 'inauth' %>
+	">
 
 	<% if user_signed_in? %>
 	<div id="header">
 		<div id="user_nav">
-		    <p>
-			<strong><%= current_user.email %></strong><br />
-			<%= link_to 'account', edit_user_registration_path %>,
+		    <p>you are
+			<%= link_to current_user.email, edit_user_registration_path %> | 
 		    <%= link_to "sign out", destroy_user_session_path, :method => :delete %>
 			</p>
 		 </div>
-		
-		<%= link_to 'Go. Fight. Win.', root_url, :id => 'logo' %><span class="divider">&raquo;</span>
-		<%=raw '<h3 class="org">org: '+yield(:org)+'</h3>' unless yield(:org).empty? %>
+		<% if @list.nil? %>
+			<%= link_to 'GFW.', root_url, :id => 'logo' %>
+		<% else %>
+			<%= link_to 'Go. Fight. Win.', org_path(@org.to_param), :id => 'logo' %>
+		<% end %>
 		
 		<% unless yield(:page_title).empty? %>
 			<h1 class="title"><%=h yield(:page_title) %></h1>

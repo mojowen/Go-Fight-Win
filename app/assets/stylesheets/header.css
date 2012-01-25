@@ -2,7 +2,7 @@
 
 #header {
 	background-color: #622;
-	box-shadow: 1px 1px 10px #226;
+	box-shadow: 1px 1px 10px #333;
 }
 
 #header a {
@@ -14,7 +14,7 @@
 }
 #user_nav {
 	float: right;
-	margin: -10px 30px 0 0;
+	margin: -6px 0 0 0;
 	color: #fff;
 	text-align: right;
 }
@@ -31,17 +31,23 @@ a#logo {
 	text-decoration: none;
 	color: #fff;
 	float: left;
-	margin-right: 60px;
 	-webkit-user-select: none;
 	-khtml-user-select: none;
 	-moz-user-select: none;
 	-o-user-select: none;
 	user-select: none;
+	border: 1px solid white;
+	padding: 2px 2px 2px 8px;
 }
-
+a#logo:hover {
+	text-decoration: none;
+	border: 1px solid #ddd;
+	color: #ddd;
+}
 #msg {
 	position: absolute;
-	top: 10px;
+	top: 4px;
+	margin-left: -40px;
 	width: 100%;
 	text-align: center;
 }

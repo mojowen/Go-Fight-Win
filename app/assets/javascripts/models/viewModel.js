@@ -178,7 +178,7 @@ function viewModel( data ) {
 				this.addSort( view.sorts[i] );
 			};
 		}
-		this.sortRows();
+		// this.sortRows();
 	}
 
 // Naming
