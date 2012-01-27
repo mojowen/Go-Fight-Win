@@ -4,4 +4,5 @@ log/*.log
 tmp/
 .sass-cache/
 .jhw-cache/
+*jhw*
 public/assets/

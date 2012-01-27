@@ -79,11 +79,13 @@ function removeNewRow(row) {
 }
 
 function fillRow(rowData,x,y) {
-	var split = rowData.split(/\t/);
-	var y = typeof y == 'undefined' ? 0 : y;
+	var split = rowData.split(/\t/),
+		y = typeof y == 'undefined' ? 0 : y;
 	for (var i=0; i < split.length; i++) {
 		if( typeof fields()[x+i] != 'undefined' ) {
-			newRows()[y][fields()[x+i].to_param](split[i])
+			var field = fields()[x+i], 
+				value = prepareValue( split[i], field.field_type, {no_ko: true});
+			newRows()[y][field.to_param ]( value );
 		}
 	};
 }

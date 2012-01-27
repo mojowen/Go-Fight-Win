@@ -12,6 +12,8 @@ function prepareValue (value, field_type, args) {
 				if( attempt == 'Invalid Date' ) { returning = value;  }
 				else { returning = attempt }
 				break;
+			case 'select':
+				returning = value.toLowerCase();
 			default:
 				returning = value;
 				break;

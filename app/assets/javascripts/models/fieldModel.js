@@ -17,6 +17,12 @@ function fieldModel(data) {
 
 	this.field_type = field.field_type || 'text';
 	this.field_options = field.field_options || '';
+	//  Downcasing the select options
+	if( this.field_type == 'select' ) {
+		for (var i = this.field_options.length - 1; i >= 0; i--){
+			this.field_options[i] = this.field_options[i].toLowerCase();
+		};
+	}
 
 	this.fieldReports = ko.dependentObservable({ 
 		read: function() {

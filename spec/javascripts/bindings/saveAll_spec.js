@@ -91,7 +91,7 @@ describe("Mocking Ajax Calls", function() {
 		
 		bl( dataModel.savingRows )
 		
-		expect(false).toBeTruthy();
+		// expect(false).toBeTruthy();
 	});
 	
 	// it("adding a view calls post", function() {
