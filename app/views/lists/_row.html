@@ -49,7 +49,7 @@
 	<textarea class="suggest data " data-bind="value: $parent[$data.to_param]"></textarea>	
 </script>
 <script type="text/html" id="rowchildren">
-	<div data-bind="foreach: $parent[$data.to_param]" class="data children">
+	<div data-bind="foreach: $parent[$data.to_param], css: {'empty' : $parent[$data.to_param]().length == 0 }" class="data children">
 		<a target="_blank" class="child_row" data-bind="text: $data.name, attr: {'href': $data.address }"></a>
 	</div>	
 </script>
