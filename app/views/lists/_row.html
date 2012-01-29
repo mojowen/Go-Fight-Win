@@ -4,6 +4,7 @@
 
 		<!-- ko if: $data.constructor.name == 'rowModel' -->
 			<tr>
+				<td data-bind="text: rows.indexOf($data) + 1"></td>
 				<!-- ko foreach: fields -->
 				<td class="cell">
 					<!-- ko template: {name: 'row'+$data.field_type } -->

@@ -4,18 +4,6 @@
 
 <table border="0" cellspacing="5" cellpadding="5" class="editor grid">
 	<thead>
-		<tr class="nav_bar">
-			<td data-bind="with: currentView, attr: {'colspan': fields().length +1 }">
-				<div id="nav">
-					<span class="clickable far_left">&#x21E4;</span>
-					<span class="clickable left">&#x2190;</span>
-					<span class="paging" data-bind="text: paged() + ' - '+ ( paged()+top() )"></span>
-					<span class="paging" data-bind="text: 'of '+ dataModel.rowSize(), visible: dataModel.rowSize() > visible()"></span>
-					<span class="clickable far_right">&#x21E5;</span>
-					<span class="clickable right">&#x2192;</span>
-				</div>
-			</td>
-		</tr>
 		<tr>
 			<!-- ko foreach: fields -->
 			<th>
@@ -25,20 +13,12 @@
 			<th></th>
 		</tr>
 	</thead>
-	<tbody id="edit_rows" data-bind="template: {name: 'row', foreach: viewModel.renderingRows }">
-	</tbody>
-	<tfoot>
-		<tr class="nav_bar">
-			<td id="current_view" data-bind="with: currentView, attr: {'colspan': fields().length +1 }">
-				<div id="nav">
-					<span class="clickable far_left">&#x21E4;</span>
-					<span class="clickable left">&#x2190;</span>
-					<span class="paging" data-bind="text: paged() + ' - '+ ( paged()+top() )"></span>
-					<span class="paging" data-bind="text: 'of '+ dataModel.rowSize(), visible: dataModel.rowSize() > visible()"></span>
-					<span class="clickable far_right">&#x21E5;</span>
-					<span class="clickable right">&#x2192;</span>
-				</div>
-			</td>
-		</tr>
-	</tfoot>
 </table>
+
+<div id="scrolling" style="overflow: auto; height: 500px;">
+	<div id="viewport" data-bind="style: {height: (dataModel.rowSize()*26)+'px'}">
+		<table border="0" cellspacing="5" cellpadding="5" class="editor grid">
+			<tbody id="edit_rows" data-bind="template: {name: 'row', foreach: viewModel.renderingRows }"></tbody>
+		</table>
+	</div>
+</div>

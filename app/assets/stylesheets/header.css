@@ -14,7 +14,7 @@
 }
 #user_nav {
 	float: right;
-	margin: -6px 0 0 0;
+	margin: -6px 0 -100% 0;
 	color: #fff;
 	text-align: right;
 }
@@ -74,9 +74,11 @@ a#logo:hover {
 }
 
 h1.title {
-	font-size: 26px;
-	color: #fff;
+	font-size: 16px;
+	color: white;
 	display: inline-block;
+	margin: 0 0 0 30px;
+	padding: 3px 0;
 }
 
 .divider {

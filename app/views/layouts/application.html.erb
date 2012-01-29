@@ -24,7 +24,7 @@
 		<% if @list.nil? %>
 			<%= link_to 'GFW.', root_url, :id => 'logo' %>
 		<% else %>
-			<%= link_to 'Go. Fight. Win.', org_path(@org.to_param), :id => 'logo' %>
+			<%= link_to 'GFW.', org_path(@org.to_param), :id => 'logo' %>
 		<% end %>
 		
 		<% unless yield(:page_title).empty? %>

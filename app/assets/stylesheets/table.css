@@ -1,4 +1,9 @@
 /** Views **/
+#current_view {
+	width: 300px;
+	display: inline-block;
+	clear: none;
+}
 input#current_view_name {
 	background: none;
 	border: 0;
@@ -28,7 +33,7 @@ span.add_view:hover, span.new_view:hover, span.clear_view:hover {
 span.save {
 	font-size: 24px;
 	float: right;
-	margin: -23px 30px 0 0;
+	margin: 8px 0 0 0;
 	color: white;
 	font-family: 'Tienne', serif;
 }

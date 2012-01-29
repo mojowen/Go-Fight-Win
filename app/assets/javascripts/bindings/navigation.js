@@ -20,21 +20,21 @@ function keyboardShortcuts (argument) {
 	}
 
 	function rowScroll() {
-		var top = $(window).scrollTop(),
-			height = $(window).height(),
+		var top = $('#scrolling').scrollTop(),
+			height = $('#scrolling').height(),
 			bottom = top + height,
 			$selected = $('.selected'),
 			$parent = $selected.parent('tr'),
 			$tbody = $parent.parent('tbody')
 			position = $selected.position().top+$('.selected').height();
 
-		if( position > bottom-200 ) {  $(window).scrollTop( position - height + 200); }
-		if( position < top+200 ) {  $(window).scrollTop( position - 200); }
+		if( position > bottom-200 ) {  $('#scrolling').scrollTop( position - height ); }
+		// if( position < top+200 ) {  $('#scrolling').scrollTop( position - 200); }
 
 		if( $tbody.find('tr').index( $parent ) == $tbody.find('tr').length -1 ) {
-			currentView().page(currentView().paged() +1 );
+			currentView().page(currentView().visible() +1 );
 		} else if ( $tbody.find('tr').index( $parent ) == 0 ) {
-			currentView().page(currentView().paged() -1 );
+			// currentView().page(currentView().paged() -1 );
 		}
 
 	}
@@ -187,5 +187,11 @@ function keyboardShortcuts (argument) {
 		currentView().goal().field(undefined);
 	});
 
-	
+// Scrolling experiment	
+	$('#scrolling').scroll(function(e){
+		var $this = $(this);
+		if( $this.scrollTop() + $this.height() > 26 * currentView().visible() ) {
+			currentView().visible( currentView().visible() + 10 );
+		}
+	});
 }
