@@ -1,24 +1,26 @@
 
 
-
-
+<span data-bind="text: currentView().start"></span>  -
+<span data-bind="text: currentView().now"></span>  -
+<span data-bind="text: currentView().end"></span>
 <table border="0" cellspacing="5" cellpadding="5" class="editor grid">
 	<thead>
 		<tr>
+			<th class="rownum" ></th>
 			<!-- ko foreach: fields -->
-			<th>
+			<th data-bind="attr: {'class':$data.field_type+' cell'}">
 				<span class="clickable" data-bind="text: $data.name"></span>
 			</th>
 			<!-- /ko -->
-			<th></th>
 		</tr>
 	</thead>
 </table>
 
-<div id="scrolling" style="overflow: auto; height: 500px;">
-	<div id="viewport" data-bind="style: {height: (dataModel.rowSize()*26)+'px'}">
+<div id="scrolling">
+	<div id="viewport" data-bind="style: {height: ((dataModel.rowSize()-currentView().start())*26)+'px', paddingTop: (currentView().start()*26)+'px'}">
 		<table border="0" cellspacing="5" cellpadding="5" class="editor grid">
-			<tbody id="edit_rows" data-bind="template: {name: 'row', foreach: viewModel.renderingRows }"></tbody>
+			<tbody id="edit_rows" data-bind="template: {name: 'row', foreach: viewModel.renderingRows }">
+			</tbody>
 		</table>
 	</div>
 </div>

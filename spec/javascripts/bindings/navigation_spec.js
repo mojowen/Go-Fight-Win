@@ -137,7 +137,23 @@ describe("the bindings on fields", function() {
 	});
 	// - enter to open
 	// - exit to close
-
   });
+
+});
+describe("scrolling", function() {
+  beforeEach(function() {
+    factoryList({rows: 300});
+	loadFixtures("views/lists/_row.html","views/lists/_table.html");
+	ko.applyBindings(dataModel);
+	setBindings();
+  });
+  it("only loads 30 rows to begin with, then loads more as scrolls down", function() {
+    expect($('.editor tbody tr').length).toEqual(30);
+	expect( $('#viewport').height() ).toEqual( rows().length * 26 );
+  });
+
+// other things to test:
+// - can 'jump' to a line and loads area
+// - rebuilding scroll after a sort or a filter (later prob)
 
 });

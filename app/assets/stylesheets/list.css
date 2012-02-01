@@ -1,4 +1,4 @@
-#analyze div.area, #data div.table {
+#scrolling {
+	overflow: auto; 
+	height: 508px;
 }
-
-

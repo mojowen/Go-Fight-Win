@@ -29,14 +29,22 @@ function factoryRow(info) {
 	return new rowModel(row);
 }
 
-function factoryList() {
+function factoryList(args) {
 	_list = 'Test';
 	fields.removeAll();
 	rows.removeAll();
-	for (var i=0; i < 4; i++) {
-		fields.push(factoryField());
+	args = typeof args == 'undefined' ? {} : args;
+	args.rows = typeof args.rows == 'undefined' ? 10 : args.rows;
+	args.fields = typeof args.fields == 'undefined' ? 4 : args.fields;
+	var da_rows = [], da_fields = [];
+	
+	for (var i=0; i < args.fields; i++) {
+		da_fields.push(factoryField());
 	};
-	for (var i=0; i < 10; i++) {
-		rows.push(factoryRow());
+	fields(da_fields);
+	
+	for (var i=0; i < args.rows; i++) {
+		da_rows.push(factoryRow());
 	};
+	rows(da_rows);
 }

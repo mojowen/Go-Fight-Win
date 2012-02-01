@@ -26,17 +26,17 @@ describe("Rows that are currently being displated, representing the list's curre
 		expect(viewModel.renderingRows()).toEqual(rows());
     });
 	it("slices rows if visible set to lower value", function() {
-		currentView().visible(1)
+		currentView().end(1)
 		expect( viewModel.renderingRows().length ).toEqual(1);
 	});
 	it("pages rows successfully", function() {
-	   currentView().visible(1);
-	   currentView().paged(1);
+	   currentView().end(2);
+	   currentView().start(1);
 	   expect( ko.toJS(viewModel.renderingRows()[0] ) ).toEqual( ko.toJS(rows()[1]) );
 	});
 	it("pages rows when filtered", function() {
-	   currentView().visible(1);
-	   currentView().paged(1);
+	   currentView().end(2);
+	   currentView().start(1);
 	   currentView().addFilter(field_1+' not z')
 	   expect( ko.toJS(viewModel.renderingRows()[0] ) ).toEqual( ko.toJS(rows()[3]) );
 	});

@@ -125,8 +125,28 @@ h1.title:hover {
 
 th {
 	text-align: center;
+	vertical-align: bottom;
+}
+th.cell {
+	width: 112px;
+}
+thead tr {
+	border-bottom: 2px solid #747474;
 }
 
+td.rownum, th.rownum {
+	width: 32px;
+	color: #747474;
+	text-align: right;
+}
+.editor tr.hovered td.rownum {
+	background-color: #fff;
+	font-weight: bold;
+	color: #333;
+}
+th.rownum {
+	border-bottom: 2px solid white;
+}
 /*.editor thead th { min-width: 80px; }*/
 
 .editor thead tr.nav_bar td, .editor thead tr.nav_bar:hover td{ background-color: #fff; }

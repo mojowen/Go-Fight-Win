@@ -6,8 +6,8 @@ beforeEach(function() {
 	newRows.removeAll();
 	fields.removeAll();
 	views.removeAll();
-	factoryfields =[]
-	factoryrows =[]
+	factoryfields =[];
+	factoryrows =[];
 	saving = ko.observable(true);
 	currentView().groups.on(true);
 });

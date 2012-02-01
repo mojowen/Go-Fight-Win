@@ -29,12 +29,27 @@
 	margin-right: 36px;
 }
 
+th.cell.number {
+	width: 78px;
+}
+
+/** Select **/
+.editor tr td.cell select {
+	width: 100px;
+}
+
+th.cell.select {
+	width: 88px;
+}
 
 /** Date picker specific **/
 .date_picker {
 	display: none;
 }
 
+th.cell.date {
+	width: 158px;
+}
 .editor tr td.cell textarea.date, .editor tr td.cell textarea.date:focus {
 	width: 130px;
 	margin-right: 36px;
@@ -102,7 +117,9 @@ ul.ui-autocomplete li.ui-menu-item {
 }
 
 /*** Children  ***/
-
+th.cell.children {
+	width: 114px;
+}
 div.children {
 	padding: 2px;
 	height: 18px;

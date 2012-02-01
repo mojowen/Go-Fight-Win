@@ -1,9 +1,6 @@
-viewModel.renderingRows = ko.dependentObservable(
+viewModel.renderingRows = ko.computed(
 	{ read: function() {
-// var t = new Date();
-		var results = viewModel.filteredRows().slice(currentView().paged(), currentView().paged()+currentView().visible());
-// var d = new Date();
-// console.log("render: "+(d-t));
+		var results = viewModel.filteredRows().slice(currentView().start(), currentView().end());
 		return results;
 	}, 
 	deferEvaluation: true

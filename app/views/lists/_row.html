@@ -2,32 +2,20 @@
 
 	<!-- ko if: typeof $data != 'undefined' -->
 
-		<!-- ko if: $data.constructor.name == 'rowModel' -->
-			<tr>
-				<td data-bind="text: rows.indexOf($data) + 1"></td>
-				<!-- ko foreach: fields -->
-				<td class="cell">
-					<!-- ko template: {name: 'row'+$data.field_type } -->
-					<!-- /ko -->
-				</td>
-				<!-- /ko -->
-				<td class="menu" data-bind="template: {name: $data._menu()} ">
-				</td>
-			</tr>
-		<!-- /ko -->
-
-		<!-- ko ifnot: $data.constructor.name == 'rowModel' -->
-
-			<tr>
-				<td data-bind="attr: { colspan: fields().length }">
-					<span data-bind="text: $data._value"></span>
-				</td>
-			</tr>
-
-			<!-- ko template: {name: 'row', foreach: $data.rows} -->
+		<tr>
+			<!-- ko if: $data._menu() != 'newRowMenu' -->
+				<td class="rownum" data-bind="text: rows.indexOf($data) + 1"></td>
 			<!-- /ko -->
-
-		<!-- /ko -->
+			<!-- ko foreach: fields -->
+			<td class="cell">
+				<!-- ko template: {name: 'row'+$data.field_type } -->
+				<!-- /ko -->
+			</td>
+			<!-- /ko -->
+			<td class="menu" data-bind="template: {name: $data._menu()} ">
+			</td>
+			<!--<td data-bind="text: new Date().toLocaleTimeString()"></td>-->
+		</tr>
 	<!-- /ko -->
 
 </script>

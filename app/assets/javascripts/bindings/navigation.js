@@ -18,26 +18,39 @@ function keyboardShortcuts (argument) {
 	    return "Woah woah woah woah, you have "+dataModel.savingState().prefix+" "+dataModel.savingState().text+'.';
 	  }
 	}
+	function checkScroll(pos) {
+		currentView().now(pos);
+		var view = ko.toJS(currentView);
+		var bottom = pos + 17 ,
+			top = pos - 3 ;
 
-	function rowScroll() {
-		var top = $('#scrolling').scrollTop(),
-			height = $('#scrolling').height(),
-			bottom = top + height,
-			$selected = $('.selected'),
-			$parent = $selected.parent('tr'),
-			$tbody = $parent.parent('tbody')
-			position = $selected.position().top+$('.selected').height();
-
-		if( position > bottom-200 ) {  $('#scrolling').scrollTop( position - height ); }
-		// if( position < top+200 ) {  $('#scrolling').scrollTop( position - 200); }
-
-		if( $tbody.find('tr').index( $parent ) == $tbody.find('tr').length -1 ) {
-			currentView().page(currentView().visible() +1 );
-		} else if ( $tbody.find('tr').index( $parent ) == 0 ) {
-			// currentView().page(currentView().paged() -1 );
+		if( bottom > view.end - 40 ) {
+			var add = bottom - view.end < 0 ? 1 : bottom - view.end;
+			var end = view.end + add < viewModel.filteredRows().length ?  view.end + add : viewModel.filteredRows().length;
+			currentView().end( end )
 		}
-
+		if( top < view.start + 10 ) {
+			var move = top - view.start > 0 ? -1 : top - view.start;
+			var start = view.start + move > 0 ? view.start + move  : 0;
+			currentView().start( start );
+			currentView().end( view.end - move )
+		}
 	}
+	function rowScroll() {
+		var $scroll = $('#scrolling'),
+			position = Math.round( ( $('.selected').position().top - $scroll.position().top + $scroll.scrollTop() ) / 26 )+ 1,
+			view = ko.toJS( currentView ),
+			now =  view.now < 3 ? 3 : view.now;
+			bottom = now + 17,
+			tiptop = now - 2;
+			if( position < tiptop  + 1 ) {
+				$scroll.scrollTop( $scroll.scrollTop() - 26 *(tiptop-position+1) )
+			}
+			if( position > bottom - 1 ) {
+				$scroll.scrollTop( $scroll.scrollTop() + 26 * (position-bottom+1)  )
+			}
+	}
+	
 	$(document).keydown(function(e){
 			var $selected = $('.selected'),
 				pos = $('td.cell', $selected.parent() ).index($selected),
@@ -56,9 +69,8 @@ function keyboardShortcuts (argument) {
 						break;
 					case 38:
 						// Up
-						if( extra ) { $selected.parents('tbody').find('tr:first td.cell:eq('+pos+')').find('.data').click(); }
-						else { $selected.parent().prev('tr').find('td.cell:eq('+pos+')').find('.data').click(); }
-						rowScroll();
+						if( extra ) {  currentView().jump('top', {callback: function() { $('.grid tbody').find('tr:first td.cell:eq('+pos+')').find('.data').click(); }}); }
+						else { $selected.parent().prev('tr').find('td.cell:eq('+pos+')').find('.data').click(); rowScroll(); }
 						break;
 					case 39: 
 						// Right
@@ -68,12 +80,11 @@ function keyboardShortcuts (argument) {
 						break;
 					case 40:
 						// Down
-						if( extra ) { $selected.parents('tbody').find('tr:last td.cell:eq('+pos+')').find('.data').click(); }
-						else { $selected.parent().next('tr').find('td.cell:eq('+pos+')').find('.data').click(); }
-						rowScroll();
+						if( extra ) { currentView().jump('bottom', {callback: function() { $('.grid tbody').find('tr:last td.cell:eq('+pos+')').find('.data').click(); }}); }
+						else { $selected.parent().next('tr').find('td.cell:eq('+pos+')').find('.data').click(); rowScroll(); }
 						break;
 					}
-				}
+				} 
 				if (  [13, 9].indexOf(e.keyCode) !== -1 && $('.grid .selected').length > 0 ) {
 					e.preventDefault(); 
 					switch(e.keyCode){
@@ -106,29 +117,11 @@ function keyboardShortcuts (argument) {
 				case 83:
 					if( extra) { e.preventDefault(); saveAll({once: true});}
 					break;
-				case 74:
-					if( $(':focus').length == 0 ) { $('.left').css('color','#747474'); }
-					break;
-				case 75:
-					if( $(':focus').length == 0 ) { $('.right').css('color','#747474'); }
-					break;
 				default:
 					// console.log(e.keyCode);
 			}
 	}).keyup( function(e) {
 		switch(e.keyCode) {
-			case 74:
-				if( $(':focus').length == 0 && !currentView().groups.on() ) { 
-					currentView().move('left');
-					$('.left').css('color','#333');
-				}
-				break;
-			case 75:
-				if( $(':focus').length == 0 && !currentView().groups.on()) { 
-					currentView().move('right');
-					$('.right').css('color','#333');
-				}
-				break;
 			case 191:
 				if( $(':focus').length == 0 && !currentView().groups.on()) { 
 					$('.search_bar').find('select:first')
@@ -188,10 +181,10 @@ function keyboardShortcuts (argument) {
 	});
 
 // Scrolling experiment	
-	$('#scrolling').scroll(function(e){
-		var $this = $(this);
-		if( $this.scrollTop() + $this.height() > 26 * currentView().visible() ) {
-			currentView().visible( currentView().visible() + 10 );
-		}
+	$('#scrolling').scroll(function(e) {
+		$('.hovered').removeClass('hovered');
+		var $this = $('#scrolling')
+		var pos = Math.round( ( $this.scrollTop() + $this.height() ) / 26 -17 );
+		checkScroll(pos);
 	});
 }

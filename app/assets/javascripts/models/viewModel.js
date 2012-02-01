@@ -5,52 +5,100 @@ function viewModel( data ) {
 	else { var view = data }
 
 	// Paging and Visible
-	var visible = parseInt(data.visible) || 30, paged = parseInt(data.paged) || 0;
-	if( isNaN(paged) ) { paged = 0; }
-	if( isNaN(visible) || visible > 200 ) { visible = 30; }
-	this.paged = ko.observable(0);
-	this.visible = ko.observable(visible);
+	// var visible = parseInt(data.visible) || 60, paged = parseInt(data.paged) || 0;
+	// if( isNaN(paged) ) { paged = 0; }
+	// if( isNaN(visible) || visible > 200 ) { visible = 60; }
+	// Need to totally rewrite this section
 
-	this.page = function(loc) {
-		var loc = parseInt(loc);
-		if( isNaN(loc) ) { this.paged(0); return false; }
-		if( loc < 0 ) { 
-			this.paged(0);
-			return false;
-		} else if ( loc > dataModel.rowSize() - this.visible() ) {
-			this.paged( dataModel.rowSize() - this.visible() > 0 ?  dataModel.rowSize() - this.visible() : 0 );
-			return false;
-		} else {
-			this.paged( loc );
-			return true
-		}
-	}
-	this.top = ko.dependentObservable({ 
-		read: function() {
-			return dataModel.rowSize() < this.visible() ? dataModel.rowSize() : this.visible();
-		},
-		deferEvaluation: true 
-	}, 
-	this);
-
-	this.move = function(dir) {
-		switch(dir) {
-			case 'left' || 'down' :
-				this.page( this.paged() - this.visible() );
-				break;
-			case 'right' || 'up' :
-				this.page( this.paged() + this.visible() );
-				break;
-			case 'start' || 'far left' || 'beginning':
-				this.page(-1);
-				break;
-			case 'end' || 'far right' || 'finish':
-				this.page( rows().length + 1);
-				break;
-		}
-	}
+	this.now = ko.observable(0);
+	this.end = ko.observable(30);
+	this.start =  ko.observable(0);
 	
-	this.page(paged);
+	this.jump = function(row,args) {
+		var view = ko.toJS(currentView),
+			length = viewModel.filteredRows().length,
+			new_top = view.start,
+			args  = args || {};
+
+		row = row == 'bottom' ?  length : row;
+		row = row == 'top' ? 0 : row;
+		
+		// Setting the top bound, don't mess with it if you've already rendered that row
+		if( row > view.end || row < view.start ) { new_top = row - 30; }
+		// Don't let the top bound be less than 0
+		if( new_top < 0 ) { new_top = 0; }
+
+		// Setting the bottom bound to not exceed the row length
+		var bottom = row+17 > length ? length : row+60;
+		// The order here matters. Updating one of these triggers the dependent variable
+		// and is evaluated using slice( top, bottom)
+
+		// Should update into a zero array (e.g. .slice(100,0) )
+		// not a huge array (e.g. .slice(0,130) )
+		if( new_top > bottom ) {
+			currentView().start( new_top);
+			currentView().end(bottom);
+		} else {
+			currentView().end(bottom);
+			currentView().start( new_top);
+		}
+
+		$('#scrolling').scrollTop(row*26);
+
+
+		if( typeof args.callback != 'undefined' ) {
+			args.callback();
+		}
+	}
+
+	this.reset = function() { 
+			this.jump('top');
+		}
+	// this.page = function(loc) {
+	// 	var loc = parseInt(loc);
+	// 	if( isNaN(loc) ) { this.paged(0); return false; }
+	// 	if( loc < 0 ) { 
+	// 		this.paged(0);
+	// 		return false;
+	// 	} else if ( loc > dataModel.rowSize() - this.visible() ) {
+	// 		this.paged( dataModel.rowSize() - this.visible() > 0 ?  dataModel.rowSize() - this.visible() : 0 );
+	// 		return false;
+	// 	} else {
+	// 		this.paged( loc );
+	// 		return true
+	// 	}
+	// }
+
+	// this.top = ko.dependentObservable({ 
+	// 	read: function() {
+	// 		return dataModel.rowSize() < this.visible() ? dataModel.rowSize() : this.visible();
+	// 	},
+	// 	deferEvaluation: true 
+	// }, 
+	// this);
+
+	// this.move = function(dir) {
+	// 	switch(dir) {
+	// 		case 'left' || 'down' :
+	// 			this.page( this.paged() - this.visible() );
+	// 			break;
+	// 		case 'right' || 'up' :
+	// 			this.page( this.paged() + this.visible() );
+	// 			break;
+	// 		case 'start' || 'far left' || 'beginning':
+	// 			this.page(-1);
+	// 			break;
+	// 		case 'end' || 'far right' || 'finish':
+	// 			this.page( rows().length + 1);
+	// 			break;
+	// 	}
+	// }
+	// this.reset = function() {
+	// 	$('#scrolling').scrollTop(0);
+	// 	currentView().visible(60);
+	// }
+	// 
+	// this.page(paged);
 
 // Filtering
 	this.filters = ko.observableArray([]);
@@ -98,6 +146,7 @@ function viewModel( data ) {
 	this.sorts = ko.observableArray([]);
 	this.sortRows = function(temp_field) {
 // var t = new Date();
+		this.reset();
 		var _sorts = ko.toJS( this.sorts() );
 		if( typeof temp_field != 'undefined' ) { 
 			if( typeof temp_field == 'object' ){
@@ -265,8 +314,6 @@ function viewModel( data ) {
 		var returnable = new Object;
 		returnable.name = this.name,
 			returnable.id = this.id,
-			returnable.visible = this.visible,
-			returnable.paged = this.paged,
 			returnable.report_on = this.reportOn,
 			returnable.pivot = this.groups.pivot(),
 			returnable.groups_on = this.groups.on();

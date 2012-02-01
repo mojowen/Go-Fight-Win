@@ -75,35 +75,7 @@ describe("vieModel can be initalized ", function() {
 	  });  
 	});
 
-	describe("paged and visible observables", function() {
-	  it("autopopulates to visible 30, paged 0 if not set", function() {
-	    var view = new viewModel();
-		expect(view.paged()).toEqual(0);
-		expect(view.visible()).toEqual(30);
-	  });
-	  it("can set visible", function() {
-	    var view = new viewModel({visible: 15 });
-	    expect(view.visible()).toEqual(15);
-	  });
-	  it("can set visible", function() {
-		// Spofing the dataModel.rowSize dependent variable for a sec
-		_temp = dataModel.rowSize;
-		dataModel.rowSize = function() { return 500; };
-		var view = new viewModel({paged: 100 });
-	    expect(view.paged()).toEqual(100);
-		// Back to normal
-		dataModel.rowSize = _temp;
-	  });
-	  it("can't set visible to over 500", function() {
-	    var view = new viewModel({visible: 500 });
-	    expect(view.visible()).toEqual(30);
-	  });
-	  it("passing non-numbers to either vibisble nor page sets to defaults", function() {
-	    var view = new viewModel({visible: 'f', paged: 'd' });
-	    expect(view.visible()).toEqual(30);
-	    expect(view.paged()).toEqual(0);
-	  });
-	});
+
 	describe("sorting", function() {
 		it("creates sorts when passed sort array and assumes direction", function() {
 			var view = viewModel({sorts: [ 'field' ] });
