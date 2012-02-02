@@ -83,24 +83,27 @@ function date_fields (argument) {
 			row[field.to_param]( new Date(event.target.value) );
 			$this.next('.date_controls').find('.date_picker').datepicker("destroy").prev('.cal').removeClass('on');
 		},
-		keyup: function(e) {
+		keydown: function(e) {
 			var $this = $(this);
-			e.preventDefault();
 			var ctx = ko.contextFor(this);
 			var row = ctx.$parent, field = ctx.$data;
 			val = row[field.to_param]();
 			if( testDate(val) ) { val = new Date().toDateString(); }
 			switch(e.keyCode){
 				case 38:
+					e.preventDefault();
 					row[field.to_param]( date_change(val,1) );
 					break;
 				case 40: 
+					e.preventDefault();
 					row[field.to_param]( date_change(val,-1) );
 					break;
 				case 33: 
+					e.preventDefault();
 					row[field.to_param]( date_change(val,0,1) );
 					break;
 				case 34: 
+					e.preventDefault();
 					row[field.to_param]( date_change(val,0,-1) );
 					break;
 			}

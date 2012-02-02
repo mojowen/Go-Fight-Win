@@ -45,33 +45,38 @@ function fields_template (argument) {
 			var $number = $(this).parent().find('.number_controls')
 			switch(e.keyCode){
 				case 38:
+					e.preventDefault();
 					$number.find('.number_up').css('color','#747474');
 					break;
 				case 40: 
+					e.preventDefault();
 					$number.find('.number_down').css('color','#747474');
 					break;
 			}
 		
 		},
 		keyup: function(e) {
-			e.preventDefault();
 			var ctx = ko.contextFor(this);
 			var row = ctx.$parent, field = ctx.$data;
 			var val = row[field.to_param]();
 			var $number = $(this).parent().find('.number_controls')
 			switch(e.keyCode){
 				case 38:
+					e.preventDefault();
 					row[field.to_param]( num_change(val,1) );
 					$number.find('.number_up').css('color','black');
 					break;
 				case 40: 
+					e.preventDefault();
 					row[field.to_param]( num_change(val,-1) );
 					$number.find('.number_down').css('color','black');
 					break;
 				case 33: 
+					e.preventDefault();
 					row[field.to_param]( num_change(val,10) );
 					break;
 				case 34: 
+					e.preventDefault();
 					row[field.to_param]( num_change(val,-10) );
 					break;
 			}
