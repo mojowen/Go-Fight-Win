@@ -11,13 +11,10 @@ describe("Testing the new row template and functionality", function() {
 	field_3['field_type'] = 'date';
 	field_4 = fields()[3];
 	field_4['field_type'] = 'number';
-
+	newRows.push( new rowModel({key: 'new', list: _list })  );
 	loadFixtures("views/lists/_row.html","views/lists/_newRow.html");
 	ko.applyBindings(dataModel);
-	newRows.push( new rowModel({key: 'new', list: _list })  );
-	
   });
-
   it("adds the new row to rows() when submitted", function() {
 	var row = newRows()[0];
 	spyOn(window,'addNewRow');
@@ -25,17 +22,19 @@ describe("Testing the new row template and functionality", function() {
 	expect(addNewRow).toHaveBeenCalledWith(row);
   });
   it("adds the new row to rows() when submitted", function() {
-	var row_length = rows().length;
+	var row = newRows()[0];
+	spyOn(window,'addRow');
 	$('.add_new_rows').click();
-	expect(rows().length).toEqual(row_length + 1);
+	expect(addRow).toHaveBeenCalledWith(row);
   });
   it("adds the new row to rows() when submitted", function() {
-	var row_length = rows().length;
+	var row = newRows()[0];
+	spyOn(window,'addRow');
 	var press = $.Event("keypress");
 	press.ctrlKey = false, 
 		press.keyCode = 13;
 	$('#new_row textarea').trigger(press);
-	expect(rows().length).toEqual(row_length + 1);
+	expect(addRow).toHaveBeenCalledWith(row);
   });
   it("adds the new row to rows() when submitted", function() {
 	expect(rows().length).toEqual(10);
@@ -93,7 +92,6 @@ describe("Testing the new row template and functionality", function() {
 		expect( $('.add_new_rows') ).toHaveText('add 3 new rows')
 		$('.add_new_rows').click();
 		expect( newRows().length).toEqual(1);
-		expect(rows().length).toEqual(13);
 		
 		// Data is correctly added to rows
 		expect( rows()[10][field_1.to_param]() ).toEqual('first');

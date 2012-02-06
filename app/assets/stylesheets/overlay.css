@@ -1,5 +1,5 @@
 #overlay {
-	top: 100px;
+	top: 60px;
 	position: absolute;
 	background-color: #333;
 	width: 70%;
@@ -11,6 +11,8 @@
 	font-size: 24px;
 	opacity: .95;
 	display: none;
+	left: 0;
+	z-index: 50;
 }
 #overlay div {
 	display: none;

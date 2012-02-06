@@ -1,3 +1,13 @@
+<div >
+	<h2 class="" >+Views</h2>
+
+	<span class="new_view">+Add</span>
+	<!-- ko foreach: views -->
+		<span class="view" data-bind="text: $data.name, css: { 'current_view': currentView() == $data, 'unsaved': $data.dirtyFlag.isDirty() }"></span>
+		(<span class="remove_view">–</span>)
+	<!-- /ko -->
+</div>
+
 <div id="goal">
 	<h2 class="goal_open" >+Goal</h2>
 	<div id="goal_box">

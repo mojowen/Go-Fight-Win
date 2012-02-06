@@ -40,7 +40,7 @@ function newRow_template() {
 			$('#new_row tr:last td:first').find('textarea, select').focus();
 		}
 	});
-	$('.add_rows').live('click',function() {
+	$('.add_new_rows').live('click',function(e) {
 		addAllRows();
 	});
 

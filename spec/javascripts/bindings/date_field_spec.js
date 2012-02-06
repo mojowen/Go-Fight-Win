@@ -35,7 +35,7 @@ describe("the bindings on fields with the table editor", function() {
 				expect( $('.data:first').next('div') ).toContain('div.ui-datepicker-inline');
 			});
 			it("clicking elsewhere closes the calendar", function() {
-				$(document).click();
+				$(document).mousedown();
 				expect( $('div.ui-datepicker-inline').length ).toBe(0);
 				expect( rows()[0][field_1.to_param]() ).toEqual('');
 				expect( $('.data:first') ).toHaveValue('--');
@@ -49,14 +49,14 @@ describe("the bindings on fields with the table editor", function() {
 				expect(today).toHaveClass('ui-datepicker-current-day');
 			});
 			it("presses down button date back", function() {
-				var press = $.Event("keyup");
+				var press = $.Event("keydown");
 				press.ctrlKey = false, 
 					press.keyCode = 40;
 				$('.data:first').trigger(press);
 			  expect( new Date(rows()[0][field_1.to_param]()).getDate() ).toEqual( t.getDate() - 1 );
 			});
 			it("presses down button date forward", function() {
-				var press = $.Event("keyup");
+				var press = $.Event("keydown");
 				press.ctrlKey = false, 
 					press.keyCode = 38;
 				$('.data:first').trigger(press);
@@ -84,14 +84,14 @@ describe("the bindings on fields with the table editor", function() {
 				expect(today).toHaveClass('ui-datepicker-current-day');
 			});
 			it("presses down button date back", function() {
-				var press = $.Event("keyup");
+				var press = $.Event("keydown");
 				press.ctrlKey = false, 
 					press.keyCode = 40;
 				$('.data:first').trigger(press);
 			  expect( new Date(rows()[0][field_1.to_param]()).getDate() ).toEqual( t.getDate() - 1 );
 			});
 			it("click to set the date", function() {
-				var press = $.Event("keyup");
+				var press = $.Event("keydown");
 				press.ctrlKey = false, 
 					press.keyCode = 38;
 				$('.data:first').trigger(press);

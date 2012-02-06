@@ -9,13 +9,17 @@ function good_other_bindings (argument) {
 		var $this = $(this);
 		$('#overlay, #overlay div:visible').hide();
 		if( !$this.hasClass('on') ) {
-			$('#'+$(this).attr('id')+'_overlay').show().parent().show()
+			$('#'+$(this).attr('id')+'_overlay').show().parent().show();
+			$('#header, #footer').css('position','absolute');
+		} else {
+			$('#header, #footer').css('position','fixed');
 		}
 		$this.toggleClass('on');
 	});
 	$('.overlay_close').live('click', function() {
 		$('.overlayer').removeClass('on');
 		$('#overlay, #overlay div:visible').hide();
+		$('#header, #footer').css('position','fixed');
 	});
 	
 	$('#bug_form').live('submit',function(e){

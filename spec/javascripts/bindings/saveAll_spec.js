@@ -89,7 +89,6 @@ describe("Mocking Ajax Calls", function() {
 		expect(rows()[rows().length-1]._tempkey).toBeNull();
 		expect(rows()[rows().length-1].dirtyFlag.isDirty()).toBeFalsy();
 		
-		bl( dataModel.savingRows )
 		
 		// expect(false).toBeTruthy();
 	});

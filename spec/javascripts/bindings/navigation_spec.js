@@ -7,7 +7,7 @@ describe("the bindings on fields", function() {
 
   describe("basic click functionality and navigation", function() {
     it("clicking a textarea adds select class but does not focus", function() {
-		$('.data:first').click();
+		$('.data:first').mousedown();
 		// Add select
 		expect( $('textarea:first').parent('td').hasClass('selected') ).toBeTruthy();
 		expect( $('tbody tr:eq(0) td.cell:eq(0)')).toHaveClass('selected');
@@ -93,47 +93,48 @@ describe("the bindings on fields", function() {
 
 		// Down
 		var press = $.Event("keydown");
-		press.ctrlKey = false, 
+		press.ctrlKey = false,
+			press.shiftKey = false,
 			press.keyCode = 40;
 		$(document).trigger(press);
-		expect( $('tbody tr:eq(1) td:first') ).not.toHaveClass('selected');
+		expect( $('tbody tr:eq(1) td.cell:first') ).not.toHaveClass('selected');
 
 		// Right
 		press.keyCode = 39;
 		$(document).trigger(press);
-		expect( $('tbody tr:eq(1) td:eq(1)')).not.toHaveClass('selected');
+		expect( $('tbody tr:eq(1) td.cell:eq(1)')).not.toHaveClass('selected');
 		
 		//  Need to move cursor so can test left and right
-		$('tbody tr:eq(1) td:eq(1) .data').dblclick().focus();
-		expect( $('tbody tr:eq(1) td:eq(1) .data').hasClass('open') ).toBeTruthy();
-		expect( $('tbody tr:eq(1) td:eq(1)') ).toHaveClass('selected');
+		$('tbody tr:eq(1) td.cell:eq(1) .data').dblclick().focus();
+		expect( $('tbody tr:eq(1) td.cell:eq(1) .data').hasClass('open') ).toBeTruthy();
+		expect( $('tbody tr:eq(1) td.cell:eq(1)') ).toHaveClass('selected');
 
 		// Up
 		press.keyCode = 38;
 		$(document).trigger(press);
-		expect( $('tbody tr:eq(0) td:eq(1)')).not.toHaveClass('selected');
+		expect( $('tbody tr:eq(0) td.cell:eq(1)')).not.toHaveClass('selected');
 		
 		// Left
 		press.keyCode = 37;
 		$(document).trigger(press);
-		expect( $('tbody tr:eq(1) td:eq(0)')).not.toHaveClass('selected');
+		expect( $('tbody tr:eq(1) td.cell:eq(0)')).not.toHaveClass('selected');
 		
 		//  Tab still works though
-		$('tbody tr:eq(1) td:eq(1) .data').dblclick().focus();
-		expect( $('tbody tr:eq(1) td:eq(1) .data').hasClass('open') ).toBeTruthy();
-		expect( $('tbody tr:eq(1) td:eq(1)') ).toHaveClass('selected');
+		$('tbody tr:eq(1) td.cell:eq(1) .data').dblclick().focus();
+		expect( $('tbody tr:eq(1) td.cell:eq(1) .data').hasClass('open') ).toBeTruthy();
+		expect( $('tbody tr:eq(1) td.cell:eq(1)') ).toHaveClass('selected');
 
 		// Tab
 		press.ctrlKey = false,
 			press.keyCode = 9;
 		$(document).trigger(press);
-		expect( $('tbody tr:eq(1) td:eq(2)')).toHaveClass('selected');
+		expect( $('tbody tr:eq(1) td.cell:eq(2)')).toHaveClass('selected');
 		
 		// Shift + Tab
 		press.shiftKey = true, 
 			press.keyCode = 9;
 		$(document).trigger(press);
-		expect( $('tbody tr:eq(1) td:eq(1)')).toHaveClass('selected');
+		expect( $('tbody tr:eq(1) td.cell:eq(1)')).toHaveClass('selected');
 	});
 	// - enter to open
 	// - exit to close

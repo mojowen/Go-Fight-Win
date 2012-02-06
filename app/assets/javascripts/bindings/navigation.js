@@ -260,7 +260,6 @@ function keyboardShortcuts (argument) {
 	});
 
 	$('#switch').live('click',function() {
-		notify('Loading...');
 		currentView().groups.on( currentView().groups.on() ? false : true );
 	});
 	$('#xls').live('click',function() {

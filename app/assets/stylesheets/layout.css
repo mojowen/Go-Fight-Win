@@ -7,9 +7,12 @@ body.site {
 }
 body.big_header {
 }
+#header, #content  {
+	width: 860px;
+}
+
 #header {
 	position: fixed;
-	width: 960px;
 	padding: 6px 40px 4px;
 	top: 0;
 
@@ -18,14 +21,14 @@ body.big_header {
 
 #footer {
 	position: fixed;
-	bottom: 0;
-	right: 20px;
+	top: 110px;
+	width: 160px;
+	margin-left: 960px;
 }
 
 #content {
 	background-color: #fff;
 	padding: 80px 40px 80px;
-	width: 960px;
 	box-shadow: 1px 0px 30px #333;
 }
 
