@@ -4,9 +4,18 @@ function appDataModel() {
 	defaultRow = ko.observableArray([]),
 	fields = ko.observableArray([]),
 	views = ko.observableArray([]),
-	currentView = ko.observable({});
 	saving = ko.observable(true);
-	this.loaded = false;
+	
+	this.loaded = false,
+	this.current = {
+		me: this,
+		view: ko.observable({}),
+		state: ko.observable('data')
+	};
+
+	var current = this.current,
+		loaded = this.loaded;
+
 
 	views.find = function(search) { var flat_views = views().map( function(elem) { return  ko.toJS(elem); }); var results = seek(search, flat_views, 'name'); return results === -1 ? false : views()[results]; }
 	rows.find = function(search) { var flat_rows = rows().map( function(elem) { return  ko.toJS(elem); }); var results = seek(search, flat_rows,'key'); return results === -1 ? false : rows()[results]; }
@@ -41,7 +50,7 @@ function appDataModel() {
 			setCurrentView( views()[_currentView] ); 
 			_currentView = null;
 		}
-		if( rows().length >= _size ) { dataModel.loaded = true; }
+		if( rows().length >= _size ) { loaded = true; }
 		else { loadAll(); }
 		// if( typeof _operators != 'undefined' ) {
 		// 	this.operators = _operators;
@@ -50,9 +59,9 @@ function appDataModel() {
 	}
 	setCurrentView = function(newView) {
 		if( newView.constructor.name == 'viewModel' ) {
-			currentView(newView);
+			current.view(newView);
 			// rows.valueHasMutated();
-			// currentView().sortRows();
+			// current.view().sortRows();
 		}
 	}
 	addView = function(newView) {
@@ -66,14 +75,14 @@ function appDataModel() {
 		if( rowData.constructor.name == 'rowModel' ) {
 			rows.push( rowData );
 			// This is where deduplicating methods, etc, could fit
-			currentView().sortRows();
+			current.view().sortRows();
 		}
 	};
 	seek = function(search, array, term) {
 		var term = typeof term == 'undefined' ? 'key' : term;
 		return array.map( function(elem) { return elem[term]; }).indexOf(search);
 	}
-	// Should write an updateRow method that'll update a row on key or _tempkey (whichever is present)
-	// Ooops I didn't, just sits inside of saveAll()
+
+	return this;
 }
 var dataModel = new appDataModel();

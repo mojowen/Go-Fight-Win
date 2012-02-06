@@ -83,27 +83,27 @@ function keyboardShortcuts (argument) {
 	  }
 	}
 	function checkScroll(pos) {
-		currentView().now(pos);
-		var view = ko.toJS(currentView);
+		dataModel.current.view().now(pos);
+		var view = ko.toJS(current.view);
 		var bottom = pos + 17 ,
 			top = pos - 3 ;
 
 		if( bottom > view.end - 40 ) {
 			var add = bottom - view.end < 0 ? 1 : bottom - view.end;
 			var end = view.end + add < viewModel.filteredRows().length ?  view.end + add : viewModel.filteredRows().length;
-			currentView().end( end )
+			dataModel.current.view().end( end )
 		}
 		if( top < view.start + 10 ) {
 			var move = top - view.start > 0 ? -1 : top - view.start;
 			var start = view.start + move > 0 ? view.start + move  : 0;
-			currentView().start( start );
-			currentView().end( view.end - move )
+			dataModel.current.view().start( start );
+			dataModel.current.view().end( view.end - move )
 		}
 	}
 	function rowScroll() {
 		var $scroll = $('#scrolling'),
 			position = Math.round( ( $('.selected').position().top - $scroll.position().top + $scroll.scrollTop() ) / 26 )+ 1,
-			view = ko.toJS( currentView ),
+			view = ko.toJS( dataModel.current.view ),
 			now =  view.now < 3 ? 3 : view.now;
 			bottom = now + 17,
 			tiptop = now - 2;
@@ -146,7 +146,7 @@ function keyboardShortcuts (argument) {
 					case 38:
 						// Up
 						if( extra ) {  
-							currentView().jump('top', {callback: function() { $('.grid tbody').find('tr:first td.cell:eq('+pos+')').find('.data').mousedown(); }}); 
+							dataModel.current.view().jump('top', {callback: function() { $('.grid tbody').find('tr:first td.cell:eq('+pos+')').find('.data').mousedown(); }}); 
 						} else { 
 							if( shift )  { $last = $last.parent().prev('tr').find('td.cell:eq('+pos+')').addClass('last'); grabem($last,$selected); rowScroll(); }
 							else {$selected.parent().prev('tr').find('td.cell:eq('+pos+')').find('.data').mousedown(); rowScroll(); }
@@ -167,7 +167,7 @@ function keyboardShortcuts (argument) {
 					case 40:
 						// Down
 						if( extra ) { 
-							currentView().jump('bottom', {callback: function() { $('.grid tbody').find('tr:last td.cell:eq('+pos+')').find('.data').mousedown(); }}); 
+							dataModel.current.view().jump('bottom', {callback: function() { $('.grid tbody').find('tr:last td.cell:eq('+pos+')').find('.data').mousedown(); }}); 
 						} else { 
 							if( shift ) { $last = $last.parent().next('tr').find('td.cell:eq('+pos+')').addClass('last'); grabem($last,$selected); rowScroll(); }
 							else { $selected.parent().next('tr').find('td.cell:eq('+pos+')').find('.data').mousedown(); rowScroll(); } 
@@ -213,7 +213,7 @@ function keyboardShortcuts (argument) {
 	}).keyup( function(e) {
 		switch(e.keyCode) {
 			case 191:
-				if( $(':focus').length == 0 && !currentView().groups.on()) { 
+				if( $(':focus').length == 0 && !dataModel.current.view().groups.on()) { 
 					$('.search_bar').find('select:first')
 				}
 				break;
@@ -260,14 +260,14 @@ function keyboardShortcuts (argument) {
 	});
 
 	$('#switch').live('click',function() {
-		currentView().groups.on( currentView().groups.on() ? false : true );
+		dataModel.current.view().groups.on( dataModel.current.view().groups.on() ? false : true );
 	});
 	$('#xls').live('click',function() {
 		window.open( 	$(this).attr('url'),'_blank','toolbar=1,location=1,directories=1,status=1,menubar=1,scrollbars=1,resizable=1'); 
 	});
 	$('.goal_clear').live('click',function(){
-		currentView().goal().value(undefined);
-		currentView().goal().field(undefined);
+		dataModel.current.view().goal().value(undefined);
+		dataModel.current.view().goal().field(undefined);
 	});
 
 // Scrolling experiment	

@@ -3,7 +3,7 @@
 
 	<span class="new_view">+Add</span>
 	<!-- ko foreach: views -->
-		<span class="view" data-bind="text: $data.name, css: { 'current_view': currentView() == $data, 'unsaved': $data.dirtyFlag.isDirty() }"></span>
+		<span class="view" data-bind="text: $data.name, css: { 'current_view': dataModel.current.view() == $data, 'unsaved': $data.dirtyFlag.isDirty() }"></span>
 		(<span class="remove_view">–</span>)
 	<!-- /ko -->
 </div>
@@ -13,11 +13,11 @@
 	<div id="goal_box">
 
 		<input data-bind="
-			value: currentView().goal().value,
+			value: dataModel.current.view().goal().value,
 			valueUpdate: 'afterkeydown'
 			">
 		<select data-bind="
-			value: currentView().goal().field,
+			value: dataModel.current.view().goal().field,
 			options: viewModel.pivotedRows(),
 			optionsText: 'long_label',
 			optionsCaption: '-- set goal'
@@ -29,13 +29,13 @@
 <div id="group" class="area">
 	<h2>+Groups</h2>
 
-	<div id="available_groups" data-bind="if: currentView().groups().length > 0, visible: currentView().groups().length > 0">
+	<div id="available_groups" data-bind="if: dataModel.current.view().groups().length > 0, visible: dataModel.current.view().groups().length > 0">
 
 		<p>
 			<em>grouped by</em>
 		</p>
 
-		<!-- ko foreach: currentView().groups() -->
+		<!-- ko foreach: dataModel.current.view().groups() -->
 			<div class="added_group">
 				<span data-bind="text: $data.name "></span>&nbsp;&nbsp;&nbsp;&nbsp;(<span class="remove_group clickable">–</span>)
 				
@@ -54,26 +54,26 @@
 
 		<!-- /ko -->
 	</div>
-	<div class="menu" data-bind="visible: currentView().groups().length == 2">
-		<input type="checkbox" data-bind="checked: currentView().groups.pivot, visible: currentView().groups().length == 2">
-		<span data-bind="visible: currentView().groups().length == 2" >pivot</span>
+	<div class="menu" data-bind="visible: dataModel.current.view().groups().length == 2">
+		<input type="checkbox" data-bind="checked: dataModel.current.view().groups.pivot, visible: dataModel.current.view().groups().length == 2">
+		<span data-bind="visible: dataModel.current.view().groups().length == 2" >pivot</span>
 
-		<span data-bind="visible: currentView().groups.pivot()">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+		<span data-bind="visible: dataModel.current.view().groups.pivot()">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
 
-		<span data-bind="visible: currentView().groups().length == 2 && currentView().groups.pivot()" class="swap clickable">swap</span>
-		<span data-bind="visible: currentView().groups.pivot()">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+		<span data-bind="visible: dataModel.current.view().groups().length == 2 && dataModel.current.view().groups.pivot()" class="swap clickable">swap</span>
+		<span data-bind="visible: dataModel.current.view().groups.pivot()">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
 
-		<!-- ko if: currentView().pivotValues().length > 0 -->
+		<!-- ko if: dataModel.current.view().pivotValues().length > 0 -->
 		<select data-bind="
-			value: currentView().reportOn,
-			options: currentView().pivotValues(),
+			value: dataModel.current.view().reportOn,
+			options: dataModel.current.view().pivotValues(),
 			optionsText: 'long_label',
 			optionsCaption: '-- select your report',
-			visible: currentView().groups.pivot"></select>
+			visible: dataModel.current.view().groups.pivot"></select>
 		<!-- /ko -->
 	</div>
-<!-- css: {'group_field': $data.constructor.name == 'fieldModel', 'clickable' : currentView().groups().length <= 2 } -->
-	<table id="grouped_table" border="0" cellspacing="5" cellpadding="5" data-bind="visible: currentView().groups.on">
+<!-- css: {'group_field': $data.constructor.name == 'fieldModel', 'clickable' : dataModel.current.view().groups().length <= 2 } -->
+	<table id="grouped_table" border="0" cellspacing="5" cellpadding="5" data-bind="visible: dataModel.current.view().groups.on">
 		<thead>
 			<tr>
 				<!-- ko foreach: viewModel.groupedFields  -->
@@ -104,15 +104,15 @@
 			<tr>
 				<!-- ko foreach: viewModel.groupedFields -->
 					<td>
-						<!-- ko if: $data.report != '_val' && !currentView().groups.pivot() && $data.report() != undefined -->
+						<!-- ko if: $data.report != '_val' && !dataModel.current.view().groups.pivot() && $data.report() != undefined -->
 								<span data-bind="text: viewModel.groupedRows()[$data.to_param][$data.report().report]"></span>
 						<!-- /ko -->
-						<!-- ko if: $data.report == 'all' && currentView().groups.pivot() && currentView().reportOn() != undefined -->
-								<span data-bind="text: viewModel.groupedRows()._uniques[1][viewModel.groupedFields().indexOf($data)-1][currentView().reportOn().name][currentView().reportOn().report]"></span>
+						<!-- ko if: $data.report == 'all' && dataModel.current.view().groups.pivot() && dataModel.current.view().reportOn() != undefined -->
+								<span data-bind="text: viewModel.groupedRows()._uniques[1][viewModel.groupedFields().indexOf($data)-1][current.view().reportOn().name][current.view().reportOn().report]"></span>
 						<!-- /ko -->
 
-						<!-- ko if: $data.name == 'Totals' && currentView().reportOn() != undefined -->
-							<span data-bind="text: viewModel.groupedRows()[currentView().reportOn().name][currentView().reportOn().report]"></span>
+						<!-- ko if: $data.name == 'Totals' && dataModel.current.view().reportOn() != undefined -->
+							<span data-bind="text: viewModel.groupedRows()[current.view().reportOn().name][current.view().reportOn().report]"></span>
 						<!-- /ko -->
 					</td>
 				<!-- /ko -->

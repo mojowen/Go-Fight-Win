@@ -14,9 +14,9 @@ describe("group stuff", function() {
     // });
   
 	/*
-//		- viewModel.pivotedRows() used for currentView().goal().field
-		- currentView().pivotValues() used for currentView().reportOn (for pivot table)
-		- currentView().pivotValues() used for currentView().reportOn (down in graph)
+//		- viewModel.pivotedRows() used for dataModel.current.view().goal().field
+		- dataModel.current.view().pivotValues() used for dataModel.current.view().reportOn (for pivot table)
+		- dataModel.current.view().pivotValues() used for dataModel.current.view().reportOn (down in graph)
 	loses reportOn going from no-group > group
 	view0 (different)
 		reportOn = count last

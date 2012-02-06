@@ -1,7 +1,7 @@
 function views_template() {
 	$('.view').live('click', function(e) {
 		var $this = $(this), view = ko.dataFor(this);
-		if( view != currentView() ) {
+		if( view != dataModel.current.view() ) {
 			setCurrentView(view);
 			try { window.history.pushState('', "Title", _url+'/'+view.to_param()); } catch(e) { }
 			document.title = view.name()+' of '+_list+' | Go. Fight. Win';
@@ -31,9 +31,9 @@ function views_template() {
 
 	$('.remove_group').live('click',function() { 
 		var group = ko.dataFor(this);
-		currentView().groups.remove(group);
-		var sort = currentView().sorts().filter(function(elem) {return elem.field == group.field;})
-		currentView().sorts.remove(sort);
+		dataModel.current.view().groups.remove(group);
+		var sort = dataModel.current.view().sorts().filter(function(elem) {return elem.field == group.field;})
+		dataModel.current.view().sorts.remove(sort);
 	});
 
 	$('.add_view').live('click',function() {
@@ -41,16 +41,16 @@ function views_template() {
 		views.push(new_view);
 	});
 	$('.left').live('click',function() {
-		currentView().move('left');
+		dataModel.current.view().move('left');
 	});
 	$('.right').live('click',function() {
-		currentView().move('right');
+		dataModel.current.view().move('right');
 	});
 	$('.far_left').live('click',function() {
-		currentView().move('start');
+		dataModel.current.view().move('start');
 	});
 	$('.far_right').live('click',function() {
-		currentView().move('end');
+		dataModel.current.view().move('end');
 	});
 	$('.save_ready').live('click', function() {
 		saveAll({once: true});

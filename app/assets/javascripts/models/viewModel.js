@@ -15,7 +15,7 @@ function viewModel( data ) {
 	this.start =  ko.observable(0);
 	
 	this.jump = function(row,args) {
-		var view = ko.toJS(currentView),
+		var view = ko.toJS(dataModel.current.view),
 			length = viewModel.filteredRows().length,
 			new_top = view.start,
 			args  = args || {};
@@ -36,11 +36,11 @@ function viewModel( data ) {
 		// Should update into a zero array (e.g. .slice(100,0) )
 		// not a huge array (e.g. .slice(0,130) )
 		if( new_top > bottom ) {
-			currentView().start( new_top);
-			currentView().end(bottom);
+			dataModel.current.view().start( new_top);
+			dataModel.current.view().end(bottom);
 		} else {
-			currentView().end(bottom);
-			currentView().start( new_top);
+			dataModel.current.view().end(bottom);
+			dataModel.current.view().start( new_top);
 		}
 
 		$('#scrolling').scrollTop(row*26);
@@ -95,7 +95,7 @@ function viewModel( data ) {
 	// }
 	// this.reset = function() {
 	// 	$('#scrolling').scrollTop(0);
-	// 	currentView().visible(60);
+	// 	dataModel.current.view().visible(60);
 	// }
 	// 
 	// this.page(paged);

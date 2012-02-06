@@ -1,7 +1,7 @@
 describe("rows for editing after a single or double grouping", function() {
 	var field_1, field_2, field_3
 	beforeEach(function() {
-		currentView().groups.on(true);
+		dataModel.current.view().groups.on(true);
 		factoryList();
 
 		field_1 = fields()[0].to_param;
@@ -24,7 +24,7 @@ describe("rows for editing after a single or double grouping", function() {
 		rows()[3][ field_3 ]('bb');
 	});
 	it("returns uniques when grouped by one", function() {
-		currentView().addGroup(field_1);
+		dataModel.current.view().addGroup(field_1);
 		field_1_vals = ['a','z','']
 		for (var i=0; i < viewModel.groupedRows()._uniques[0].length; i++) {
 			field_1_vals[i] = field_1_vals[i] == '' ? '--' : field_1_vals[i];
@@ -32,8 +32,8 @@ describe("rows for editing after a single or double grouping", function() {
 		};
 	});
 	it("returns uniques when grouped by two fields", function() {
-		currentView().addGroup(field_1);
-		currentView().addGroup(field_2)
+		dataModel.current.view().addGroup(field_1);
+		dataModel.current.view().addGroup(field_2)
 		field_1_vals = ['a','z','']
 		field_2_vals = [1,2,5,'']
 		for (var i=0; i < viewModel.groupedRows()._uniques[0].length; i++) {
@@ -45,31 +45,31 @@ describe("rows for editing after a single or double grouping", function() {
 	
 	});
 	it("returns uniques when grouped by one field", function() {
-		currentView().addGroup(field_1);
+		dataModel.current.view().addGroup(field_1);
 		expect( viewModel.groupedRows().rows.length ).toEqual(3);
 	});
 	// it("returns count when grouped by one field", function() {
-	// 	currentView().addGroup(field_1);
+	// 	dataModel.current.view().addGroup(field_1);
 	// 	expect( viewModel.groupedRows().rows[0].rows.length ).toEqual(2);
 	// });
 	it("returns sum when grouped by one field", function() {
-		currentView().addGroup(field_1);
+		dataModel.current.view().addGroup(field_1);
 		expect( viewModel.groupedRows().rows[0][field_2].sum ).toEqual(2);
 	});
 	it("returns average when grouped by one field", function() {
-		currentView().addGroup(field_1);
+		dataModel.current.view().addGroup(field_1);
 		expect( viewModel.groupedRows().rows[1][field_2].average ).toEqual(3.5);
 	});
 	it("returns average when grouped by two fields", function() {
-		currentView().addGroup(field_1);
-		currentView().addGroup(field_2);
+		dataModel.current.view().addGroup(field_1);
+		dataModel.current.view().addGroup(field_2);
 		expect( viewModel.groupedRows().rows[1][field_2].average ).toEqual(3.5);
 		expect( viewModel.groupedRows().rows[1].rows[1][field_2].average ).toEqual(2);
 	});
 	it("returns average when grouped by three fields", function() {
-		currentView().addGroup(field_1);
-		currentView().addGroup(field_2);
-		currentView().addGroup(field_3);
+		dataModel.current.view().addGroup(field_1);
+		dataModel.current.view().addGroup(field_2);
+		dataModel.current.view().addGroup(field_3);
 		expect( viewModel.groupedRows().rows[1][field_2].average ).toEqual(3.5);
 		expect( viewModel.groupedRows().rows[1].rows[1][field_2].sum ).toEqual(2);
 		expect( viewModel.groupedRows().rows[1].rows[1].rows[1][field_2].average ).toEqual(2);

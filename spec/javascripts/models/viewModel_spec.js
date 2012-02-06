@@ -31,7 +31,7 @@ describe("vieModel can be initalized ", function() {
 	view.name('hey changing');
 	expect(view.dirtyFlag.isDirty()).toBeTruthy();
   });
-  it("it resets the view if passed the current object", function() {
+  it("it resets the view if passed the dataModel.current object", function() {
 	var view = new viewModel();
 	var old_flat = ko.toJS(view);
 	view.name('different');
@@ -106,14 +106,14 @@ describe("vieModel can be initalized ", function() {
 				rows()[3][ field_2 ]('1');
 		    });
 			it("sorts some fucking rows by one field", function() {
-				currentView().addSort({field: field_1, direction: 'DESC'});
-				currentView().sortRows();
+				dataModel.current.view().addSort({field: field_1, direction: 'DESC'});
+				dataModel.current.view().sortRows();
 				expect( viewModel.renderingRows()[0][field_1]() ).toEqual('z');
 			});
 			it("sorts some fucking rows by two fields", function() {
-				currentView().addSort({field: field_1, direction: 'DESC'});
-				currentView().addSort(field_2)
-				currentView().sortRows();
+				dataModel.current.view().addSort({field: field_1, direction: 'DESC'});
+				dataModel.current.view().addSort(field_2)
+				dataModel.current.view().sortRows();
 				expect( viewModel.renderingRows()[0][field_2]() ).toEqual('1');
 			});
 		});

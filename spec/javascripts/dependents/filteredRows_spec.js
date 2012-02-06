@@ -22,61 +22,61 @@ describe("Rows after a filter has been applied", function() {
 	rows()[2][ field_3 ]('ba');
 	rows()[3][ field_3 ]('bb');
   });
-  it("returns rows when nothing has been passed to the currentView.filters", function() {
+  it("returns rows when nothing has been passed to the dataModel.current.view.filters", function() {
      expect( viewModel.filteredRows() ).toEqual(rows());
    });
   it("filters rows with is not", function() {	
-	currentView().addFilter(field_1+' is not a');
+	dataModel.current.view().addFilter(field_1+' is not a');
 	for ( var i=0; i < viewModel.filteredRows().length; i++ ) {
 		expect( viewModel.filteredRows()[i][field_1]() ).not.toEqual('a');
 	};
   });
 	  it("filters rows with is", function() {	
-	currentView().addFilter(field_1+' is a')
+	dataModel.current.view().addFilter(field_1+' is a')
 	for ( var i=0; i < viewModel.filteredRows().length; i++ ) {
 		expect( viewModel.filteredRows()[i][field_1]() ).toEqual('a');
 	};
 	  });
 	  it("filters rows starts with", function() {	
-	currentView().addFilter(field_3+' starts with a')
+	dataModel.current.view().addFilter(field_3+' starts with a')
 	for ( var i=0; i < viewModel.filteredRows().length; i++ ) {
 		expect( viewModel.filteredRows()[i][field_3]()[0] ).toEqual('a');
 	};
 	  });
 	  	it("filters rows ends with", function() {	
-		currentView().addFilter(field_3+' is a')
+		dataModel.current.view().addFilter(field_3+' is a')
 		for ( var i=0; i < viewModel.filteredRows().length; i++ ) {
 			expect( viewModel.filteredRows()[i][field_3]().slice(-1) ).toEqual('a');
 		};
 	  	});
 	it("filters rows with greater than", function() {	
-		currentView().addFilter(field_2+' greater than 2')
+		dataModel.current.view().addFilter(field_2+' greater than 2')
 		for ( var i=0; i < viewModel.filteredRows().length; i++ ) {
 			expect( viewModel.filteredRows()[i][field_2]() ).toBeGreaterThan(2);
 		};
 	});
 	it("filters rows with greater than or equal", function() {	
-		currentView().addFilter(field_2+' greater than or equal to 2')
+		dataModel.current.view().addFilter(field_2+' greater than or equal to 2')
 		for ( var i=0; i < viewModel.filteredRows().length; i++ ) {
 			expect( viewModel.filteredRows()[i][field_2]() ).toBeGreaterThan(1);
 		};
 	});
 	it("filters rows with less than", function() {	
-		currentView().addFilter(field_2+' less than 2')
+		dataModel.current.view().addFilter(field_2+' less than 2')
 		for ( var i=0; i < viewModel.filteredRows().length; i++ ) {
 			expect( viewModel.filteredRows()[i][field_2]() ).toBeLessThan(2);
 		};
 	});
 	
 	it("filters rows with is less than or equal to", function() {	
-		currentView().addFilter(field_2+' less than or equal to 3')
+		dataModel.current.view().addFilter(field_2+' less than or equal to 3')
 		for ( var i=0; i < viewModel.filteredRows().length; i++ ) {
 			expect( viewModel.filteredRows()[i][field_2]() ).toBeLessThan(3);
 		};
 	});
 	it("filters rows can accept multiple filters", function() {	
-		currentView().addFilter(field_1+' is a');
-		currentView().addFilter(field_1+' is z');
+		dataModel.current.view().addFilter(field_1+' is a');
+		dataModel.current.view().addFilter(field_1+' is z');
 		for ( var i=0; i < viewModel.filteredRows().length; i++ ) {
 			expect( viewModel.filteredRows()[i][field_1]() ).not.toEqual('');
 		};

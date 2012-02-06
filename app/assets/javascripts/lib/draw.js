@@ -22,7 +22,7 @@ function draw() {
 	                idx=2;
 	            }
 	            context.fillText( words.slice(0,idx-1).join(' '), x, y + (lineHeight*currentLine) );
-	            currentLine++;
+	            dataModel.currentLine++;
 	            words = words.splice(idx-1);
 	            idx = 1;
 	        }
@@ -38,7 +38,7 @@ function draw() {
     canvas = document.getElementById("canvas");
 	if( canvas != null ){
 	    ctx = canvas.getContext("2d"), 
-			goal = currentView().goal(),
+			goal = dataModel.current.view().goal(),
 			graph = viewModel.graph();
 		ctx.clearRect ( 0 , 0 , canvas.width , canvas.height );
 
@@ -150,7 +150,7 @@ function draw() {
 			xpos += width;
 		};
 
-		if( currentView().goal.label() && graph.goal ) {
+		if( dataModel.current.view().goal.label() && graph.goal ) {
 
 			// Drawing the Goal
 			ctx.beginPath();
@@ -169,7 +169,7 @@ function draw() {
 			ctx.fillText("goal: "+value+'/'+goal.value()+' ('+ (Math.round(  value / goal.value() * 1000 ) / 10) + '%)', canvas.width-right_buffer-goal_text_buffer, top_buffer+graph_inside_top_buffer+graph_height * (1 - goal.value() / max ));
 			// Could be smarter, know if the goal is met or something
 		}
-		if( graph.need_select && currentView().reportOn() == undefined ) {
+		if( graph.need_select && dataModel.current.view().reportOn() == undefined ) {
 			ctx.font = 'bold 18px sans-serif';
 			ctx.fillStyle = 'rgba(60, 60, 60, 0.6)';
 			ctx.textAlign = 'center';

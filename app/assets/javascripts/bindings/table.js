@@ -18,6 +18,6 @@ function table_template() {
 			direction = direction == 'ASC' ? 'DESC' : 'ASC';
 		}
 		$(this).data('direction',direction);
-		currentView().sortRows({field: field.to_param, direction: direction});
+		dataModel.current.view().sortRows({field: field.to_param, direction: direction});
 	});
 }

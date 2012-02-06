@@ -53,11 +53,11 @@ function saveAll (args) {
 								// console.log(view._flatten('json'))
 							}
 						}
-						if( view == currentView() ) {
+						if( view == dataModel.current.view() ) {
 							window.history.pushState('', "Title", _url+'/'+view.to_param());
 						}
 					};
-					// needs to check if currentView = new view
+					// needs to check if dataModel.current.view = new view
 					// + sets the URL if saving a new view
 					// + change the url if the name has changed
 				}

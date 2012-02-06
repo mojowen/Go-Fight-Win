@@ -1,4 +1,3 @@
-
 <% content_for :page_title do %>
 	<%= @list.name %>
 <% end %>
@@ -12,7 +11,7 @@
 	<%= render :partial => 'views' %>
 <% end %>
 
-	<div id="data" data-bind="visible: !currentView().groups.on()" >
+	<div id="data" data-bind="visible: !dataModel.current.view().groups.on()" >
 		<div id="table" class="table">
 			<%= render :partial => 'table' %>
 		</div>
@@ -20,7 +19,7 @@
 			<%= render :partial => 'newRow' %>
 		</div>
 	</div>
-	<div id="analyze" data-bind="visible: currentView().groups.on()">
+	<div id="analyze" data-bind="visible: dataModel.current.view().groups.on()">
 		<%= render :partial => 'row' %>
 		<%= render :partial => 'groupedRow' %>
 
@@ -36,7 +35,7 @@
 	var _url = '<%= '/'+@list.org.to_param+'/'+@list.to_param %>';
 	var _views = <%= raw @views.to_json %>;
 	<% unless @current_view.nil? %>
-	var _currentView = <%= raw @current_view.to_json %>;
+	var _current.view = <%= raw @current_view.to_json %>;
 	<% end %>
 	<% unless @list.operators.nil? %>
 	var _operators = <%= raw @list.operators.to_json %>;

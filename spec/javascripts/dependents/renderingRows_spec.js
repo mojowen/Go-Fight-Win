@@ -1,4 +1,4 @@
-describe("Rows that are currently being displated, representing the list's current condition", function() {
+describe("Rows that are dataModel.currently being displated, representing the list's dataModel.current condition", function() {
 	var field_1, field_2, field_3
 	beforeEach(function() {
 		factoryList();
@@ -26,24 +26,24 @@ describe("Rows that are currently being displated, representing the list's curre
 		expect(viewModel.renderingRows()).toEqual(rows());
     });
 	it("slices rows if visible set to lower value", function() {
-		currentView().end(1)
+		dataModel.current.view().end(1)
 		expect( viewModel.renderingRows().length ).toEqual(1);
 	});
 	it("pages rows successfully", function() {
-	   currentView().end(2);
-	   currentView().start(1);
+	   dataModel.current.view().end(2);
+	   dataModel.current.view().start(1);
 	   expect( ko.toJS(viewModel.renderingRows()[0] ) ).toEqual( ko.toJS(rows()[1]) );
 	});
 	it("pages rows when filtered", function() {
-	   currentView().end(2);
-	   currentView().start(1);
-	   currentView().addFilter(field_1+' not z')
+	   dataModel.current.view().end(2);
+	   dataModel.current.view().start(1);
+	   dataModel.current.view().addFilter(field_1+' not z')
 	   expect( ko.toJS(viewModel.renderingRows()[0] ) ).toEqual( ko.toJS(rows()[3]) );
 	});
 	// it("pages rows when grouped", function() {
-	//    currentView().visible(1);
-	//    currentView().paged(1);
-	//    currentView().addGroup(field_1);
+	//    dataModel.current.view().visible(1);
+	//    dataModel.current.view().paged(1);
+	//    dataModel.current.view().addGroup(field_1);
 	//    expect( ko.toJS(viewModel.renderingRows()[0]._value ) ).toEqual( 'z' );
 	// });
 });

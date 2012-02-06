@@ -1,8 +1,8 @@
 viewModel.graph = ko.dependentObservable(
 	{ read: function() {
-		var graph = false, goal = currentView().goal();
-		if( currentView().goal.label() && currentView().groups().length == 0 ) {
-			var value = viewModel.groupedRows()[ currentView().goal().field().name ][ currentView().goal().field().report ],
+		var graph = false, goal = dataModel.current.view().goal();
+		if( dataModel.current.view().goal.label() && dataModel.current.view().groups().length == 0 ) {
+			var value = viewModel.groupedRows()[ dataModel.current.view().goal().field().name ][ dataModel.current.view().goal().field().report ],
 				max = goal.value() > value ? goal.value() : value;
 			graph = {
 				max: max,
@@ -16,9 +16,9 @@ viewModel.graph = ko.dependentObservable(
 				]
 			}
 		}
-		if( currentView().groups().length > 0 && currentView().groups.on() ) {
-			var max = 0, report = currentView().reportOn(), bars = [], uniques = [], key = false;
-			var goal =  currentView().reportOn() != undefined && currentView().reportOn().label == 'goal'
+		if( dataModel.current.view().groups().length > 0 && dataModel.current.view().groups.on() ) {
+			var max = 0, report = dataModel.current.view().reportOn(), bars = [], uniques = [], key = false;
+			var goal =  dataModel.current.view().reportOn() != undefined && dataModel.current.view().reportOn().label == 'goal'
 
 			for (var i=0; i < viewModel.groupedRows().rows.length; i++) {
 				var parent = viewModel.groupedRows().rows[i];
@@ -67,7 +67,7 @@ viewModel.graph = ko.dependentObservable(
 			};
 
 			if( report != undefined && report.label == 'goal' ) {
-				max = currentView().goal().value() > max ? currentView().goal().value() : max;
+				max = dataModel.current.view().goal().value() > max ? dataModel.current.view().goal().value() : max;
 			}
 
 			graph = {

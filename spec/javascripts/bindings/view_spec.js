@@ -18,26 +18,16 @@ describe("Testing the row template", function() {
 		i++;
 	});
   });
-  // it("switches goals when switching views", function() {
-  //    expect(false).toBeTruthy();
-  //  });
-  //  it("switches groups when switching views", function() {
-  //    expect(false).toBeTruthy();
-  //  });
-	// it("successfully groups things", function() {
-	//   currentView().addGroup();
-	//   var group = $('.group:first option:last');
-	//   group.attr('selected','selected').change();
-	//   expect( currentView().groups()[0].field() ).toEqual( group.val() );
-	// });
-	// it("can group two things", function() {
-	//   currentView().addGroup();
-	//   var group = $('.group:first option:last');
-	//   group.attr('selected','selected').change();
-	//   currentView().addGroup();
-	//   var group = $('.group:last option:eq(1)');
-	//   group.attr('selected','selected').change();
-	//   expect( currentView().groups()[1].field() ).toEqual( group.val() );
-	// });
+
+
+	it("successfully groups things", function() {
+	});
+	it("can group two things", function() {
+	});
+	it("switches goals when switching views", function() {
+	});
+	it("switches groups when switching views", function() {
+	});
+
 	
 });

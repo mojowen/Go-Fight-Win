@@ -40,7 +40,7 @@ describe("the bindings on fields with the table editor", function() {
 				expect( rows()[0][field_1.to_param]() ).toEqual('');
 				expect( $('.data:first') ).toHaveValue('--');
 			});
-			it("opens to current this month if blank", function() {
+			it("opens to dataModel.current this month if blank", function() {
 				expect($('.ui-datepicker-month') ).toHaveText( $.datepicker._defaults.monthNames[t.getMonth()] );
 				expect($('.ui-datepicker-year') ).toHaveText( t.getFullYear() );
 			});
@@ -75,7 +75,7 @@ describe("the bindings on fields with the table editor", function() {
 				rows()[0][field_1.to_param](val);
 				$('.data:first').dblclick().focus();
 			});
-		  	it("opens to current month of a value that's been set", function() {
+		  	it("opens to dataModel.current month of a value that's been set", function() {
 				expect($('.ui-datepicker-month') ).toHaveText( $.datepicker._defaults.monthNames[t.getMonth()] );
 				expect($('.ui-datepicker-year') ).toHaveText( t.getFullYear() );
 			});
@@ -98,7 +98,6 @@ describe("the bindings on fields with the table editor", function() {
 			  expect( new Date(rows()[0][field_1.to_param]()).getDate() ).toEqual( t.getDate() + 1 );
 			});
 		});
-
 	  });
 });
 //  Commented out till the new row can be re-thought through
@@ -138,7 +137,7 @@ describe("the bindings on fields with the table editor", function() {
 // 				expect( rows()[0][field_1.to_param]() ).toEqual('');
 // 				expect( $('.data:first') ).toHaveValue('--');
 // 			});
-// 			it("opens to current this month if blank", function() {
+// 			it("opens to dataModel.current this month if blank", function() {
 // 				expect($('.ui-datepicker-month') ).toHaveText( $.datepicker._defaults.monthNames[t.getMonth()] );
 // 				expect($('.ui-datepicker-year') ).toHaveText( t.getFullYear() );
 // 			});

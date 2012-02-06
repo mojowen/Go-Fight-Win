@@ -89,16 +89,15 @@ describe("dataModel set ups", function() {
 		  rows.push(row);
 		  expect(rows()[0].name_1()).toEqual('thing');
 		});
-
 	});
 	describe("changing between views and such", function() {
-	  it("sets currentView to a blank viewModel if nothing is set", function() {
-	    expect(ko.toJSON( currentView() ) ).toEqual( ko.toJSON( new viewModel() ) );
+	  it("sets dataModel.current.view to a blank viewModel if nothing is set", function() {
+	    expect(ko.toJSON( dataModel.current.view() ) ).toEqual( ko.toJSON( new viewModel() ) );
 	  });
-	  it("can set views to replace the current view", function() {
+	  it("can set views to replace the dataModel.current view", function() {
 	    view = new viewModel({name: 'better view'});
 		setCurrentView(view);
-		expect( currentView().name() ).toEqual('better view');
+		expect( dataModel.current.view().name() ).toEqual('better view');
 	  });
 	  it("cannot set duplicate names for views", function() {
 		view = new viewModel({name: 'better view'});
@@ -106,7 +105,7 @@ describe("dataModel set ups", function() {
 	    addView( view );
 	    expect( addView(nother_view) ).toBeFalsy();
 	  });
-	  describe("dependent variables are shifted when currentView shifts", function() {
+	  describe("dependent variables are shifted when dataModel.current.view shifts", function() {
 		var field_1, field_2
 
 		beforeEach(function() {
@@ -146,10 +145,7 @@ describe("dataModel set ups", function() {
 		});
 	});
 	describe("adding views", function() {
-	  // it("cannot add a duplicate name", function() {
-	  //   var new_view = new viewModel({id: 'new', name: 'new name'});
-	  //   var nother_view = new viewModel({id: 'new', name: 'new name'});
-	  // });
 	});
+	
 });
 

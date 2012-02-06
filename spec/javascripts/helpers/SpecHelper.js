@@ -1,7 +1,7 @@
 var _size = 0, _list = 'Test', _url = document.location.href;
 
 beforeEach(function() {
-	currentView(new viewModel());
+	dataModel.current.view(new viewModel());
 	rows.removeAll();
 	newRows.removeAll();
 	fields.removeAll();
@@ -9,7 +9,7 @@ beforeEach(function() {
 	factoryfields =[];
 	factoryrows =[];
 	saving = ko.observable(true);
-	currentView().groups.on(true);
+	dataModel.current.view().groups.on(true);
 });
 
 function bl (argument) {
