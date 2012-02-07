@@ -9,7 +9,7 @@ beforeEach(function() {
 	factoryfields =[];
 	factoryrows =[];
 	saving = ko.observable(true);
-	dataModel.current.view().groups.on(true);
+	dataModel.current.state('explore');
 });
 
 function bl (argument) {

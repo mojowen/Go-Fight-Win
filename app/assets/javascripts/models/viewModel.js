@@ -139,7 +139,7 @@ function viewModel( data ) {
 	var pivot = typeof view.pivot == 'undefined' ? false : view.pivot;
 	this.groups.pivot = ko.observable(pivot);
 	var groups_on = typeof view.groups_on == 'undefined' ? false : view.groups_on;
-	this.groups.on = ko.observable(groups_on);
+	this.groups.on = ko.computed( function() { return dataModel.current.state() == 'analyze' } );
 
 
 // Sorting
@@ -315,8 +315,7 @@ function viewModel( data ) {
 		returnable.name = this.name,
 			returnable.id = this.id,
 			returnable.report_on = this.reportOn,
-			returnable.pivot = this.groups.pivot(),
-			returnable.groups_on = this.groups.on();
+			returnable.pivot = this.groups.pivot();
 
 		if( typeof this._destroy != 'undefined' ) { returnable._destroy = true; }
 

@@ -1,4 +1,4 @@
-function fields_template (argument) {
+appDataModel.fields_template = function(argument) {
 	date_fields();
 
 	/** Autocomplete **/

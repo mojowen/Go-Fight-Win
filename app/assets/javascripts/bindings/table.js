@@ -1,4 +1,4 @@
-function table_template() {
+appDataModel.table_template = function() {
 	$('#edit_rows .remove').live('click', function(e) {
 		e.preventDefault();
 		clearSelection();

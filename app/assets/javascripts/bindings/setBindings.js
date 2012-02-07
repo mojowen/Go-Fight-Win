@@ -1,11 +1,12 @@
 function setBindings (argument) {
-	table_template();
-	newRow_template();
-	views_template();
-	keyboardShortcuts();
-	groups_template();
-	graph_template();
-	fields_template();
+	appDataModel.table_template();
+	appDataModel.newRow_template();
+	appDataModel.views_template();
+	appDataModel.keyboard_shortcuts();
+	appDataModel.groups_template();
+	appDataModel.graph_template();
+	appDataModel.fields_template();
+	appDataModel.navigation();
 }
 
 function clearSelection() {

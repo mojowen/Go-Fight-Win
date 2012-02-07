@@ -6,3 +6,4 @@ tmp/
 .jhw-cache/*
 *jhw*
 public/assets/
+*.DS_Store

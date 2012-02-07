@@ -1,7 +1,7 @@
 describe("rows for editing after a single or double grouping", function() {
 	var field_1, field_2, field_3
 	beforeEach(function() {
-		dataModel.current.view().groups.on(true);
+		dataModel.current.state('analyze');
 		factoryList();
 
 		field_1 = fields()[0].to_param;

@@ -1,6 +1,5 @@
 /** 
 	Ways to attack this:
-		- Need to test jquery plugins
 
 		- Need to test AJAX response for
 			- Saving rows
@@ -11,9 +10,7 @@
 			- Pivot table
 
 		- Need to test Bindings
-			- Regular row update
 			- New row
-			- Date update
 			- Number update
 
 
@@ -144,7 +141,21 @@ describe("dataModel set ups", function() {
 			expect( viewModel.renderingRows()[0][field_2]() ).toEqual(10);
 		});
 	});
-	describe("adding views", function() {
+	describe("loads a view", function() {
+		var current_view;
+		beforeEach(function() {
+			_currentView = 0;
+			current_view = new viewModel({name: 'Current View'});
+			views.push( current_view);
+			factoryList();
+			loadFixtures("views/lists/_row.html","views/lists/_table.html","views/lists/_views.html","views/lists/_groupedRow.html","views/lists/_grouped.html");
+			load();
+			ko.applyBindings(dataModel);
+		});
+		it("succesfully loads the view", function() {
+			expect( dataModel.current.view()  ).toEqual( current_view );
+			expect(dataModel.current.view().dirtyFlag.isDirty()).toBeFalsy();
+		});
 	});
 	
 });

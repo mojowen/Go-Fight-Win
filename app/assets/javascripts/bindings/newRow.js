@@ -15,7 +15,7 @@ newRows.plurl = ko.dependentObservable(
 },
 newRows);
 
-function newRow_template() {
+appDataModel.newRow_template = function() {
 	newRows.push( new rowModel({key: 'new', list: _list })  );
 	
 	$('#new_row textarea').live('paste', function (e) {
