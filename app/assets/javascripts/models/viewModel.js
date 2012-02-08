@@ -114,10 +114,7 @@ function viewModel( data ) {
 		} else if ( typeof data.filters == 'string' ) {
 			this.filters.push( new filterModel( view.filters ) );
 		}
-	} else {
-		this.addFilter('');
-	}
-
+	} 
 // Grouping
 	this.groups = ko.observableArray([]);
 	this.addGroup = function(group) {

@@ -7,6 +7,7 @@ function setBindings (argument) {
 	appDataModel.graph_template();
 	appDataModel.fields_template();
 	appDataModel.navigation();
+	appDataModel.analyze_template();
 }
 
 function clearSelection() {

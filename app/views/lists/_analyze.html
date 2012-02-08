@@ -1,0 +1,46 @@
+<div class="view_title" data-bind="with: dataModel.current.view">
+	<h2 class="view_title" data-bind="text: $data.name, css: {'unsaved' : views.indexOf($data) === -1 }"></h2>
+	<div class="section">
+		<h3>Constrain</h3>
+		<em>Limit what you're looking at</em>
+		<div data-bind="template: {name: 'filter', foreach: $data.filters }"></div>
+		<span class="add clickable add_filter">+Add</span>
+	</div>
+
+	<div class="section">
+		<h3>Plan</h3>
+		<em>add goals &amp; track your progress</em>
+		<span class="add clickable">+Add</span>
+	</div>
+
+	<div class="section">
+		<h3>Tabulate</h3>
+		<em>group &amp; pivot your data</em>
+		<span class="add clickable">+Add</span>
+	</div>
+
+	<div class="section">
+		<h3>Graph</h3>
+		<em>visualize your data</em>
+		<span class="add clickable">+Add</span>
+	</div>
+
+	<div class="section">
+		<h3>Map</h3>
+		<em>your data on the world</em>
+		<span class="add clickable">+Add</span>
+	</div>
+
+	<div class="section">
+		<h3>Cloud</h3>
+		<em>your data's word cloud</em>
+		<span class="add clickable">+Add</span>
+	</div>
+
+	<div class="section">
+		<h3>Calendar</h3>
+		<em>your data on time</em>
+		<span class="add clickable">+Add</span>
+	</div>
+
+</div>

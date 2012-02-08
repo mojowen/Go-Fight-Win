@@ -7,11 +7,8 @@
 	<% end %>
 	<%= @list.name %>
 <% end %>
-<% content_for :extra do %>
-	<%= render :partial => 'views' %>
-<% end %>
 
-	<div id="data" data-bind="visible: !dataModel.current.view().groups.on()" >
+	<div id="data" data-bind="visible: dataModel.current.state() == 'explore' " >
 		<div id="table" class="table">
 			<%= render :partial => 'table' %>
 		</div>
@@ -19,12 +16,8 @@
 			<%= render :partial => 'newRow' %>
 		</div>
 	</div>
-	<div id="analyze" data-bind="visible: dataModel.current.view().groups.on()">
-		<%= render :partial => 'row' %>
-		<%= render :partial => 'groupedRow' %>
-
-		<%= render :partial => 'grouped' %>
-		<%= render :partial => 'graph' %>	
+	<div id="analyze" data-bind="visible:  dataModel.current.state() == 'analyze' ">
+		<%= render :partial => 'analyze' %>
 	</div>
 
 <script type="text/javascript">
@@ -35,12 +28,15 @@
 	var _url = '<%= '/'+@list.org.to_param+'/'+@list.to_param %>';
 	var _views = <%= raw @views.to_json %>;
 	<% unless @current_view.nil? %>
-	var _current.view = <%= raw @current_view.to_json %>;
+	var _currentView = <%= raw @current_view.to_json %>;
 	<% end %>
 	<% unless @list.operators.nil? %>
 	var _operators = <%= raw @list.operators.to_json %>;
 	<% end %>
 </script>
+<%= render :partial => 'row' %>
+<%= render :partial => 'groupedRow' %>
+<%= render :partial => 'filter' %>
 
 <% content_for :overlay do %>
 	<%= render :partial => 'bug' %>
@@ -49,10 +45,10 @@
 
 <% content_for :footer do %>
 	<!-- <div id="switch" class="f_tab" data-bind="text: viewModel.switchText"></div> -->
-	<div id="switch" class="f_tab on" >Data</div>
-	<div id="switch" class="f_tab" >Editor</div>
-	<div id="switch" class="f_tab" >Analysis</div>
-	<div id="xls" class="f_tab" url="<%= list_path(@list.org.to_param, @list.to_param)+'.xls' %>">Export</div>
-	<div id="bug" class="f_tab overlayer">Bug</div>
-	<div id="help" class="f_tab overlayer">?</div>
+	<div class="f_tab switch b_tab", data-bind="css: {'on': dataModel.current.state() == 'explore' }" >Explore</div>
+	<div class="f_tab switch b_tab", data-bind="css: {'on': dataModel.current.state() == 'analyze' }" >Analyze</div>
+
+	<div id="xls" class="f_tab s_tab" url="<%= list_path(@list.org.to_param, @list.to_param)+'.xls' %>">Export</div>
+	<div id="bug" class="f_tab s_tab overlayer">Bug</div>
+	<div id="help" class="f_tab s_tab overlayer">?</div>
 <% end %>
