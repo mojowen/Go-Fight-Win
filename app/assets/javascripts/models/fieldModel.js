@@ -23,6 +23,9 @@ function fieldModel(data) {
 			this.field_options[i] = this.field_options[i].toLowerCase();
 		};
 	}
+	if( this.field_type == 'children' ) {
+		this.id = 0;
+	}
 
 	this.fieldReports = ko.dependentObservable({ 
 		read: function() {
