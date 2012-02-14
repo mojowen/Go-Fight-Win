@@ -21,12 +21,11 @@
 		</div>
 	</div>
 	<div id="analyze" data-bind="visible: dataModel.current.view().groups.on()">
-		<%= render :partial => 'row' %>
-		<%= render :partial => 'groupedRow' %>
-
-		<%= render :partial => 'grouped' %>
-		<%= render :partial => 'graph' %>	
+		<%= render :partial => 'analyze' %>
 	</div>
+
+<%= render :partial => 'row' %>
+<%= render :partial => 'groupedRow' %>
 
 <script type="text/javascript">
 	var _fields = <%= raw @fields.to_json %>;
@@ -36,7 +35,7 @@
 	var _url = '<%= '/'+@list.org.to_param+'/'+@list.to_param %>';
 	var _views = <%= raw @views.to_json %>;
 	<% unless @current_view.nil? %>
-	var _current.view = <%= raw @current_view.to_json %>;
+	var _currentView = <%= raw @current_view.to_json %>;
 	<% end %>
 	<% unless @list.operators.nil? %>
 	var _operators = <%= raw @list.operators.to_json %>;
@@ -50,9 +49,9 @@
 
 <% content_for :footer do %>
 	<!-- <div id="switch" class="f_tab" data-bind="text: viewModel.switchText"></div> -->
-	<div class="f_tab on switch" >Explore</div>
-	<div class="f_tab switch" >Analyze</div>
-	<div id="xls" class="f_tab" url="<%= list_path(@list.org.to_param, @list.to_param)+'.xls' %>">Export</div>
-	<div id="bug" class="f_tab overlayer">Bug</div>
-	<div id="help" class="f_tab overlayer">?</div>
+	<div class="f_tab switch" data-bind="css: {'on': dataModel.current.state() == 'explore' }">Explore</div>
+	<div class="f_tab switch"  data-bind="css: {'on': dataModel.current.state() == 'analyze' }">Analyze</div>
+	<div id="xls" class="f_tab s_tab" url="<%= list_path(@list.org.to_param, @list.to_param)+'.xls' %>">Export</div>
+	<div id="bug" class="f_tab s_tab overlayer">Bug</div>
+	<div id="help" class="f_tab s_tab overlayer">?</div>
 <% end %>
