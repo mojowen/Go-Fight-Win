@@ -134,22 +134,22 @@ appDataModel.keyboard_shortcuts = function(argument) {
 					case 37:
 						// Left
 						if( shift ) {
-							if( extra ) { $last = $last.parent().find('td.cell:first').addClass('last'); }
+							if( extra ) { $last = $last.parent().find('td.cell:first').addClass('last'); clicking = false; }
 							else { $last = $last.prev('td.cell').addClass('last'); }
 						 	grabem($last,$selected);
 						} else {
-							if( extra ) { $selected.parent().find('td.cell:first').find('.data').mousedown(); }
-							else { $selected.prev('td.cell').find('.data').mousedown(); }
+							if( extra ) { $selected.parent().find('td.cell:first').find('.data').mousedown(); clicking = false; }
+							else { $selected.prev('td.cell').find('.data').mousedown(); clicking = false; }
 						}
 						rowScroll();
 						break;
 					case 38:
 						// Up
-						if( extra ) {  
-							dataModel.current.view().jump('top', {callback: function() { $('.grid tbody').find('tr:first td.cell:eq('+pos+')').find('.data').mousedown(); }}); 
+						if( extra ) { 
+							dataModel.current.view().jump('top', { callback: function() { $('.grid tbody').find('tr:first td.cell:eq('+pos+')').find('.data').mousedown(); clicking = false; }}); 
 						} else { 
 							if( shift )  { $last = $last.parent().prev('tr').find('td.cell:eq('+pos+')').addClass('last'); grabem($last,$selected); rowScroll(); }
-							else {$selected.parent().prev('tr').find('td.cell:eq('+pos+')').find('.data').mousedown(); rowScroll(); }
+							else {$selected.parent().prev('tr').find('td.cell:eq('+pos+')').find('.data').mousedown(); clicking = false; rowScroll(); }
 						}
 						break;
 					case 39: 
@@ -159,18 +159,18 @@ appDataModel.keyboard_shortcuts = function(argument) {
 							else { $last = $last.next('td.cell').addClass('last'); }
 							grabem($last,$selected);
 						} else {
-							if( extra ) { $selected.parent().find('td.cell:last').find('.data').mousedown(); }
-							else { $selected.next('td.cell').find('.data').mousedown(); }
+							if( extra ) { $selected.parent().find('td.cell:last').find('.data').mousedown(); clicking = false; }
+							else { $selected.next('td.cell').find('.data').mousedown();  clicking = false; }
 						}
 						rowScroll();
 						break;
 					case 40:
 						// Down
-						if( extra ) { 
-							dataModel.current.view().jump('bottom', {callback: function() { $('.grid tbody').find('tr:last td.cell:eq('+pos+')').find('.data').mousedown(); }}); 
+						if( extra ) {
+							dataModel.current.view().jump('bottom', { callback: function() { $('.grid tbody').find('tr:last td.cell:eq('+pos+')').find('.data').mousedown(); clicking = false; }}); 
 						} else { 
 							if( shift ) { $last = $last.parent().next('tr').find('td.cell:eq('+pos+')').addClass('last'); grabem($last,$selected); rowScroll(); }
-							else { $selected.parent().next('tr').find('td.cell:eq('+pos+')').find('.data').mousedown(); rowScroll(); } 
+							else { $selected.parent().next('tr').find('td.cell:eq('+pos+')').find('.data').mousedown(); clicking = false; rowScroll(); } 
 						}
 						break;
 					}

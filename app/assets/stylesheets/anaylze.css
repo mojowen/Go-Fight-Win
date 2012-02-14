@@ -23,15 +23,21 @@ div.section span.add {
 	text-align: center;
 	color: #747474;
 	border: 1px solid #ddd;
-	-webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    -o-user-select: none;
-    user-select: none;
-    
 }
 div.section span.add:hover {
 	background-color: #226;
 	color: #fff;
+}
+div.section div.subsection {
+	margin: 20px 0;
+	padding: 10px;
+	border: 2px solid #ddd;
+	border-radius: 15px;
+}
+div.section em {
+	font-size: 10px;
+	color: #747474;
+}
+div.section .remove {
+	float: right;
 }

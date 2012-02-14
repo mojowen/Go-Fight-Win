@@ -1,8 +1,8 @@
 
 <h2 class="view_title">Your Data</h2>
-<div style="text-align: right;">
-	<em>Filtered (-)</em>
-</div>
+<p class="filters" data-bind="visible: dataModel.current.view().filters().length > 0" >
+	<em><input type="checkbox" data-bind="checked: dataModel.current.filtered"> Filtered</em>
+</p>
 <table border="0" cellspacing="5" cellpadding="5" class="editor grid">
 	<thead>
 		<tr>

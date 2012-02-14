@@ -1,8 +1,8 @@
 <script type="text/html" id="filter">
-	<div class="filter">
-		<span data-bind="text: $parent.filters.indexOf($data) + 1"></span>
+	<div class="filter subsection">
 		<select data-bind="value: $data.field, optionsValue: 'to_param', optionsText: 'name', options: fields()"></select>
 		<select class="filter" data-bind="visible: $data.field() != undefined, value: $data.operator, options: ['contains','is','isn\'t']">
 		<input class="filter" data-bind="visible: $data.field() != undefined, value: $data.filter, valueUpdate: 'afterkeydown'" >
+		<span class="remove">(<span class="clickable">–</span>)</span>
 	</div>
 </script>
