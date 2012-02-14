@@ -2,3 +2,15 @@
 	overflow: auto; 
 	height: 508px;
 }
+h2.view_title {
+	color: #747474;
+	text-align: right;
+}
+.clickable {
+	-webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}

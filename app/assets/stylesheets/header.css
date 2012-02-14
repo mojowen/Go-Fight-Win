@@ -38,11 +38,14 @@ a#logo {
 	user-select: none;
 	border: 1px solid white;
 	padding: 2px 2px 2px 8px;
+	overflow: hidden;
 }
 a#logo:hover {
 	text-decoration: none;
 	border: 1px solid #ddd;
-	color: #ddd;
+	color: #333;
+	background-color: #fff;
+	box-shadow: 0 0 15px #ddd;
 }
 #msg {
 	position: absolute;

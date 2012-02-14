@@ -3,7 +3,7 @@ db/*.sqlite3
 log/*.log
 tmp/
 .sass-cache/
-.jhw-cache/*
+*.jhw-cache/*
 *jhw*
 public/assets/
 *.DS_Store

@@ -249,7 +249,10 @@ td.copying {
 	text-decoration: underline;
 	font-weight: bold;
 }
-
+/** Filters **/
+#data .filters {
+	text-align: right;
+}
 
 /** Goal **/
 #goal {

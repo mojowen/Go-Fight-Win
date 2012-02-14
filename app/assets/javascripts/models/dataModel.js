@@ -10,7 +10,8 @@ function appDataModel() {
 	this.current = {
 		me: this,
 		view: ko.observable({}),
-		state: ko.observable('explore')
+		state: ko.observable('explore'),
+		filtered: ko.observable(false)
 	};
 	var current = this.current,
 		loaded = this.loaded;
@@ -64,8 +65,9 @@ function appDataModel() {
 	setCurrentView = function(newView) {
 		if( newView.constructor.name == 'viewModel' ) {
 			current.view(newView);
-			// rows.valueHasMutated();
-			// current.view().sortRows();
+		}
+		if( views.indexOf(newView) !== -1 ) {
+			current.filtered(true);
 		}
 	}
 	addView = function(newView) {

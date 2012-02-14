@@ -105,6 +105,11 @@ function viewModel( data ) {
 	this.addFilter = function(filter) {
 		filter = typeof filter == 'undefined' ? {filter: '', field: '', operator: 'is'} : filter;
 		this.filters.push( new filterModel( filter ) );
+		dataModel.current.filtered(true);
+	}
+	this.removeFilter = function(filter) {
+		this.filters.remove( filter );
+		if( this.filters().length == 0 ) { dataModel.current.filtered(false); }
 	}
 	if( typeof view.filters != 'undefined' && view.filters != null ) {
 		if( typeof view.filters == 'object' ) {
@@ -114,10 +119,7 @@ function viewModel( data ) {
 		} else if ( typeof data.filters == 'string' ) {
 			this.filters.push( new filterModel( view.filters ) );
 		}
-	} else {
-		this.addFilter('');
-	}
-
+	} 
 // Grouping
 	this.groups = ko.observableArray([]);
 	this.addGroup = function(group) {

@@ -1,8 +1,8 @@
 
-
-<span data-bind="text: dataModel.current.view().start"></span>  -
-<span data-bind="text: dataModel.current.view().now"></span>  -
-<span data-bind="text: dataModel.current.view().end"></span>
+<h2 class="view_title">Your Data</h2>
+<p class="filters" data-bind="visible: dataModel.current.view().filters().length > 0" >
+	<em><input type="checkbox" data-bind="checked: dataModel.current.filtered"> Filtered</em>
+</p>
 <table border="0" cellspacing="5" cellpadding="5" class="editor grid">
 	<thead>
 		<tr>
@@ -17,7 +17,7 @@
 </table>
 
 <div id="scrolling">
-	<div id="viewport" data-bind="style: {height: ((dataModel.rowSize()-current.view().start())*26)+'px', paddingTop: (current.view().start()*26)+'px'}">
+	<div id="viewport" data-bind="style: {height: ((dataModel.rowSize()-current.view().start())*26)+'px', paddingTop: (dataModel.current.view().start()*26)+'px'}">
 		<table border="0" cellspacing="5" cellpadding="5" class="editor grid">
 			<tbody id="edit_rows" data-bind="template: {name: 'row', foreach: viewModel.renderingRows }">
 			</tbody>

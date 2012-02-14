@@ -7,9 +7,8 @@ describe("the bindings on fields with the table editor", function() {
 	loadFixtures("views/lists/_row.html","views/lists/_table.html");
 	ko.applyBindings(dataModel);
   });
-	
       describe("basic binding is occuring and values are set correctly", function() {
-	    it("marks the textarea with the date class", function() {
+		it("marks the textarea with the date class", function() {
 	      expect($('textarea.date').length).toEqual(rows().length);
 	    });
 		it("renders date values in toDateString val", function() {
@@ -41,7 +40,7 @@ describe("the bindings on fields with the table editor", function() {
 				expect( $('.data:first') ).toHaveValue('--');
 			});
 			it("opens to dataModel.current this month if blank", function() {
-				expect($('.ui-datepicker-month') ).toHaveText( $.datepicker._defaults.monthNames[t.getMonth()] );
+				expect( $('.ui-datepicker-month') ).toHaveText( $.datepicker._defaults.monthNames[t.getMonth()] );
 				expect($('.ui-datepicker-year') ).toHaveText( t.getFullYear() );
 			});
 			it("highlights today", function() {
@@ -53,7 +52,7 @@ describe("the bindings on fields with the table editor", function() {
 				press.ctrlKey = false, 
 					press.keyCode = 40;
 				$('.data:first').trigger(press);
-			  expect( new Date(rows()[0][field_1.to_param]()).getDate() ).toEqual( t.getDate() - 1 );
+			  expect( new Date( rows()[0][field_1.to_param]()).getDate() ).toEqual( t.getDate() - 1 );
 			});
 			it("presses down button date forward", function() {
 				var press = $.Event("keydown");
@@ -100,6 +99,7 @@ describe("the bindings on fields with the table editor", function() {
 		});
 	  });
 });
+
 //  Commented out till the new row can be re-thought through
 
 // describe("the bindings on fields with the newRow editor", function() {

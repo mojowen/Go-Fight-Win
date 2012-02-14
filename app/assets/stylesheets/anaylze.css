@@ -1,0 +1,43 @@
+div.view_title {
+	margin: 0 0 30px;
+}
+div.view_title h2.unsaved {
+	color: #ddd;
+}
+div.section {
+	margin: 20px 0;
+	min-height: 50px;
+}
+div.section h3 {
+	clear: both;
+}
+
+div.section span.add {
+	font-weight: bold;
+	font-size: 14px;
+	display: block;
+	border-radius: 15px;
+	padding: 4px 10px;
+	width: 100px;
+	margin: 40px auto;
+	text-align: center;
+	color: #747474;
+	border: 1px solid #ddd;
+}
+div.section span.add:hover {
+	background-color: #226;
+	color: #fff;
+}
+div.section div.subsection {
+	margin: 20px 0;
+	padding: 10px;
+	border: 2px solid #ddd;
+	border-radius: 15px;
+}
+div.section em {
+	font-size: 10px;
+	color: #747474;
+}
+div.section .remove {
+	float: right;
+}
