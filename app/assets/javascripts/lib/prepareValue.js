@@ -25,7 +25,7 @@ function prepareValue (value, field_type, args) {
 				break;
 		}
 	}
-	
+
 	if( !args['no_ko'] ) { return ko.observable(returning); }
 	else { return returning; }
 	

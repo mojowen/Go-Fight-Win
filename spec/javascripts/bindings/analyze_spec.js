@@ -21,7 +21,6 @@ describe("Analyze page bindings", function() {
 		$('.filter .remove').click();
 		expect(  dataModel.current.view().filters().length ).toEqual(0);
 	  });
-	  
 
 	});
 });

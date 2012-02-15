@@ -43,6 +43,7 @@ th.cell.number {
 /** Select **/
 .editor tr td.cell select {
 	width: 100px;
+	text-indent: 6px;
 }
 
 th.cell.select {

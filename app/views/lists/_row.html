@@ -28,7 +28,7 @@
 	<div class="number_controls field_controller"><span class="number_up">&#x2191;</span><span class="number_down">&#x2193;</span></div>
 </script>
 <script type="text/html" id="rowselect">
-	<select data-bind="value: $parent[$data.to_param], options: [''].concat($data.field_options)" class="data"></select>
+	<select data-bind="value: $parent[$data.to_param], options: ['--'].concat($data.field_options)" class="data"></select>
 </script>
 <script type="text/html" id="rowdate">
 	<textarea class="date has_controls data" spellcheck="false" data-bind="datepicker: $parent[$data.to_param](), valueUpdate: 'afterkeydown'"></textarea>	

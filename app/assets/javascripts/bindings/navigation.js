@@ -3,7 +3,8 @@ appDataModel.navigation = function() {
 		click: function(e) {
 			var $this = $(this);
 			e.preventDefault();
-			dataModel.current.state($this.text().toLowerCase())
+			dataModel.current.state($this.text().toLowerCase());
+			$(document).scrollTop(0);
 		}
 	});
 }
