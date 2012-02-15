@@ -4,45 +4,52 @@ function filterer (filters, _rows, flat_fields) {
 		var passes = true;
 		for( var i = 0; i < filters.length; i++ ) {
 			var field = filters[i].field(), operator = filters[i].operator(), filter = filters[i].filter();
-			if ( typeof field != 'undefined' && flat_fields.indexOf(field) > -1 ) {
+			if ( typeof field != 'undefined' && filters[i].obj() != undefined ) {
 				var value = row[ field ]();
 				value = value == undefined ? '' : value;
+				filter = prepareValue(filter, filters[i].obj().field_type, {no_ko: true});
 				if( operator.trim() != 'is' ) {
 					operator = operator.replace('is ','').trim();
 				} else {
 					operator = operator.trim();
 				}
 				if( filter != undefined ) {
-					switch(operator) {
-						case 'is' || 'equal' || 'equals' || '=' || '==':
+					switch(true) {
+						case (operator == 'is' || operator == 'equal' || operator == 'equals' || operator == '=' || operator == '=='):
 							passes = value == filter  && passes;
 							break;
-						case 'not' || "isn't" || 'not equal' || '<>' || '!=':
+						case (operator == 'not' || operator ==  'not equal' || operator ==  '<>' || operator ==  '!='):
 							passes = value != filter  && passes;
 							break;
-						case 'greater than' || 'more than' || 'after' || 'bigger than' || '>':
+						case (operator == 'greater than' || operator ==  'more than' || operator ==  'bigger than' || operator ==  '>'):
 							passes = value > filter && passes;
 							break;
-						case 'greater than or equal' || 'more than or equal' || 'at or after' || 'bigger than or equal' || '>=':
+						case (operator == 'greater than or equal' || operator ==  'more than or equal' || operator ==  'after' || operator ==  'bigger than or equal' || operator ==  '>='):
 							passes = value >= filter && passes;
 							break;
-						case 'less than' || 'fewer than' || 'before or equal' || 'smaller than' || '<':
+						case (operator == 'less than' || operator ==  'fewer than' || operator ==  'smaller than' || operator ==  '<'):
 							passes = value < filter && passes;
 							break;
-						case 'less than or equal' || 'fewer than or equal' || 'at or before' || 'smaller than or equal' || '<=':
+						case (operator == 'less than or equal' || operator ==  'fewer than or equal' || operator ==  'before' || operator ==  'smaller than or equal' || operator ==  '<='):
 							passes = value <= filter && passes;
 							break;
-						case 'ends with':
+						case (operator == 'ends with'):
 							passes = value.slice(-[filter.length]) == filter && passes;
 							break;
-						case 'starts with' || 'begins with':
+						case (operator == 'starts with' || operator ==  'begins with'):
 							passes = value.slice(0,[filter.length]) == filter && passes;
 							break;
-						case 'contains' || 'has' || 'includes':
-							passes = value.search(filter) !== -1 && passes;
+						case (operator == 'contains' || operator ==  'has' || operator ==  'includes'):
+							passes = value.toString().search(filter) !== -1 && passes;
 							break;
-						case 'does not contain' || 'does not include' || 'does not have':
-							passes = value.search(filter) === -1 && passes;
+						case (operator == 'does not contain' || operator ==  'does not include' || operator ==  'does not have'):
+							passes = value.toString().search(filter) === -1 && passes;
+							break;
+						case (operator == 'empty' || operator ==  'blank' ):
+							passes = (value == '' || value == '--') && passes;
+							break;
+						case (operator == 'not empty' || operator ==  'not blank'):
+							passes = (value != '' && value != '--') && passes;
 							break;
 						default:
 							passes = passes;
