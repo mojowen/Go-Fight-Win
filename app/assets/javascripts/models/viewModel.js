@@ -120,6 +120,8 @@ function viewModel( data ) {
 			this.filters.push( new filterModel( view.filters ) );
 		}
 	} 
+
+
 // Grouping
 	this.groups = ko.observableArray([]);
 	this.addGroup = function(group) {
@@ -315,9 +317,9 @@ function viewModel( data ) {
 	this._flatten = function(return_type) {
 		var returnable = new Object;
 		returnable.name = this.name,
-			returnable.id = this.id,
-			returnable.report_on = this.reportOn,
-			returnable.pivot = this.groups.pivot();
+			returnable.id = this.id;
+//			returnable.report_on = this.reportOn,
+//			returnable.pivot = this.groups.pivot();
 
 		if( typeof this._destroy != 'undefined' ) { returnable._destroy = true; }
 
@@ -328,7 +330,7 @@ function viewModel( data ) {
 		}
 		if( typeof this.groups == 'function' ) { returnable.groups = this.groups().filter(function(elem){ return elem.field() != '' && elem.field() != undefined }); } else { returnable.groups = this.groups.filter(function(elem){ return elem.field != '' }); }
 		if( typeof this.sorts == 'function' ) { returnable.sorts = this.sorts().filter(function(elem){ return elem.field() != '' && elem.field() != undefined }); } else { returnable.sorts = this.sorts.filter(function(elem){ return elem.field != '' }); }
-		if( typeof this.filters == 'function' ){ returnable.filters = this.filters().filter(function(elem){ return elem.field() != '' && elem.field() != undefined });} else { returnable.filters = this.filters.filter(function(elem){ return elem.field != '' }); }
+		returnable.filters = _flatten( this.filters() );
 
 		if( return_type == 'json' ) {return ko.toJSON( returnable );}
 		else { return ko.toJS( returnable ); }
@@ -337,4 +339,12 @@ function viewModel( data ) {
 	this.dirtyFlag = new ko.dirtyFlag(this, initDirty);
 
 	return this;
+	
+	function _flatten(flattener) {
+		var returning = []
+		for (var i=0; i < flattener.length; i++) {
+			returning.push( flattener[i]._flatten() );
+		};
+		return returning;
+	}
 }

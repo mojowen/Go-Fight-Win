@@ -44,6 +44,11 @@ function filterModel(data) {
 		var operator = me.operator();
 		return operator != 'empty' &&  operator != 'not empty';
 	});
+	this._flatten = function() {
+		var returning = ko.toJS(this);
+		returning.obj = null;
+		return returning;
+	}
 	
 	return this;
 }

@@ -19,7 +19,7 @@ ko.dirtyFlag = function(root, isInitiallyDirty) {
 		}
     };
 	result.undo = function() {
-		// console.log(_initialState());
+		return _initialState();
 	}
 
     return result;

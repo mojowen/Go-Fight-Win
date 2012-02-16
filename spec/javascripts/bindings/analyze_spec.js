@@ -1,7 +1,7 @@
 describe("Analyze page bindings", function() {
 	beforeEach(function() {
 		factoryList();
-		loadFixtures("views/lists/_analyze.html","views/lists/_groupedRow.html","views/lists/_grouped.html","views/lists/_graph.html","views/lists/_filter.html");
+		loadFixtures("views/lists/_analyze.html.erb","views/lists/_groupedRow.html","views/lists/_grouped.html","views/lists/_graph.html","views/lists/_filter.html");
 		ko.applyBindings(dataModel);
 		setBindings();
 	});

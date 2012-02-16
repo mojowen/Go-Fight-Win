@@ -1,34 +1,4 @@
-<div >
-	<h2 class=>+Views</h2>
-
-	<span class="new_view">+Add</span>
-	<!-- ko foreach: views -->
-		<span class="view" data-bind="text: $data.name, css: { 'current_view': dataModel.current.view() == $data, 'unsaved': $data.dirtyFlag.isDirty() }"></span>
-		(<span class="remove_view">–</span>)
-	<!-- /ko -->
-</div>
-
-<div id="goal">
-	<h2 class="goal_open" >+Goal</h2>
-	<div id="goal_box">
-
-		<input data-bind="
-			value: dataModel.current.view().goal().value,
-			valueUpdate: 'afterkeydown'
-			">
-		<select data-bind="
-			value: dataModel.current.view().goal().field,
-			options: viewModel.pivotedRows(),
-			optionsText: 'long_label',
-			optionsCaption: '-- set goal'
-			"></select>
-			(<span class="clickable goal_clear">–</span>)
-	</div>
-</div>
-
-<div id="group" class="area">
-	<h2>+Groups</h2>
-
+<div class="group">
 	<div id="available_groups" data-bind="if: dataModel.current.view().groups().length > 0, visible: dataModel.current.view().groups().length > 0">
 
 		<p>
@@ -38,12 +8,12 @@
 		<!-- ko foreach: dataModel.current.view().groups() -->
 			<div class="added_group">
 				<span data-bind="text: $data.name "></span>&nbsp;&nbsp;&nbsp;&nbsp;(<span class="remove_group clickable">–</span>)
-				
+			
 				<select data-bind="value: $data.option, options: $data.options, visible: $data.options.length > 0"></select>
 			</div>
 		<!-- /ko -->
 	</div>
-	
+
 	<div id="available_groups" data-bind="if: viewModel.availableGroups().length > 0, visible: viewModel.availableGroups().length > 0">
 		<p>
 			<em>click to group</em>
@@ -54,6 +24,7 @@
 
 		<!-- /ko -->
 	</div>
+
 	<div class="menu" data-bind="visible: dataModel.current.view().groups().length == 2">
 		<input type="checkbox" data-bind="checked: dataModel.current.view().groups.pivot, visible: dataModel.current.view().groups().length == 2">
 		<span data-bind="visible: dataModel.current.view().groups().length == 2" >pivot</span>
@@ -72,7 +43,7 @@
 			visible: dataModel.current.view().groups.pivot"></select>
 		<!-- /ko -->
 	</div>
-<!-- css: {'group_field': $data.constructor.name == 'fieldModel', 'clickable' : dataModel.current.view().groups().length <= 2 } -->
+	<!-- css: {'group_field': $data.constructor.name == 'fieldModel', 'clickable' : dataModel.current.view().groups().length <= 2 } -->
 	<table id="grouped_table" border="0" cellspacing="5" cellpadding="5" data-bind="visible: dataModel.current.view().groups.on">
 		<thead>
 			<tr>

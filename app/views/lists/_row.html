@@ -45,6 +45,9 @@
 		<a target="_blank" class="child_row" data-bind="text: $data.name, attr: {'href': $data.address }"></a>
 	</div>	
 </script>
+<script type="text/html" id="rowblock">
+	<textarea data-bind="value: $parent[$data.to_param], valueUpdate: 'afterkeydown'" class="data block"></textarea>
+</script>
 
 <script type="text/html" id="newRowMenu">
 	<span class="add clickable">Add</span>

@@ -1,5 +1,9 @@
+#table {
+	overflow-x: scroll;
+	margin-top: 30px;
+}
 #scrolling {
-	overflow: auto; 
+	overflow-y: scroll; 
 	height: 508px;
 }
 h2.view_title {
@@ -13,4 +17,7 @@ h2.view_title {
     -ms-user-select: none;
     -o-user-select: none;
     user-select: none;
+}
+#new_rows {
+	overflow: scroll;
 }

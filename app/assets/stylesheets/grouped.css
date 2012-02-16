@@ -1,25 +1,8 @@
 /** Grouping **/
-#group {
-	margin: 30px 0;
-}
-#group h2 {
-	float: left;
-	margin: 0 30px;
-}
-#group .menu {
-	padding: 40px 0 0 0;
-	margin: 0 0 40px 100px;
-	clear: both;
-	font-size: 16px;
-	color: #747474;
-	font-weight: bold;
-}
 
 h2.groups_full { cursor: default; text-decoration: none; color: #747474}
 
-table#grouped_table {
-	margin: 0 100px;
-}
+.group { width: 70%; margin: 0 auto;}
 
 table#grouped_table tbody tr.total td:first-child {
 	font: italic;
@@ -52,7 +35,6 @@ table#grouped_table tbody tr.total td:first-child {
 }
 
 #available_groups {
-	margin: 50px 0 50px 100px;
 	clear: both;
 }
 
@@ -83,6 +65,7 @@ table#grouped_table {
 	padding: 4px;
 	text-align: center;
 	font-size: 14px;
+	margin: 30px 2px;
 }
 
 table#grouped_table td {

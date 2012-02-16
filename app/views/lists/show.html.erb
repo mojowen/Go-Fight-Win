@@ -13,9 +13,11 @@
 <% end %>
 
 	<div id="data" data-bind="visible: !current.view().groups.on()" >
+		<h2 class="view_title">Your Data</h2>
 		<div id="table" class="table">
 			<%= render :partial => 'table' %>
 		</div>
+		<h2 data-bind="text: '+New Row'+newRows.plurl()"></h2>
 		<div id="new_rows" class="table">
 			<%= render :partial => 'newRow' %>
 		</div>

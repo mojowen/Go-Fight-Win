@@ -5,6 +5,19 @@ function appDataModel() {
 	fields = ko.observableArray([]),
 	views = ko.observableArray([]),
 	saving = ko.observable(true);
+	fields.width = ko.computed( function() {
+		computed = 0;
+		for (var i=0; i < fields().length; i++) {
+			switch(fields()[i].field_type) {
+				case 'date':
+					computed += 180;
+				default:
+					computed += 130;
+					break;
+			}
+		};
+		return computed;
+	});
 	
 	this.loaded = false,
 	this.current = {

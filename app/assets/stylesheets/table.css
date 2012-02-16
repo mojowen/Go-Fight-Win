@@ -136,9 +136,9 @@ th {
 	vertical-align: bottom;
 }
 th.cell {
-	width: 112px;
+	width: 118px;
 }
-thead tr {
+thead tr th {
 	border-bottom: 2px solid #747474;
 }
 
@@ -147,10 +147,14 @@ td.rownum, th.rownum {
 	color: #747474;
 	text-align: right;
 }
+th.rowend {
+	width: 56px;
+	border-bottom: none;
+}
 .editor tr.hovered td.rownum, .editor tr.hovered td.menu {
 	background-color: #fff;
-	font-weight: bold;
-	color: #333;
+	color: #000;
+	text-decoration: underline;
 }
 th.rownum {
 	border-bottom: 2px solid white;

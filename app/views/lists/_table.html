@@ -1,9 +1,7 @@
-
-<h2 class="view_title">Your Data</h2>
 <p class="filters" data-bind="visible: dataModel.current.view().filters().length > 0" >
 	<em><input type="checkbox" data-bind="checked: dataModel.current.filtered"> Filtered</em>
 </p>
-<table border="0" cellspacing="5" cellpadding="5" class="editor grid">
+<table border="0" cellspacing="5" cellpadding="5" class="editor grid" data-bind="style: {width: fields.width()+'px'}">
 	<thead>
 		<tr>
 			<th class="rownum" ></th>
@@ -12,13 +10,14 @@
 				<span class="clickable" data-bind="text: $data.name"></span>
 			</th>
 			<!-- /ko -->
+			<th class="rowend"></th>
 		</tr>
 	</thead>
 </table>
 
-<div id="scrolling">
-	<div id="viewport" data-bind="style: {height: ((dataModel.rowSize()-current.view().start())*26)+'px', paddingTop: (dataModel.current.view().start()*26)+'px'}">
-		<table border="0" cellspacing="5" cellpadding="5" class="editor grid">
+<div id="scrolling" data-bind="style: {width: fields.width()+'px'}">
+	<div id="viewport" data-bind="style: { height: ((dataModel.rowSize()-current.view().start())*26)+'px', paddingTop: (dataModel.current.view().start()*26)+'px'}">
+		<table border="0" cellspacing="5" cellpadding="5" class="editor grid"  data-bind="style: {width: (fields.width()-10)+'px'}">
 			<tbody id="edit_rows" data-bind="template: {name: 'row', foreach: viewModel.renderingRows }">
 			</tbody>
 		</table>
