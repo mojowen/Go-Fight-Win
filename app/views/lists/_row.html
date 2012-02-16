@@ -30,6 +30,9 @@
 <script type="text/html" id="rowselect">
 	<select data-bind="value: $parent[$data.to_param], options: ['--'].concat($data.field_options)" class="data"></select>
 </script>
+<script type="text/html" id="rowmulti-select">
+	<select multiple="true" data-bind="selectedOptions: $parent[$data.to_param], options: ['--'].concat($data.field_options)" class="data"></select>
+</script>
 <script type="text/html" id="rowdate">
 	<textarea class="date has_controls data" spellcheck="false" data-bind="datepicker: $parent[$data.to_param](), valueUpdate: 'afterkeydown'"></textarea>	
 	<div class="date_controls field_controller"><span class="cal">&#x1f4c5;</span><div class="date_picker"></div></div>

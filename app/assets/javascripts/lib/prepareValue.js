@@ -14,6 +14,11 @@ function prepareValue (value, field_type, args) {
 				break;
 			case 'select':
 				returning = value.toLowerCase();
+				break;
+			//Attempt at doing multi-select. Styling challenges as well as translating the data
+			case 'multi-select':
+				returning = value.toString().toLowerCase().split(',');
+				break;
 			default:
 				returning = value;
 				break;
