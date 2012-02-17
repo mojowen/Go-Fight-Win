@@ -1,3 +1,6 @@
+<span data-bind="text: dataModel.current.view().start"></span>  -
+<span data-bind="text: dataModel.current.view().now"></span>  -
+<span data-bind="text: dataModel.current.view().end"></span>
 <p class="filters" data-bind="visible: dataModel.current.view().filters().length > 0" >
 	<em><input type="checkbox" data-bind="checked: dataModel.current.filtered"> Filtered</em>
 </p>

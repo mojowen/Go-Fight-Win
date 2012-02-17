@@ -99,7 +99,7 @@ td.ui-datepicker-current-day { border: 1px dashed #333; }
 
 
 .field_controller span:hover, .cal.on {
-	color: #747474;
+	opacity: .6;
 }
 
 

@@ -4,12 +4,6 @@ function viewModel( data ) {
 	if( data.View || data.view ) { var view = data.View || data.view; }
 	else { var view = data }
 
-	// Paging and Visible
-	// var visible = parseInt(data.visible) || 60, paged = parseInt(data.paged) || 0;
-	// if( isNaN(paged) ) { paged = 0; }
-	// if( isNaN(visible) || visible > 200 ) { visible = 60; }
-	// Need to totally rewrite this section
-
 	this.now = ko.observable(0);
 	this.end = ko.observable(30);
 	this.start =  ko.observable(0);
@@ -54,51 +48,6 @@ function viewModel( data ) {
 	this.reset = function() { 
 			this.jump('top');
 		}
-	// this.page = function(loc) {
-	// 	var loc = parseInt(loc);
-	// 	if( isNaN(loc) ) { this.paged(0); return false; }
-	// 	if( loc < 0 ) { 
-	// 		this.paged(0);
-	// 		return false;
-	// 	} else if ( loc > dataModel.rowSize() - this.visible() ) {
-	// 		this.paged( dataModel.rowSize() - this.visible() > 0 ?  dataModel.rowSize() - this.visible() : 0 );
-	// 		return false;
-	// 	} else {
-	// 		this.paged( loc );
-	// 		return true
-	// 	}
-	// }
-
-	// this.top = ko.dependentObservable({ 
-	// 	read: function() {
-	// 		return dataModel.rowSize() < this.visible() ? dataModel.rowSize() : this.visible();
-	// 	},
-	// 	deferEvaluation: true 
-	// }, 
-	// this);
-
-	// this.move = function(dir) {
-	// 	switch(dir) {
-	// 		case 'left' || 'down' :
-	// 			this.page( this.paged() - this.visible() );
-	// 			break;
-	// 		case 'right' || 'up' :
-	// 			this.page( this.paged() + this.visible() );
-	// 			break;
-	// 		case 'start' || 'far left' || 'beginning':
-	// 			this.page(-1);
-	// 			break;
-	// 		case 'end' || 'far right' || 'finish':
-	// 			this.page( rows().length + 1);
-	// 			break;
-	// 	}
-	// }
-	// this.reset = function() {
-	// 	$('#scrolling').scrollTop(0);
-	// 	dataModel.current.view().visible(60);
-	// }
-	// 
-	// this.page(paged);
 
 // Filtering
 	this.filters = ko.observableArray([]);
