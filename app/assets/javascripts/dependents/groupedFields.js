@@ -11,7 +11,7 @@ viewModel.groupedFields = ko.dependentObservable({
 // var d = new Date();
 // console.log('groupedFields: '+(d-t));
 
-		if(  dataModel.current.view().groups.pivot() && typeof viewModel.groupedRows()._uniques[1] != 'undefined' ) { 
+		if(  dataModel.current.view().groups.pivot() && typeof $this.grouped()._uniques[1] != 'undefined' ) { 
 			var _adjusted = [ {name: dataModel.current.view().groups()[0].field(), report: "_val" } ].concat(viewModel.groupedRows()._uniques[1].map( function(elem) { return { name: elem.display, report: 'all' } }) );
 			return  _adjusted.concat( [{name: 'Totals', report: "_val" }] )
 		} else { return _fields; }

@@ -1,6 +1,8 @@
 <script type="text/html" id="groupedRow">
 
+
 	<!-- ko if: typeof $data != 'undefined' -->
+
 
 	<!-- ko if: $data.rows.length !=  0 && !dataModel.current.view().groups.pivot() -->
 			<tr>
@@ -15,7 +17,8 @@
 					<!-- /ko -->
 
 			<tr class="total">
-				<!-- ko foreach: viewModel.groupedFields -->
+				// This is an unfortunate way to call the groupingModel. But because these get nested, it's necessary
+				<!-- ko foreach: $parents.filter(function(el){ return el.constructor.name == 'groupingModel'; })[0].columns -->
 					<!-- ko if: $data.name == $parent._field -->
 					<td colspan="2">
 						TOTAL:
@@ -44,7 +47,9 @@
 			</td>
 			<!-- /ko -->
 
-			<!-- ko foreach: viewModel.groupedFields -->
+			// This is an unfortunate way to call the groupingModel. But because these get nested, it's necessary
+			<!-- ko foreach: $parents.filter(function(el){ return el.constructor.name == 'groupingModel'; })[0].columns -->
+			
 				<!-- ko if: $data.id != undefined -->
 				<td>
 					<!-- ko if: $data.report().name != dataModel.current.view().goal.field() || !dataModel.current.view().goal.label() -->

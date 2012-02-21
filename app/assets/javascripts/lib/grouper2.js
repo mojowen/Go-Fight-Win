@@ -1,5 +1,5 @@
-function grouper (_rows) {
-	var groups = ko.toJS(dataModel.current.view().groups());
+function grouper (_rows, groups) {
+	var groups = typeof groups == 'undefined' ? ko.toJS(dataModel.current.view().groups()) : groups;
 
 	var grouped = { rows: [] }, uniques = [];
 
@@ -22,7 +22,7 @@ function grouper (_rows) {
 			var field = groups[ii]['field'], 
 				value = typeof row[ field ] == 'function' ? row[ field ]() : row[ field ],
 				options = groups[ii]['options'],
-				option = dataModel.current.view().groups()[ii]['option'](),
+				option = groups[ii]['option'],
 				field_type = groups[ii]['field_type'];
 			if( value == '' || value == 'null' ) { value = '--'; }
 			if( value.constructor.name == 'Date' ) { value = (value.getMonth()+1)+'/'+value.getDate()+'/'+value.getFullYear().toString().slice(-2); }

@@ -4,7 +4,10 @@ h2.groups_full { cursor: default; text-decoration: none; color: #747474}
 
 .group { width: 70%; margin: 0 auto;}
 
-table#grouped_table tbody tr.total td:first-child {
+table.grouped_table th {
+	border-bottom: 0;
+}
+table.grouped_table tbody tr.total td:first-child {
 	font: italic;
 	text-align: right;
 	border: none;
@@ -61,24 +64,24 @@ table#grouped_table tbody tr.total td:first-child {
 	display: block;
 }
 
-table#grouped_table {
+table.grouped_table {
 	padding: 4px;
 	text-align: center;
 	font-size: 14px;
 	margin: 30px 2px;
 }
 
-table#grouped_table td {
+table.grouped_table td {
 	border: #ddd 2px solid;
 }
 
 
-table#grouped_table td.label {
+table.grouped_table td.label {
 	border: #fff 2px solid;
 	border-right: #ddd 2px solid;
 	font-weight: bold;
 }
 
-table#grouped_table tfoot td, table#grouped_table td.total {
+table.grouped_table tfoot td, table.grouped_table td.total {
 	border: #fff 2px solid;
 }

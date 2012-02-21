@@ -73,21 +73,24 @@ function viewModel( data ) {
 
 // Grouping
 	this.groups = ko.observableArray([]);
-	this.addGroup = function(group) {
-		group = typeof group == 'undefined' ? '' : group
-		this.groups.push( new groupModel( group ) );
+	this.groupings = ko.observableArray([]);
+
+	this.addGrouping = function() {
+		this.groupings.push( new groupingModel() )
 	}
+
 	if( typeof view.groups != 'undefined' && view.groups != null ) {
 		if( typeof view.groups == 'object' ) {
 			var t_groups = [];
 			for (var i in view.groups) {
-				t_groups.push( new groupModel( view.groups[i] ) );
+				t_groups.push( new groupingModel( view.groups[i] ) );
 			};
-			this.groups(t_groups);
+			this.groupings(t_groups);
 		} else if ( typeof view.groups == 'string' ) {
-			this.groups.push( new groupModel( view.groups ) );
+			this.groupings.push( new groupingModel( view.groups ) );
 		}
-	} 
+	}
+
 
 	var pivot = typeof view.pivot == 'undefined' ? false : view.pivot;
 	this.groups.pivot = ko.observable(pivot);
