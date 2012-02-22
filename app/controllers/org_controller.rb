@@ -5,7 +5,7 @@ class OrgController < ApplicationController
 
   def show
     @org = Org.find_smart( params[:org_id] || params[:org_name], :include => :memberships )
-    @invites = @org.memberships.select{ |m| m.approved? && m.user_id.nil? && !m.invite_token.nil? }
+    @invites = @org.memberships.select{ |m| m.approved? && m.user_id.nil? && !m.invite_token.nil? } unlesss @org.nil?
 
     authorize! :show, @org, :message => 'You don\'t have access to that Org'
   end
