@@ -1,10 +1,9 @@
 <script type="text/html" id="groupedRow">
 
-
 	<!-- ko if: typeof $data != 'undefined' -->
 
 
-	<!-- ko if: $data.rows.length !=  0 && !dataModel.current.view().groups.pivot() -->
+	<!-- ko if: $data.rows.length !=  0 && !$parent.pivot() -->
 			<tr>
 				<!-- ko if: typeof $data._value != 'undefined' -->
 				<td class="label label_first" data-bind="attr: {'rowspan': $data.rows.filter(function(elem) { return elem != undefined; }).length + 1 } ">
@@ -13,11 +12,11 @@
 				<!-- /ko -->
 			</tr>
 
-					<!-- ko template: {name: 'groupedRow', foreach: $data.rows} -->
-					<!-- /ko -->
+					<!-- ko template: {name: 'groupedRow', foreach: $data.rows}, groups: $parent --><!-- /ko -->
 
 			<tr class="total">
-				// This is an unfortunate way to call the groupingModel. But because these get nested, it's necessary
+				// The $data object refers to the particular grouped row we're iterating through. And I've cheated and hid the parent $grouping model using the
+				// group binding in each element
 				<!-- ko foreach: $parents.filter(function(el){ return el.constructor.name == 'groupingModel'; })[0].columns -->
 					<!-- ko if: $data.name == $parent._field -->
 					<td colspan="2">
@@ -38,7 +37,7 @@
 			</tr>
 	<!-- /ko -->
 
-	<!-- ko if: $data.rows.length ==  0 || dataModel.current.view().groups.pivot() -->
+	<!-- ko if: $data.rows.length ==  0 || $parent.pivot() -->
 		<tr>
 
 			<!-- ko if: typeof $data._value != 'undefined' -->
@@ -48,7 +47,8 @@
 			<!-- /ko -->
 
 			// This is an unfortunate way to call the groupingModel. But because these get nested, it's necessary
-			<!-- ko foreach: $parents.filter(function(el){ return el.constructor.name == 'groupingModel'; })[0].columns -->
+			<!-- ko if: console.log($data) --><!-- /ko -->
+			<!-- ko foreach: $data.$grouping.columns -->
 			
 				<!-- ko if: $data.id != undefined -->
 				<td>
@@ -60,16 +60,15 @@
 					<!-- /ko -->
 				</td>
 				<!-- /ko -->
-
-				<!-- ko if: $data.report == 'all' && dataModel.current.view().groups.pivot() -->
+				<!-- ko if: $data.report == 'all' && $parents.filter(function(el){ return el.constructor.name == 'groupingModel'; })[0].pivot() -->
 				<td>
-						<!-- ko if: $parent.rows[viewModel.groupedFields().indexOf($data)-1] != undefined && dataModel.current.view().reportOn() != undefined -->
+						<!-- ko if: $parent.rows[ $parent.$grouping.columns().indexOf($data)-1] != undefined && dataModel.current.view().reportOn() != undefined -->
 							
 						<!-- ko if: dataModel.current.view().reportOn().label != 'goal' -->
-							<span data-bind="text: $parent.rows[viewModel.groupedFields().indexOf($data)-1][current.view().reportOn().name][current.view().reportOn().report] "></span>
+							<span data-bind="text: $parent.rows[ $parent.$grouping.columns().indexOf($data)-1][current.view().reportOn().name][current.view().reportOn().report] "></span>
 						<!-- /ko -->
 						<!-- ko if: dataModel.current.view().reportOn().label == 'goal' -->
-							<span data-bind="text: ( $parent.rows[viewModel.groupedFields().indexOf($data)-1][current.view().reportOn().name][current.view().reportOn().report] + '/' + dataModel.current.view().goal().value() + ' (' + Math.round($parent.rows[viewModel.groupedFields().indexOf($data)-1][current.view().reportOn().name][current.view().reportOn().report] / dataModel.current.view().goal().value() * 1000 ) / 10 ) + '%)' "></span>
+							<span data-bind="text: ( $parent.rows[ $parent.$grouping.columns().indexOf($data)-1][current.view().reportOn().name][current.view().reportOn().report] + '/' + dataModel.current.view().goal().value() + ' (' + Math.round($parent.rows[viewModel.groupedFields().indexOf($data)-1][current.view().reportOn().name][current.view().reportOn().report] / dataModel.current.view().goal().value() * 1000 ) / 10 ) + '%)' "></span>
 						<!-- /ko -->
 						
 						<!-- /ko -->

@@ -30,3 +30,18 @@ appDataModel.groups_template = function(argument) {
 		dataModel.current.view().groups.pivot(false)
 	});
 }
+ko.bindingHandlers.groups = {
+	init: function(element, valueAccessor, allBindingsAccessor) { 
+		var bindings = allBindingsAccessor()
+		for (var i = allBindingsAccessor().template.foreach.length - 1; i >= 0; i--){
+			console.log(bindings.template.foreach[i]);
+			bindings.template.foreach[i]['$grouping'] = bindings.groups
+		};
+ 	}
+ 	// ,
+ 	// update: function(element, valueAccessor, allBindingsAccessor) { 
+ 	// 	
+ 	// }
+};
+// Let's us use with virtual elements
+ko.allowedVirtualElementBindings.groups = true;

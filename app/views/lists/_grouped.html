@@ -27,7 +27,7 @@
 		</div>
 
 		<div class="menu" data-bind="visible: $data.groups().length == 2">
-			<input type="checkbox" data-bind="checked: $data.groups.pivot, visible: $data.groups().length == 2">
+			<input type="checkbox" data-bind="checked: $data.pivot, visible: $data.groups().length == 2">
 			<span data-bind="visible: $data.groups().length == 2" >pivot</span>
 
 			<span data-bind="visible: dataModel.current.view().groups.pivot()">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
@@ -70,16 +70,16 @@
 				</tr>
 			</thead>
 
-				<tbody data-bind="template: {name: 'groupedRow', foreach: $data.grouped().rows}" ></tbody>
+				<tbody data-bind="template: {name: 'groupedRow', foreach: $data.grouped().rows}, groups: $data" ></tbody>
 
 			<tfoot>
 				<tr>
 					<!-- ko foreach: $data.columns -->
 						<td>
-							<!-- ko if: $data.report != '_val' && !dataModel.current.view().groups.pivot() && $data.report() != undefined -->
+							<!-- ko if: $data.report != '_val' && !$parent.pivot() && $data.report() != undefined -->
 									<span data-bind="text: $parent.grouped()[$data.to_param][$data.report().report]"></span>
 							<!-- /ko -->
-							<!-- ko if: $data.report == 'all' && dataModel.current.view().groups.pivot() && dataModel.current.view().reportOn() != undefined -->
+							<!-- ko if: $data.report == 'all' && $parent.pivot() && dataModel.current.view().reportOn() != undefined -->
 									<span data-bind="text: $parent.grouped()._uniques[1][viewModel.groupedFields().indexOf($data)-1][current.view().reportOn().name][current.view().reportOn().report]"></span>
 							<!-- /ko -->
 

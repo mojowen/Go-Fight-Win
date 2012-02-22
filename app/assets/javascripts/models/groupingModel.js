@@ -34,7 +34,7 @@ function groupingModel(data) {
 		_fields = grouped_fields.map(function(elem) { return {name: elem, report: "_val" }; })
 			.concat(_fields.filter(function(elem) { return  grouped_fields.indexOf(elem.to_param) === -1 && elem.fieldReports().length > 0; }));
 		if(  $this.pivot() && typeof $this.grouped()._uniques[1] != 'undefined' ) { 
-			var _adjusted = [ {name: groups[0].field(), report: "_val" } ].concat($this.grouped()._uniques[1].map( function(elem) { return { name: elem.display, report: 'all' } }) );
+			var _adjusted = [ {name: groups[0].field, report: "_val" } ].concat($this.grouped()._uniques[1].map( function(elem) { return { name: elem.display, report: 'all' } }) );
 			return  _adjusted.concat( [{name: 'Totals', report: "_val" }] )
 		} else { return _fields; }
 
@@ -54,6 +54,6 @@ function groupingModel(data) {
 			return [];
 		}
 	})
-
+	this.$grouping = this;
 	return this;
 }
