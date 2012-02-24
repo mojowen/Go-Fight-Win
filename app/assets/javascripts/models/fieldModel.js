@@ -40,15 +40,15 @@ function fieldModel(data) {
 				}
 			} else {
 
-				options.push( {label: 'count', name: field.name, report: 'count' } );
-				options.push( {label: 'unique', name: field.name, report: 'unique' } );
+				options.push( {label: 'count', name: field.name, report: 'count', id: this.id } );
+				options.push( {label: 'unique', name: field.name, report: 'unique', id: this.id } );
 
 				switch(field.field_type) {
 					case 'number': 
-						options.push( {label: 'sum', name: field.name, report: 'sum' } );
-						options.push( {label: 'avg', name: field.name, report: 'average' } );
-						options.push( {label: 'max', name: field.name, report: 'max' } );
-						options.push( {label: 'min', name: field.name, report: 'min' } );
+						options.push( {label: 'sum', name: field.name, report: 'sum', id: this.id } );
+						options.push( {label: 'avg', name: field.name, report: 'average', id: this.id } );
+						options.push( {label: 'max', name: field.name, report: 'max', id: this.id } );
+						options.push( {label: 'min', name: field.name, report: 'min', id: this.id } );
 						break;
 					default:
 						break;
@@ -65,7 +65,7 @@ function fieldModel(data) {
 	}, 
 	this);
 
-	this.report = ko.observable( {label: 'count', name: field.name, report: 'count', long_label: 'count: '+this.name } );
+	this.report = {label: 'count', name: field.name, report: 'count', long_label: 'count: '+this.name };
 
 	return this;
 }

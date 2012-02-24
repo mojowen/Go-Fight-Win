@@ -78,18 +78,13 @@ function viewModel( data ) {
 	this.addGrouping = function() {
 		this.groupings.push( new groupingModel() )
 	}
-
 	if( typeof view.groups != 'undefined' && view.groups != null ) {
-		if( typeof view.groups == 'object' ) {
-			var t_groups = [];
-			for (var i in view.groups) {
-				t_groups.push( new groupingModel( view.groups[i] ) );
-			};
-			this.groupings(t_groups);
-		} else if ( typeof view.groups == 'string' ) {
-			this.groupings.push( new groupingModel( view.groups ) );
-		}
-	}
+		var t_groups = [];
+		for (var i in view.groups) {
+			t_groups.push( new groupingModel( view.groups[i] ) );
+		};
+		this.groupings(t_groups);
+	} 
 
 
 	var pivot = typeof view.pivot == 'undefined' ? false : view.pivot;
@@ -280,9 +275,10 @@ function viewModel( data ) {
 		} else { 
 			returnable.goal = this.goal.value == '' && ( this.goal.field == '' ||  this.goal.field == undefined ) ? '' : this.goal;
 		}
-		if( typeof this.groups == 'function' ) { returnable.groups = this.groups().filter(function(elem){ return elem.field() != '' && elem.field() != undefined }); } else { returnable.groups = this.groups.filter(function(elem){ return elem.field != '' }); }
+
 		if( typeof this.sorts == 'function' ) { returnable.sorts = this.sorts().filter(function(elem){ return elem.field() != '' && elem.field() != undefined }); } else { returnable.sorts = this.sorts.filter(function(elem){ return elem.field != '' }); }
 		returnable.filters = _flatten( this.filters() );
+		returnable.groups = _flatten( this.groupings() );
 
 		if( return_type == 'json' ) {return ko.toJSON( returnable );}
 		else { return ko.toJS( returnable ); }

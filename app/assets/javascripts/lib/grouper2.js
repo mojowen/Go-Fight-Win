@@ -1,4 +1,4 @@
-function grouper (_rows, groups) {
+function grouper (_rows, groups, grouping) {
 	var groups = typeof groups == 'undefined' ? ko.toJS(dataModel.current.view().groups()) : groups;
 
 	var grouped = { rows: [] }, uniques = [];
@@ -16,7 +16,7 @@ function grouper (_rows, groups) {
 	for( var i = 0 ; _rows.length > i; i++ ) {
 		var row = _rows[i];
 		grouped = computer(grouped, row);
-		
+
 		var positions = [];
 		for (var ii=0; ii < groups.length; ii++) {
 			var field = groups[ii]['field'], 
@@ -26,7 +26,10 @@ function grouper (_rows, groups) {
 				field_type = groups[ii]['field_type'];
 			if( value == '' || value == 'null' ) { value = '--'; }
 			if( value.constructor.name == 'Date' ) { value = (value.getMonth()+1)+'/'+value.getDate()+'/'+value.getFullYear().toString().slice(-2); }
-			if( field_type == 'children' ) { value = value.map(function(elem){ return elem.name; }).join(', '); }
+			if( field_type == 'children' ) { 
+				value = value == '--' ? [{name:'--'}] : value;
+				value = value.map(function(elem){ return elem.name; }).join(', '); 
+			}
 			if( field_type == 'date' ) {
 				var the_date = new Date(value);
 				if( the_date != 'Invalid Date' ) {
@@ -71,6 +74,7 @@ function grouper (_rows, groups) {
 				nested.rows.push(row);
 			}
 			nested = computer(nested, row);
+			nested.$grouping = grouping;
 		};
 	
 	};

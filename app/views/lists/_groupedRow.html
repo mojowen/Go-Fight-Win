@@ -12,25 +12,24 @@
 				<!-- /ko -->
 			</tr>
 
-					<!-- ko template: {name: 'groupedRow', foreach: $data.rows}, groups: $parent --><!-- /ko -->
+				<!-- ko template: {name: 'groupedRow', foreach: $data.rows, groups: true } --><!-- /ko -->
 
 			<tr class="total">
-				// The $data object refers to the particular grouped row we're iterating through. And I've cheated and hid the parent $grouping model using the
-				// group binding in each element
-				<!-- ko foreach: $parents.filter(function(el){ return el.constructor.name == 'groupingModel'; })[0].columns -->
+
+				// The $data object refers to the particular grouped row we're iterating through. And I've cheated and hid the parent $grouping model using the group binding in each element see groups.js for the custom binding
+				<!-- ko foreach: $parent.columns -->
+
 					<!-- ko if: $data.name == $parent._field -->
+
 					<td colspan="2">
 						TOTAL:
 					</td>
+
 					<!-- /ko -->
+
 					<!-- ko if: $data.constructor.name == 'fieldModel' -->
 					<td>
-						<!-- ko if: $data.report().name != dataModel.current.view().goal.field() || !dataModel.currentcurrent.view().goal.label() -->
 							<span data-bind="text: $parent[$data.to_param][$data.report().report]"></span>
-						<!-- /ko -->
-						<!-- ko if: $data.report().name == dataModel.current.view().goal.field() && dataModel.current.view().goal.label() -->
-							<span data-bind="text: ( $parent[current.view().goal.field()][ dataModel.current.view().goal().field().report] + '/' + dataModel.current.view().goal().value() + ' (' + Math.round($parent[current.view().goal.field()][ dataModel.current.view().goal().field().report] / dataModel.current.view().goal().value() * 1000 ) / 10 ) + '%)' "></span>
-						<!-- /ko -->
 					</td>
 					<!-- /ko -->
 				<!-- /ko -->
@@ -46,48 +45,33 @@
 			</td>
 			<!-- /ko -->
 
-			// This is an unfortunate way to call the groupingModel. But because these get nested, it's necessary
-			<!-- ko if: console.log($data) --><!-- /ko -->
-			<!-- ko foreach: $data.$grouping.columns -->
-			
-				<!-- ko if: $data.id != undefined -->
-				<td>
-					<!-- ko if: $data.report().name != dataModel.current.view().goal.field() || !dataModel.current.view().goal.label() -->
-						<span data-bind="text: $parent[$data.to_param][$data.report().report]"></span>
-					<!-- /ko -->
-					<!-- ko if: $data.report().name == dataModel.current.view().goal.field() && dataModel.current.view().goal.label() -->
-						<span data-bind="text: ( $parent[current.view().goal.field()][ dataModel.current.view().goal().field().report] + '/' + dataModel.current.view().goal().value() + ' (' + Math.round($parent[current.view().goal.field()][ dataModel.current.view().goal().field().report] / dataModel.current.view().goal().value() * 1000 ) / 10 ) + '%)' "></span>
-					<!-- /ko -->
-				</td>
-				<!-- /ko -->
-				<!-- ko if: $data.report == 'all' && $parents.filter(function(el){ return el.constructor.name == 'groupingModel'; })[0].pivot() -->
-				<td>
-						<!-- ko if: $parent.rows[ $parent.$grouping.columns().indexOf($data)-1] != undefined && dataModel.current.view().reportOn() != undefined -->
-							
-						<!-- ko if: dataModel.current.view().reportOn().label != 'goal' -->
-							<span data-bind="text: $parent.rows[ $parent.$grouping.columns().indexOf($data)-1][current.view().reportOn().name][current.view().reportOn().report] "></span>
-						<!-- /ko -->
-						<!-- ko if: dataModel.current.view().reportOn().label == 'goal' -->
-							<span data-bind="text: ( $parent.rows[ $parent.$grouping.columns().indexOf($data)-1][current.view().reportOn().name][current.view().reportOn().report] + '/' + dataModel.current.view().goal().value() + ' (' + Math.round($parent.rows[viewModel.groupedFields().indexOf($data)-1][current.view().reportOn().name][current.view().reportOn().report] / dataModel.current.view().goal().value() * 1000 ) / 10 ) + '%)' "></span>
-						<!-- /ko -->
-						
-						<!-- /ko -->
-				</td>
-				<!-- /ko -->
-				
-				<!-- ko if: $data.name == 'Totals' && dataModel.current.view().reportOn() != undefined -->
-				<td class="total">
-					<!-- ko if: dataModel.current.view().reportOn().label != 'goal' -->
-						<span data-bind="text: $parent[current.view().reportOn().name][current.view().reportOn().report] "></span>
-					<!-- /ko -->
-					<!-- ko if: dataModel.current.view().reportOn().label == 'goal' -->
-						<span data-bind="text: ( $parent[current.view().reportOn().name][current.view().reportOn().report] + '/' + dataModel.current.view().goal().value() + ' (' + Math.round($parent[current.view().reportOn().name][current.view().reportOn().report] / dataModel.current.view().goal().value() * 1000 ) / 10 ) + '%)' "></span>
-					<!-- /ko -->
-					
-				</td>
-				<!-- /ko -->
-				
 
+			<!-- ko if: typeof $data.$grouping != 'undefined' -->
+				// This is an unfortunate way to call the groupingModel. But because these get nested, it's necessary
+				<!-- ko foreach: $data.$grouping.columns -->
+
+					// This is for non-pivoted fields, you know because the column object has an id and therefor is a fieldModel
+					<!-- ko if: $data.id != undefined -->
+					<td>
+						<span data-bind="text: $parent[$data.to_param][$data.report().report]"></span>
+					</td>
+					<!-- /ko -->
+
+					// This is for pivoted data
+					<!-- ko if: $data.report == 'all' && $parent.$grouping.pivot() -->
+					<td>
+						<!-- ko if: $parent.rows.length > 0 -->
+							<span data-bind="text: $parent.rows[ $parent.$grouping.columns().indexOf($data)-1 ][ $parent.$grouping.report().name ][ $parent.$grouping.report().report ] "></span>
+						<!-- /ko -->
+					</td>
+					<!-- /ko -->
+
+					<!-- ko if: $data.name == 'Totals' -->
+					<td class="total">
+						<span data-bind="text: $parent[$parent.$grouping.report().name ][ $parent.$grouping.report().report] "></span>
+					</td>
+					<!-- /ko -->
+				<!-- /ko -->
 			<!-- /ko -->
 		</tr>
 		
