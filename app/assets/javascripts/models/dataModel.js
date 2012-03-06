@@ -6,15 +6,26 @@ function appDataModel() {
 	views = ko.observableArray([]),
 	saving = ko.observable(true);
 	fields.width = ko.computed( function() {
-		computed = 0;
+		computed = 100 + 32; // rownum + rowend
 		for (var i=0; i < fields().length; i++) {
 			switch(fields()[i].field_type) {
 				case 'date':
-					computed += 180;
+					computed += 150;
+					break;
+				case 'select':
+					computed += 102;
+					break;
+				case 'children':
+					computed += 120;
+					break;
+				case 'number':
+					computed += 88;
+					break;
 				default:
-					computed += 130;
+					computed += 122;
 					break;
 			}
+			computed += 2; // for the borders
 		};
 		return computed;
 	});

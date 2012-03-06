@@ -7,7 +7,7 @@
 				<td class="rownum" data-bind="text: rows.indexOf($data) + 1"></td>
 			<!-- /ko -->
 			<!-- ko foreach: fields -->
-			<td class="cell">
+			<td data-bind="attr: {'class': 'cell '+$data.field_type }" >
 				<!-- ko template: {name: 'row'+$data.field_type } -->
 				<!-- /ko -->
 			</td>

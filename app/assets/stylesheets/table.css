@@ -1,3 +1,5 @@
+
+
 /** Views **/
 #current_view {
 	width: 300px;
@@ -135,11 +137,11 @@ th {
 	text-align: center;
 	vertical-align: bottom;
 }
-th.cell {
-	width: 118px;
-}
+
 thead tr th {
 	border-bottom: 2px solid #747474;
+	border-left: 1px solid white;
+	border-right: 1px solid white;
 }
 
 td.rownum, th.rownum {
@@ -147,8 +149,8 @@ td.rownum, th.rownum {
 	color: #747474;
 	text-align: right;
 }
-th.rowend {
-	width: 56px;
+th.rowend, td.menu {
+	width: 100px;
 	border-bottom: none;
 }
 .editor tr.hovered td.rownum, .editor tr.hovered td.menu {
@@ -172,7 +174,7 @@ th.rownum {
 	height: 2em;
 	border: 0;
 	background: none;
-	width: 120px;
+	width: 100px;
 	box-sizing: border-box;
 	-o-box-sizing: border-box;
 	-icab-box-sizing: border-box;

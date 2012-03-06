@@ -12,6 +12,7 @@ class ListsController < ApplicationController
     end
     
     authorize! :show, @list.org, :message => 'You don\'t have access to that List'
+    
 
     @current_view = @list.views.index{|v| v.to_param == params[:view_name] || v.slug == params[:view_slug] }
     @fields = @list.fields
@@ -20,6 +21,19 @@ class ListsController < ApplicationController
     @size = @query[:size]
     @views = @list.views
 
+    unless @list.operators.nil?
+      unless @list.operators[:order].nil?
+        new_fields = []
+        order = @list.operators[:order].class == String ? @list.operators[:order].split(' ') : @list.operators[:order]
+        order.each do |o|
+          int = o.class == String ? o.to_i : o
+          pos = @fields.index{ |f| f.id == int }
+          new_fields.push( @fields.slice(pos) ) unless pos.nil?
+        end
+        @fields = new_fields.concat(@fields)
+      end
+    end
+    
     #TODO: Add some sort of paging function when querying rows via a sort
     authorize! :show, @list.org, :message => 'You don\'t have access to that List'
 

@@ -1,3 +1,20 @@
+/* WIDTHS */
+th.cell.number, td.cell.number {
+	width: 88px;
+}
+th.cell.select, td.cell.select {
+	width: 102px;
+}
+th.cell.date. td.cell.date {
+	width: 150px;
+}
+th.cell.children, td.cell.children {
+	width: 120px;
+}
+
+
+
+/** Other features **/
 .field_controller {
 	margin: -1.4em 8px 0 0;
 	font-size: 18px;
@@ -36,9 +53,6 @@
 	margin-right: 36px;
 }
 
-th.cell.number {
-	width: 78px;
-}
 
 /** Select **/
 .editor tr td.cell select {
@@ -46,20 +60,14 @@ th.cell.number {
 	text-indent: 6px;
 }
 
-th.cell.select {
-	width: 88px;
-}
 
 /** Date picker specific **/
 .date_picker {
 	display: none;
 }
 
-th.cell.date {
-	width: 161px;
-}
 .editor tr td.cell textarea.date, .editor tr td.cell textarea.date:focus {
-	width: 130px;
+	width: 110px;
 	margin-right: 36px;
 }
 
@@ -125,9 +133,6 @@ ul.ui-autocomplete li.ui-menu-item {
 }
 
 /*** Children  ***/
-th.cell.children {
-	width: 114px;
-}
 div.children {
 	padding: 2px;
 	height: 18px;
