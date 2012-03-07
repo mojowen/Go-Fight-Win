@@ -4,7 +4,9 @@
 }
 #scrolling {
 	overflow-y: scroll; 
-	height: 508px;
+	max-height: 508px;
+	min-height: 160px;
+}
 }
 h2.view_title {
 	color: #747474;

@@ -1,11 +1,14 @@
 /* WIDTHS */
+th.cell, td.cell {
+	width: 122px;
+}
 th.cell.number, td.cell.number {
 	width: 88px;
 }
 th.cell.select, td.cell.select {
-	width: 102px;
+	width: 100px;
 }
-th.cell.date. td.cell.date {
+th.cell.date, td.cell.date {
 	width: 150px;
 }
 th.cell.children, td.cell.children {

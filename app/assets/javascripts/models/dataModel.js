@@ -6,7 +6,7 @@ function appDataModel() {
 	views = ko.observableArray([]),
 	saving = ko.observable(true);
 	fields.width = ko.computed( function() {
-		computed = 100 + 32; // rownum + rowend
+		computed = 100 + 33; // rownum + rowend
 		for (var i=0; i < fields().length; i++) {
 			switch(fields()[i].field_type) {
 				case 'date':
