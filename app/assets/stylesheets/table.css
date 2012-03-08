@@ -92,9 +92,12 @@ input#current_view_name.untracked {
 	display: none;
 }
 input#current_view_name.untracked.unsaved {
-	display: block.;
+	display: block;
+	opacity: 0.4;
 }
-
+input#current_view_name.untracked.unsaved:hover {
+	opacity: 0.9;
+}
 #views {
 	display: none;
 	color: #747474;

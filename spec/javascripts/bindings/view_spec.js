@@ -5,7 +5,7 @@ describe("Testing the row template", function() {
 		var view = new viewModel({id: i, name: 'hey '+i });
 		views.push(view);
 	};
-	loadFixtures("views/lists/_row.html","views/lists/_table.html","views/lists/_grouped.html","views/lists/_groupedRow.html","views/lists/_views.html");
+	loadFixtures("views/lists/_row.html","views/lists/_table.html","views/lists/_views.html","views/lists/_menu.html");
 	ko.applyBindings(dataModel);
   });
   it("renders the views", function() {

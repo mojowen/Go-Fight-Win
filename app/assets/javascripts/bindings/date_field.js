@@ -25,11 +25,13 @@ function date_fields (argument) {
 				}
 			)
 			.datepicker('setDate', new Date(val) )
-			.click(
+			.click( // This is what fires when clicking on a date
 				function(e) {
-						 if( $(e.target).is('a') ) { $.datepicker.updateKnockout( $this, ctx ); }
+						var $target = $(e.target);
+						if( $target.is('a') || $target.is('td:not(".ui-datepicker-unselectable")') ) { $.datepicker.updateKnockout( $this, ctx ); }
 				}
 			);
+
 			if( testDate(val) ) { $this.val('--') }
 			$this.focus();
 		}
@@ -46,7 +48,7 @@ function date_fields (argument) {
 		var day_change = day_change || 0;
 		var month_change = month_change || 0;
 		if( date == 'Invalid Date' ) { 
-			warn('not a date, cheif');
+			warn('not a date, chief');
 			return val;
 		} else {
 			changed_date = new Date(date.getFullYear(),date.getMonth()+month_change, (date.getDate()+day_change) );
@@ -70,7 +72,6 @@ function date_fields (argument) {
 					$this.next('.date_controls').find('.date_picker').datepicker("destroy").prev('.cal').removeClass('on');
 					break;
 				default:
-					console.log(e.keyCode);
 					$this.datepicker("destroy").prev('.cal').removeClass('on');
 			}
 		}
@@ -80,7 +81,8 @@ function date_fields (argument) {
 			var $this = $(this);
 			var ctx = ko.contextFor(this);
 			var row = ctx.$parent, field = ctx.$data;
-			row[field.to_param]( new Date(event.target.value) );
+			// console.log(event.target.value )
+			// row[field.to_param]( new Date(event.target.value) );
 			$this.next('.date_controls').find('.date_picker').datepicker("destroy").prev('.cal').removeClass('on');
 		},
 		keydown: function(e) {
@@ -106,6 +108,10 @@ function date_fields (argument) {
 					e.preventDefault();
 					row[field.to_param]( date_change(val,0,-1) );
 					break;
+				case 13:
+					e.preventDefault();
+					$('.hasDatepicker').datepicker('destroy').prev('.cal').removeClass('on');
+					break;
 			}
 		},
 		focusin: function(e) {
@@ -116,9 +122,14 @@ function date_fields (argument) {
 
 	$('.date_controls .cal').live({ 
 		click: function(e) {
-			$(this).parents('td').addClass('selected').find('textarea').addClass('open')
-			openDateBox( $(this).parent().prev('textarea') );
-			e.preventDefault();
+			var $this = $(this);
+			if( $this.hasClass('on') ) {
+				$this.removeClass('on').next('.date_picker').datepicker("destroy");
+			} else {
+				$this.parents('td').addClass('selected').find('textarea').addClass('open')
+				openDateBox( $(this).parent().prev('textarea') );
+				e.preventDefault();
+			}
 		}
 	});
 }

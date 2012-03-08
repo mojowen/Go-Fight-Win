@@ -71,8 +71,10 @@ appDataModel.keyboard_shortcuts = function(argument) {
 		} else {
 			$('.selected, .addselected, .last').removeClass('selected').removeClass('addselected').removeClass('last');
 		}
-		//  removes datpicker if so
-		if( $target.parents('.hasDatepicker') && !$target.is('.hasDatepicker') && !$target.is('textarea.date') && !$target.is('.cal') ) {
+
+		//  removes datpicker if clicking anywher but in datepicke
+
+		if( $target.parents('.hasDatepicker').length < 1 && !$target.hasClass('cal') ) {
 			$('.hasDatepicker').datepicker('destroy').prev('.cal').removeClass('on');
 		}
 	});

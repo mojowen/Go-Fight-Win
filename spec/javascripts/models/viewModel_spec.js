@@ -16,11 +16,11 @@ describe("vieModel can be initalized ", function() {
     var view = new viewModel();
 	expect(view.to_param()).toEqual('');
   });
-
-  it("new views have a dirtyFlag set to true", function() {
-    var view = new viewModel();
-	expect(view.dirtyFlag.isDirty() ).toBeTruthy();
-  });
+	// Now only marked as dirty if included in 'views'
+	//   it("new views have a dirtyFlag set to true whe", function() {
+	//     var view = new viewModel();
+	// expect(view.dirtyFlag.isDirty() ).toBeTruthy();
+	//   });
   it("initializing a new view with an id doesn't have true dirty flag", function() {
     var view = new viewModel({id: 1, name:'thing'});
 	expect(view.dirtyFlag.isDirty()).toBeFalsy();
@@ -44,34 +44,29 @@ describe("vieModel can be initalized ", function() {
 
 	describe("Interactions with filterModel object", function() {
 	  it("passes filters if they are passed one value in an array", function() {
-	    var view = new viewModel({ filters: ['a is b'] });
-	    expect( ko.toJS(view.filters()[0]) ).toEqual( ko.toJS(new filterModel('a is b')) );
+	    var view = new viewModel({ filters: ['a is b'] }),
+			filter = new filterModel('a is b');
+	    expect( ko.toJS(view.filters()[0].field) ).toEqual( ko.toJS(filter.field) );
+	    expect( ko.toJS(view.filters()[0].operator) ).toEqual( ko.toJS(filter.operator) );
+	    expect( ko.toJS(view.filters()[0].filter) ).toEqual( ko.toJS(filter.filter) );
 	  });
 	  it("passes filters if they are passed one value in a string", function() {
-	    var view = new viewModel({ filters: 'a is b' });
-	    expect( ko.toJS(view.filters()[0]) ).toEqual( ko.toJS(new filterModel('a is b')) );
+	    var view = new viewModel({ filters: 'a is b' }),
+			filter = new filterModel('a is b');
+
+	    expect( ko.toJS(view.filters()[0].field) ).toEqual( ko.toJS(filter.field) );
+	    expect( ko.toJS(view.filters()[0].operator) ).toEqual( ko.toJS(filter.operator) );
+	    expect( ko.toJS(view.filters()[0].filter) ).toEqual( ko.toJS(filter.filter) );
 	  });
 	  it("passes filters in correct order if they are passed in an array", function() {
 		var filters = ['a is b','c is d','e is f'];
 	    var view = new viewModel({ filters: filters});
 		for (var i=0; i < view.filters().length; i++) {
-			expect( ko.toJS(view.filters()[i]) ).toEqual( ko.toJS( new filterModel(filters[i]) ) );
+			var filter = new filterModel(filters[i]);
+			expect( ko.toJS(view.filters()[i].field) ).toEqual( ko.toJS(filter.field) );
+			expect( ko.toJS(view.filters()[i].operator) ).toEqual( ko.toJS(filter.operator) );
+			expect( ko.toJS(view.filters()[i].filter) ).toEqual( ko.toJS(filter.filter) );
 		}
-	  });  
-	});
-	describe("interactions with groupModel object", function() {
-	  it("creates a group if the values are defined if defined as string", function() {
-	    var view = new viewModel({ groups: 'hey' });
-		expect(ko.toJS(view.groups()[0])).toEqual( ko.toJS(new groupModel('hey')) );    
-	  });
-	  it("creates a new group with options if defined", function() {
-	    var view = new viewModel({groups: [{field: 'hey', options:'an option'}] } );
-		expect( ko.toJS( view.groups()[0] ) ).toEqual( ko.toJS( new groupModel({field: 'hey', options:'an option'})) );    
-	  });
-	  it("creates a nested grouping if passed an array", function() {
-	    var view = new viewModel({groups: [{field: 'hey', options:'an option'},'other hey'] } );
-		expect( ko.toJS( view.groups()[0] ) ).toEqual( ko.toJS( new groupModel({field: 'hey', options:'an option'})) );    
-		expect( ko.toJS( view.groups()[1] ) ).toEqual( ko.toJS( new groupModel('other hey')) );
 	  });  
 	});
 
