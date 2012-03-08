@@ -24,6 +24,17 @@ ko.dirtyFlag = function(root, isInitiallyDirty) {
 	result.setDirty = function() {
 		_isInitiallyDirty(true);
 	}
+	result.__compare = function() {
+		var initial = JSON.parse( _initialState() ),
+			current = JSON.parse( root._flatten('json') ),
+			problem = {};
+		for( var i in initial ) {
+			if( ko.toJSON(initial[i]) != ko.toJSON(current[i]) ) {
+				problem[i] = {initial: initial[i], current: current[i] };
+			}
+		}
+		return problem;
+	}
 
     return result;
 };

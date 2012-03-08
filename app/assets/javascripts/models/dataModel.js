@@ -65,7 +65,7 @@ function appDataModel() {
 			for (var i=0; i < _views.length; i++) {
 				views.push( new viewModel(_views[i]) ); 
 			};
-			_views = null;
+//			_views = null;
 		}
 		if( typeof _currentView == 'undefined' ) { 
 			setCurrentView( new viewModel() );

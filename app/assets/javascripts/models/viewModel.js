@@ -276,7 +276,6 @@ function viewModel( data ) {
 			returnable.goal = this.goal.value == '' && ( this.goal.field == '' ||  this.goal.field == undefined ) ? '' : this.goal;
 		}
 
-		if( typeof this.sorts == 'function' ) { returnable.sorts = this.sorts().filter(function(elem){ return elem.field() != '' && elem.field() != undefined }); } else { returnable.sorts = this.sorts.filter(function(elem){ return elem.field != '' }); }
 		returnable.filters = _flatten( this.filters() );
 		returnable.groups = _flatten( this.groupings() );
 

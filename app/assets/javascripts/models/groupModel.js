@@ -20,9 +20,9 @@ function groupModel(data) {
 	this.field_type = _field.field_type;
 	if( options.length > 0 ) {
 		var pos = options.indexOf(option);
-		option = pos !== -1 ? options[pos] : undefined;
+		option = pos !== -1 ? options[pos] : '';
 	}
-	this.option = ko.observable(option);
+	this.option = ko.observable(option || data.option);
 	this.options = options;
 
 	return this;

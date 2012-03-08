@@ -47,6 +47,8 @@ function filterModel(data) {
 	this._flatten = function() {
 		var returning = ko.toJS(this);
 		returning.obj = null;
+		returning.options = null;
+		returning.need_input = null;
 		return returning;
 	}
 	

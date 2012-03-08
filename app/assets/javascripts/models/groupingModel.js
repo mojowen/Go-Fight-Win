@@ -4,6 +4,26 @@ function groupingModel(data) {
 	this.report = ko.observable({name: 'contacts', report: 'sum'}),
 	this.columns_reports = [];
 
+	// Building the groups 
+	if( typeof data != 'undefined' ){
+		if ( typeof data.groups != 'undefined' ){
+			// new group
+			for (var i in data.groups){
+				this.groups.push(new groupModel(data.groups[i]));
+			};
+			this.pivot( data.pivot == 'true' );
+			this.report( data.report );
+			if( typeof data.columns != 'undefined' ) { 
+				for(var i in data.columns ){
+					this.columns_reports.push(data.columns[i]); 
+				}
+			}
+		} else {
+			// old group
+			this.groups.push(new groupModel(data));
+		}
+	}
+
 
 	var $this = this;
 	// Setting up the computed variables
@@ -39,9 +59,11 @@ function groupingModel(data) {
 					function(el) { 
 						if( typeof el.report != 'string' ) {
 							// This matches one of the stored filteredReports (which are internal to the column object's) to the report
-							var saved = $this.columns_reports.filter(function(l) { return l.id == el.id; })[0],
+							var saved = $this.columns_reports.filter(function(l) { return parseInt(l.id) == el.id; })[0],
 								match = typeof saved != 'undefined' ? el.fieldReports.filter(function(l) { return l.long_label == saved.long_label; })[0] : undefined,
 								report = match || el.report;
+							// Setting the ID if it's not set
+							if( typeof report.id == 'undefined' ) { report.id = el.id; }
 							el.report = ko.observable(report); 
 						}
 						return el; 
@@ -108,25 +130,6 @@ function groupingModel(data) {
 	}
 	
 	
-	// Building the groups 
-	if( typeof data != 'undefined' ){
-		if ( typeof data.groups != 'undefined' ){
-			// new group
-			for (var i in data.groups){
-				this.groups.push(new groupModel(data.groups[i]));
-			};
-			this.pivot( data.pivot == 'true' );
-			this.report( data.report );
-			if( typeof data.columns != 'undefined' ) { 
-				for(var i in data.columns ){
-					this.columns_reports.push(data.columns[i]); 
-				}
-			}
-		} else {
-			// old group
-			this.groups.push(new groupModel(data));
-		}
-	}
 
 	this.$grouping = this;
 	return this;
