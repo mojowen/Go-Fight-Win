@@ -1,6 +1,15 @@
 # A sample Guardfile
 # More info at https://github.com/guard/guard#readme
 
+# Make sure this guard is ABOVE any other guards using assets such as jasmine-headless-webkit
+# It is recommended to make explicit list of assets in `config/application.rb`
+# config.assets.precompile = ['application.js', 'application.css', 'all-ie.css']
+guard 'rails-assets' do
+  watch(%r{^app/assets/.+$})
+  watch('config/application.rb')
+end
+
+
 guard 'rspec', :version => 2 do
   watch(%r{^spec/.+_spec\.rb$})
   watch(%r{^lib/(.+)\.rb$})     { |m| "spec/lib/#{m[1]}_spec.rb" }
@@ -54,13 +63,4 @@ guard 'jasmine-headless-webkit' do
   watch(%r{^app/assets/javascripts/*/*.js$}) { |m| newest_js_file(spec_location % m[1]) }
   watch(%r{^spec/javascripts/helpers/factories.js$})
   watch(%r{^public/assets/.*\.js$})
-end
-
-
-# Make sure this guard is ABOVE any other guards using assets such as jasmine-headless-webkit
-# It is recommended to make explicit list of assets in `config/application.rb`
-# config.assets.precompile = ['application.js', 'application.css', 'all-ie.css']
-guard 'rails-assets' do
-  watch(%r{^app/assets/.+$})
-  watch('config/application.rb')
 end
