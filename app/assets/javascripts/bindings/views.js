@@ -37,8 +37,10 @@ appDataModel.views_template = function() {
 	});
 
 	$('.add_view').live('click',function() {
-		var new_view = ko.dataFor(this);
+		var new_view = dataModel.current.view();
+		new_view.dirtyFlag.setDirty();
 		views.push(new_view);
+		$('#current_view input').select()
 	});
 
 	$('.save_ready').live('click', function() {

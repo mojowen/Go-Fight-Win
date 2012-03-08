@@ -18,8 +18,11 @@ ko.dirtyFlag = function(root, isInitiallyDirty) {
 			return false;
 		}
     };
-	result.undo = function() {
+	result.__initial = function() {
 		return _initialState();
+	}
+	result.setDirty = function() {
+		_isInitiallyDirty(true);
 	}
 
     return result;

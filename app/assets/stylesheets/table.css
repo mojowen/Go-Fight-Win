@@ -13,31 +13,33 @@
 	width: 300px;
 	display: inline-block;
 	clear: none;
+	margin: 0 0 -6px 0;
 }
-input#current_view_name {
-	background: none;
-	border: 0;
-	color: #fff;
-	font-size: 16px;
-}
-
-input#current_view_name.untracked {
-	color: #747474;
-	font-weight: normal;
+li.save_view {
+	list-style: none;
+	width: 120px;
+	font-style: italic;
 	opacity: .7;
 }
-
-input#current_view_name.unsaved {
-	font-style: italic;
+input#current_view_name {
+	border: 2px  white solid;
+	font-size: 12px;
+	text-transform: uppercase;
+	padding: 0 30px 0 0;
+	border-radius: 15px;
+	text-align: center;
+	background:  white;
+	color:  #622;
+	margin: 0 60px 0 0;
+	width: 240px;
 }
 
-span.add_view, span.new_view, span.clear_view {
-	color: #fff;
-	font-weight: bold;
-	cursor: pointer;
-}
-span.add_view:hover, span.new_view:hover, span.clear_view:hover {
-	color: #226;
+div.clear_view_wrapper {
+	float: right;
+	margin: -13px 30px 0 0;
+	color: #333;
+	font-size: 7px;
+	position: relative;
 }
 
 span.save {
@@ -52,7 +54,46 @@ span.save_ready {
 	text-decoration: underline;
 	cursor: pointer;
 }
-
+li.view_row {
+	text-transform: capitalize;
+	font-size: 10px;
+	margin: 2px 0;
+	list-style: none;
+}
+li.view_row:before {
+	content: "» " 
+}
+li.active {
+	font-size: 10px;
+	text-transform: uppercase;
+	border: 2px solid white;
+	border-radius: 10px;
+	text-align: center;
+	margin-left: -8px;
+	background:  white;
+	color:  #622;
+	font-weight: bold;
+	cursor: default;
+}
+span.view {
+	text-overflow: ellipsis;
+	width: 124px;
+	overflow: hidden;
+}
+.active div.remove_wrapper {
+	display: none;
+}
+div.remove_wrapper {
+	float: right;
+	font-size: 6px;
+	margin: 2px -8px 0 0;
+}
+input#current_view_name.untracked {
+	display: none;
+}
+input#current_view_name.untracked.unsaved {
+	display: block.;
+}
 
 #views {
 	display: none;
@@ -92,11 +133,11 @@ span.save_ready {
 .f_tab {
 	background-color: #226;
 	box-shadow: 1px 1px 10px #226;
-	text-align: center;
+	text-align: left;
 	color: white;
 	cursor: pointer;
 	padding: 4px 14px;
-	font-size: 24px;
+	font-size: 14px;
 	float: left;
 	clear: both;
 	margin: 2px 0;
@@ -106,9 +147,20 @@ span.save_ready {
 	background-color: #622;
 	opacity: 1;
 }
+.f_tab .suboption {
+	display: none;
+}
+.f_tab.on .suboption {
+	display: block;
+}
+.f_tab ul {
+	padding: 0;
+	margin: 4px 0;
+}
 .b_tab {
 	width: 128px;
 }
+
 
 .s_tab {
 	clear: none;

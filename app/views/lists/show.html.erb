@@ -19,7 +19,7 @@
 
 		<h2 data-bind="text: '+New Row'+newRows.plurl()"></h2>
 			<%= render :partial => 'newRow' %>
-
+		</div>
 	</div>
 	<div id="analyze" data-bind="visible: dataModel.current.view().groups.on()">
 		<%= render :partial => 'analyze' %>
@@ -52,8 +52,21 @@
 
 <% content_for :footer do %>
 	<!-- <div id="switch" class="f_tab" data-bind="text: viewModel.switchText"></div> -->
-	<div class="f_tab switch" data-bind="css: {'on': dataModel.current.state() == 'explore' }">Explore</div>
-	<div class="f_tab switch"  data-bind="css: {'on': dataModel.current.state() == 'analyze' }">Analyze</div>
+	<div class="f_tab b_tab switch" data-bind="css: {'on': dataModel.current.state() == 'explore' }">
+		<h2>Explore</h2>
+		<p class="filters suboption" data-bind="visible: dataModel.current.view().filters().length > 0" >
+			<em><input type="checkbox" data-bind="checked: dataModel.current.filtered"> Filtered</em>
+		</p>
+	</div>
+	<div class="f_tab b_tab switch"  data-bind="css: {'on': dataModel.current.state() == 'analyze' }">
+		<h2>Analyze</h2>
+		<ul class="suboption">
+		<!-- ko foreach: views -->
+			<li class="view_row" data-bind="css: {'active': dataModel.current.view() ==  $data }"><span data-bind="text: $data.name" class="clickable view"></span><div class="remove_wrapper">(<span class="clickable remove_view">x</span>)</div></li>
+		<!-- /ko -->
+			<li class="save_view clickable add_view" data-bind="visible: views().indexOf(dataModel.current.view()) === -1">+ save current</li>
+		</ul>
+	</div>
 	<div id="xls" class="f_tab s_tab" url="<%= list_path(@list.org.to_param, @list.to_param)+'.xls' %>">Export</div>
 	<div id="bug" class="f_tab s_tab overlayer">Bug</div>
 	<div id="help" class="f_tab s_tab overlayer">?</div>

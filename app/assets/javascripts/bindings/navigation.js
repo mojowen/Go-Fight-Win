@@ -1,5 +1,5 @@
 appDataModel.navigation = function() { 
-	$('.switch').live({
+	$('.switch h2').live({
 		click: function(e) {
 			var $this = $(this);
 			e.preventDefault();

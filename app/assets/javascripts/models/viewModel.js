@@ -283,8 +283,8 @@ function viewModel( data ) {
 		if( return_type == 'json' ) {return ko.toJSON( returnable );}
 		else { return ko.toJS( returnable ); }
 	}
-	var initDirty = this.id == 'new'
-	this.dirtyFlag = new ko.dirtyFlag(this, initDirty);
+
+	this.dirtyFlag = new ko.dirtyFlag(this);
 
 	return this;
 	
