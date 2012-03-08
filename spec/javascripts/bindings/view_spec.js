@@ -7,8 +7,9 @@ describe("Testing the row template", function() {
 	};
 	views()[0].addGrouping();
 	views()[0].groupings()[0].groups.push( new groupModel(fields()[0].to_param ) );
-	views()[0].addFilter( {field: fields()[1].to_pam, operator: 'has', filter: '' } );
-
+	views()[0].addFilter( fields()[1].to_param+' has a' );
+	views()[0].dirtyFlag.__force();
+	
 	views()[1].addGrouping();
 	views()[1].groupings()[0].groups.push( new groupModel(fields()[0].to_param ) );
 	views()[1].groupings()[0].groups.push( new groupModel(fields()[1].to_param ) );
@@ -28,15 +29,28 @@ describe("Testing the row template", function() {
 	});
   });
  it('switching views to a view', function() {
+	expect( views()[0].dirtyFlag.isDirty() ).toBeFalsy();
 	$('.view:first').click();
 	expect( views()[0].dirtyFlag.isDirty() ).toBeFalsy();
 	expect( dataModel.current.view() ).toEqual( views()[0] );
   });
 	it("discarding a view", function() {
-	  expect(true).toBeFalsy();
+		expect( views()[0].dirtyFlag.isDirty() ).toBeFalsy();
+		$('.view:first').click();
+		expect( views()[0].dirtyFlag.isDirty() ).toBeFalsy();
+		$('.clear_view').click();
+		expect( dataModel.current.view().id ).toEqual( 'new' );
+		expect( dataModel.current.view().dirtyFlag.isDirty() ).toBeFalsy();
+		expect( views()[0].dirtyFlag.isDirty() ).toBeFalsy();
 	});
 	it("saving current unsaved view", function() {
-	  expect(true).toBeFalsy();
+		var view_length = views().length
+		expect( dataModel.current.view().id ).toEqual( 'new' );
+		expect( dataModel.current.view().dirtyFlag.isDirty() ).toBeFalsy();
+		$('.add_view:first').click();
+		expect( dataModel.current.view().id ).toEqual( 'new' );
+		expect( dataModel.current.view().dirtyFlag.isDirty() ).toBeTruthy();
+		expect(views().length).toEqual(view_length+1);
 	});
 
 

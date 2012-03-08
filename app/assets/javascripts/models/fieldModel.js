@@ -55,7 +55,7 @@ function fieldModel(data) {
 				}
 			}
 			for (var i=0; i < options.length; i++) {
-				options[i]['long_label'] = options[i].label+' '+this.plural;
+				options[i]['long_label'] = options[i].label+': '+this.plural;
 				options[i]['long_label'] = options[i]['long_label'].capitalize();
 			};
 			return options;
@@ -65,7 +65,7 @@ function fieldModel(data) {
 	}, 
 	this);
 
-	this.report = {label: 'count', name: field.name, report: 'count', long_label: 'count: '+this.name };
+	this.report = {label: 'count', name: field.name, report: 'count', long_label: 'Count: '+this.name.capitalize() };
 
 	return this;
 }

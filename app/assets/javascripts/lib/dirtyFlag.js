@@ -18,6 +18,10 @@ ko.dirtyFlag = function(root, isInitiallyDirty) {
 			return false;
 		}
     };
+    result.__force = function() {
+		_initialState( root._flatten('json') );
+		_isInitiallyDirty(false);
+    };
 	result.__initial = function() {
 		return _initialState();
 	}

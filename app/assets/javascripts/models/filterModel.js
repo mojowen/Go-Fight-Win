@@ -45,10 +45,9 @@ function filterModel(data) {
 		return operator != 'empty' &&  operator != 'not empty';
 	});
 	this._flatten = function() {
-		var returning = ko.toJS(this);
-		returning.obj = null;
-		returning.options = null;
-		returning.need_input = null;
+		var flat = ko.toJS(this),
+			returning = {field: flat.field, filter: flat.filter, operator: flat.operator};
+		
 		return returning;
 	}
 	

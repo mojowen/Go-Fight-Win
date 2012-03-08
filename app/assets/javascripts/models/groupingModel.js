@@ -123,7 +123,8 @@ function groupingModel(data) {
 		returning.columns = [];
 		for (var i=0; i < this.columns().length; i++) {
 			if( typeof this.columns()[i].report == 'function' ) {
-				returning.columns.push( this.columns()[i].report );
+				var flat_report = this.columns()[i].report();
+				returning.columns.push( {long_label: flat_report.long_label, id: flat_report.id, name: flat_report.name,  report: flat_report.report} );
 			}
 		};
 		return ko.toJS(returning);
