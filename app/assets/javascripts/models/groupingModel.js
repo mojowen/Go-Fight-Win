@@ -4,6 +4,33 @@ function groupingModel(data) {
 	this.report = ko.observable({name: 'contacts', report: 'sum'}),
 	this.columns_reports = [];
 
+	this.pivotedReports = ko.dependentObservable( function() {
+				var _fields = fields();
+				var options = [];
+
+				for (var i=0; i < _fields.length; i++) {
+					var _field = _fields[i];
+					if( typeof _operators != 'undefined' && typeof _operators.goalables != 'undefined' ) {
+						var pos = _operators.goalables.map(function(elem) {return elem.field }).indexOf(_field.to_param);
+						if( pos !== -1 ) {
+							for (var ii=0; ii < _operators.goalables[pos].operations.length; ii++) {
+								var report = _operators.goalables[pos].operations[ii].report,
+									label = _operators.goalables[pos].operations[ii].label == undefined ? report : _operators.goalables[pos].operations[ii].label;
+
+									var long_label = label+' '+_field.plural;
+									long_label = long_label.capitalize();
+									options.push( {label: label, name: _field.to_param, report: report, long_label: long_label } );
+							};
+						}
+					} else {
+						options = options.concat(_field.fieldReports())
+					}
+				};
+
+			return options;
+	});
+
+
 	// Building the groups 
 	if( typeof data != 'undefined' ){
 		if ( typeof data.groups != 'undefined' ){
@@ -12,7 +39,10 @@ function groupingModel(data) {
 				this.groups.push(new groupModel(data.groups[i]));
 			};
 			this.pivot( data.pivot == 'true' );
-			this.report( data.report );
+			if( data.report != 'undefined' ) {
+				var report = this.pivotedReports().filter( function(el) { return el.id == parseInt(data.report.id) && el.report == data.report.report })[0];
+				this.report( report );
+			}
 			if( typeof data.columns != 'undefined' ) { 
 				for(var i in data.columns ){
 					this.columns_reports.push(data.columns[i]); 
@@ -87,31 +117,6 @@ function groupingModel(data) {
 			return [];
 		}
 	});
-	this.pivotedReports = ko.dependentObservable( function() {
-				var _fields = fields();
-				var options = [];
-
-				for (var i=0; i < _fields.length; i++) {
-					var _field = _fields[i];
-					if( typeof _operators != 'undefined' && typeof _operators.goalables != 'undefined' ) {
-						var pos = _operators.goalables.map(function(elem) {return elem.field }).indexOf(_field.to_param);
-						if( pos !== -1 ) {
-							for (var ii=0; ii < _operators.goalables[pos].operations.length; ii++) {
-								var report = _operators.goalables[pos].operations[ii].report,
-									label = _operators.goalables[pos].operations[ii].label == undefined ? report : _operators.goalables[pos].operations[ii].label;
-
-									var long_label = label+' '+_field.plural;
-									long_label = long_label.capitalize();
-									options.push( {label: label, name: _field.to_param, report: report, long_label: long_label } );
-							};
-						}
-					} else {
-						options = options.concat(_field.fieldReports())
-					}
-				};
-
-			return options;
-	});
 
 	this._flatten = function() {
 		var returning = new Object,
@@ -122,7 +127,7 @@ function groupingModel(data) {
 		// Saving the individual field reports
 		returning.columns = [];
 		for (var i=0; i < this.columns().length; i++) {
-			if( typeof this.columns()[i].report == 'function' ) {
+			if( typeof this.columns()[i].report == 'function' && !$this.pivot() ) {
 				var flat_report = this.columns()[i].report();
 				returning.columns.push( {long_label: flat_report.long_label, id: flat_report.id, name: flat_report.name,  report: flat_report.report} );
 			}

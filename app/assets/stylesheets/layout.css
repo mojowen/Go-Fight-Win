@@ -1,14 +1,14 @@
 /** Layout **/
 
 body.site {
-	width: 960px;
+	width: 1060px;
 	margin: 0 auto;
 	background-color: #ddd;
 }
 body.big_header {
 }
 #header, #content  {
-	width: 860px;
+	width: 960px;
 }
 
 #header {
@@ -23,7 +23,7 @@ body.big_header {
 	position: fixed;
 	top: 110px;
 	width: 160px;
-	margin-left: 960px;
+	margin-left: 1060px;
 }
 
 #content {

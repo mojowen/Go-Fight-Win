@@ -40,4 +40,15 @@ div.section em {
 }
 div.section .remove {
 	float: right;
+	font-size: 8px;
+	color: #747474;
+}
+div.section .remove:hover {
+	color: #000;
+}
+div.section .remove:after {
+	content: " )";
+}
+div.section .remove:before {
+	content: "( ";
 }

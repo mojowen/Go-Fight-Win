@@ -1,46 +1,46 @@
 <script type="text/html" id="grouped">
-	<div class="group">
-		<div id="available_groups" data-bind="if: $data.groups().length > 0, visible: $data.groups().length > 0">
+<div class="group">
+	<span class="remove clickable">remove</span>
+	<div class="group_box menu">
+		<div class="available_groups" data-bind="if: $data.groups().length > 0, visible: $data.groups().length > 0">
 
 			<p>
-				<em>grouped by</em>
+				<em>- grouped by -</em>
 			</p>
 
 			<!-- ko foreach: $data.groups() -->
 				<div class="added_group">
 					<span data-bind="text: $data.name "></span>&nbsp;&nbsp;&nbsp;&nbsp;(<span class="remove_group clickable">–</span>)
-			
+		
 					<select data-bind="value: $data.option, options: $data.options, visible: $data.options.length > 0"></select>
 				</div>
 			<!-- /ko -->
 		</div>
 
-		<div id="available_groups" data-bind="if: $data.available().length > 0, visible:  $data.available().length > 0">
+		<div class="available_groups" data-bind="if: $data.available().length > 0, visible:  $data.available().length > 0">
 			<p>
-				<em>click to group</em>
+				<em>- click to group -</em>
 			</p>
 			<!-- ko foreach: $data.available -->
 
-				<span class="add_group" data-bind="text: $data.name"></span>
+				<div class="add_group" data-bind="text: $data.name"></div>
 
 			<!-- /ko -->
 		</div>
 
-		<div class="menu" data-bind="visible: $data.groups().length == 2">
-			<input type="checkbox" data-bind="checked: $data.pivot, visible: $data.groups().length == 2">
-			<span data-bind="visible: $data.groups().length == 2" >pivot</span>
+		<div class="pivot_menu" data-bind="visible: $data.groups().length == 2">
+			<p>
+				<em>- additional options -</em>
+			</p>
+			<p>
+				<input type="checkbox" data-bind="checked: $data.pivot, visible: $data.groups().length == 2">
+				<span data-bind="visible: $data.groups().length == 2" >pivot table</span>
+			</p>
 			<!--<span data-bind="visible: $data.groups().length == 2 && $data.pivot()" class="swap clickable">swap</span>-->
 
-
-			<!-- ko if: $data.pivot -->
-			<select data-bind="
-				value: $data.report,
-				options: $data.pivotedReports(),
-				optionsText: 'long_label',
-				visible: $data.pivot()"></select>
-			<!-- /ko -->
 		</div>
-		<!-- css: {'group_field': $data.constructor.name == 'fieldModel', 'clickable' : $data.groups().length <= 2 } -->
+	</div>
+	<div class="grouped_table group_box">
 		<table class="grouped_table" border="0" cellspacing="5" cellpadding="5" data-bind="visible: dataModel.current.view().groups.on">
 			<thead>
 				<tr>
@@ -88,4 +88,17 @@
 			</tfoot>
 		</table>
 	</div>
+	<div class="group_box graph">
+	</div>
+	<div class="report_menu" data-bind="css: {'graph_only':$data.groups().length == 1, 'both': $data.groups().length == 2 }, visible: $data.groups().length == 2">
+		<p>
+			<em>- report on -</em>
+		</p>
+		<select data-bind="
+			value: $data.report,
+			options: $data.pivotedReports(),
+			optionsText: 'long_label'"></select>
+	</div>
+
+</div>
 </script>

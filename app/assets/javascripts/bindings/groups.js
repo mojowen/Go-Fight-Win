@@ -20,13 +20,10 @@ appDataModel.groups_template = function(argument) {
 			grouping = context.$parent;
 		grouping.groups.remove(grouped);
 	});
-	$('.swap').live('click', function(event) {
-		dataModel.current.view().groups.reverse();
-	});
-	$('.pivot').live('click', function(event) {
-		dataModel.current.view().groups.pivot(true)
-	});
-	$('.unpivot').live('click', function(event) {
-		dataModel.current.view().groups.pivot(false)
+	$('.group .remove').live('click', function(event) {
+		var context = ko.contextFor(this),
+			grouping = context.$data,
+			view = context.$parent;
+		view.groupings.remove(grouping);
 	});
 }

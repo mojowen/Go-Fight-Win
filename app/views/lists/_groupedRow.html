@@ -58,9 +58,10 @@
 					<!-- /ko -->
 
 					// This is for pivoted data
+					// Checks and makes sure there's data in the row and the row is defined
 					<!-- ko if: $data.report == 'all' && $parent.$grouping.pivot() -->
 					<td>
-						<!-- ko if: $parent.rows.length > 0 -->
+						<!-- ko if: $parent.rows.length > 0 && typeof $parent.rows[ $parent.$grouping.columns().indexOf($data)-1 ] != 'undefined' -->
 							<span data-bind="text: $parent.rows[ $parent.$grouping.columns().indexOf($data)-1 ][ $parent.$grouping.report().name ][ $parent.$grouping.report().report ] "></span>
 						<!-- /ko -->
 					</td>

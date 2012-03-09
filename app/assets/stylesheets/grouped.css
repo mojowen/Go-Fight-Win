@@ -1,9 +1,9 @@
 /** Grouping **/
 
+
 h2.groups_full { cursor: default; text-decoration: none; color: #747474}
 
-.group { width: 70%; margin: 0 auto;}
-
+.group { width: 900px; margin: 0 auto; clear: both; min-height: 300px; }
 table.grouped_table th {
 	border-bottom: 0;
 	width: 100px;
@@ -13,19 +13,7 @@ table.grouped_table tbody tr.total td:first-child {
 	text-align: right;
 	border: none;
 }
-/*** Graph **/
-#graph h2 {
-	float: left;
-	margin: 0 42px 0 30px;
-}
-
-#graph select {
-	margin: 10px 30px;
-}
-
-#graph #canvas {
-	margin: 30px 80px;
-}
+.available_groups {clear: both;}
 
 .add_group {
 	border: #226 2px solid;
@@ -34,14 +22,48 @@ table.grouped_table tbody tr.total td:first-child {
 	color: white;
 	background-color: #226;
 	cursor: pointer;
-	font-size: 16px;
-	margin: 10px;
+	font-size: 12px;
+	float: left;
+	margin: 4px 3px;
 }
 
-#available_groups {
+.group_box {
+	float:left;
+	margin: 0 6px;
+}
+
+.group .menu {
+	width: 140px;
+}
+.group .menu .p {
+	padding: 0 0 0 14px;
+}
+.group .grouped_table {
+	width: 728px;
+/*	width: 528px;*/
+	overflow: auto;
+	padding: 0 2px;
+}
+.group .graph {
+	width: 188px;
+	display: none;
+}
+.pivot_menu {
+	clear: left;
+}
+.report_menu {
+	float: right;
+	text-align: center;
 	clear: both;
+	margin-top: -40px;
 }
-
+.report_menu.both {
+	width: 600px;
+}
+report_menu.graph_only {
+	width: 188px;
+	display: none;
+}
 .add_group:hover {
 	background-color: lightblue;
 	border: lightblue 2px solid;
@@ -50,8 +72,8 @@ table.grouped_table tbody tr.total td:first-child {
 
 .added_group {
 	width: auto;
-	padding: 10px;
-	font-size: 20px;
+	padding: 4px;
+	font-size: 12px;
 	color: white;
 	border: 2px #622 solid;
 	border-radius: 4px;
@@ -63,6 +85,7 @@ table.grouped_table tbody tr.total td:first-child {
 }
 .added_group select {
 	display: block;
+	margin: 6px 0 0;
 }
 
 table.grouped_table {
