@@ -30,8 +30,12 @@
 <script type="text/html" id="rowselect">
 	<select data-bind="value: $parent[$data.to_param], options: ['--'].concat($data.field_options)" class="data"></select>
 </script>
-<script type="text/html" id="rowmulti-select">
-	<select multiple="true" data-bind="selectedOptions: $parent[$data.to_param], options: ['--'].concat($data.field_options)" class="data"></select>
+<script type="text/html" id="rowmultiselect">
+	<button type="button" class="ui-multiselect trigger_multiselect data" aria-haspopup="true" tabindex="0" >
+		<span class="ui-icon ui-icon-triangle-2-n-s"></span>
+		<span data-bind="text: $parent[$data.to_param]() != '--' ? $parent[$data.to_param]().constructor.name == 'Array' ? $parent[$data.to_param]().join(', ') : $parent[$data.to_param]().capitalize() : 'Select options' "></span>
+	</button>
+	<select multiple="multiple" style="display: none;" data-bind="options: $data.field_options, selectedOptions: $parent[$data.to_param]" class="data multiselect"></select>
 </script>
 <script type="text/html" id="rowdate">
 	<textarea class="date has_controls data" spellcheck="false" data-bind="datepicker: $parent[$data.to_param](), valueUpdate: 'afterkeydown'"></textarea>	

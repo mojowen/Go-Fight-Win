@@ -3,7 +3,7 @@
 	<!-- ko if: typeof $data != 'undefined' -->
 
 
-	<!-- ko if: $data.rows.length !=  0 && !$parent.pivot() -->
+	<!-- ko if: $data.rows.length !=  0 && !$parent.$grouping.pivot() -->
 			<tr>
 				<!-- ko if: typeof $data._value != 'undefined' -->
 				<td class="label label_first" data-bind="attr: {'rowspan': $data.rows.filter(function(elem) { return elem != undefined; }).length + 1 } ">
@@ -36,7 +36,7 @@
 			</tr>
 	<!-- /ko -->
 
-	<!-- ko if: $data.rows.length ==  0 || $parent.pivot() -->
+	<!-- ko if: $data.rows.length ==  0 || $parent.$grouping.pivot() -->
 		<tr>
 
 			<!-- ko if: typeof $data._value != 'undefined' -->

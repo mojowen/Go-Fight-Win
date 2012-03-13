@@ -16,8 +16,12 @@ function prepareValue (value, field_type, args) {
 				returning = value.toLowerCase();
 				break;
 			//Attempt at doing multi-select. Styling challenges as well as translating the data
-			case 'multi-select':
-				returning = value.toString().toLowerCase().split(',');
+			case 'multiselect':
+				var tmp = value.toString().toLowerCase().split(/\n/);
+				returning = [];
+				for (var i=0; i < tmp.length; i++) {
+					if( tmp[i] != '---' && tmp[i] != '' ) { returning.push( tmp[i].replace('- ','').capitalize() ); }
+				}; 
 				break;
 			default:
 				returning = value;

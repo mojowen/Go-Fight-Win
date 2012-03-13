@@ -19,6 +19,7 @@ appDataModel.groups_template = function(argument) {
 			grouped = context.$data,
 			grouping = context.$parent;
 		grouping.groups.remove(grouped);
+		grouping.pivot(false);
 	});
 	$('.group .remove').live('click', function(event) {
 		var context = ko.contextFor(this),

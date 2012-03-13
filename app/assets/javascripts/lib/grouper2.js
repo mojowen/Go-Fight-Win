@@ -24,13 +24,12 @@ function grouper (_rows, groups, grouping) {
 				options = groups[ii]['options'],
 				option = groups[ii]['option'],
 				field_type = groups[ii]['field_type'];
-			if( value == '' || value == 'null' ) { value = '--'; }
+			if( value == '' || value == 'null' || typeof value == 'undefined' || value == null) { value = '--'; }
 			if( value.constructor.name == 'Date' ) { value = (value.getMonth()+1)+'/'+value.getDate()+'/'+value.getFullYear().toString().slice(-2); }
 			if( field_type == 'children' ) { 
 				value = value == '--' ? [{name:'--'}] : value;
-				value = value.map(function(elem){ return elem.name; }).join(', '); 
-			}
-			if( field_type == 'date' ) {
+				value = value.map(function(elem){ return elem.name; });
+			} else if( field_type == 'date' ) {
 				var the_date = new Date(value);
 				if( the_date != 'Invalid Date' ) {
 					switch( option ) {
@@ -51,30 +50,63 @@ function grouper (_rows, groups, grouping) {
 				}
 			}
 
-			// creating unique arrays
-			if( typeof uniques[ii] == 'undefined' ) { uniques[ii] = [] }
+			value = value.constructor.name != 'Array' ? [value] : value;
+			positions[ii] = typeof positions[ii] == 'undefined' ? [] : positions[ii];
+
+
+			for (var iii=0; iii < value.length; iii++) {
+
+				// creating unique arrays
+				if( typeof uniques[ii] == 'undefined' ) { uniques[ii] = [] }
 		
-			var pos = unique_find(uniques[ii],value);
-			if( pos === false ) {
-				new_unique = {value: value, display: value};
-				pos = uniques[ii].push(new_unique)-1
-			}
+				var pos = unique_find(uniques[ii],value[iii]);
+				if( pos === false ) {
+					new_unique = {value: value[iii], display: value[iii]};
+					pos = uniques[ii].push(new_unique)-1;
+				}
 
-			uniques[ii][pos] = computer(uniques[ii][pos], row);
+				uniques[ii][pos] = computer(uniques[ii][pos], row);
 
-			// creating nested objects
-			positions.push(pos);
-			var depth = '['+positions.join('].rows[')+']';
-			var nested = eval('grouped.rows'+depth);
-			if( typeof nested == 'undefined' ) {
-				eval('grouped.rows'+depth+'= {_value: value, rows: [], _field: field}');
-				nested = eval('grouped.rows'+depth);
-			} 
-			if( ii == groups.length ) {
-				nested.rows.push(row);
-			}
-			nested = computer(nested, row);
-			nested.$grouping = grouping;
+				// creating nested objects
+				positions[ii][iii] = pos;
+				if( ii > 0 ) {
+					for (var iv=0; iv < ii; iv++) {
+						for (var v=0; v < positions[iv].length; v++) {
+							var deep = [positions[iv][v], positions[ii][iii]];
+							var depth = '['+deep.join('].rows[')+']';
+							var nested = eval('grouped.rows'+depth);
+
+							if( typeof nested == 'undefined' ) {
+								eval('grouped.rows'+depth+'= {_value: value[iii], rows: [], _field: field}');
+								nested = eval('grouped.rows'+depth);
+							} 
+							if( ii == groups.length ) {
+								nested.rows.push(row);
+							}
+							nested = computer(nested, row);
+							nested.$grouping = grouping;
+						};
+					};
+					
+				} else {
+					var depth = '['+positions[ii][iii]+']';
+					// var depth = '['+positions[ii][iii].join('].rows[')+']';
+					var nested = eval('grouped.rows'+depth);
+
+					if( typeof nested == 'undefined' ) {
+						eval('grouped.rows'+depth+'= {_value: value[iii], rows: [], _field: field}');
+						nested = eval('grouped.rows'+depth);
+					} 
+					if( ii == groups.length ) {
+						nested.rows.push(row);
+					}
+					nested = computer(nested, row);
+					nested.$grouping = grouping;
+				}
+
+
+			};
+
 		};
 	
 	};

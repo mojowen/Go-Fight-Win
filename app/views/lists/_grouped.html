@@ -90,7 +90,7 @@
 	</div>
 	<div class="group_box graph">
 	</div>
-	<div class="report_menu" data-bind="css: {'graph_only':$data.groups().length == 1, 'both': $data.groups().length == 2 }, visible: $data.groups().length == 2">
+	<div class="report_menu" data-bind="css: {'graph_only':$data.groups().length == 1, 'both': $data.groups().length == 2 }, visible: $data.groups().length == 2 && $data.pivot() ">
 		<p>
 			<em>- report on -</em>
 		</p>

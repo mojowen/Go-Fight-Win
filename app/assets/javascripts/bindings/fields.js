@@ -3,7 +3,7 @@ appDataModel.fields_template = function(argument) {
 
 	/** Autocomplete **/
 	//	- can't be slow
-	$('.suggest').live({
+	$('.open.suggest').live({
 		focusin: function() {
 			var ctx = ko.contextFor(this);
 			var row = ctx.$parent, field = ctx.$data;
@@ -22,8 +22,34 @@ appDataModel.fields_template = function(argument) {
 	});
 	
 	
+	function closeAutoSuggest() {
+		$('.ui-autocomplete-input').autocomplete('destroy');
+	}
+	/** Multiselect **/
+	var multiselect_options = { 
+		header: true, 
+		selectedList: 5, 
+		minWidth: 'auto',
+		height: 'auto',
+		close: function() { 
+			closeMultiSelect(this);
+		} 
+	}
 
-    
+	$('.selected .trigger_multiselect').live('click', function(e) {
+		$(this).hide().next('select.multiselect').multiselect(multiselect_options);
+	});
+
+    function closeMultiSelect() {
+		$('button.ui-multiselect').removeClass('open').not('.trigger_multiselect').prev('select').multiselect('destroy').removeClass('open').hide().prev('.trigger_multiselect').removeClass('open').show();
+	}
+	
+	/*** Scroll which kills multiselect and auto-suggest ***/
+	$('#scrolling').scroll( function() {
+		closeMultiSelect();
+		closeAutoSuggest();
+	});
+
 	/** Numbers **/
 	function num_change(val,change) {
 		if( val == '' || val == undefined ) { val = 0; }
