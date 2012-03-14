@@ -21,7 +21,11 @@
 </script>
 
 <script type="text/html" id="rowtext">
-	<textarea data-bind="value: $parent[$data.to_param], valueUpdate: 'afterkeydown'" class="data"></textarea>
+	<textarea data-bind="value: $parent[$data.to_param], valueUpdate: 'afterkeydown'" class="text data"></textarea>
+</script>
+<script type="text/html" id="rowblock">
+	<textarea data-bind="value: $parent[$data.to_param], valueUpdate: 'afterkeydown'" class="block data"></textarea>
+	<div class="block_controls field_controller"><em>Shift + Enter for line break</em</div>
 </script>
 <script type="text/html" id="rownumber">
 	<textarea class="number has_controls data" data-bind="value: $parent[$data.to_param], valueUpdate: 'afterkeydown'"></textarea>

@@ -133,7 +133,7 @@ appDataModel.keyboard_shortcuts = function(argument) {
 				pos = $('td.cell', $last.parent() ).index($last);
 			}
 			// need to do a check when this is ok
-			if( [37, 38, 39, 40, 13, 9].indexOf(e.keyCode) !== -1 && $('.grid .selected').length > 0 && $('.open').length < 1 ) { 
+			if( [37, 38, 39, 40 ].indexOf(e.keyCode) !== -1 && $('.grid .selected').length > 0 && $('.open').length < 1 ) { 
 				$('.hovered').removeClass('hovered');
 				e.preventDefault(); 
 				switch(e.keyCode){
@@ -181,10 +181,8 @@ appDataModel.keyboard_shortcuts = function(argument) {
 						break;
 					}
 				} 
-				if (  [13, 9].indexOf(e.keyCode) !== -1 && $('.grid .selected').length > 0 ) {
+				if (  e.keyCode == 9 && $('.grid .selected').length > 0   ) {
 					e.preventDefault(); 
-					switch(e.keyCode){
-					case 9:
 						if( e.shiftKey ) {
 							if( pos == 0 ) {
 								$selected.parent().prev('tr').find('td.cell:eq('+($selected.parent().find('td.cell').length-1)+')').find('.data').mousedown();
@@ -198,26 +196,30 @@ appDataModel.keyboard_shortcuts = function(argument) {
 								$selected.next('td.cell').find('.data').mousedown();
 							}
 						}
-						break;
-					case 13:
+				}
+				if (  e.keyCode == 13 && $('.grid .selected').length > 0  ) {
 						if( $selected.find('textarea, select').hasClass('open') ) {
-							$selected.find('textarea, select').removeClass('open').blur();
+							if( !e.shiftKey || !$selected.find('textarea, select').hasClass('block') ) {
+								e.preventDefault(); 
+								$selected.find('textarea, select').removeClass('open').blur().trigger('close');
+							}
 						} else {
+							e.preventDefault(); 
 							var actionable = $selected.find('textarea, select, button');
+							actionable.trigger('open');
 							if( actionable.is('button') ) {
 								actionable.addClass('open').click().nextAll('button:first').click();
-								
 							} else {
-								actionable.addClass('open').focus();
+								actionable.addClass('open').focus().trigger('open');
 							}
 						}
-						break;
 				}
-			}
 			// keypress's regardless of whether something is highlighted or not
 			switch(e.keyCode) {
 				case 83:
-					if( extra) { e.preventDefault(); saveAll({once: true});}
+					if( extra) {
+						e.preventDefault(); 
+						saveAll({once: true});}
 					break;
 				default:
 					// console.log(e.keyCode);
@@ -250,11 +252,11 @@ appDataModel.keyboard_shortcuts = function(argument) {
 			$(this).parent('td').removeClass('hovered').parents('tr').removeClass('hovered');
 		},
 		focus: function(e) {
-			$(this).not(".open").blur().parent('td').addClass('selected');
+			$(this).not(".open").blur().trigger('close').parent('td').addClass('selected');
 		},
 		dblclick: function(e) {
 			var $this = $(this);
-			$this.addClass('open').focus().parent('td').addClass('selected');
+			$this.addClass('open').focus().trigger('open').parent('td').addClass('selected');
 		},
 		focusout: function(e) {
 			$(this).removeClass('open');
@@ -265,8 +267,8 @@ appDataModel.keyboard_shortcuts = function(argument) {
 					$this = $(this);
 					if( $this.hasClass('multiselect') ) {
 
-					} else {
-						$this.val( $this.val().replace(/\n/g,'') ).blur().parent().addClass('selected');
+					} else if( !e.shiftKey || !$this.hasClass('block') ) {
+						$this.val( $this.val().replace(/\n/g,'') ).blur().trigger('close').parent().addClass('selected');
 					}
 					// remove cal
 					$this.next('.date_controls').find('.date_picker').datepicker("destroy").prev('.cal').removeClass('on');

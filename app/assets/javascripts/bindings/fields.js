@@ -125,5 +125,16 @@ appDataModel.fields_template = function(argument) {
 		var val = row[field.to_param]();
 		row[field.to_param]( num_change(val,-1) );
 	});
+	
+	/** Blocks **/
+	$('textarea.block').live({
+		open: function() {
+			$this = $(this);
+			$(this).height($this[0].scrollHeight).next('.block_controls').show();
+		},
+		focusout: function() {
+			$(this).height(28).next('.block_controls').hide();
+		}
+	});
 }
 
