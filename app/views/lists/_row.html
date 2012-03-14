@@ -37,7 +37,7 @@
 <script type="text/html" id="rowmultiselect">
 	<button type="button" class="ui-multiselect trigger_multiselect data" aria-haspopup="true" tabindex="0" >
 		<span class="ui-icon ui-icon-triangle-2-n-s"></span>
-		<span data-bind="text: $parent[$data.to_param]() != '--' ? $parent[$data.to_param]().constructor.name == 'Array' ? $parent[$data.to_param]().join(', ') : $parent[$data.to_param]().capitalize() : 'Select options' "></span>
+		<span data-bind="text: $parent[$data.to_param]() != '--' ? $parent[$data.to_param]().constructor.name == 'Array' ? $parent[$data.to_param]().length == 0 ?  'Select options' : $parent[$data.to_param]().join(', ') : $parent[$data.to_param]().capitalize() : 'Select options' "></span>
 	</button>
 	<select multiple="multiple" style="display: none;" data-bind="options: $data.field_options, selectedOptions: $parent[$data.to_param]" class="data multiselect"></select>
 </script>
