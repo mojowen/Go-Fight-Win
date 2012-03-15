@@ -28,7 +28,7 @@ appDataModel.fields_template = function(argument) {
 	/** Multiselect **/
 	var multiselect_options = { 
 		header: true, 
-		selectedList: 5, 
+		selectedList: 1, 
 		minWidth: 'auto',
 		height: 'auto',
 		close: function() { 
