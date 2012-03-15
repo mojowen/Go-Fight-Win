@@ -30,7 +30,7 @@ class ListsController < ApplicationController
           pos = @fields.index{ |f| f.id == int }
           new_fields.push( @fields.slice(pos) ) unless pos.nil?
         end
-        @fields = new_fields.concat( @fields.select{ |f| @list.operators[:order].index(f).nil? } )
+        @fields = new_fields.concat( @fields.select{ |f| @list.operators[:order].index(f.id).nil? } )
       end
     end
     
