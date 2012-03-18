@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111214212410) do
+ActiveRecord::Schema.define(:version => 20120318192903) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -27,8 +27,8 @@ ActiveRecord::Schema.define(:version => 20111214212410) do
   create_table "entries", :force => true do |t|
     t.integer  "item_id"
     t.integer  "field_id"
-    t.string   "data"
-    t.boolean  "active",     :default => true
+    t.text     "data",       :limit => 100000
+    t.boolean  "active",                       :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
   end
