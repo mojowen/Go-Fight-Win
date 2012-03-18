@@ -22,7 +22,7 @@ function prepareValue (value, field_type, args) {
 				for (var i=0; i < tmp.length; i++) {
 					if( tmp[i] != '--- ' && tmp[i] != '--' && tmp[i] != '---' && tmp[i] != '- --' && tmp[i] != '' ) { 
 						var clean = tmp[i].replace('- ','').replace(/\"/g,'').replace(/\\/g,'').trim();
-						returning.push( clean[0].toLowerCase() ); 
+						returning.push( clean.toLowerCase() ); 
 					}
 				}; 
 				break;
