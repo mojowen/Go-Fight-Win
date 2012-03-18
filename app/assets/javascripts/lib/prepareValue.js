@@ -13,7 +13,7 @@ function prepareValue (value, field_type, args) {
 				else { returning = attempt }
 				break;
 			case 'select':
-				returning = value.toLowerCase();
+				returning = value.capitalize();
 				break;
 			//Attempt at doing multi-select. Styling challenges as well as translating the data
 			case 'multiselect':
@@ -22,7 +22,7 @@ function prepareValue (value, field_type, args) {
 				for (var i=0; i < tmp.length; i++) {
 					if( tmp[i] != '--- ' && tmp[i] != '--' && tmp[i] != '---' && tmp[i] != '- --' && tmp[i] != '' ) { 
 						var clean = tmp[i].replace('- ','').replace(/\"/g,'').replace(/\\/g,'').trim();
-						returning.push( clean.toLowerCase() ); 
+						returning.push( clean.capitalize() ); 
 					}
 				}; 
 				break;

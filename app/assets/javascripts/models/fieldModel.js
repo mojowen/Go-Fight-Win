@@ -20,7 +20,7 @@ function fieldModel(data) {
 	//  Downcasing the select options
 	if( this.field_type == 'select' || this.field_type == 'multiselect' ) {
 		for (var i = this.field_options.length - 1; i >= 0; i--){
-			this.field_options[i] = this.field_options[i].toLowerCase();
+			this.field_options[i] = this.field_options[i].capitalize();
 		};
 	}
 	if( this.field_type == 'children' ) {
