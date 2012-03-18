@@ -17,7 +17,7 @@ function prepareValue (value, field_type, args) {
 				break;
 			//Attempt at doing multi-select. Styling challenges as well as translating the data
 			case 'multiselect':
-				var tmp = value.toString().toLowerCase().split(/\n/);
+				var tmp = value.toString().split(/\n/);
 				returning = [];
 				for (var i=0; i < tmp.length; i++) {
 					if( tmp[i] != '--- ' && tmp[i] != '--' && tmp[i] != '---' && tmp[i] != '- --' && tmp[i] != '' ) { 
