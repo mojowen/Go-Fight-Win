@@ -1,7 +1,7 @@
 function groupingModel(data) {
 	this.groups = ko.observableArray([]),
 	this.pivot = ko.observable(false),
-	this.report = ko.observable({name: 'contacts', report: 'sum'}),
+	this.report = ko.observable(),
 	this.columns_reports = [];
 
 	this.pivotedReports = ko.dependentObservable( function() {
@@ -17,7 +17,7 @@ function groupingModel(data) {
 								var report = _operators.goalables[pos].operations[ii].report,
 									label = _operators.goalables[pos].operations[ii].label == undefined ? report : _operators.goalables[pos].operations[ii].label;
 
-									var long_label = label+' '+_field.plural;
+									var long_label = label+': '+_field.plural;
 									long_label = long_label.capitalize();
 									options.push( {label: label, name: _field.to_param, report: report, long_label: long_label } );
 							};
@@ -38,16 +38,17 @@ function groupingModel(data) {
 				this.groups.push(new groupModel(data.groups[i]));
 			};
 			this.pivot( data.pivot == 'true' );
-			if( data.report != 'undefined' ) {
-				var report = this.pivotedReports().filter( function(el) { return el.id == parseInt(data.report.id) && el.report == data.report.report })[0];
-				this.report( report );
-			}
-			if( typeof data.columns != 'undefined' ) { 
-				for(var i in data.columns ){
-					this.columns_reports.push(data.columns[i]); 
-				}
-			}
+		}
+		if( typeof data.report != 'undefined' ) {
+			var report = this.pivotedReports().filter( function(el) { return el.id == parseInt(data.report.id) && el.report == data.report.report })[0];
+			this.report( report );
 		} 
+		if( typeof data.columns != 'undefined' ) { 
+			for(var i in data.columns ){
+				this.columns_reports.push(data.columns[i]); 
+			}
+		}
+
 	}
 
 
@@ -55,7 +56,6 @@ function groupingModel(data) {
 	// Setting up the computed variables
 	this.grouped = ko.computed( function() {
 		var groups = ko.toJS($this.groups);
-		if( dataModel.current.state() == 'analyze' && groups.length > 0 ) {
 		if( dataModel.current.state() == 'analyze' ) {
 			var results = grouper(ko.toJS(viewModel.filteredRows),  groups, $this);
 		} else {

@@ -246,16 +246,6 @@ function viewModel( data ) {
 	}, 
 	this);
 
-	//  For the pivot table and groups
-	if( view.report_on != null ) {
-		var pos = this.pivotValues().map(function(elem) { return elem.name+elem.label}).indexOf( view.report_on.name+view.report_on.label ),
-			report_on = view.report_on;
-		
-		report_on = pos === -1 ? undefined : this.pivotValues()[pos];
-		this.reportOn = ko.observable(report_on);
-	} else {
-		this.reportOn = ko.observable(undefined);
-	}
 
 // Flatten and Dirty Flag
 	this._flatten = function(return_type) {

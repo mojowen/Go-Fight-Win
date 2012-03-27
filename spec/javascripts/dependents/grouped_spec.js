@@ -44,7 +44,6 @@ describe("rows for editing after a single or double grouping", function() {
 			expect( grouping.grouped()._uniques[0][i].value ).toEqual( field_1_vals[i] );
 			expect( grouping.grouped()._uniques[1][i].value ).toEqual( field_2_vals[i] );
 		};
-	
 	});
 	it("returns uniques when grouped by one field", function() {
 		grouping.groups.push( new groupModel(field_1 ) );

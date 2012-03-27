@@ -27,9 +27,9 @@ function fieldModel(data) {
 		this.id = 0;
 	}
 
+	var field = this;
 	this.fieldReports = ko.dependentObservable({ 
 		read: function() {
-
 			var options = [];
 			if( typeof _operators != 'undefined' && typeof _operators.computables != 'undefined' ) {
 				var pos = _operators.computables.map(function(elem) {return elem.field }).indexOf(this.to_param);
@@ -40,9 +40,6 @@ function fieldModel(data) {
 				}
 			} else {
 
-				options.push( {label: 'count', name: field.name, report: 'count', id: this.id } );
-				options.push( {label: 'unique', name: field.name, report: 'unique', id: this.id } );
-
 				switch(field.field_type) {
 					case 'number': 
 						options.push( {label: 'sum', name: field.name, report: 'sum', id: this.id } );
@@ -51,6 +48,8 @@ function fieldModel(data) {
 						options.push( {label: 'min', name: field.name, report: 'min', id: this.id } );
 						break;
 					default:
+						options.push( {label: 'count', name: field.name, report: 'count', id: this.id } );
+						options.push( {label: 'unique', name: field.name, report: 'unique', id: this.id } );
 						break;
 				}
 			}
@@ -65,7 +64,7 @@ function fieldModel(data) {
 	}, 
 	this);
 
-	this.report = {label: 'count', name: field.name, report: 'count', long_label: 'Count: '+this.name.capitalize() };
+	this.report = {label: 'count', name: field.name, report: 'count', long_label: 'Count: '+this.plural.capitalize() };
 
 	return this;
 }
