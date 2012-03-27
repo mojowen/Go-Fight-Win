@@ -86,9 +86,6 @@ function viewModel( data ) {
 		this.groupings(t_groups);
 	} 
 
-
-	var pivot = typeof view.pivot == 'undefined' ? false : view.pivot;
-	this.groups.pivot = ko.observable(pivot);
 	var groups_on = typeof view.groups_on == 'undefined' ? false : view.groups_on;
 	this.groups.on = ko.computed( function() { return dataModel.current.state() == 'analyze' } );
 

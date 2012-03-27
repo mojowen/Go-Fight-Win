@@ -34,7 +34,6 @@ function groupingModel(data) {
 	// Building the groups 
 	if( typeof data != 'undefined' ){
 		if ( typeof data.groups != 'undefined' ){
-			// new group
 			for (var i in data.groups){
 				this.groups.push(new groupModel(data.groups[i]));
 			};
@@ -48,10 +47,7 @@ function groupingModel(data) {
 					this.columns_reports.push(data.columns[i]); 
 				}
 			}
-		} else {
-			// old group
-			this.groups.push(new groupModel(data));
-		}
+		} 
 	}
 
 
@@ -60,6 +56,7 @@ function groupingModel(data) {
 	this.grouped = ko.computed( function() {
 		var groups = ko.toJS($this.groups);
 		if( dataModel.current.state() == 'analyze' && groups.length > 0 ) {
+		if( dataModel.current.state() == 'analyze' ) {
 			var results = grouper(ko.toJS(viewModel.filteredRows),  groups, $this);
 		} else {
 			var results = {rows:[] };

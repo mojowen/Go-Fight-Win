@@ -19,7 +19,7 @@ appDataModel.views_template = function() {
 	$('.remove_view').live('click',function() { 
 		var view = ko.dataFor(this);
 		views.destroy(view);
-		setCurrentView(new viewModle() );
+		setCurrentView(new viewModel() );
 		try { window.history.pushState('', "Title", _url); } catch(e) { }
 		document.title = _list+' | Go. Fight. Win';
 	});
