@@ -1,9 +1,9 @@
 describe("savingViews dependent variable", function() {
-  it("returns unsaved views", function() {
-	var view = new viewModel();
-    views.push( view );
-	expect(dataModel.savingViews()[0] ).toEqual( view._flatten() );
-  });
+	//   it("returns unsaved views", function() {
+	// var view = new viewModel();
+	//     views.push( view );
+	// expect(dataModel.savingViews()[0] ).toEqual( view._flatten() );
+	//   });
   it("doesn't return non-dirty views", function() {
 	var view = new viewModel({name: 'thing', id: 1});
     views.push( view );

@@ -6,7 +6,7 @@ describe("Testing the new row template and functionality", function() {
 	field_1 = fields()[0];
 	field_2 = fields()[1];
 	field_2['field_type'] = 'select';
-	field_2['field_options'] = ['a','b','c'];
+	field_2['field_options'] = ['A','B','C'];
 	field_3 = fields()[2];
 	field_3['field_type'] = 'date';
 	field_4 = fields()[3];
@@ -70,20 +70,20 @@ describe("Testing the new row template and functionality", function() {
 	waits(1);
 	runs(function() {
 		expect(newRows()[0][field_1.to_param]() ).toEqual('first');
-		expect( $('#new_row select:first') ).toHaveValue('c');
+		expect( $('#new_row select:first') ).toHaveValue('C');
 		expect( newRows()[0][field_3.to_param]() ).toEqual( new Date('11/1/11') );
 		expect( $('#new_row textarea.date:first') ).toHaveValue( new Date('11/1/11').toDateString() );
 
 		expect( newRows()[0][field_4.to_param]() ).toEqual( 1 );
 		
 		expect(newRows()[1][field_1.to_param]() ).toEqual('second');
-		expect(newRows()[1][field_2.to_param]() ).toEqual('b');
+		expect(newRows()[1][field_2.to_param]() ).toEqual('B');
 		expect(newRows()[1][field_3.to_param]() ).toEqual( new Date('11/1/10') );
 		expect( $('#new_row textarea.date:eq(1)') ).toHaveValue( new Date('11/1/10').toDateString() );
 		expect( newRows()[1][field_4.to_param]() ).toEqual( 69 );
 		
 		expect(newRows()[2][field_1.to_param]() ).toEqual('third');
-		expect(newRows()[2][field_2.to_param]() ).toEqual('a');
+		expect(newRows()[2][field_2.to_param]() ).toEqual('A');
 		expect(newRows()[2][field_3.to_param]() ).toEqual( new Date('11/1/12') );
 		expect( $('#new_row textarea.date:eq(2)') ).toHaveValue( new Date('11/1/12').toDateString() );
 		expect( newRows()[2][field_4.to_param]() ).toEqual( 420 );
@@ -95,17 +95,17 @@ describe("Testing the new row template and functionality", function() {
 		
 		// Data is correctly added to rows
 		expect( rows()[10][field_1.to_param]() ).toEqual('first');
-		expect( rows()[10][field_2.to_param]() ).toEqual('c');
+		expect( rows()[10][field_2.to_param]() ).toEqual('C');
 		expect( rows()[10][field_3.to_param]() ).toEqual( new Date('11/1/11') );
 		expect( rows()[10][field_4.to_param]() ).toEqual( 1 );
 		
 		expect( rows()[11][field_1.to_param]() ).toEqual('second');
-		expect( rows()[11][field_2.to_param]() ).toEqual('b');
+		expect( rows()[11][field_2.to_param]() ).toEqual('B');
 		expect( rows()[11][field_3.to_param]() ).toEqual( new Date('11/1/10') );
 		expect( rows()[11][field_4.to_param]() ).toEqual( 69 );
 		
 		expect( rows()[12][field_1.to_param]() ).toEqual('third');
-		expect( rows()[12][field_2.to_param]() ).toEqual('a');
+		expect( rows()[12][field_2.to_param]() ).toEqual('A');
 		expect( rows()[12][field_3.to_param]() ).toEqual( new Date('11/1/12') );
 		expect( rows()[12][field_4.to_param]() ).toEqual( 420 );
 	});

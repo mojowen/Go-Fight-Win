@@ -7,12 +7,14 @@ describe("Testing the row template", function() {
 	};
 	views()[0].addGrouping();
 	views()[0].groupings()[0].groups.push( new groupModel(fields()[0].to_param ) );
+	views()[0].groupings()[0].report( views()[0].groupings()[0].pivotedReports()[0] );
 	views()[0].addFilter( fields()[1].to_param+' has a' );
 	views()[0].dirtyFlag.__force();
 	
 	views()[1].addGrouping();
 	views()[1].groupings()[0].groups.push( new groupModel(fields()[0].to_param ) );
 	views()[1].groupings()[0].groups.push( new groupModel(fields()[1].to_param ) );
+	views()[1].groupings()[0].report( views()[1].groupings()[0].pivotedReports()[0] );
 	views()[1].addFilter( {field: fields()[2].to_pam, operator: 'has', filter: '' } );
 
 	loadFixtures("views/lists/_row.html","views/lists/_table.html","views/lists/_views.html","views/lists/_menu.html","views/lists/_analyze.html.erb","views/lists/_grouped.html","views/lists/_groupedRow.html","views/lists/_filter.html");
@@ -50,7 +52,7 @@ describe("Testing the row template", function() {
 		$('.add_view:first').click();
 		expect( dataModel.current.view().id ).toEqual( 'new' );
 		expect( dataModel.current.view().dirtyFlag.isDirty() ).toBeTruthy();
-		expect(views().length).toEqual(view_length+1);
+		expect(views().length).toBeGreaterThan(view_length);
 	});
 
 

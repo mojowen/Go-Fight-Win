@@ -76,7 +76,7 @@ function date_fields (argument) {
 			}
 		}
 	});
-	$(".cell.date").live({
+	$(".data.date").live({
 		change: function(e) {
 			var $this = $(this);
 			var ctx = ko.contextFor(this);
@@ -114,7 +114,7 @@ function date_fields (argument) {
 					break;
 			}
 		},
-		focusin: function(e) {
+		open: function(e) {
 			openDateBox( $(this) );
 			e.preventDefault();
 		}

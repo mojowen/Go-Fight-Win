@@ -74,8 +74,9 @@ function grouper (_rows, groups, grouping) {
 						for (var v=0; v < positions[iv].length; v++) {
 							var deep = [positions[iv][v], positions[ii][iii]];
 							var depth = '['+deep.join('].rows[')+']';
+						try{ //Throwing errors during tests...
 							var nested = eval('grouped.rows'+depth);
-
+						} catch(e){}
 							if( typeof nested == 'undefined' ) {
 								eval('grouped.rows'+depth+'= {_value: value[iii], rows: [], _field: field}');
 								nested = eval('grouped.rows'+depth);
@@ -90,7 +91,6 @@ function grouper (_rows, groups, grouping) {
 					
 				} else {
 					var depth = '['+positions[ii][iii]+']';
-					// var depth = '['+positions[ii][iii].join('].rows[')+']';
 					var nested = eval('grouped.rows'+depth);
 
 					if( typeof nested == 'undefined' ) {

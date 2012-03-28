@@ -68,7 +68,7 @@
 					</td>
 					<!-- /ko -->
 
-					<!-- ko if: $data.name == 'Totals' -->
+					<!-- ko if: $data.name == 'Totals' && $parent.$grouping.pivot() -->
 					<td class="total">
 						<span data-bind="text: $parent[$parent.$grouping.report().name.toLowerCase() ][ $parent.$grouping.report().report] "></span>
 					</td>

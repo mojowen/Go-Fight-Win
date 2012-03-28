@@ -89,7 +89,7 @@
 								<span data-bind="text: $parent.grouped()[$parent.report().name.toLowerCase()][$parent.report().report]"></span>
 							<!-- /ko -->
 
-							<!-- ko if: $data.report == '_val' && $data.name != 'Totals' -->
+							<!-- ko if: $data.report == '_val' && $data.name != 'Totals' && $parent.$grouping.pivot() -->
 								<span class="total">Total</span>
 							<!-- /ko -->
 

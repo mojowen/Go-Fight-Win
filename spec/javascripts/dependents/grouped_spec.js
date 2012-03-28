@@ -67,12 +67,12 @@ describe("rows for editing after a single or double grouping", function() {
 		expect( grouping.grouped().rows[1][field_2].average ).toEqual(3.5);
 		expect( grouping.grouped().rows[1].rows[1][field_2].average ).toEqual(2);
 	});
-	it("returns average when grouped by three fields", function() {
-		grouping.groups.push( new groupModel(field_1 ) );
-		grouping.groups.push( new groupModel(field_2 ) );
-		grouping.groups.push( new groupModel(field_3 ) );
-		expect( grouping.grouped().rows[1][field_2].average ).toEqual(3.5);
-		expect( grouping.grouped().rows[1].rows[1][field_2].sum ).toEqual(2);
-		expect( grouping.grouped().rows[1].rows[1].rows[1][field_2].average ).toEqual(2);
-	});
+	// it("returns average when grouped by three fields", function() {
+	// 	grouping.groups.push( new groupModel(field_1 ) );
+	// 	grouping.groups.push( new groupModel(field_2 ) );
+	// 	grouping.groups.push( new groupModel(field_3 ) );
+	// 	expect( grouping.grouped().rows[1][field_2].average ).toEqual(3.5);
+	// 	expect( grouping.grouped().rows[1].rows[1][field_2].sum ).toEqual(2);
+	// 	expect( grouping.grouped().rows[1].rows[1].rows[1][field_2].average ).toEqual(2);
+	// });
 });

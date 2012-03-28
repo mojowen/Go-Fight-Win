@@ -2,6 +2,7 @@ function prepareValue (value, field_type, args) {
 	var returning = '';
 	var args = args || new Object;
 	if( value != undefined ) {
+		value = typeof value == 'string' ? value.trim() : value;
 		switch( field_type ){
 			case 'number':
 				if( !isNaN(parseInt(value)) ) { returning = parseInt(value); }
