@@ -28,12 +28,15 @@ appDataModel.fields_template = function(argument) {
 	}
 	/** Multiselect **/
 	var multiselect_options = { 
-		header: true, 
+		header: '<li class="other"><a class="ui-multiselect-all" href="#"><span>+ Check all</span></a></li><li class="other"><a class="ui-multiselect-none" href="#"><span>- Uncheck all</span></a></li>',
 		selectedList: 1, 
 		appendTo: '#scrolling',
-		position: {my: 'top', at: 'bottom', collision: 'none none' },
+		position: {my: 'left top', at: 'left bottom', collision: 'none none' },
 		minWidth: 'auto',
 		height: 'auto',
+		beforeclose: function() {
+			
+		},
 		close: function() { 
 			closeMultiSelect(this);
 		} 

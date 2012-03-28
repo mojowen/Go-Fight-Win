@@ -22,9 +22,10 @@ th.cell.children, td.cell.children {
 	position: relative; 
 	top: 0; 
 	left: 0; 
-	width: 100%; 
+	width: auto !important;
+	max-width: 160px;
 	height: 150px;
-	overflow-x: scroll; 
+	overflow: auto; 
 	background-color: #fff; 
 	border: 2px solid #ddd;
 }
@@ -50,8 +51,13 @@ padding: 0 6px;
 .ui-widget-header ul {
 	margin: 0;
 	font-size: 8px;
+	padding: 0;
 }
 .ui-widget-header ul li { 
+	margin: 2px 0;
+	padding: 0;
+}
+.ui-widget-header ul li.other { 
 	margin: 2px 0;
 	padding: 0;
 }
