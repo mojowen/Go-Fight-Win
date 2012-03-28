@@ -11,6 +11,7 @@ appDataModel.fields_template = function(argument) {
 			$(this)
 				.autocomplete({
 					source: ko.utils.arrayGetDistinctValues(rows().map( function(elem) { return elem[field.to_param]() } )),
+					appendTo: '#scrolling'
 				});
 		},
 		focusout: function() {
@@ -29,6 +30,8 @@ appDataModel.fields_template = function(argument) {
 	var multiselect_options = { 
 		header: true, 
 		selectedList: 1, 
+		appendTo: '#scrolling',
+		position: {my: 'top', at: 'bottom', collision: 'none none' },
 		minWidth: 'auto',
 		height: 'auto',
 		close: function() { 
@@ -44,11 +47,7 @@ appDataModel.fields_template = function(argument) {
 		$('button.ui-multiselect').removeClass('open').not('.trigger_multiselect').prev('select').multiselect('destroy').removeClass('open').hide().prev('.trigger_multiselect').removeClass('open').show();
 	}
 	
-	/*** Scroll which kills multiselect and auto-suggest ***/
-	$('#scrolling').scroll( function() {
-		closeMultiSelect();
-		closeAutoSuggest();
-	});
+
 
 	/** Numbers **/
 	function num_change(val,change) {

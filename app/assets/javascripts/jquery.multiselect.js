@@ -39,7 +39,8 @@ $.widget("ech.multiselect", {
 		hide: '',
 		autoOpen: false,
 		multiple: true,
-		position: {}
+		position: {},
+		appendTo: 'body'
 	},
 
 	_create: function(){
@@ -63,7 +64,7 @@ $.widget("ech.multiselect", {
 			menu = (this.menu = $('<div />'))
 				.addClass('ui-multiselect-menu ui-widget ui-widget-content ui-corner-all')
 				.addClass( o.classes )
-				.appendTo( document.body ),
+				.appendTo( $(document).find( o.appendTo || "body" )[0] ),
 				
 			header = (this.header = $('<div />'))
 				.addClass('ui-widget-header ui-corner-all ui-multiselect-header ui-helper-clearfix')

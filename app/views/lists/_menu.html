@@ -2,7 +2,7 @@
 <div class="f_tab b_tab switch" data-bind="css: {'on': dataModel.current.state() == 'explore' }">
 	<h2>Explore</h2>
 	<p class="filters suboption" data-bind="visible: dataModel.current.view().filters().length > 0" >
-		<em><input type="checkbox" data-bind="checked: dataModel.current.filtered"> Filtered</em>
+		<em><input type="checkbox" data-bind="checked: dataModel.current.filtered"> Constrained</em>
 	</p>
 </div>
 <div class="f_tab b_tab switch"  data-bind="css: {'on': dataModel.current.state() == 'analyze' }">
