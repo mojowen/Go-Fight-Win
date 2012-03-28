@@ -46,12 +46,13 @@ function saveAll (args) {
 							var flat = new viewModel(_views[i].data);
 							view.id = _views[i].id;
 							view.slug = _views[i].slug;
-							if( !view.dirtyFlag.reset( flat ) ) {
+							view.dirtyFlag.__force();
+							// if( !view.dirtyFlag.reset( flat ) ) {
 								// console.log('flat view')
 								// console.log(flat._flatten('json'))
 								// console.log('view view')
 								// console.log(view._flatten('json'))
-							}
+							// }
 						}
 						if( view == dataModel.current.view() ) {
 							window.history.pushState('', "Title", _url+'/'+view.to_param());

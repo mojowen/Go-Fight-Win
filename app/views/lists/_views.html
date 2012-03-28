@@ -1,6 +1,6 @@
 <div id="current_view" data-bind="with: dataModel.current.view">
 	<input id="current_view_name" data-bind="valueUpdate: 'afterkeydown', value: name, css:{ 'unsaved' : $data.dirtyFlag.isDirty(), 'untracked': views.indexOf($data) === -1  }, disable: views.indexOf($data) === -1 " >
-	<div class="clear_view_wrapper" data-bind="visible: views.indexOf($data) !== -1">(<span  class="clickable clear_view">clear</span>)</div>
+	<div class="clear_view_wrapper" data-bind="visible: views.indexOf($data) !== -1">(<span  class="clickable clear_view">close view</span>)</div>
 	<div class="clear_view_wrapper" data-bind="visible: views.indexOf($data) === -1 && $data.dirtyFlag.isDirty()">(<span  class="clickable add_view">add view</span>)</div>
 </div>
 <span class="save" data-bind="text: dataModel.savingState().text, css: {'save_ready': dataModel.savingState().enabled && dataModel.savingState().text != 'saved' }">saved</span>

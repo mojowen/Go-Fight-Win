@@ -19,7 +19,7 @@ function groupingModel(data) {
 
 									var long_label = label+': '+_field.plural;
 									long_label = long_label.capitalize();
-									options.push( {label: label, name: _field.to_param, report: report, long_label: long_label } );
+									options.push( {label: label, name: _field, report: report, long_label: long_label } );
 							};
 						}
 					} else {

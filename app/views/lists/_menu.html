@@ -11,7 +11,7 @@
 	<!-- ko foreach: views -->
 		<li class="view_row" data-bind="css: {'active': dataModel.current.view() ==  $data }"><span data-bind="text: $data.name" class="clickable view"></span><div class="remove_wrapper">(<span class="clickable remove_view">x</span>)</div></li>
 	<!-- /ko -->
-		<li class="save_view clickable add_view" data-bind="visible: views().indexOf(dataModel.current.view()) === -1">+ add current</li>
+		<li class="save_view clickable add_view" data-bind="visible: views().indexOf(dataModel.current.view()) === -1">+ add view</li>
 	</ul>
 </div>
 <div id="xls" class="f_tab s_tab" url="<%= list_path(@list.org.to_param, @list.to_param)+'.xls' %>">Export</div>

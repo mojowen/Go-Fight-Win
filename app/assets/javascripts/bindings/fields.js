@@ -1,6 +1,6 @@
 appDataModel.fields_template = function(argument) {
 	date_fields();
-
+	i = 0;
 	/** Autocomplete **/
 	//	- can't be slow
 	$('.open.suggest').live({
@@ -59,7 +59,7 @@ appDataModel.fields_template = function(argument) {
 			return val;
 		}
 	}
-	$('.number').live({
+	$('.cell.number').live({
 		change: function(e) {
 			var ctx = ko.contextFor(this);
 			var row = ctx.$parent, field = ctx.$data;
@@ -85,6 +85,7 @@ appDataModel.fields_template = function(argument) {
 			var row = ctx.$parent, field = ctx.$data;
 			var val = row[field.to_param]();
 			var $number = $(this).parent().find('.number_controls')
+			i++;
 			switch(e.keyCode){
 				case 38:
 					e.preventDefault();
@@ -105,7 +106,6 @@ appDataModel.fields_template = function(argument) {
 					row[field.to_param]( num_change(val,-10) );
 					break;
 			}
-		
 		}
 	});
 	$('.number_controls .number_up').live('click',function(e) {

@@ -76,7 +76,7 @@ function date_fields (argument) {
 			}
 		}
 	});
-	$(".date").live({
+	$(".cell.date").live({
 		change: function(e) {
 			var $this = $(this);
 			var ctx = ko.contextFor(this);

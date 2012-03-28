@@ -60,6 +60,11 @@
 						<span data-bind="text: '('+$data.fieldReports[0].label +')', visible: $data.fieldReports.length == 1"></span>
 						<!-- /ko -->
 					<!-- /ko -->
+
+					<!-- ko if: $data.report == '_val' && $data.name == 'Totals' -->
+						<span class="total">Total</span>
+					<!-- /ko -->
+
 					</th>
 
 					<!-- /ko -->
@@ -75,13 +80,19 @@
 							<!-- ko if: $data.report != '_val' && !$parent.pivot() -->
 									<span data-bind="text: $parent.grouped()[$data.to_param][$data.report().report]"></span>
 							<!-- /ko -->
+
 							<!-- ko if: $data.report == 'all' && $parent.pivot() -->
-									<span data-bind="text: $parent.grouped()._uniques[1][$parent.columns().indexOf($data)-1][$parent.report().name][$parent.report().report]"></span>
+									<span data-bind="text: $parent.grouped()._uniques[1][$parent.columns().indexOf($data)-1][$parent.report().name.toLowerCase()][$parent.report().report]"></span>
 							<!-- /ko -->
 
-							<!-- ko if: $data.name == 'Totals' -->
-								<span data-bind="text: $parent.grouped()[$parent.report().name][$parent.report().report]"></span>
+							<!-- ko if:  $data.report == '_val' && $data.name == 'Totals' -->
+								<span data-bind="text: $parent.grouped()[$parent.report().name.toLowerCase()][$parent.report().report]"></span>
 							<!-- /ko -->
+
+							<!-- ko if: $data.report == '_val' && $data.name != 'Totals' -->
+								<span class="total">Total</span>
+							<!-- /ko -->
+
 						</td>
 					<!-- /ko -->
 				</tr>

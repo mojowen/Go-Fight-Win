@@ -61,15 +61,16 @@
 					// Checks and makes sure there's data in the row and the row is defined
 					<!-- ko if: $data.report == 'all' && $parent.$grouping.pivot() -->
 					<td>
+						<!-- ko if:  $parent.rows[ $parent.$grouping.columns().indexOf($data)-1 ] --><!-- /ko -->
 						<!-- ko if: $parent.rows.length > 0 && typeof $parent.rows[ $parent.$grouping.columns().indexOf($data)-1 ] != 'undefined' -->
-							<span data-bind="text: $parent.rows[ $parent.$grouping.columns().indexOf($data)-1 ][ $parent.$grouping.report().name ][ $parent.$grouping.report().report ] "></span>
+							<span data-bind="text: $parent.rows[ $parent.$grouping.columns().indexOf($data)-1 ][ $parent.$grouping.report().name.toLowerCase() ][ $parent.$grouping.report().report ] "></span>
 						<!-- /ko -->
 					</td>
 					<!-- /ko -->
 
 					<!-- ko if: $data.name == 'Totals' -->
 					<td class="total">
-						<span data-bind="text: $parent[$parent.$grouping.report().name ][ $parent.$grouping.report().report] "></span>
+						<span data-bind="text: $parent[$parent.$grouping.report().name.toLowerCase() ][ $parent.$grouping.report().report] "></span>
 					</td>
 					<!-- /ko -->
 				<!-- /ko -->

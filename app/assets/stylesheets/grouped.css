@@ -109,3 +109,8 @@ table.grouped_table td.label {
 table.grouped_table tfoot td, table.grouped_table td.total {
 	border: #fff 2px solid;
 }
+
+td span.total, th span.total {
+	font-weight: normal;
+	font-size: 60%;
+}
