@@ -4,6 +4,7 @@ body.site {
 	width: 1060px;
 	margin: 0 auto;
 	background-color: #ddd;
+	padding-right: 160px;
 }
 body.big_header {
 }
@@ -32,3 +33,27 @@ body.big_header {
 	box-shadow: 1px 0px 30px #333;
 }
 
+/** Flexible Layout **/
+
+@media only screen and (max-width: 1200px) {
+	body.site {
+		width: 900px;
+	}
+	#header, #content  {
+		width: 710px;
+	}
+	#footer {
+		margin-left: 800px;
+	}
+}
+@media only screen and (max-width: 1000px) {
+	body.site {
+		width: 700px;
+	}
+	#header, #content  {
+		width: 510px;
+	}
+	#footer {
+		margin-left: 600px;
+	}
+}
