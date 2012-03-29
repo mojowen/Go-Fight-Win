@@ -1,11 +1,13 @@
 appDataModel.groups_template = function(argument) {
 	$('.add_group').live('click',function(e) {
 		var $this = $(this), 
-			context = ko.contextFor(this),
-			field = context.$data,
+			context = ko.contextFor(this);
+		if( typeof context != 'undefined' ){
+			var field = context.$data,
 			grouping = context.$parent;
 
 			if( grouping.groups().length < 2 ) { grouping.groups.push( new groupModel(field.to_param) ); }
+		}
 
 		// notify('Grouping, may take a sec...');
 		// var sorting = dataModel.current.view().groups().map( function(elem) { return {field: elem.field, direction: 'ASC'}; } );
@@ -15,16 +17,20 @@ appDataModel.groups_template = function(argument) {
 		// dataModel.current.view().addGroup(field.to_param);
 	});
 	$('.remove_group').live('click', function(event) {
-		var context = ko.contextFor(this),
-			grouped = context.$data,
-			grouping = context.$parent;
-		grouping.groups.remove(grouped);
-		grouping.pivot(false);
+		var context = ko.contextFor(this);
+		if( typeof context != 'undefined' ) {
+			var grouped = context.$data,
+				grouping = context.$parent;
+			grouping.groups.remove(grouped);
+			grouping.pivot(false);
+		}
 	});
 	$('.group .remove').live('click', function(event) {
-		var context = ko.contextFor(this),
-			grouping = context.$data,
-			view = context.$parent;
-		view.groupings.remove(grouping);
+		var context = ko.contextFor(this);
+		if( typeof context != 'undefined' ){
+			var grouping = context.$data,
+				view = context.$parent;
+			view.groupings.remove(grouping);
+		}
 	});
 }

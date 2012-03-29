@@ -7,7 +7,7 @@ appDataModel.analyze_template = function() {
 		var filter = ko.dataFor(this);
 		dataModel.current.view().addGrouping();
 	});
-	$(document).on('click', '.remove', function(e) {
+	$(document).on('click', '.filter .remove', function(e) {
 		var filter = ko.dataFor(this);
 		dataModel.current.view().removeFilter( filter );
 	});
