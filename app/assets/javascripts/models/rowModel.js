@@ -22,6 +22,7 @@ function rowModel(data) {
 		for (var i=0; i < fields().length; i++) {
 			var field_name = fields()[i].to_param;
 			if( init[field_name] == 'Invalid Date' ) { init[field_name] = "null"; }
+			if( init[field_name] == '--' ) { init[field_name] = ""; }
 			changed_fields[ field_name ] = prepareValue(init[field_name], fields()[i].field_type);
 		};
 		if( typeof this._destroy != 'undefined' ) { changed_fields._destroy = true; }
