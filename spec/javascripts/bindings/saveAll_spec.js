@@ -90,7 +90,7 @@ describe("Mocking Ajax Calls", function() {
 		expect(rows()[rows().length-1].dirtyFlag.isDirty()).toBeFalsy();
 		
 		
-		// expect(false).toBeTruthy();
+		// expect('pending').toEqual('completed');
 	});
 	
 	// it("adding a view calls post", function() {
@@ -198,7 +198,7 @@ describe("Mocking Ajax Calls", function() {
 	// });
 	// 
 	// it("times out", function() {
-	// 	// expect(false).toBeTruthy();
+	// 	// expect('pending').toEqual('completed');
 	// });
 	// 
 	// it("posts bad JSON", function() {

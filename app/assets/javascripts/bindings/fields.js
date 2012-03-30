@@ -34,9 +34,6 @@ appDataModel.fields_template = function(argument) {
 		position: {my: 'left top', at: 'left bottom', collision: 'none none' },
 		minWidth: 'auto',
 		height: 'auto',
-		beforeclose: function() {
-			
-		},
 		close: function() { 
 			closeMultiSelect(this);
 		} 

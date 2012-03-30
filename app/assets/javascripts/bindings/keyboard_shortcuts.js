@@ -255,8 +255,7 @@ appDataModel.keyboard_shortcuts = function(argument) {
 			$(this).not(".open").blur().trigger('close').parent('td').addClass('selected');
 		},
 		dblclick: function(e) {
-			var $this = $(this);
-			$this.addClass('open').focus().trigger('open').parent('td').addClass('selected');
+			$(this).addClass('open').focus().trigger('open').parent('td').addClass('selected');
 		},
 		focusout: function(e) {
 			$(this).removeClass('open');

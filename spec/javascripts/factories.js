@@ -36,10 +36,12 @@ function factoryList(args) {
 	args = typeof args == 'undefined' ? {} : args;
 	args.rows = typeof args.rows == 'undefined' ? 10 : args.rows;
 	args.fields = typeof args.fields == 'undefined' ? 4 : args.fields;
-	var da_rows = [], da_fields = [];
-	
+	var da_rows = [], da_fields = [], set_fields = args.fields.constructor.name == 'Array' ? args.fields : [];
+	args.fields = args.fields.constructor.name == 'Array' ? args.fields.length : args.fields;
+
 	for (var i=0; i < args.fields; i++) {
-		da_fields.push(factoryField());
+		var fill = typeof set_fields[i] != 'undefined' ? set_fields[i] : '';
+		da_fields.push(factoryField(fill));
 	};
 	fields(da_fields);
 	
