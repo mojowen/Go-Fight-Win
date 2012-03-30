@@ -1,76 +1,56 @@
 appDataModel.keyboard_shortcuts = function(argument) {
 
-	function selectMe( $target, event) {
+	$(document).keydown(function(e){
 
-	window.onbeforeunload = function() { 
-	  if ( dataModel.savingRows().length + dataModel.savingViews().length > 0 ) {
-	    return "Woah woah woah woah, you have "+dataModel.savingState().prefix+" "+dataModel.savingState().text+'.';
-	  }
-	}
-	function checkScroll(pos) {
-		dataModel.current.view().now(pos);
-		var view = ko.toJS(dataModel.current.view);
-		var bottom = pos + 17 ,
-			top = pos - 3 ;
+			appDataModel.clicking = false;
 
 			var $selected = $('.selected'),
 				pos = $('td.cell', $selected.parent() ).index($selected),
 				extra = e.ctrlKey || e.metaKey,
-				shift = e.shiftKey;
-			if( shift ) {
+				shift = e.shiftKey,
+				$obj = $selected,
 				$last = $('.last').removeClass('last');
-				if( $last.length == 0 ) { $last = $selected;}
+
+			if( shift ) { 
+				if( $last.length == 0 ) $last = $selected;
 				pos = $('td.cell', $last.parent() ).index($last);
+				$obj = $last;
 			}
-			// need to do a check when this is ok
-			if( [37, 38, 39, 40 ].indexOf(e.keyCode) !== -1 && $('.grid .selected').length > 0 && $('.open').length < 1 ) { 
-				$('.hovered').removeClass('hovered');
-				e.preventDefault(); 
+			var data = {
+				parentEvent: e,
+				selected: $selected,
+				$last: $last
+			}
+
+			if( [37, 38, 39, 40 ].indexOf(e.keyCode) !== -1 && $('.grid .selected').length > 0 && $('.open').length < 1 ) {  // If move keycode AND there's a selected cell AND there's no open cells
+				$('.hovered').removeClass('hovered'); // When we scroll, no hovered
+				e.preventDefault();
 				switch(e.keyCode){
-					case 37:
-						// Left
-						if( shift ) {
-							if( extra ) { $last = $last.parent().find('td.cell:first').addClass('last'); clicking = false; }
-							else { $last = $last.prev('td.cell').addClass('last'); }
-						 	grabem($last,$selected);
-						} else {
-							if( extra ) { $selected.parent().find('td.cell:first').find('.data').mousedown(); clicking = false; }
-							else { $selected.prev('td.cell').find('.data').mousedown(); clicking = false; }
-						}
-						rowScroll();
+					case 37: // Left
+						if( extra ) $obj.parent().find('td.cell:first').trigger('select',{data:data})
+						else $obj.prev('td.cell').trigger('select',{data:data}) 
+						appDataModel.rowScroll();
 						break;
-					case 38:
-						// Up
-						if( extra ) { 
-							dataModel.current.view().jump('top', { callback: function() { $('.grid tbody').find('tr:first td.cell:eq('+pos+')').find('.data').mousedown(); clicking = false; }}); 
-						} else { 
-							if( shift )  { $last = $last.parent().prev('tr').find('td.cell:eq('+pos+')').addClass('last'); grabem($last,$selected); rowScroll(); }
-							else {$selected.parent().prev('tr').find('td.cell:eq('+pos+')').find('.data').mousedown(); clicking = false; rowScroll(); }
-						}
-						break;
-					case 39: 
-						// Right
-						if( shift) {
-							if( extra ) { $last = $last.parent().find('td.cell:last').addClass('last'); }
-							else { $last = $last.next('td.cell').addClass('last'); }
-							grabem($last,$selected);
-						} else {
-							if( extra ) { $selected.parent().find('td.cell:last').find('.data').mousedown(); clicking = false; }
-							else { $selected.next('td.cell').find('.data').mousedown();  clicking = false; }
-						}
-						rowScroll();
-						break;
-					case 40:
-						// Down
+					case 38: // Up
 						if( extra ) {
-							dataModel.current.view().jump('bottom', { callback: function() { $('.grid tbody').find('tr:last td.cell:eq('+pos+')').find('.data').mousedown(); clicking = false; }}); 
-						} else { 
-							if( shift ) { $last = $last.parent().next('tr').find('td.cell:eq('+pos+')').addClass('last'); grabem($last,$selected); rowScroll(); }
-							else { $selected.parent().next('tr').find('td.cell:eq('+pos+')').find('.data').mousedown(); clicking = false; rowScroll(); } 
-						}
+							data.parentEvent.shiftKey = false // Setting to false as we don't let jump + select happen for up or down
+							dataModel.current.view().jump('top', { callback: function() { $('.grid tbody').find('tr:first td.cell:eq('+pos+')').trigger('select',{data:data}) }});
+						} else $obj.parent().prev('tr').find('td.cell:eq('+pos+')').trigger('select',{data:data}) 
+						break;
+					case 39: // Right
+						if( extra ) $obj.parent().find('td.cell:last').trigger('select',{data:data})
+						else $selected.next('td.cell').trigger('select',{data:data})
+						appDataModel.rowScroll();
+						break;
+					case 40: // Down
+						if( extra ) {
+							data.parentEvent.shiftKey = false // Setting to false as we don't let jump + select happen for up or down
+							dataModel.current.view().jump('bottom', { callback: function() { $('.grid tbody').find('tr:last td.cell:eq('+pos+')').trigger('select',{data:data})  }}); 
+						} else $obj.parent().next('tr').find('td.cell:eq('+pos+')').trigger('select',{data:data}) 
 						break;
 					}
 				} 
+
 				if (  e.keyCode == 9 && $('.grid .selected').length > 0   ) {
 					e.preventDefault(); 
 						if( e.shiftKey ) {
@@ -87,6 +67,7 @@ appDataModel.keyboard_shortcuts = function(argument) {
 							}
 						}
 				}
+
 				if (  e.keyCode == 13 && $('.grid .selected').length > 0  ) {
 						if( $selected.find('textarea, select').hasClass('open') ) {
 							if( !e.shiftKey || !$selected.find('textarea, select').hasClass('block') ) {
