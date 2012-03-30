@@ -14,7 +14,7 @@ function prepareValue (value, field_type, args) {
 				else { returning = attempt }
 				break;
 			case 'select':
-				returning = value.capitalize();
+				returning = typeof value.capitalize == 'function' ? value.capitalize() : value;
 				break;
 			//Attempt at doing multi-select. Styling challenges as well as translating the data
 			case 'multiselect':
