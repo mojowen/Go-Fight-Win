@@ -1,87 +1,6 @@
 appDataModel.keyboard_shortcuts = function(argument) {
-	$(document).mouseup( function(e) {
-		clicking = false;
-	});
-	function fix() {
-		$('#ideal').remove(); 
-		$('.copying').removeClass('copying');
-	}
-	
-	function selectElementContents(el) {
-		var body = document.body, range, sel;
-		if (body.createTextRange) {
-			range = body.createTextRange();
-			range.moveToElementText(el);
-			range.select();
-		} else if (document.createRange && window.getSelection) {
-			range = document.createRange();
-			range.selectNodeContents(el);
-			sel = window.getSelection();
-			sel.removeAllRanges();
-			sel.addRange(range);
-		}
-		var t = setTimeout(function() { fix(); },200);
-	}
-	$(document).bind('cut copy', function(e) {
-		$('body').append('<div id="ideal"></div>');
-		var $selected = $('.addselected, .selected').addClass('copying'),
-			rows = $selected.parent().length,
-			columns = $selected.length / rows,
-			copy = "";
-			
-		for (var i=0; i < $selected.length; i++) {
-			var value = '',
-				$this = $($selected[i]);
-
-			if( $this.hasClass('multiselect') ) {
-				value = $('select.data',$this).val();
-			} else {
-				value = $('.data',$this).val();
-			}
-
-			if( value == "" ) { value = $('.data',$this).text(); }
-			if( value == null || value == '' ) { value = '--'; }
-
-			if( (i+1) % columns === 0 ) {
-				copy += value+"\n\r"
-			} else {
-				copy += value+"\t"
-			}
-
-		}
-
-		$('#ideal').text(copy);
-		selectElementContents(document.getElementById('ideal'));
-	});
 
 	function selectMe( $target, event) {
-		var $selected = $('.selected');
-		window.getSelection().removeAllRanges();
-		if( event.shiftKey ) {
-			grabem($target, $selected);
-		} else {
-			$selected.removeClass('selected');
-			$('.addselected').removeClass('addselected');
-			$target.addClass('selected');
-		}
-	}
-	$(document).mousedown(function(e){
-		var $target = $(e.target);
-
-		if( $target.is('td.cell') ) {
-			selectMe( $target, e);
-		} else if ( $target.parents('td.cell').length > 0 ) {
-			selectMe( $target.parents('td.cell'), e )
-		} else {
-			$('.selected, .addselected, .last').removeClass('selected').removeClass('addselected').removeClass('last');
-		}
-
-		//  removes datpicker if clicking anywher but in datepicke
-
-		if( $target.parents('.hasDatepicker').length < 1 && !$target.hasClass('cal') ) {
-			$('.hasDatepicker').datepicker('destroy').prev('.cal').removeClass('on');
-		}
-	});
 
 	window.onbeforeunload = function() { 
 	  if ( dataModel.savingRows().length + dataModel.savingViews().length > 0 ) {
@@ -94,35 +13,6 @@ appDataModel.keyboard_shortcuts = function(argument) {
 		var bottom = pos + 17 ,
 			top = pos - 3 ;
 
-		if( bottom > view.end - 40 ) {
-			var add = bottom - view.end < 0 ? 1 : bottom - view.end;
-			var end = view.end + add < viewModel.filteredRows().length ?  view.end + add : viewModel.filteredRows().length;
-			dataModel.current.view().end( end )
-		}
-		if( top < view.start + 10 ) {
-			var move = top - view.start > 0 ? -1 : top - view.start;
-			var start = view.start + move > 0 ? view.start + move  : 0;
-			dataModel.current.view().start( start );
-			dataModel.current.view().end( view.end - move )
-		}
-	}
-	function rowScroll() {
-		var $scroll = $('#scrolling'),
-			position = Math.round( ( $('.selected').position().top - $scroll.position().top + $scroll.scrollTop() ) / 26 )+ 1,
-			view = ko.toJS( dataModel.current.view ),
-			now =  view.now < 3 ? 3 : view.now;
-			bottom = now + 17,
-			tiptop = now - 2;
-			if( position < tiptop  + 1 ) {
-				$scroll.scrollTop( $scroll.scrollTop() - 26 *(tiptop-position+1) )
-			}
-			if( position > bottom - 1 ) {
-				$scroll.scrollTop( $scroll.scrollTop() + 26 * (position-bottom+1)  )
-			}
-	}
-	
-	$(document).keydown(function(e){
-			clicking = false;
 			var $selected = $('.selected'),
 				pos = $('td.cell', $selected.parent() ).index($selected),
 				extra = e.ctrlKey || e.metaKey,
@@ -214,38 +104,39 @@ appDataModel.keyboard_shortcuts = function(argument) {
 							}
 						}
 				}
+
 			// keypress's regardless of whether something is highlighted or not
 			switch(e.keyCode) {
 				case 83:
-					if( extra) {
+					if( extra) { // Saving if extra is pressed
 						e.preventDefault(); 
 						saveAll({once: true});}
 					break;
-				default:
-					// console.log(e.keyCode);
 			}
-	}).keyup( function(e) {
-		switch(e.keyCode) {
-			case 191:
-				if( $(':focus').length == 0 && !dataModel.current.view().groups.on()) { 
-					$('.search_bar').find('select:first')
-				}
-				break;
-			default:
-				// console.log(e.keyCode);
-		}
+	// }).keyup( function(e) {
+	// 	switch(e.keyCode) {
+	// 		case 191: //forward slash
+	// 			if( $(':focus').length == 0 && !dataModel.current.view().groups.on()) { 
+	// 				$('.search_bar').find('select:first')
+	// 			}
+	// 			break;
+	// 		default:
+	// 			// console.log(e.keyCode);
+	// 	}
 	});
-	var clicking = false;
+
+	appDataModel.clicking = false;
+
 	$('.grid td.cell .data').live({
 		mousedown: function(e) {
-			clicking = true;
+			appDataModel.clicking = true;
 		},
 		mouseover: function(e) {
 			$(this).parent('td').addClass('hovered').parents('tr').addClass('hovered');
-			if( clicking && !e.shiftKey ) {
+			if( appDataModel.clicking && !e.shiftKey ) {
 				var $this = $('td.hovered'),
 					$selected = $('.selected');
-				grabem($this,$selected);
+				appDataModel.grabem($this,$selected);
 			}
 		}, 
 		mouseout: function(e) {
@@ -274,34 +165,9 @@ appDataModel.keyboard_shortcuts = function(argument) {
 					break;
 			}
 		}
+	
 	});
 
-// Scrolling
-	$('#scrolling').scroll(function(e) {
-		$('.hovered').removeClass('hovered');
-		var $this = $('#scrolling')
-		var pos = Math.round( ( $this.scrollTop() + $this.height() ) / 26 -17 );
-		checkScroll(pos);
-	});
 
-// Function used to seelct things
-	function grabem($begin, $end) {
-		if( $begin.length == 0 || $end.length == 0 ) { return false; }
-		$('td').removeClass('addselected');
-		// Probably could make this into a single object or something
-		var $this_y = $('tr', $begin.parents('tbody')).index($begin.parents('tr')),
-			$this_x = $('td.cell', $begin.parent()).index($begin),
-			$selected_y = $('tr', $end.parents('tbody')).index($end.parents('tr')),
-			$selected_x = $('td.cell', $end.parent()).index($end);
-		var $start_y = $selected_y > $this_y ? $this_y : $selected_y,
-			$end_y = $selected_y < $this_y ? $this_y : $selected_y,
-			$start_x = $selected_x > $this_x ? $this_x : $selected_x,
-			$end_x = $selected_x < $this_x ? $this_x : $selected_x;
-	// Grabs everything inbetween the selected cell and the newly clicked cell
-		for( var y = $start_y; y < $end_y+1; y++) {
-			for( var x = $start_x; x < $end_x+1; x++) {
-				$('tbody#edit_rows tr:eq('+y+') td.cell:eq('+x+')').addClass('addselected');
-			}
-		}
-	}
+
 }

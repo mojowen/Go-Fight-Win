@@ -1,7 +1,10 @@
 function setBindings (argument) {
+	appDataModel.custom_events();
 	appDataModel.table_template();
 	appDataModel.newRow_template();
 	appDataModel.views_template();
+	appDataModel.scrolling();
+	appDataModel.copying();
 	appDataModel.keyboard_shortcuts();
 	appDataModel.groups_template();
 	appDataModel.graph_template();
