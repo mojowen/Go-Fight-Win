@@ -32,15 +32,15 @@ function good_other_bindings (argument) {
 				'entry.5.single': $('#session_data',$this).val(),
 				'entry.2.single':  $('#current_user',$this).val(),
 				'entry.4.single': ko.toJSON(rows),
-				'entry.3.single': ko.toJSON(views),
-				'entry.6.single': ko.toJSON($.browser),
-				'submit': 'submit'
+				'entry.3.single': views().map(function(el) { return el._flatten('json')  }),
+				'entry.6.single': JSON.stringify($.browser),
+				'submit': 'Submit'
 			},
 			function(){
 				
 			}
 		);
-		$this.html('<p><strong style="color:yellow;">THANKS!</strong></p><p>get back atcha soon</p>')
+		notify('THANKS! Get back atcha soon');
 		e.preventDefault();
 	});
 }
