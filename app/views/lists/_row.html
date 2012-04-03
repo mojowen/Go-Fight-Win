@@ -32,10 +32,14 @@
 	<div class="number_controls field_controller"><span class="number_up">&#x2191;</span><span class="number_down">&#x2193;</span></div>
 </script>
 <script type="text/html" id="rowselect">
-	<select data-bind="value: $parent[$data.to_param], options: ['--'].concat($data.field_options)" class="data"></select>
+	<button type="button" class="ui-multiselect trigger_betterselect data" aria-haspopup="true" tabindex="0" >
+		<span class="ui-icon ui-icon-triangle-2-n-s"></span>
+		<span data-bind="text: $parent[$data.to_param] " ></span>
+	</button>
+	<select style="display: none;"  data-bind="value: $parent[$data.to_param], options: ['--'].concat($data.field_options)" class="data select"></select>
 </script>
 <script type="text/html" id="rowmultiselect">
-	<button type="button" class="ui-multiselect trigger_multiselect data" aria-haspopup="true" tabindex="0" >
+	<button type="button" class="ui-multiselect trigger_betterselect data" aria-haspopup="true" tabindex="0" >
 		<span class="ui-icon ui-icon-triangle-2-n-s"></span>
 		<span data-bind="text: $parent[$data.to_param]().length == 0 ? 'Select options' : $parent[$data.to_param]().length == 1 ? $parent[$data.to_param]()[0] : $parent[$data.to_param]().length +' selected'" ></span>
 	</button>

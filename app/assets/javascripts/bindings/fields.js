@@ -27,24 +27,29 @@ appDataModel.fields_template = function(argument) {
 		$('.ui-autocomplete-input').autocomplete('destroy');
 	}
 	/** Multiselect **/
-	var multiselect_options = { 
-		header: '<li class="other"><a class="ui-multiselect-all" href="#"><span>+ Check all</span></a></li><li class="other"><a class="ui-multiselect-none" href="#"><span>- Uncheck all</span></a></li>',
-		selectedList: 1, 
-		appendTo: '#scrolling',
-		position: {my: 'left top', at: 'left bottom', collision: 'none none' },
-		minWidth: 'auto',
-		height: 'auto',
-		close: function() { 
-			closeMultiSelect(this);
-		} 
-	}
+	function multiselect() {
+		return { 
+			header: '<li class="other"><a class="ui-multiselect-all" href="#"><span>+ Check all</span></a></li><li class="other"><a class="ui-multiselect-none" href="#"><span>- Uncheck all</span></a></li>',
+			selectedList: 1, 
+			appendTo: '#scrolling',
+			position: {my: 'left top', at: 'left bottom', collision: 'none none' },
+			minWidth: 'auto',
+			height: 'auto',
+			close: function() { 
+				closeMultiSelect(this);
+			}
+		}
+	};
+	var multiselect_options = new multiselect, select_options = new multiselect;
+	select_options.multiple = false;
 
-	$('.selected .trigger_multiselect').live('click', function(e) {
+	$('.selected .trigger_betterselect').live('click', function(e) {
 		$(this).hide().next('select.multiselect').multiselect(multiselect_options);
+		$(this).hide().next('select.select').multiselect(select_options);
 	});
 
     function closeMultiSelect() {
-		$('button.ui-multiselect').removeClass('open').not('.trigger_multiselect').prev('select').multiselect('destroy').removeClass('open').hide().prev('.trigger_multiselect').removeClass('open').show();
+		$('button.ui-multiselect').removeClass('open').not('.trigger_betterselect').prev('select').multiselect('destroy').removeClass('open').hide().prev('.trigger_betterselect').removeClass('open').show();
 	}
 	
 
