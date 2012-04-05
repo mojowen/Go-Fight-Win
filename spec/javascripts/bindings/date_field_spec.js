@@ -1,5 +1,5 @@
 describe("the bindings on fields with the table editor", function() {
-	var field_1;
+	var field_1, t, val;
   beforeEach(function() {
 	factoryList();
 	field_1 = fields()[0];
@@ -12,24 +12,25 @@ describe("the bindings on fields with the table editor", function() {
 	      expect($('textarea.date').length).toEqual(rows().length);
 	    });
 		it("renders date values in toDateString val", function() {
-			var val = '11/11/11';
+			val = '11/11/11';
 			rows()[0][field_1.to_param](val);
 			expect( $('textarea.date:first').val() ).toEqual( new Date(val).toDateString() );
 		});
-		// it("renders a blank row as -- not a date", function() {
-		// 	$('textarea.date:first').each( function() {
-		// 		expect( $(this).val() ).toEqual( '--' );
-		// 	});
-		// });
+		it("renders a blank row as -- not a date", function() {
+			$('textarea.date:first').each( function() {
+				expect( $(this).val() ).toEqual( '--' );
+			});
+		});
 		it("opens the calendar when clicking on the calendar icon, places cursor in text box", function() {
 			$('.cal:first').click();
 			expect( $('.data:first').next('div') ).toContain('div.ui-datepicker-inline');
 		});
 		describe("calendar is opened", function() {
-			var t = new Date();
 			beforeEach(function() {
-			  $('.data:first').dblclick().focus();
+				t  = new Date();
+				$('.data:first').dblclick().focus();
 			});
+
 			it("opens the calendar", function() {
 				expect( $('.data:first').next('div') ).toContain('div.ui-datepicker-inline');
 			});

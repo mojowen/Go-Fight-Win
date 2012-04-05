@@ -1,4 +1,4 @@
-describe("group stuff", function() {
+describe("filter stuff", function() {
 	var field;
 	beforeEach(function() {
 		factoryList();
@@ -6,7 +6,6 @@ describe("group stuff", function() {
 		rows()[0][field]('a')
 		loadFixtures("views/lists/_filter.html","views/lists/_analyze.html.erb");
 		ko.applyBindings(dataModel);
-		setBindings();
 	});
 	it("adding a filter", function() {
 		$('.add_filter').click();

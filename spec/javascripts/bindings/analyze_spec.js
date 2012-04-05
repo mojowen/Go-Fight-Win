@@ -3,7 +3,6 @@ describe("Analyze page bindings", function() {
 		factoryList();
 		loadFixtures("views/lists/_analyze.html.erb","views/lists/_groupedRow.html","views/lists/_grouped.html","views/lists/_graph.html","views/lists/_filter.html");
 		ko.applyBindings(dataModel);
-		setBindings();
 	});
 	describe("Adding and removing filters", function() {
 	  it("Clicks to add a filter to the view", function() {

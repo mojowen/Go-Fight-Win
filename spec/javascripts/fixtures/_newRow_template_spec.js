@@ -1,10 +1,8 @@
 describe("Testing the row template", function() {
   beforeEach(function() {
 	factoryList();
+	newRows.push( new rowModel({key: 'new', list: _list })  );
 	loadFixtures("views/lists/_row.html","views/lists/_newRow.html");
-	_list = 'test';
-	load();
-	setBindings();
 	ko.applyBindings(dataModel);
   });
   it("renders the fields", function() {

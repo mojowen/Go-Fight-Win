@@ -1,5 +1,5 @@
 appDataModel.analyze_template = function() {
-	$('.section').on('click', '.add_filter', function(e) {
+	$(document).on('click', '.add_filter', function(e) {
 		dataModel.current.view().addFilter();
 		e.stopPropagation();
 	});

@@ -6,7 +6,6 @@ describe("group stuff", function() {
 		rows()[0][field]('a')
 		loadFixtures("views/lists/_groupedRow.html","views/lists/_grouped.html","views/lists/_analyze.html.erb");
 		ko.applyBindings(dataModel);
-		setBindings();
 	});
 	it("adding a grouping", function() {
 		$('.add_grouping').click();
