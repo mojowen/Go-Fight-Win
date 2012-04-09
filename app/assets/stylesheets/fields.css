@@ -90,7 +90,7 @@ padding: 0 6px;
 	-o-user-select: none;
 	user-select: none;
 }
-.editor td textarea {
+.editor td textarea.open {
 	-webkit-user-select: text;
 	-khtml-user-select: text;
 	-moz-user-select: text;
