@@ -56,8 +56,9 @@ appDataModel.copying = function(argument) {
 		for (var i=0; i < $selected.length; i++) {
 			var value = '',
 				$this = $($selected[i]);
-			if( $this.hasClass('multiselect') ) {
+			if( $this.hasClass('multiselect') || $this.hasClass('select') ) {
 				value = $('select.data',$this).val();
+				value;
 			} else if ( $this.hasClass('children') ) {
 				value = $('.data',$this).text(); 
 			} else {
