@@ -58,10 +58,11 @@ appDataModel.copying = function(argument) {
 				$this = $($selected[i]);
 			if( $this.hasClass('multiselect') ) {
 				value = $('select.data',$this).val();
+			} else if ( $this.hasClass('children') ) {
+				value = $('.data',$this).text(); 
 			} else {
 				value = $('.data',$this).val();
 			}
-			if( value == "" ) { value = $('.data',$this).text(); }
 			if( value == null || value == '' ) { value = '--'; }
 			if( (i+1) % columns === 0 ) {
 				copy += value+"\n\r"
@@ -98,11 +99,6 @@ appDataModel.copying = function(argument) {
 			$('.selected, .addselected, .last').removeClass('selected').removeClass('addselected').removeClass('last');
 		}
 
-		//  removes datpicker if clicking anywher but in datepicke
-		//  TODO: Should just call close on the cell
-		if( $target.parents('.hasDatepicker').length < 1 && !$target.hasClass('cal') ) {
-			$('.hasDatepicker').datepicker('destroy').prev('.cal').removeClass('on');
-		}
 	});
 
 }

@@ -44,8 +44,10 @@ appDataModel.fields_template = function(argument) {
 	select_options.multiple = false;
 
 	$('.selected .trigger_betterselect').live('click', function(e) {
-		$(this).hide().next('select.multiselect').multiselect(multiselect_options);
-		$(this).hide().next('select.select').multiselect(select_options);
+		var $this = $(this);
+		multiselect_options.appendTo = $this.parents('.scroller'), select_options.appendTo = $this.parents('.scroller'), 
+		$this.hide().next('select.multiselect').multiselect(multiselect_options);
+		$this.hide().next('select.select').multiselect(select_options);
 	});
 
     function closeMultiSelect() {
@@ -140,5 +142,10 @@ appDataModel.fields_template = function(argument) {
 			$(this).height(28).next('.block_controls').hide();
 		}
 	});
+	
+	/** Children **/
+	$('div.children.empty').on('open',function() {
+		$(this).trigger('closeCell');
+	})
 }
 
