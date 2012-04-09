@@ -25,28 +25,29 @@ appDataModel.keyboard_shortcuts = function(argument) {
 			if( [37, 38, 39, 40 ].indexOf(e.keyCode) !== -1 && $('.grid .selected').length > 0 && $('.open').length < 1 ) {  // If move keycode AND there's a selected cell AND there's no open cells
 				$('.hovered').removeClass('hovered'); // When we scroll, no hovered
 				e.preventDefault();
+				appDataModel.clicking = false;
 				switch(e.keyCode){
 					case 37: // Left
-						if( extra ) $obj.parent().find('td.cell:first').trigger('select',{data:data})
-						else $obj.prev('td.cell').trigger('select',{data:data}) 
+						if( extra ) $obj.parent().find('td.cell:first').trigger('selectCell',{data:data})
+						else $obj.prev('td.cell').trigger('selectCell',{data:data}) 
 						appDataModel.rowScroll();
 						break;
 					case 38: // Up
 						if( extra ) {
 							data.parentEvent.shiftKey = false // Setting to false as we don't let jump + select happen for up or down
-							dataModel.current.view().jump('top', { callback: function() { $('.grid tbody').find('tr:first td.cell:eq('+pos+')').trigger('select',{data:data}) }});
-						} else $obj.parent().prev('tr').find('td.cell:eq('+pos+')').trigger('select',{data:data}) 
+							dataModel.current.view().jump('top', { callback: function() { $('.grid tbody').find('tr:first td.cell:eq('+pos+')').trigger('selectCell',{data:data}) }});
+						} else $obj.parent().prev('tr').find('td.cell:eq('+pos+')').trigger('selectCell',{data:data}) 
 						break;
 					case 39: // Right
-						if( extra ) $obj.parent().find('td.cell:last').trigger('select',{data:data})
-						else $selected.next('td.cell').trigger('select',{data:data})
+						if( extra ) $obj.parent().find('td.cell:last').trigger('selectCell',{data:data})
+						else $selected.next('td.cell').trigger('selectCell',{data:data})
 						appDataModel.rowScroll();
 						break;
 					case 40: // Down
 						if( extra ) {
 							data.parentEvent.shiftKey = false // Setting to false as we don't let jump + select happen for up or down
-							dataModel.current.view().jump('bottom', { callback: function() { $('.grid tbody').find('tr:last td.cell:eq('+pos+')').trigger('select',{data:data})  }}); 
-						} else $obj.parent().next('tr').find('td.cell:eq('+pos+')').trigger('select',{data:data}) 
+							dataModel.current.view().jump('bottom', { callback: function() { $('.grid tbody').find('tr:last td.cell:eq('+pos+')').trigger('selectCell',{data:data})  }}); 
+						} else $obj.parent().next('tr').find('td.cell:eq('+pos+')').trigger('selectCell',{data:data}) 
 						break;
 					}
 				} 
@@ -108,11 +109,13 @@ appDataModel.keyboard_shortcuts = function(argument) {
 
 	appDataModel.clicking = false;
 
-	$('.grid td.cell .data').live({
-		mousedown: function(e) {
+	$('#edit_rows td.cell, .grid .data').live({
+		mousedown: function(e) { // Default behavior when clicking on a cell
 			appDataModel.clicking = true;
+			var $this = $(this);
+			$(this).trigger('selectCell',{ data: {selected: $('.selected'), parentEvent: e} });
 		},
-		mouseover: function(e) {
+		mouseover: function(e) { // Default behaivor when hovering plus when dragging
 			$(this).parent('td').addClass('hovered').parents('tr').addClass('hovered');
 			if( appDataModel.clicking && !e.shiftKey ) {
 				var $this = $('td.hovered'),
@@ -120,24 +123,20 @@ appDataModel.keyboard_shortcuts = function(argument) {
 				appDataModel.grabem($this,$selected);
 			}
 		}, 
-		mouseout: function(e) {
+		mouseout: function(e) { // Removing the hover 
 			$(this).parent('td').removeClass('hovered').parents('tr').removeClass('hovered');
 		},
-		focus: function(e) {
-			$(this).not(".open").blur().trigger('close').parent('td').addClass('selected');
-		},
-		dblclick: function(e) {
-			$(this).addClass('open').focus().trigger('open').parent('td').addClass('selected');
+		dblclick: function(e) { 
+			$(this).trigger('openCell')
 		},
 		focusout: function(e) {
-			$(this).removeClass('open');
 		},
 		keypress: function(e) {
 			switch(e.keyCode) {
 				case 13:
 					$this = $(this);
 					if( $this.hasClass('multiselect') ) {
-
+						$this.trigger('openCell')
 					} else if( !e.shiftKey || !$this.hasClass('block') ) {
 						$this.val( $this.val().replace(/\n/g,'') ).blur().trigger('close').parent().addClass('selected');
 					}
@@ -150,5 +149,19 @@ appDataModel.keyboard_shortcuts = function(argument) {
 	});
 
 
+	$(document).mousedown(function(e){
+		var $target = $(e.target), 
+			$open = $('.open'),
+			$prev = $open.parent()
+		
+		if( !$target.is($prev) && $open.length != 0 && !$.contains($prev[0],$target[0] ) ) {
+			$open.trigger('closeCell');
+		}
+
+
+		if( $target.parents('.hasDatepicker').length < 1 && !$target.hasClass('cal') ) {
+			$('.hasDatepicker').datepicker('destroy').prev('.cal').removeClass('on');
+		}
+	});
 
 }
