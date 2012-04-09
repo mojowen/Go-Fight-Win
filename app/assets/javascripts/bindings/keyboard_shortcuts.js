@@ -137,7 +137,8 @@ appDataModel.keyboard_shortcuts = function(argument) {
 					$this = $(this);
 					if( $this.hasClass('multiselect') ) {
 						$this.trigger('openCell')
-					} else if( !e.shiftKey || !$this.hasClass('block') ) {
+					}
+					if( !e.shiftKey || !$this.hasClass('block') ) {
 						$this.val( $this.val().replace(/\n/g,'') ).blur().trigger('close').parent().addClass('selected');
 					}
 					// remove cal

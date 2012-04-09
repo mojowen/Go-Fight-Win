@@ -133,13 +133,17 @@ appDataModel.fields_template = function(argument) {
 	});
 	
 	/** Blocks **/
-	$('textarea.block').live({
+	$('textarea.block').on({
 		open: function() {
 			$this = $(this);
 			$(this).height($this[0].scrollHeight).next('.block_controls').show();
 		},
 		focusout: function() {
 			$(this).height(28).next('.block_controls').hide();
+		},
+		keypress: function() {
+			$this = $(this);
+			$(this).height($this[0].scrollHeight).next('.block_controls').show();
 		}
 	});
 	
