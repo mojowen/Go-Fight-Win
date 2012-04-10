@@ -17,7 +17,7 @@
 	</thead>
 </table>
 
-<div id="scrolling" data-bind="style: {width: (fields.width()+30)+'px'}">
+<div id="scrolling" data-bind="style: {width: (fields.width()+30)+'px'}" class="scroller">
 	<div id="viewport" data-bind="style: { height: ((dataModel.rowSize()-current.view().start())*26)+'px', paddingTop: (dataModel.current.view().start()*26)+'px'}">
 		<table border="0" cellspacing="5" cellpadding="5" class="editor grid"  data-bind="style: {width: fields.width()+'px'}">
 			<tbody id="edit_rows" data-bind="template: {name: 'row', foreach: viewModel.renderingRows }">

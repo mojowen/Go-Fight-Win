@@ -133,17 +133,19 @@ appDataModel.fields_template = function(argument) {
 	});
 	
 	/** Blocks **/
-	$('textarea.block').on({
+	$('textarea.block').live({
 		open: function() {
-			$this = $(this);
-			$(this).height($this[0].scrollHeight).next('.block_controls').show();
+			var $this = $(this),
+				height = $this[0].scrollHeight > 25 ?  $this[0].scrollHeight + 9 : 25;
+			$this.height( height ).next('.block_controls').show();
 		},
 		focusout: function() {
-			$(this).height(28).next('.block_controls').hide();
+			$(this).height(25).next('.block_controls').hide();
 		},
-		keypress: function() {
-			$this = $(this);
-			$(this).height($this[0].scrollHeight).next('.block_controls').show();
+		keydown: function() {
+			var $this = $(this),
+				height = $this[0].scrollHeight > 25 ? $this[0].scrollHeight + 9 : 25;
+			$this.height( height )
 		}
 	});
 	

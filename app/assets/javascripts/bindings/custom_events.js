@@ -10,14 +10,16 @@ appDataModel.custom_events = function(argument) {
 				$cell = $(this).is('td.cell') ? $(this) : $(this).parents('td.cell'),
 				$data = $(this).is('.data') ? $(this) : $(this).find('.data')
 
-			if( $cell.hasClass('selected') ) {
-				$data.trigger('openCell')
+			if( $cell.is($selected) ) {
+//				Not sure why this is here... removing it doens't break anything. HMMMM
+//				$data.trigger('openCell')
 			} else { // Clicking on this for the first time
 				if( shift ) { //If shift is being held
 					$cell.addClass('last'); 
 					appDataModel.grabem($cell,$selected);
 				} else {
-					$('.addselected, .selected').removeClass('addselected').removeClass('selected')
+					$('.addselected').removeClass('addselected')
+					$selected.removeClass('selected')
 					$cell.addClass('selected')
 					$data.trigger('closeCell').attr('disabled',true);
 					setTimeout(function(){ $data.attr('disabled',false)},1);

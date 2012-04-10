@@ -34,9 +34,9 @@
 <script type="text/html" id="rowselect">
 	<button type="button" class="ui-multiselect trigger_betterselect data" aria-haspopup="true" tabindex="0" >
 		<span class="ui-icon ui-icon-triangle-2-n-s"></span>
-		<span data-bind="text: $parent[$data.to_param] " ></span>
+		<span data-bind="text: $parent[$data.to_param]() == '--' || $parent[$data.to_param]() == undefined ? 'Select' : $parent[$data.to_param] " ></span>
 	</button>
-	<select style="display: none;"  data-bind="value: $parent[$data.to_param], options: ['--'].concat($data.field_options)" class="data select"></select>
+	<select style="display: none;"  data-bind="value: $parent[$data.to_param], options: $data.field_options, optionsCaption: '--'" class="data select"></select>
 </script>
 <script type="text/html" id="rowmultiselect">
 	<button type="button" class="ui-multiselect trigger_betterselect data" aria-haspopup="true" tabindex="0" >
