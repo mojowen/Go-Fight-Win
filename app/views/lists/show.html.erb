@@ -11,17 +11,17 @@
 <% content_for :extra do %>
 	<%= render :partial => 'views' %>
 <% end %>
-
-	<div id="data" data-bind="visible: !current.view().groups.on()" >
+	<div id="data" data-bind="visible: dataModel.current.state() == 'explore' " >
 		<h2 class="view_title">Your Data</h2>
 		<div id="table" class="table">
 			<%= render :partial => 'table' %>
-
-		<h2 data-bind="text: '+New Row'+newRows.plurl()"></h2>
-			<%= render :partial => 'newRow' %>
 		</div>
 	</div>
-	<div id="analyze" data-bind="visible: dataModel.current.view().groups.on()">
+	<div id="add" data-bind="visible: dataModel.current.state() == 'add' ">
+		<h2 data-bind="text: 'New Row'+newRows.plurl()"></h2>
+			<%= render :partial => 'newRow' %>
+	</div>
+	<div id="analyze" data-bind="visible: dataModel.current.state() == 'analyze' ">
 		<%= render :partial => 'analyze' %>
 	</div>
 

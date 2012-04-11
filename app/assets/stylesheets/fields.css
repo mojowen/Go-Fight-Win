@@ -28,6 +28,7 @@ th.cell.children, td.cell.children {
 	overflow: auto; 
 	background-color: #fff; 
 	border: 2px solid #ddd;
+	text-align: left;
 }
 button.trigger_multiselect, button.ui-multiselect {
 	width: 100px;
