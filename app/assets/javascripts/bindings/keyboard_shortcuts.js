@@ -146,8 +146,13 @@ appDataModel.keyboard_shortcuts = function(argument) {
 					break;
 			}
 		}
-	
 	});
+	$(document).on('click','.form .data',function(e) {
+		$(this).trigger('open');
+		e.preventDefault();
+	}).on('focusin', '.form .data', function() {
+		$(this).trigger('open');
+	})
 
 
 	$(document).mousedown(function(e){

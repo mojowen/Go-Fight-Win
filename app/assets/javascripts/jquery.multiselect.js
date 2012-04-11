@@ -401,15 +401,15 @@ $.widget("ech.multiselect", {
 
 	// set button width
 	_setButtonWidth: function(){
-		var width = this.element.outerWidth(),
-			o = this.options;
-			
-		if( /\d/.test(o.minWidth) && width < o.minWidth){
-			width = o.minWidth;
-		}
-		
-		// set widths
-		this.button.width( width );
+		// var width = this.element.outerWidth(),
+		// 	o = this.options;
+		// 	
+		// if( /\d/.test(o.minWidth) && width < o.minWidth){
+		// 	width = o.minWidth;
+		// }
+		// 
+		// // set widths
+		// this.button.width( width );
 	},
 	
 	// set menu width
