@@ -34,8 +34,9 @@ function appDataModel() {
 	this.current = {
 		me: this,
 		view: ko.observable({}),
-		state: ko.observable('explore'),
-		filtered: ko.observable(false)
+		state: ko.observable('add'),
+		filtered: ko.observable(false),
+		form: ko.observable(true)
 	};
 	var current = this.current,
 		loaded = this.loaded;
@@ -65,7 +66,7 @@ function appDataModel() {
 			for (var i=0; i < _views.length; i++) {
 				views.push( new viewModel(_views[i]) ); 
 			};
-//			_views = null;
+			_views = null;
 		}
 		if( typeof _currentView == 'undefined' ) { 
 			setCurrentView( new viewModel() );
@@ -75,7 +76,9 @@ function appDataModel() {
 			_currentView = null;
 			if( document.location.hash == '#explore' ) {
 				dataModel.current.state('explore');
-			} else {
+			} else if( document.location.hash == '#add' || document.location.hash == '#edit') {
+				dataModel.current.state('add');
+			} {
 				dataModel.current.state('analyze');
 			}
 		}
