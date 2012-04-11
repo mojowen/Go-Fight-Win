@@ -1,4 +1,4 @@
-<div class="scroller">
+<div class="scroller" data-bind="visible: !dataModel.current.form() ">
 	<table border="0" cellspacing="5" cellpadding="5" class="editor new_rows" data-bind="style: {width: fields.width()+'px'}">
 		<thead>
 			<tr>
@@ -23,3 +23,5 @@
 		</tfoot>
 	</table>
 </div>
+
+<div class="forms" data-bind="template: { name: 'form', foreach: newRows }, visible: dataModel.current.form "></div>

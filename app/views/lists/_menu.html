@@ -5,6 +5,12 @@
 		<em><input type="checkbox" data-bind="checked: dataModel.current.filtered"> Constrained</em>
 	</p>
 </div>
+<div class="f_tab b_tab switch" data-bind="css: {'on': dataModel.current.state() == 'add' }">
+	<h2>+ Add</h2>
+	<p class="suboption">
+		<em><input type="checkbox" data-bind="checked: dataModel.current.form"> Form?</em>
+	</p>
+</div>
 <div class="f_tab b_tab switch"  data-bind="css: {'on': dataModel.current.state() == 'analyze' }">
 	<h2>Analyze</h2>
 	<ul class="suboption">
