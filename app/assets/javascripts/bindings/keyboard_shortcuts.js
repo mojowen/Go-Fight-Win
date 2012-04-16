@@ -147,12 +147,15 @@ appDataModel.keyboard_shortcuts = function(argument) {
 			}
 		}
 	});
-	$(document).on('click','.form .data',function(e) {
-		$(this).trigger('open');
-		e.preventDefault();
-	}).on('focusin', '.form .data', function() {
-		$(this).trigger('open');
-	})
+	$(document).on({
+		click: function(e) {
+			$(this).trigger('open')
+			e.preventDefault();
+		},
+		focusin: function() {
+//			$(this).trigger('open')
+		}
+	},'.form .data');
 
 
 	$(document).mousedown(function(e){

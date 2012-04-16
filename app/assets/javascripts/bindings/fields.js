@@ -21,7 +21,24 @@ appDataModel.fields_template = function(argument) {
 			if( $('.ui-autocomplete').is(':hidden') ) { $(this).autocomplete('destroy'); }
 		}
 	});
-	
+	$(document).on({
+		focusin: function() {
+			var ctx = ko.contextFor(this);
+			var row = ctx.$parent, field = ctx.$data;
+			var $this = $(this);
+			$(this)
+				.autocomplete({
+					source: ko.utils.arrayGetDistinctValues(rows().map( function(elem) { return elem[field.to_param]() } )),
+					appendTo: '.form'
+				});
+		},
+		focusout: function() {
+			var ctx = ko.contextFor(this);
+			var row = ctx.$parent, field = ctx.$data;
+			row[field.to_param]( $(this).val() );
+			if( $('.ui-autocomplete').is(':hidden') ) { $(this).autocomplete('destroy'); }
+		}
+	},'.form textarea.suggest');
 	
 	function closeAutoSuggest() {
 		$('.ui-autocomplete-input').autocomplete('destroy');

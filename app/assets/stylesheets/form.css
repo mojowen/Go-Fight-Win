@@ -36,9 +36,16 @@
 .form .input {
 	display: inline-block;
 	width: 130px;
-	overflow: hidden;
 }
 .form .select .input, 
 .form .multiselect .input {
 	width: 124px;
+}
+
+ul.ui-autocomplete {
+	width: 94px;
+	text-align: left;
+}
+.form .children {
+	display: none;
 }

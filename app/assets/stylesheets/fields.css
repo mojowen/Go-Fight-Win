@@ -42,6 +42,7 @@ button.trigger_multiselect, button.ui-multiselect {
 	list-style: none;
 	margin: 0 0 0 4px;
 	padding: 0 0 0 10px;
+	text-align: left;
 }
 .ui-multiselect-menu ul li {
 	margin: 8px 0;

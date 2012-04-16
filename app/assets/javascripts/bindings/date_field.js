@@ -4,12 +4,12 @@ function date_fields (argument) {
 	function testDate(val) {
 		return val == '' || val == '--' || val == 'Invalid Date' || val == 'null' || val == undefined;
 	}
-	
+
 	//  Generic function used to open a date box
 	function openDateBox(textbox){
 		// textbox var should be a jquery object of the textarea we're wanting to mess with
 		var $this = textbox;
-		if( $this.hasClass('open') ) {
+
 			var ctx = ko.contextFor($this[0]);
 			var row = ctx.$parent, field = ctx.$data;
 			var val = row[field.to_param](), observable = row[field.to_param];
@@ -34,7 +34,7 @@ function date_fields (argument) {
 
 			if( testDate(val) ) { $this.val('--') }
 			$this.focus();
-		}
+
 	}
 
 	/** Date **/
@@ -132,7 +132,10 @@ function date_fields (argument) {
 			}
 		}
 	});
+
+
 }
+
 
 ko.bindingHandlers.datepicker = {
 	  init: function(element, valueAccessor, allBindingsAccessor) { 
@@ -154,3 +157,4 @@ $.extend($.datepicker, { updateKnockout: function (obj, ctx) {
 	row[field.to_param]( obj.val() );
 	obj.next('.date_controls').find('.date_picker').datepicker("destroy").prev('.cal').removeClass('on');
 }});
+

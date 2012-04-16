@@ -17,7 +17,8 @@ describe("the bindings on fields", function() {
 			{field_type:'multiselect',field_options:['Start','Stop','Left','Right']},
 			{field_type:'number'},
 			{field_type:'block'},
-			{field_type:'suggest'}
+			{field_type:'suggest'},
+			{field_type:'date'}
 		]
 	});
 	select = fields()[0].to_param,
@@ -25,6 +26,7 @@ describe("the bindings on fields", function() {
 	number = fields()[2].to_param,
 	block = fields()[3].to_param,
 	suggest = fields()[4].to_param
+	date = fields()[5].to_param
 
 	newRows.push( new rowModel({key: 'new', list: _list })  );
 
@@ -71,101 +73,79 @@ describe("the bindings on fields", function() {
  		expect( $('.ui-multiselect-checkboxes input:checked:first').parent() ).toHaveText('Stop');
  		expect( $('.ui-multiselect-checkboxes input:checked:last').parent() ).toHaveText('Left');
      });
+   });   
+   describe("the number bindings", function() {
+     it("opens and is changed", function() {
+ 		expect(newRows()[0][number]()).not.toEqual(69);
+ 		$('.number textarea').val(69).change();
+ 		expect(newRows()[0][number]()).toEqual('69');
+     });
+     it("updates when changed above", function() {
+ 		newRows()[0][number](420);
+ 		expect( $('.number textarea') ).toHaveValue(420);
+     });
+     it("updates when up is clicked", function() {
+ 		newRows()[0][number](2);
+		$('.form .number_up').click();
+ 		expect( $('.number textarea') ).toHaveValue(3);
+     });
+     it("updates when changed above", function() {
+ 		newRows()[0][number](2);
+		$('.form .number_down').click();
+ 		expect( $('.number textarea') ).toHaveValue(1);
+     });
    });
-		//    describe("the number bindings", function() {
-		//      it("doesn't open on first click", function() {
-		//  		$('.number textarea').mousedown();
-		//  		expect( $('.number') ).toHaveClass('selected');
-		//  		expect( $('.number .data') ).not.toHaveClass('open');
-		//      });
-		//      it("opens on double click", function() {
-		//  		$('.number textarea').dblclick();
-		//  		expect( $('.number') ).toHaveClass('selected');
-		//  		expect( $('.number .data') ).toHaveClass('open');
-		//      });
-		//      it("opens and is changed", function() {
-		//  		expect(rows()[0][number]()).not.toEqual(69);
-		//  		$('.number textarea').dblclick().val(69).change();
-		//  		expect(rows()[0][number]()).toEqual(69);
-		//      });
-		//      it("updates when changed above", function() {
-		//  		rows()[0][number](420);
-		//  		$('.number button:visible').dblclick().click();
-		//  		expect( $('.number textarea') ).toHaveValue(420);
-		//      });
-		//      it("copies empty field", function() {
-		//  		$('.number textarea').mousedown().trigger('copy');
-		//  		expect( $('#ideal').text().trim() ).toEqual('--')
-		//      });
-		//      it("copies full field", function() {
-		//  		rows()[0][number](666);
-		//  		$('.number textarea').mousedown().trigger('copy');
-		//  		expect( $('#ideal').text().trim() ).toEqual('666')
-		//      });
-		//    });
-		//    describe("the block bindings", function() {
-		//      it("doesn't open on first click", function() {
-		//  		$('.block textarea').mousedown();
-		//  		expect( $('.block') ).toHaveClass('selected');
-		//  		expect( $('.block .data') ).not.toHaveClass('open');
-		//      });
-		//      it("opens on double click", function() {
-		//  		$('.block textarea').dblclick();
-		//  		expect( $('.block') ).toHaveClass('selected');
-		//  		expect( $('.block .data') ).toHaveClass('open');
-		//      });
-		//      it("opens and is changed", function() {
-		//  		expect(rows()[0][block]()).not.toEqual("Long long long\nlong long\nlong long\nsection");
-		//  		$('.block textarea').dblclick().val("Long long long\nlong long\nlong long\nsection").change();
-		//  		expect(rows()[0][block]()).toEqual("Long long long\nlong long\nlong long\nsection");
-		// expect( $('.block textarea').dblclick().height() +4 ).toEqual( $('.block textarea')[0].scrollHeight );
-		//      });
-		//      it("updates when changed above", function() {
-		//  		rows()[0][block]("Long long long\nlong long\nlong long\nsection");
-		//  		expect( $('.block textarea') ).toHaveValue("Long long long\nlong long\nlong long\nsection");
-		//      });
-		//      it("copies empty field", function() {
-		//  		$('.block textarea').mousedown().trigger('copy');
-		//  		expect( $('#ideal').text().trim() ).toEqual('--')
-		//      });
-		//      it("copies full field", function() {
-		//  		rows()[0][block]("Long long long\nlong long\nlong long\nsection");
-		//  		$('.block textarea').mousedown().trigger('copy');
-		//  		expect( $('#ideal').text().trim() ).toEqual("Long long long\nlong long\nlong long\nsection")
-		//      });
-		//    });
-		//    describe("the suggest bindings", function() {
-		//      it("doesn't open on first click", function() {
-		//  		$('.suggest textarea').mousedown();
-		//  		expect( $('.suggest') ).toHaveClass('selected');
-		//  		expect( $('.suggest .data') ).not.toHaveClass('open');
-		//      });
-		//      it("opens on double click", function() {
-		//  		$('.suggest textarea').dblclick();
-		//  		expect( $('.suggest') ).toHaveClass('selected');
-		//  		expect( $('.suggest .data') ).toHaveClass('open');
-		//  		expect( $('.suggest .data').attr('aria-haspopup') ).toEqual('true');
-		//      });
-		//      it("opens and is changed", function() {
-		//  		expect(rows()[0][suggest]()).not.toEqual("SuggestMe");
-		//  		$('.suggest textarea').dblclick().val("SuggestMe").change();
-		//  		expect(rows()[0][suggest]()).toEqual("SuggestMe");
-		//      });
-		//      it("updates when changed above", function() {
-		//  		rows()[0][suggest]("SuggestMe");
-		//  		expect( $('.suggest textarea') ).toHaveValue("SuggestMe");
-		//      });
-		//      it("copies empty field", function() {
-		//  		$('.suggest textarea').mousedown().trigger('copy');
-		//  		expect( $('#ideal').text().trim() ).toEqual('--')
-		//      });
-		//      it("copies full field", function() {
-		//  		rows()[0][suggest]("Autosuggest");
-		//  		$('.suggest textarea').mousedown().trigger('copy');
-		//  		expect( $('#ideal').text().trim() ).toEqual("Autosuggest")
-		//      });
-		//    });
+   describe("the block bindings", function() {
+     it("opens and is changed", function() {
+ 		expect(newRows()[0][block]()).not.toEqual("Long long long\nlong long\nlong long\nsection");
+ 		$('.block textarea').val("Long long long\nlong long\nlong long\nsection").change();
+ 		expect(newRows()[0][block]()).toEqual("Long long long\nlong long\nlong long\nsection");
+     });
+     it("updates when changed above", function() {
+ 		newRows()[0][block]("Long long long\nlong long\nlong long\nsection");
+ 		expect( $('.block textarea') ).toHaveValue("Long long long\nlong long\nlong long\nsection");
+     });
+   });
+   describe("the suggest bindings", function() {
+     it("opens and is changed", function() {
+ 		expect(newRows()[0][suggest]()).not.toEqual("SuggestMe");
+ 		$('.form textarea.suggest').val("SuggestMe").change().focus();
+ 		expect( $('.form textarea.suggest').attr('aria-haspopup') ).toEqual('true');
+ 		expect(newRows()[0][suggest]()).toEqual("SuggestMe");
+     });
+   });
+  describe("the date bindings", function() {
+    it("renders a blank row as -- not a date", function() {
+		expect( $('.form textarea.date').click().val() ).toEqual('--')
+    });
+    it("opens the calendar when date textarea", function() {
+		$('.form textarea.date').click();
+		expect( $('.form textarea.date:first').next('div') ).toContain('div.ui-datepicker-inline');
+    });
+    it("opens the calendar when clicking on the calendar icon", function() {
+		$('.form .cal').click();
+		expect( $('.form textarea.date:first').next('div') ).toContain('div.ui-datepicker-inline');
+    });
+    it("presses down button date back", function() {
+		var press = $.Event("keydown"),
+			t = new Date();
+		newRows()[0][date](t.toDateString());
+		press.ctrlKey = false, 
+			press.keyCode = 40;
+		$('.form textarea.date:first').trigger(press);
+	  expect( new Date( newRows()[0][date]()).getDate() ).toEqual( t.getDate() - 1 );
+    });
+    it("presses down button date forward", function() {
+		var press = $.Event("keydown"),
+			t = new Date();
+		newRows()[0][date](t.toDateString());
+		press.ctrlKey = false, 
+			press.keyCode = 38;
+		$('.form textarea.date:first').trigger(press);
+	  expect( new Date( newRows()[0][date]()).getDate() ).toEqual( t.getDate() + 1 );
+    });
+   });
 
-		//  ALSO DATE FIELD
+
 
 });
