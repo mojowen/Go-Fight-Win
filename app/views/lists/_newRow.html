@@ -3,7 +3,7 @@
 		<thead>
 			<tr>
 				<!-- ko foreach: fields -->
-				<th>
+				<th data-bind="attr: {'class': $data.field_type }" >
 					<span data-bind="text: $data.name"></span>
 				</th>
 				<!-- /ko -->

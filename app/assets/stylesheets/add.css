@@ -46,6 +46,6 @@ ul.ui-autocomplete {
 	width: 94px;
 	text-align: left;
 }
-.form .children {
+#add .children {
 	display: none;
 }

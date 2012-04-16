@@ -150,12 +150,11 @@ appDataModel.keyboard_shortcuts = function(argument) {
 	$(document).on({
 		click: function(e) {
 			$(this).trigger('open')
-			e.preventDefault();
 		},
 		focusin: function() {
 //			$(this).trigger('open')
 		}
-	},'.form .data');
+	},'.form .data, #new_row .data');
 
 
 	$(document).mousedown(function(e){

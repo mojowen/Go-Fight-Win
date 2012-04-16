@@ -2,25 +2,7 @@ appDataModel.fields_template = function(argument) {
 	date_fields();
 	i = 0;
 	/** Autocomplete **/
-	//	- can't be slow
-	$('.open.suggest').live({
-		focusin: function() {
-			var ctx = ko.contextFor(this);
-			var row = ctx.$parent, field = ctx.$data;
-			var $this = $(this);
-			$(this)
-				.autocomplete({
-					source: ko.utils.arrayGetDistinctValues(rows().map( function(elem) { return elem[field.to_param]() } )),
-					appendTo: '#scrolling'
-				});
-		},
-		focusout: function() {
-			var ctx = ko.contextFor(this);
-			var row = ctx.$parent, field = ctx.$data;
-			row[field.to_param]( $(this).val() );
-			if( $('.ui-autocomplete').is(':hidden') ) { $(this).autocomplete('destroy'); }
-		}
-	});
+
 	$(document).on({
 		focusin: function() {
 			var ctx = ko.contextFor(this);
@@ -29,7 +11,7 @@ appDataModel.fields_template = function(argument) {
 			$(this)
 				.autocomplete({
 					source: ko.utils.arrayGetDistinctValues(rows().map( function(elem) { return elem[field.to_param]() } )),
-					appendTo: '.form'
+					appendTo: $(this).parents('.scroller, .form')
 				});
 		},
 		focusout: function() {
@@ -38,7 +20,8 @@ appDataModel.fields_template = function(argument) {
 			row[field.to_param]( $(this).val() );
 			if( $('.ui-autocomplete').is(':hidden') ) { $(this).autocomplete('destroy'); }
 		}
-	},'.form textarea.suggest');
+	},'.form textarea.suggest, .open.suggest, #new_row textarea.suggest');
+
 	
 	function closeAutoSuggest() {
 		$('.ui-autocomplete-input').autocomplete('destroy');
