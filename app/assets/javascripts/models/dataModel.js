@@ -34,7 +34,7 @@ function appDataModel() {
 	this.current = {
 		me: this,
 		view: ko.observable({}),
-		state: ko.observable('add'),
+		state: ko.observable('explore'),
 		filtered: ko.observable(false),
 		form: ko.observable(true)
 	};

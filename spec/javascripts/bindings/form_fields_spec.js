@@ -29,6 +29,8 @@ describe("the bindings on fields", function() {
 	date = fields()[5].to_param
 
 	newRows.push( new rowModel({key: 'new', list: _list })  );
+	dataModel.current.state('add')
+	
 	dataModel.current.form(true)
 	loadFixtures("views/lists/_row.html","views/lists/_newRow.html");
 	ko.applyBindings(dataModel);
