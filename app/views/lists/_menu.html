@@ -9,7 +9,10 @@
 	<h2>Analyze</h2>
 	<ul class="suboption">
 	<!-- ko foreach: views -->
-		<li class="view_row" data-bind="css: {'active': dataModel.current.view() ==  $data }"><span data-bind="text: $data.name" class="clickable view"></span><div class="remove_wrapper">(<span class="clickable remove_view">x</span>)</div></li>
+		<li class="view_row" data-bind="css: {'active': dataModel.current.view() ==  $data }">
+			<div class="remove_wrapper">(<span class="clickable remove_view">x</span>)</div>
+			<span data-bind="text: $data.name" class="clickable view"></span>
+		</li>
 	<!-- /ko -->
 		<li class="save_view clickable add_view" data-bind="visible: views().indexOf(dataModel.current.view()) === -1">+ add view</li>
 	</ul>
