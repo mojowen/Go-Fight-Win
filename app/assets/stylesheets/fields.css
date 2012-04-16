@@ -83,14 +83,14 @@ padding: 0 6px;
 
 
 
-.editor, .editor td, .editor td span, .editor, .editor td select, .editor td textarea, .editor td button, .editor td button span {
+.grid, .grid td, .grid td span, .grid, .grid td select, .grid td textarea, .grid td button, .grid td button span {
 	-webkit-user-select: none;
 	-khtml-user-select: none;
 	-moz-user-select: none;
 	-o-user-select: none;
 	user-select: none;
 }
-.editor td textarea.open {
+.editor td textarea.open, #new_row td textarea.open {
 	-webkit-user-select: text;
 	-khtml-user-select: text;
 	-moz-user-select: text;
