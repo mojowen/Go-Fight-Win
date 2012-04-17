@@ -68,20 +68,21 @@ function appDataModel() {
 			};
 			_views = null;
 		}
+
 		if( typeof _currentView == 'undefined' ) { 
 			setCurrentView( new viewModel() );
-			if( document.location.href != _url ) { try{ window.history.pushState('', "Title", _url); } catch(e) { document.location = _url; } }
+			if( document.location.href != _url ) { try{ window.history.pushState('', "Title", _url+document.location.hash); } catch(e) { document.location = _url+document.location.hash; } }
 		} else { 
 			setCurrentView( views()[_currentView] ); 
 			_currentView = null;
-			if( document.location.hash == '#explore' ) {
-				dataModel.current.state('explore');
-			} else if( document.location.hash == '#add' || document.location.hash == '#edit') {
-				dataModel.current.state('add');
-			} {
-				dataModel.current.state('analyze');
-			}
+			dataModel.current.state('analyze');
 		}
+		if( document.location.hash == '#explore' ) {
+			dataModel.current.state('explore');
+		} else if( document.location.hash == '#add' || document.location.hash == '#edit') {
+			dataModel.current.state('add');
+		}
+
 		if( rows().length >= _size ) { loaded = true; }
 		else { loadAll(); }
 		// if( typeof _operators != 'undefined' ) {
