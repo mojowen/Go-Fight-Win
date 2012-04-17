@@ -44,7 +44,7 @@ appDataModel.newRow_template = function() {
 		addAllRows();
 	});
 
-	$('#new_row .add').live('click', function() {
+	$('#new_row .add, .form .add').live('click', function() {
 		var row = ko.dataFor(this);
 		addNewRow( row );
 		notify('one new row added');
