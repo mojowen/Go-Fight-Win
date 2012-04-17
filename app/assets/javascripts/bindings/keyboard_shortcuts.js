@@ -37,6 +37,7 @@ appDataModel.keyboard_shortcuts = function(argument) {
 							data.parentEvent.shiftKey = false // Setting to false as we don't let jump + select happen for up or down
 							dataModel.current.view().jump('top', { callback: function() { $('.grid tbody').find('tr:first td.cell:eq('+pos+')').trigger('selectCell',{data:data}) }});
 						} else $obj.parent().prev('tr').find('td.cell:eq('+pos+')').trigger('selectCell',{data:data}) 
+						appDataModel.rowScroll();
 						break;
 					case 39: // Right
 						if( extra ) $obj.parent().find('td.cell:last').trigger('selectCell',{data:data})
@@ -48,6 +49,7 @@ appDataModel.keyboard_shortcuts = function(argument) {
 							data.parentEvent.shiftKey = false // Setting to false as we don't let jump + select happen for up or down
 							dataModel.current.view().jump('bottom', { callback: function() { $('.grid tbody').find('tr:last td.cell:eq('+pos+')').trigger('selectCell',{data:data})  }}); 
 						} else $obj.parent().next('tr').find('td.cell:eq('+pos+')').trigger('selectCell',{data:data}) 
+						appDataModel.rowScroll();
 						break;
 					}
 				} 

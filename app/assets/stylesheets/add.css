@@ -1,6 +1,7 @@
 .form {
 	width: 260px;
 	text-align: right;
+	margin: 0 auto;
 }
 .form textarea {
 	resize: none;
