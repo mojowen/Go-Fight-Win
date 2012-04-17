@@ -35,7 +35,8 @@ function appDataModel() {
 		me: this,
 		view: ko.observable({}),
 		state: ko.observable('explore'),
-		filtered: ko.observable(false)
+		filtered: ko.observable(false),
+		form: ko.observable(true)
 	};
 	var current = this.current,
 		loaded = this.loaded;
@@ -65,20 +66,23 @@ function appDataModel() {
 			for (var i=0; i < _views.length; i++) {
 				views.push( new viewModel(_views[i]) ); 
 			};
-//			_views = null;
+			_views = null;
 		}
+
 		if( typeof _currentView == 'undefined' ) { 
 			setCurrentView( new viewModel() );
-			if( document.location.href != _url ) { try{ window.history.pushState('', "Title", _url); } catch(e) { document.location = _url; } }
+			if( document.location.href != _url ) { try{ window.history.pushState('', "Title", _url+document.location.hash); } catch(e) { document.location = _url+document.location.hash; } }
 		} else { 
 			setCurrentView( views()[_currentView] ); 
 			_currentView = null;
-			if( document.location.hash == '#explore' ) {
-				dataModel.current.state('explore');
-			} else {
-				dataModel.current.state('analyze');
-			}
+			dataModel.current.state('analyze');
 		}
+		if( document.location.hash == '#explore' ) {
+			dataModel.current.state('explore');
+		} else if( document.location.hash == '#add' || document.location.hash == '#edit') {
+			dataModel.current.state('add');
+		}
+
 		if( rows().length >= _size ) { loaded = true; }
 		else { loadAll(); }
 		// if( typeof _operators != 'undefined' ) {

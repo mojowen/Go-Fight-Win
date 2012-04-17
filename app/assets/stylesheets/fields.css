@@ -28,6 +28,7 @@ th.cell.children, td.cell.children {
 	overflow: auto; 
 	background-color: #fff; 
 	border: 2px solid #ddd;
+	text-align: left;
 }
 button.trigger_multiselect, button.ui-multiselect {
 	width: 100px;
@@ -41,6 +42,7 @@ button.trigger_multiselect, button.ui-multiselect {
 	list-style: none;
 	margin: 0 0 0 4px;
 	padding: 0 0 0 10px;
+	text-align: left;
 }
 .ui-multiselect-menu ul li {
 	margin: 8px 0;
@@ -90,7 +92,7 @@ padding: 0 6px;
 	-o-user-select: none;
 	user-select: none;
 }
-.editor td textarea.open, #new_row td textarea.open {
+.grid td textarea.open, #new_row textarea {
 	-webkit-user-select: text;
 	-khtml-user-select: text;
 	-moz-user-select: text;

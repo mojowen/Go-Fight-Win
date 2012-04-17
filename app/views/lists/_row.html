@@ -1,7 +1,5 @@
 <script type="text/html" id="row">
-
 	<!-- ko if: typeof $data != 'undefined' -->
-
 		<tr>
 			<!-- ko if: $data._menu() != 'newRowMenu' -->
 				<td class="rownum" data-bind="text: rows.indexOf($data) + 1"></td>
@@ -17,7 +15,24 @@
 			<!--<td data-bind="text: new Date().toLocaleTimeString()"></td>-->
 		</tr>
 	<!-- /ko -->
-
+</script>
+<script type="text/html" id="form">
+	<!-- ko if: typeof $data != 'undefined' -->
+		<div class="form">
+			<!-- ko if: $data._menu() != 'newRowMenu' && false -->
+				<td class="rownum" data-bind="text: rows.indexOf($data) + 1"></td>
+			<!-- /ko -->
+			<!-- ko foreach: fields -->
+			<div data-bind="attr: {'class': 'field '+$data.field_type }" >
+				<label data-bind="text: $data.name"></label>
+				<div class="input" >
+					<!-- ko template: {name: 'row'+$data.field_type } -->
+					<!-- /ko -->
+				</div>
+			</div>
+			<!-- /ko -->
+		</div>
+	<!-- /ko -->
 </script>
 
 <script type="text/html" id="rowtext">

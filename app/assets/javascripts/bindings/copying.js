@@ -92,13 +92,14 @@ appDataModel.copying = function(argument) {
 	$(document).mousedown(function(e){
 		var $target = $(e.target);
 
-		if( $target.is('td.cell') ) {
+		if( $target.is('.grid td.cell') ) {
 			selectMe( $target, e);
-		} else if ( $target.parents('td.cell').length > 0 ) {
+		} else if ( $target.parents('.grid td.cell').length > 0 ) {
 			selectMe( $target.parents('td.cell'), e )
 		} else {
-			$('.selected, .addselected, .last').removeClass('selected').removeClass('addselected').removeClass('last');
+			$('.grid .selected, .grid .addselected, .grid .last').removeClass('selected').removeClass('addselected').removeClass('last');
 		}
+
 
 	});
 

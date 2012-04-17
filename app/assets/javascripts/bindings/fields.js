@@ -2,8 +2,8 @@ appDataModel.fields_template = function(argument) {
 	date_fields();
 	i = 0;
 	/** Autocomplete **/
-	//	- can't be slow
-	$('.open.suggest').live({
+
+	$(document).on({
 		focusin: function() {
 			var ctx = ko.contextFor(this);
 			var row = ctx.$parent, field = ctx.$data;
@@ -11,7 +11,7 @@ appDataModel.fields_template = function(argument) {
 			$(this)
 				.autocomplete({
 					source: ko.utils.arrayGetDistinctValues(rows().map( function(elem) { return elem[field.to_param]() } )),
-					appendTo: '#scrolling'
+					appendTo: $(this).parents('.scroller, .form')
 				});
 		},
 		focusout: function() {
@@ -20,8 +20,8 @@ appDataModel.fields_template = function(argument) {
 			row[field.to_param]( $(this).val() );
 			if( $('.ui-autocomplete').is(':hidden') ) { $(this).autocomplete('destroy'); }
 		}
-	});
-	
+	},'.form textarea.suggest, .open.suggest, #new_row textarea.suggest');
+
 	
 	function closeAutoSuggest() {
 		$('.ui-autocomplete-input').autocomplete('destroy');
@@ -43,18 +43,19 @@ appDataModel.fields_template = function(argument) {
 	var multiselect_options = new multiselect, select_options = new multiselect;
 	select_options.multiple = false;
 
-	$('.selected .trigger_betterselect').live('click', function(e) {
+	$(document).on('open', '.trigger_betterselect', function(e) {
 		var $this = $(this);
-		multiselect_options.appendTo = $this.parents('.scroller'), select_options.appendTo = $this.parents('.scroller'), 
+		multiselect_options.appendTo = $this.parents('.scroller, .form'), select_options.appendTo = $this.parents('.scroller, .form');
+		if( $this.parents('#edit_rows').length < 1 ) multiselect_options.autoOpen = true, select_options.autoOpen = true;
 		$this.hide().next('select.multiselect').multiselect(multiselect_options);
 		$this.hide().next('select.select').multiselect(select_options);
 	});
+	
 
     function closeMultiSelect() {
 		$('button.ui-multiselect').removeClass('open').not('.trigger_betterselect').prev('select').multiselect('destroy').removeClass('open').hide().prev('.trigger_betterselect').removeClass('open').show();
 	}
 	
-
 
 	/** Numbers **/
 	function num_change(val,change) {
@@ -133,7 +134,7 @@ appDataModel.fields_template = function(argument) {
 	});
 	
 	/** Blocks **/
-	$('textarea.block').live({
+	$('.grid textarea.block').live({
 		open: function() {
 			var $this = $(this),
 				height = $this[0].scrollHeight > 25 ?  $this[0].scrollHeight + 9 : 25;

@@ -40,5 +40,6 @@ appDataModel.scrolling = function(argument) {
 		var pos = Math.round( ( $this.scrollTop() + $this.height() ) / 26 -17 );
 		checkScroll(pos);
 	});
-	
+	// Mating grid editor size to viewport
+	$('#data .scroller').css('max-height',$(window).height()-164+'px')
 }

@@ -199,8 +199,4 @@ describe("the bindings on fields", function() {
  		expect( $('#ideal').text().trim() ).toEqual("Autosuggest")
      });
    });
-it("description", function() {
-  expect('pending').toEqual('complete');
-});
-
 });
