@@ -6,7 +6,7 @@ function appDataModel() {
 	views = ko.observableArray([]),
 	saving = ko.observable(true);
 	fields.width = ko.computed( function() {
-		computed = 100 + 33; // rownum + rowend
+		computed = 100 + 63; // rownum + rowend
 		for (var i=0; i < fields().length; i++) {
 			switch(fields()[i].field_type) {
 				case 'date':
@@ -29,15 +29,20 @@ function appDataModel() {
 		};
 		return computed;
 	});
-	
 	this.loaded = false,
 	this.current = {
 		me: this,
 		view: ko.observable({}),
 		state: ko.observable('explore'),
 		filtered: ko.observable(false),
-		form: ko.observable(true)
+		form: ko.observable(true),
+		height: ko.observable(800),
+		width: ko.observable(1040)
 	};
+	this.current.height.scroll = ko.computed( function() {
+		return Math.round(this.height() / 33 ) - 1
+	},this.current)
+	
 	var current = this.current,
 		loaded = this.loaded;
 
@@ -89,6 +94,10 @@ function appDataModel() {
 		// 	this.operators = _operators;
 		// 	// _operators = null;
 		// }
+
+		// Setting height and width
+		current.height( $('#scrolling').height() )
+		current.width( $('#scrolling').width() )
 	}
 	setCurrentView = function(newView) {
 		if( newView.constructor.name == 'viewModel' ) {

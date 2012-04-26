@@ -9,6 +9,7 @@
 //= require jquery_ujs
 //= require knockout-latest.debug
 //= require jquery.multiselect.js
+//= require scrollsync.js
 //= require_tree ./lib
 //= require_tree ./models
 //= require_tree ./dependents

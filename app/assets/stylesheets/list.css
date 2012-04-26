@@ -1,11 +1,16 @@
 #table {
-	overflow-x: scroll;
+	overflow: hidden;
 	margin: 30px -40px -80px;
 }
 .scroller {
-	overflow-y: scroll; 
+	overflow: scroll; 
 	max-height: 800px;
 	min-height: 160px;
+	width: 100%;
+}
+.scroll_head {
+	overflow: hidden;
+	width: 99%;
 }
 }
 h2.view_title {

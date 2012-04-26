@@ -1,24 +1,27 @@
-<div style="display: none;">
+
+<div >
 	<span data-bind="text: dataModel.current.view().start"></span>  -
 	<span data-bind="text: dataModel.current.view().now"></span>  -
 	<span data-bind="text: dataModel.current.view().end"></span>
 </div>
-<table border="0" cellspacing="5" cellpadding="5" class="editor grid" data-bind="style: {width: fields.width()+'px'}">
-	<thead>
-		<tr>
-			<th class="rownum" ></th>
-			<!-- ko foreach: fields -->
-			<th data-bind="attr: {'class':$data.field_type+' cell'}">
-				<span class="clickable" data-bind="text: $data.name"></span>
-			</th>
-			<!-- /ko -->
-			<th class="rowend"></th>
-		</tr>
-	</thead>
-</table>
 
-<div id="scrolling" data-bind="style: {width: (fields.width()+30)+'px'}" class="scroller">
-	<div id="viewport" data-bind="style: { height: ((dataModel.rowSize()-current.view().start())*26)+'px', paddingTop: (dataModel.current.view().start()*26)+'px'}">
+<div class="scroll_head">
+	<table border="0" cellspacing="5" cellpadding="5" class="editor grid" data-bind="style: {width: fields.width()+'px'}">
+		<thead>
+			<tr>
+				<th class="rownum" ></th>
+				<!-- ko foreach: fields -->
+				<th data-bind="attr: {'class':$data.field_type+' cell'}">
+					<span class="clickable" data-bind="text: $data.name"></span>
+				</th>
+				<!-- /ko -->
+				<th class="rowend"></th>
+			</tr>
+		</thead>
+	</table>
+</div>
+<div id="scrolling" data-bind="style: { height: current.height()+'px'}" class="scroller">
+	<div id="viewport" data-bind="style: { height: ((dataModel.rowSize()-current.view().start())*33)+'px', paddingTop: (dataModel.current.view().start()*33)+'px',width: fields.width()+'px'}">
 		<table border="0" cellspacing="5" cellpadding="5" class="editor grid"  data-bind="style: {width: fields.width()+'px'}">
 			<tbody id="edit_rows" data-bind="template: {name: 'row', foreach: viewModel.renderingRows }">
 			</tbody>

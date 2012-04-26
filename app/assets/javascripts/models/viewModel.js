@@ -5,7 +5,7 @@ function viewModel( data ) {
 	else { var view = data }
 
 	this.now = ko.observable(0);
-	this.end = ko.observable(30);
+	this.end = ko.observable(90);
 	this.start =  ko.observable(0);
 	
 	this.jump = function(row,args) {
