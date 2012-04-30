@@ -44,4 +44,7 @@ appDataModel.scrolling = function(argument) {
 		checkScroll(pos);
 	});
 	$('#scrolling, .scroll_head').scrollsync({targetSelector: '#scrolling', axis : 'x'});
+	$(window).resize(function(e){
+		dataModel.current.height( $(window).height() - 200 )
+	})
 }

@@ -96,7 +96,7 @@ function appDataModel() {
 		// }
 
 		// Setting height and width
-		current.height( $('#scrolling').height() )
+		current.height( $(window).height() - 200 )
 		current.width( $('#scrolling').width() )
 	}
 	setCurrentView = function(newView) {
