@@ -1,6 +1,7 @@
 appDataModel.scrolling = function(argument) {
 	function checkScroll(pos) {
 		var pos =  pos > 0 ? pos : 0
+		if( dataModel.current.view().now() == pos ) return false // If position hasn't changed, end
 		dataModel.current.view().now(pos);
 		var view = ko.toJS(dataModel.current.view),
 			scrollV = dataModel.current.height.scroll()
@@ -38,6 +39,7 @@ appDataModel.scrolling = function(argument) {
 
 	// Scrolling
 	$('#scrolling').scroll(function(e) {
+		var d = new Date()
 		$('.hovered').removeClass('hovered');
 		var $this = $('#scrolling')
 		var pos = Math.round( ( $this.scrollTop() + $this.height() ) / 33 - dataModel.current.height.scroll() + 2); // position = scroll of top scroll + possible height of top scroll ~ converted to row number - rows that can fit + 2 or so off the top
