@@ -43,14 +43,14 @@ appDataModel.fields_template = function(argument) {
 	var multiselect_options = new multiselect, select_options = new multiselect;
 	select_options.multiple = false;
 
-	$(document).on('open', '.form .trigger_betterselect', function(e) {
+	$(document).on('click', '.form .trigger_betterselect', function(e) {
 		var $this = $(this);
 		multiselect_options.appendTo = $this.parents('.form'), select_options.appendTo = $this.parents('.form');
 		if( $this.parents('#edit_rows').length < 1 ) multiselect_options.autoOpen = true, select_options.autoOpen = true;
 		$this.hide().next('select.multiselect').multiselect(multiselect_options);
 		$this.hide().next('select.select').multiselect(select_options);
 	});
-	$(document).on('open', '.scroller .trigger_betterselect', function(e) {
+	$(document).on('click', '.scroller .trigger_betterselect', function(e) {
 		var $this = $(this);
 		multiselect_options.appendTo = $this.parents('.scroller'), select_options.appendTo = $this.parents('.scroller');
 		if( $this.parents('#edit_rows').length < 1 ) multiselect_options.autoOpen = true, select_options.autoOpen = true;
