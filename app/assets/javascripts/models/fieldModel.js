@@ -65,6 +65,27 @@ function fieldModel(data) {
 	this);
 
 	this.report = {label: 'count', name: field.name, report: 'count', long_label: 'Count: '+this.plural.capitalize() };
-
+	this.width = ko.computed(function() {
+		var computed = 0
+		switch(this.field_type) {
+			case 'date':
+				computed += 150;
+				break;
+			case 'select':
+				computed += 102;
+				break;
+			case 'children':
+				computed += 120;
+				break;
+			case 'number':
+				computed += 88;
+				break;
+			default:
+				computed += 122;
+				break;
+		}
+		computed += 2 // for the borders
+		return computed
+	},this)
 	return this;
 }
