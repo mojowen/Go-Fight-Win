@@ -36,11 +36,12 @@ function good_other_bindings (argument) {
 				'entry.6.single': JSON.stringify($.browser),
 				'submit': 'Submit'
 			},
-			function(){
-				
-			}
+			function(){}
 		);
 		notify('THANKS! Get back atcha soon');
+		$('.overlayer').removeClass('on');
+		$('#overlay, #overlay div:visible').hide();
+		$('#header, #footer').css('position','fixed');
 		e.preventDefault();
 	});
 }
