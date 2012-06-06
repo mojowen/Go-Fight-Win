@@ -1,27 +1,17 @@
 <script type="text/html" id="row">
-	<!-- ko if: typeof $data != 'undefined' -->
-		<tr>
-			<!-- ko if: $data._menu() != 'newRowMenu' -->
-				<td class="rownum" data-bind="text: rows.indexOf($data) + 1"></td>
-			<!-- /ko -->
-			<!-- ko foreach: fields -->
-			<td data-bind="attr: {'class': 'cell '+$data.field_type }" >
-				<!-- ko template: {name: 'row'+$data.field_type } -->
-				<!-- /ko -->
-			</td>
-			<!-- /ko -->
-			<td class="menu" data-bind="template: {name: $data._menu()} ">
-			</td>
-			<!--<td data-bind="text: new Date().toLocaleTimeString()"></td>-->
-		</tr>
-	<!-- /ko -->
+	<tr>
+		<td class="rownum" data-bind="text: $index()+1"></td>
+		<!--<td data-bind="text: new Date().toLocaleTimeString()"></td>-->
+		<!-- ko foreach: fields -->
+		<td data-bind="attr: {'class': 'cell '+$data.field_type }, template : { name: 'row'+$data.field_type }" >
+		</td>
+		<!-- /ko -->
+		<td class="menu" data-bind="template: {name: $data._menu()} ">
+		</td>
+	</tr>
 </script>
 <script type="text/html" id="form">
-	<!-- ko if: typeof $data != 'undefined' -->
 		<div class="form">
-			<!-- ko if: $data._menu() != 'newRowMenu' && false -->
-				<td class="rownum" data-bind="text: rows.indexOf($data) + 1"></td>
-			<!-- /ko -->
 			<!-- ko foreach: fields -->
 			<div data-bind="attr: {'class': 'field '+$data.field_type }" >
 				<label data-bind="text: $data.name"></label>
@@ -33,7 +23,6 @@
 			<!-- /ko -->
 			<button class="add clickable">Add</span>
 		</div>
-	<!-- /ko -->
 </script>
 
 <script type="text/html" id="rowtext">

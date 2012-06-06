@@ -23,6 +23,6 @@
 		<li class="save_view clickable add_view" data-bind="visible: views().indexOf(dataModel.current.view()) === -1">+ add view</li>
 	</ul>
 </div>
-<div id="xls" class="f_tab s_tab" url="<%= list_path(@list.org.to_param, @list.to_param)+'.xls' %>">Export</div>
+<a id="xls" class="f_tab s_tab" href="<%= list_path(@list.org.to_param, @list.to_param)+'.xls' %>">Export</a>
 <div id="bug" class="f_tab s_tab overlayer">Bug</div>
 <div id="help" class="f_tab s_tab overlayer">?</div>
