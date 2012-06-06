@@ -1,8 +1,10 @@
 viewModel.renderingRows = ko.computed(
 	{ read: function() {
-		var results = viewModel.filteredRows().slice(dataModel.current.view().start(), dataModel.current.view().end()) ;
+		var start = typeof dataModel.current.view().start != 'undefined' ? dataModel.current.view().start() : 0,
+			end = typeof dataModel.current.view().end != 'undefined' ? dataModel.current.view().end() : 90,
+			results = viewModel.filteredRows().slice(start,end)
 		return results;
 	}, 
 	deferEvaluation: true
 },
-viewModel);
+viewModel).extend({ throttle: 1 });

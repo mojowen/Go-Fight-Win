@@ -10,7 +10,7 @@ appDataModel.scrolling = function(argument) {
 			bottom = pos + 10,
 			top = pos - 10 ;
 
-
+		var l = new Date();
 		if( bottom > view.end - 40 ) {
 			var add = bottom - view.end < 0 ? 1 : bottom - view.end;
 			var end = view.end + add < viewModel.filteredRows().length ?  view.end + add : viewModel.filteredRows().length;
@@ -25,6 +25,8 @@ appDataModel.scrolling = function(argument) {
 		}
 
 		dataModel.current.view().now(pos);
+
+		
 	}
 
 	appDataModel.rowScroll = function() {
