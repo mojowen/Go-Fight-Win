@@ -47,6 +47,7 @@ function appDataModel() {
 			for (var i=0; i < _rows.length; i++) {
 				temp_rows.push( new rowModel(_rows[i]) ); 
 			};
+			temp_rows.sort(function(a,b) { return a.key() > b.key() ? -1 : 1 } )[0]
 			rows(temp_rows);
 			_rows = null;
 			temp_rows = null;
@@ -100,7 +101,7 @@ function appDataModel() {
 	}
 	addRow = function(rowData) {
 		if( rowData.constructor.name == 'rowModel' ) {
-			rows.push( rowData );
+			rows.unshift( rowData );
 			// This is where deduplicating methods, etc, could fit
 			current.view().sortRows();
 		}
