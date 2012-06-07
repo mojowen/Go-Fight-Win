@@ -101,15 +101,21 @@ describe("vieModel can be initalized ", function() {
 				rows()[3][ field_2 ]('1');
 		    });
 			it("sorts some fucking rows by one field", function() {
-				dataModel.current.view().addSort({field: field_1, direction: 'DESC'});
-				dataModel.current.view().sortRows();
-				expect( viewModel.renderingRows()[0][field_1]() ).toEqual('z');
+				runs( function() { 
+					dataModel.current.view().addSort({field: field_1, direction: 'DESC'});
+					dataModel.current.view().sortRows();
+				})
+				waits(20)
+				runs( function() {expect( viewModel.renderingRows()[0][field_1]() ).toEqual('z');});
 			});
 			it("sorts some fucking rows by two fields", function() {
-				dataModel.current.view().addSort({field: field_1, direction: 'DESC'});
-				dataModel.current.view().addSort(field_2)
-				dataModel.current.view().sortRows();
-				expect( viewModel.renderingRows()[0][field_2]() ).toEqual('1');
+				runs( function() {
+					dataModel.current.view().addSort({field: field_1, direction: 'DESC'});
+					dataModel.current.view().addSort(field_2)
+					dataModel.current.view().sortRows();
+				})
+				waits(20)
+				runs( function(){expect( viewModel.renderingRows()[0][field_2]() ).toEqual('1');});
 			});
 		});
 	});

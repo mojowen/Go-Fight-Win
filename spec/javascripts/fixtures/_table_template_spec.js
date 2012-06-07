@@ -18,14 +18,15 @@ describe("Testing the row template", function() {
   });
   it("renders all the fields with the correct data", function() {
 	rows()[0][fields()[0].to_param]('a vallluse');
-	expect( $('textarea:first').val() ).toEqual('a vallluse');
+	expect( $('tr:last .data:first textarea:').val() ).toEqual('a vallluse');
   });
   it("renders the menus for normal rows", function() {
-	expect($('tbody tr:first td:last').html().trim() ).toEqual("<span class=\"remove clickable\">\n\t\tDelete\n\t</span>");
+	expect($('tbody tr:eq(1) td:last').html().trim() ).toEqual("<span class=\"remove clickable\">\n\t\tDelete\n\t</span>");
   });
   it("renders the menus for new rows", function() {
-	rows.push( new rowModel({key: 'new', list: _list })  );
-	expect($('tbody tr:last td:last').html()).toEqual("\n\t<span class=\"remove clickable\">Discard</span>\n");
+	runs( function() { rows.push( new rowModel({key: 'new', list: _list })  ); },)
+	waits(20)
+	runs( function() { expect($('tbody tr:first td:last').html()).toEqual("\n\t<span class=\"remove clickable\">Discard</span>\n"); })
   });
 
   

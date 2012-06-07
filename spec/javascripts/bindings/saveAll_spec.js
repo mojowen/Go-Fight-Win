@@ -85,9 +85,9 @@ describe("Mocking Ajax Calls", function() {
 		var rdata = JSON.stringify( ko.toJS(rows()[1]) );
 		var returned = '{"rows": [ {"key": "6969","success": true,"list": "'+_list+'","error": [], "data": '+rdata+', "_tempkey":"'+new_row._tempkey+'" } ], "views":[] }';
 		$.post.mostRecentCall.args[2](JSON.parse(returned));
-		expect(rows()[rows().length-1].key()).not.toEqual('new');
-		expect(rows()[rows().length-1]._tempkey).toBeNull();
-		expect(rows()[rows().length-1].dirtyFlag.isDirty()).toBeFalsy();
+		expect(rows()[0].key()).not.toEqual('new');
+		expect(rows()[0]._tempkey).toBeNull();
+		expect(rows()[0].dirtyFlag.isDirty()).toBeFalsy();
 		
 		
 		// expect('pending').toEqual('completed');

@@ -133,12 +133,15 @@ describe("dataModel set ups", function() {
 			rows()[1][ field_2 ]('5');
 		});
 		it("can add a new row to rows and have it sorted", function() {
-			view = new viewModel({sorts: [{field: field_2, direction: 'DESC'}] });
-			setCurrentView( view );
-			var row = new rowModel({ key: 'new', list: 'Test' });
-			row[field_2](10);
-			addRow(row);
-			expect( viewModel.renderingRows()[0][field_2]() ).toEqual(10);
+			runs( function() {
+				view = new viewModel({sorts: [{field: field_2, direction: 'DESC'}] });
+				setCurrentView( view );
+				var row = new rowModel({ key: 'new', list: 'Test' });
+				row[field_2](10);
+				addRow(row);
+			})
+			waits(20)
+			runs( function() { expect( viewModel.renderingRows()[0][field_2]() ).toEqual(10); })
 		});
 	});
 	describe("loads a view", function() {
