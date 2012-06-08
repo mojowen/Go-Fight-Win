@@ -140,7 +140,7 @@ describe("dataModel set ups", function() {
 				row[field_2](10);
 				addRow(row);
 			})
-			waits(20)
+			waits(2)
 			runs( function() { expect( viewModel.renderingRows()[0][field_2]() ).toEqual(10); })
 		});
 	});

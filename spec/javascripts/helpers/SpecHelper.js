@@ -1,5 +1,7 @@
 var _size = 0, _list = 'Test', _url = document.location.href;
 
+dev = true
+
 beforeEach(function() {
 	dataModel.current.view(new viewModel());
 	rows.removeAll();

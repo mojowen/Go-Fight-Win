@@ -105,7 +105,7 @@ describe("vieModel can be initalized ", function() {
 					dataModel.current.view().addSort({field: field_1, direction: 'DESC'});
 					dataModel.current.view().sortRows();
 				})
-				waits(20)
+				waits(2)
 				runs( function() {expect( viewModel.renderingRows()[0][field_1]() ).toEqual('z');});
 			});
 			it("sorts some fucking rows by two fields", function() {
@@ -114,7 +114,7 @@ describe("vieModel can be initalized ", function() {
 					dataModel.current.view().addSort(field_2)
 					dataModel.current.view().sortRows();
 				})
-				waits(20)
+				waits(2)
 				runs( function(){expect( viewModel.renderingRows()[0][field_2]() ).toEqual('1');});
 			});
 		});

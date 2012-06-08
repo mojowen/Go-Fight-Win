@@ -25,7 +25,7 @@ describe("Testing the row template", function() {
   });
   it("renders the menus for new rows", function() {
 	runs( function() { rows.push( new rowModel({key: 'new', list: _list })  ); },)
-	waits(20)
+	waits(2)
 	runs( function() { expect($('tbody tr:first td:last').html()).toEqual("\n\t<span class=\"remove clickable\">Discard</span>\n"); })
   });
 

@@ -30,20 +30,31 @@ describe("the bindings on fields", function() {
   });
   describe("the select bindings", function() {
      it("doesn't open on first click", function() {
- 		$('td.cell.select:first button:visible').mousedown();
- 		expect( $('td.cell.select:first') ).toHaveClass('selected');
- 		expect( $('td.cell.select:first .data') ).not.toHaveClass('open');
+		waits(2)
+ 		runs( function() {
+			$('td.cell.select:last button:visible').mousedown();
+ 			expect( $('td.cell.select:last') ).toHaveClass('selected');
+ 			expect( $('td.cell.select:last .data') ).not.toHaveClass('open');
+		})
      });
      it("opens on double click", function() {
- 		$('td.cell.select:first button:visible').dblclick();
- 		expect( $('td.cell.select:first') ).toHaveClass('selected');
- 		expect( $('td.cell.select:first .data') ).toHaveClass('open');
+		waits(2)
+		runs( function() {
+ 			$('td.cell.select:last button:visible').dblclick();
+ 			expect( $('td.cell.select:last') ).toHaveClass('selected');
+ 			expect( $('td.cell.select:last .data') ).toHaveClass('open');
+		})
      });
      it("opens and is changed", function() {
- 		expect(rows()[0][select]()).not.toEqual('Fourth');
- 		$('td.cell.select:first button:visible').dblclick().click();
- 		$('.ui-multiselect-checkboxes li:last input').attr('checked','checked').click()
- 		expect(rows()[0][select]()).toEqual('Fourth');
+		waits(2)
+		runs( function() {
+ 			expect(rows()[0][select]()).not.toEqual('Fourth');
+ 			$('td.cell.select:last button:visible').dblclick().click();
+ 			$('.ui-multiselect-checkboxes li:last input').attr('checked','checked').click()
+			expect( rows()[0][select]() ).toEqual('Fourth');
+		})
+		waits(2)
+		runs( function() { bl( rows()[0][select]()  })
      });
      it("updates when changed above", function() {
  		expect( $('td.cell.select:first button:visible span') ).toHaveText('Select')
@@ -58,7 +69,7 @@ describe("the bindings on fields", function() {
      });
      it("copies full field", function() {
  		rows()[0][select]('Third');
- 		$('td.cell.select:first button:visible').mousedown().trigger('copy');
+ 		$('td.cell.select:last button:visible').mousedown().trigger('copy');
  		expect( $('#ideal').text().trim() ).toEqual('Third')
      });
    });
@@ -97,8 +108,11 @@ describe("the bindings on fields", function() {
  		expect( $('.ui-multiselect-checkboxes input:checked:last').parent() ).toHaveText('Left');
      });
      it("copies empty field", function() {
- 		$('td.cell.multiselect:first button:visible').mousedown().trigger('copy');
- 		expect( $('#ideal').text().trim() ).toEqual('--')
+		waits(2)
+		runs( function () {
+ 			$('td.cell.multiselect:first button:visible').mousedown().trigger('copy');
+ 			expect( $('#ideal').text().trim() ).toEqual('--')
+		})
      });
      it("copies full field", function() {
  		rows()[0][multiselect](['Start', 'Stop', 'Right']);

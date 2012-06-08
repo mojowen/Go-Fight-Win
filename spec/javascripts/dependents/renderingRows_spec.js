@@ -23,12 +23,12 @@ describe("Rows that are dataModel.currently being displated, representing the li
 		rows()[3][ field_3 ]('bb');
 	});
 	it("returns rows normally if no parameters are set and rows are less than visible and paged", function() {
-		waits(20)
+		waits(2)
 		runs( function() { expect(viewModel.renderingRows()).toEqual(rows()) });
     });
 	it("slices rows if visible set to lower value", function() {
 		runs(function() { dataModel.current.view().end(1) })
-		waits(20)
+		waits(2)
 		runs(function() {expect( viewModel.renderingRows().length ).toEqual(1); })
 	});
 	it("pages rows successfully", function() {
@@ -36,7 +36,7 @@ describe("Rows that are dataModel.currently being displated, representing the li
 		dataModel.current.view().end(2);
 		dataModel.current.view().start(1);
 	   })
-		waits(20)
+		waits(2)
 	   runs(function(){expect( ko.toJS(viewModel.renderingRows()[0] ) ).toEqual( ko.toJS(rows()[1]) );})
 	});
 	it("pages rows when filtered", function() {
@@ -45,7 +45,7 @@ describe("Rows that are dataModel.currently being displated, representing the li
 			dataModel.current.view().start(1);
 			dataModel.current.view().addFilter(field_1+' not z')
 		})
-		waits(20)
+		waits(2)
 	   runs( function() {expect( ko.toJS(viewModel.renderingRows()[0] ) ).toEqual( ko.toJS(rows()[3]) );});
 	});
 	// it("pages rows when grouped", function() {
