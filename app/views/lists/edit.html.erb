@@ -7,6 +7,7 @@
 <div id="edit_list">
 
 	<h1>Edit <%= @list.name %></h1>
+	<h2><%= link_to 'View List', list_path(@list.org.to_param, @list.to_param) %></h1>
 
 	<div data-bind="sortable: editModel.fields ">
 		<div class="field" data-bind=" css: { disabled: $data.disabled }">
