@@ -13,6 +13,9 @@
 <% end %>
 	<div id="data" data-bind="visible: dataModel.current.state() == 'explore' " >
 		<h2 class="view_title">Your Data</h2>
+		<% if can? :manage, @list.org %>
+			<%= link_to 'Edit', list_edit_path(@list.org.to_param, @list.to_param) %>
+		<% end %>
 		<div id="table" class="table">
 			<%= render :partial => 'table' %>
 		</div>
