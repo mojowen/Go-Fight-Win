@@ -1,0 +1,220 @@
+<% content_for :extra do %>
+	<span class="save make_save clickable">save</span>
+<% end %>
+
+
+
+<div id="edit_list">
+
+	<h1>Edit <%= @list.name %></h1>
+
+	<div data-bind="sortable: editModel.fields ">
+		<div class="field" data-bind=" css: { disabled: $data.disabled }">
+			<p class="locked" data-bind="visible: $data.disabled"> <strong>LOCKED</strong> You cannot edit</p>
+			<div class="drag">
+				<div class="top_arrow arrow"></div>
+				drag<br />
+				to<br />
+				reorder
+				<div class="base_arrow arrow"></div>
+			</div>
+			<span class="clickable remove delete_field">Delete</span>
+			<div class="field_options">
+				<h3 class="name" >Field Name: <input data-bind="value: $data.name, disable: $data.disabled"> </h3>
+				<h3>Type: <select data-bind="options: $parent.types(), value: $data.type, disable: $data.disabled"></select></h3>
+				<p data-bind="text: editModel.all_types[ $data.type() ] "></p>
+			</div>
+			<div class="field_options_options" data-bind="if: $data.type() == 'select' || $data.type() == 'multiselect' ">
+				<h3>Field Options</h3>
+				<ul data-bind="sortable: { data: $data.options, isEnabled: $data.disabled }">
+					<li><input type="text" data-bind="value: $data, disable: $parent.disabled"> <span data-bind="visible: !$parent.disabled"><span class="clickable remove delete_option">(x)</span></span></li>
+				</ul>
+				<span class="clickable add_option" data-bind="visible: !$data.disabled">+Add</span>
+			</div>
+			<div class="anaylsis">
+				<h2 class=" show_options">Analysis Options</h2>
+				<div class="groupable">
+					<p><strong>Groupable: </strong><input type="checkbox" data-bind="checked: $data.groupable"> <em>Can this row be grouped?</em></p>
+				</div>
+				<div class="computables">
+					<h3>Computable</h3>
+					<p>How should we analyze this field?</p>
+						<ul data-bind="foreach: $data.computables" >
+							<li data-bind="css: {'disabled': !$data.enabled() }">
+								<p data-bind="html: editModel.report_definitions[$data.report]"></p>
+								<strong>Label:</strong><input data-bind="value: $data.label, disable: !$data.enabled() "><strong>Enabled:</strong><input data-bind="checked: $data.enabled" type="checkbox">
+							</li>
+						</ul>
+				</div>
+			</div>
+		<div style="clear:both;"></div>
+		</div>
+	</div>
+	<div>
+		<h3 class="clickable button add_field">Add</h3>
+	</div>
+
+
+<script type="text/javascript" charset="utf-8">
+	var _fields = <%= raw @fields.each{ |f| f['disabled'] = true if f.list_id != @list.id }.to_json %>,
+		_operators = <%= raw @list.operators.to_json %>
+		editModel = {
+			fields: ko.observableArray([]),
+			operatirs: ko.computed( function() {
+				return ''
+			}, this),
+			all_types: { 
+				'text': 'For small amounts of text',
+				'number': 'For numbers, can + or -',
+				'block': 'For paragraphic text',
+				'date': 'For dates',
+				'select': 'For some option, can pick one',
+				'multiselect': 'For some options, can pick many',
+				'array': 'For a list of things that can be clicked on',
+			},
+			types: function() {
+				var all_types = []
+				for( var i in editModel.all_types ) all_types.push(i)
+				return all_types
+			},
+			report_definitions: {
+				'count' : '<em>Count</em> reports on the number of things there are in a particular grouping. A, 1, 2, 3, A is five things, according to count',
+				'unique' : '<em>Average</em> reports on the number of things there are in a particular grouping. A, 1, 2, 1, A is three things, according to unique',
+				'sum' : '<em>Sum</em> reports on the sum of things there are in a particular grouping, ignores non-numbers',
+				'average' : '<em>Average</em> reports on the average of things there are in a particular grouping, ignores non-numbers',
+				'max' : '<em>Maximum</em> reports on the largest number of things there are in a particular grouping, ignores non-numbers',
+				'min' : '<em>Minimum</em> reports on the smallest number of things there are in a particular grouping, ignores non-numbers'
+			}
+		}
+
+	assign_computables = function(field, computables) {
+		var all_on = typeof computables == 'undefined',
+			type = field.field_type || 'text'
+			options = []
+		
+		switch(type) {
+			case 'number': 
+				options.push( new Object({label: ko.observable('sum'), report: 'sum', enabled: ko.observable( all_on ) }) );
+				options.push( new Object({label: ko.observable('avg'), report: 'average', enabled: ko.observable( all_on ) }) );
+				options.push( new Object({label: ko.observable('max'), report: 'max', enabled: ko.observable( all_on ) }) );
+				options.push( new Object({label: ko.observable('min'), report: 'min', enabled: ko.observable( all_on ) }) );
+				break;
+			default:
+				options.push( new Object({label: ko.observable('count'), report: 'count', enabled: ko.observable( all_on )}) );
+				options.push( new Object({label: ko.observable('unique'), report: 'unique', enabled: ko.observable( all_on ) }) );
+				break;
+		}
+		if( !all_on && typeof field.name != 'undefined' ) {
+			var this_field = computables.filter( function(el) { return el.field == field.name.replace(/ /g,'_') })[0]
+			console.log( this_field )
+				for (var i=0; i < options.length; i++) {
+					var this_option = typeof this_field != 'undefined' ? this_field.operations.filter( function(el) { return el.report == options[i].report }) : []
+					if( this_option.length > 0 ) {
+
+						options[i].label( this_option[0].label )
+						options[i].enabled( true )
+					}
+				};
+		}
+		return options;
+	}
+
+	for (var i=0; i < _fields.length; i++)  editModel.fields.push({
+		name: ko.observable(_fields[i].name),
+		id: _fields[i].id,
+		type: ko.observable(_fields[i].field_type), 
+		options: _fields[i].field_typ == 'select' || _fields[i].field_typ == 'multiselect' ? ko.observableArray( _fields[i].field_options ) : ko.observable(_fields[i].field_options),
+		groupable: ko.observable( typeof _operators['groupables'] == 'undefined' || _operators['groupables'] == null  || _operators['groupables'].indexOf( _fields[0].name.replace(/ /g,'_') ) !== -1 ),
+		computables: assign_computables(_fields[i],_operators.computables),
+		disabled: _fields[i].disabled
+	})
+	
+	editModel.saving = ko.computed( function() {
+		var order = [],
+			computables = [],
+			groupables = [],
+			save_fields = []
+			fields = ko.toJS(editModel.fields )
+		
+		for (var i=0; i < fields.length; i++) {
+			var field = fields[i], post_field = {}
+			if( field.groupable ) groupables.push( field.name.replace(/ /g,'_') )
+			if( field.id != null ) order.push( field.id )
+	
+			var active_computables = field.computables.filter( function(el) { return el.enabled })
+			if( active_computables.length > 0 ) {
+				computables.push( {
+					field: field.name.replace(/ /g,'_'), 
+					operations: [ active_computables.map( function(el) { el.enabled = null; return el }) ] 
+				})
+			}
+	
+			if( !field.disabled ) {
+				post_field.field_type = field.type
+				post_field.field_options = field.options
+				post_field.id = field.id
+				post_field.name = field.name	
+				save_fields.push( post_field )
+			}
+
+		}
+		return {fields: save_fields, order: order, computables: computables, groupables: groupables }
+	})
+
+	$(document)
+		.on('click','.add_field',function(e) {
+			editModel.fields.push({
+				name: ko.observable( 'New Field' ),
+				id: 'new_'+Math.floor(Math.random()*1000),
+				type: ko.observable('Text'), 
+				options: ko.observableArray([]),
+				groupable: ko.observable( true ),
+				computables: assign_computables( {},_operators.computables)
+			})
+		})
+		.on('click','.delete_field',function(e) {
+			var ctx = ko.contextFor(this)
+			if( ctx.$data.id.toString().search('new_') === -1 ) ctx.$parent.fields.destroy( ctx.$data )
+			else ctx.$parent.fields.remove( ctx.$data )
+		})
+		.on('click','.add_option',function(e) {
+			var ctx = ko.contextFor(this)
+			ctx.$data.options.push('new option')
+		})
+		.on('click','.delete_option',function(e) {
+			var ctx = ko.contextFor(this)
+			ctx.$parent.options.remove( ctx.$data)
+		})
+		.on('click','.show_options',function(e){
+			$('.groupable, .computables',$(this).parent()).slideToggle()()
+		})
+		.on('click','.make_save',function(e){
+			$this = $(this).removeClass('make_save').removeClass('clickable').text('saving...')
+			$.post(
+				'<%= list_admin_update_path(@list.org.to_param, @list.to_param) %>',
+				editModel.saving(),
+				function(response) {
+					for (var i=0; i < response.fields.length; i++) {
+						var returned_field = response.fields[i], field = null
+						if( typeof returned_field.temp_id != 'undefined') {
+							field = editModel.fields().filter( function(el) { return el.id == returned_field.temp_id })[0]
+						} else {
+							field = editModel.fields().filter( function(el) { return el.id == returned_field.id })[0]
+						}
+						if( typeof returned_field._destroy != 'undefined') editModel.fields.remove(field)
+						else {
+							field.id = returned_field.id
+							field.name( returned_field.name )
+						}
+						$this.addClass('make_save').addClass('clickable').text('save')
+					};
+					
+				})
+		})
+		.ready( function() {  
+			ko.applyBindings(editModel);
+		})
+</script>
+
+
+</div>

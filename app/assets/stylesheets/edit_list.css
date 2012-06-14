@@ -1,0 +1,106 @@
+#edit_list .field {
+	border: 1px solid #ddd;
+	margin: 20px 10px;
+	padding: 20px 50px;
+	border-radius: 15px;
+	min-height: 100px;
+	background: #fff;
+}
+#edit_list .locked {
+	position: absolute;
+	margin: -16px -46px;
+	padding: 2px 0 0 25px;
+	font-style: italic;
+	color: #747474;
+}
+
+#edit_list .field_options_options li {
+	width: 130px;
+}
+#edit_list .field_options_options {
+	width: 180px;
+	margin-left: 90px;
+	float: left;
+}
+#edit_list input[type=text] {
+	border: 0;
+	border-bottom: 1px solid #ddd;
+	width: 100px;
+	padding: 2px 0 2px 8px;
+}
+#edit_list input:disabled {
+	color: #ddd;
+	border-bottom: 1px solid #eee;
+}
+#edit_list h3 {
+	margin: 10px 0 0
+}
+#edit_list .button, #edit_list .show_options {
+	margin: 30px 0 0 100px;
+	border: 2px solid #ddd;
+	padding: 10px 2px;
+	text-align: center;
+	border-radius: 15px;
+	text-decoration: none;
+	color: #333;
+	cursor: pointer;
+}
+#edit_list .button:hover, #edit_list .show_options:hover {
+	background-color: #226;
+	color: #fff;
+}
+#edit_list .field.disabled .field_options, #edit_list .field.disabled .field_options_options, #edit_list .computables li.disabled {
+	opacity: 0.4;
+}
+#edit_list .field_options {
+	width: 220px;
+	float: left;
+}
+#edit_list .anaylsis {
+	width: 340px;
+	float: right;
+	clear: right;
+}
+#edit_list ul {
+	list-style: none;
+	padding: 0;
+}
+#edit_list .groupable, #edit_list .computables { display: none; } 
+#edit_list .computables input {
+	width: 80px;
+	font-size: 10px;
+}
+#edit_list li p {
+	font-size: 10px;
+}
+#edit_list .remove {
+	float: right;
+	font-size: 8px;
+	color: #747474;
+}
+#edit_list .drag {
+	position: absolute;
+	margin: 20px 0 0 -54px;
+	text-align: center;
+	width: 50px;
+	font-size: 7px;
+	cursor: move;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+}
+.top_arrow {
+	border-color: transparent transparent #747474 transparent;
+}
+.base_arrow {
+	border-color: #747474 transparent transparent transparent;
+}
+.arrow {
+	border-style: solid;
+	border-width: 5px;
+	width: 0;
+	margin: 10px auto;
+	padding: 0 0 0;
+}

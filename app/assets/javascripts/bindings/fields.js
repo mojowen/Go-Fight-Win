@@ -59,7 +59,7 @@ appDataModel.fields_template = function(argument) {
 	});
 	
 
-    function closeMultiSelect() {
+	function closeMultiSelect() {
 		$('button.ui-multiselect').removeClass('open').not('.trigger_betterselect').prev('select').multiselect('destroy').removeClass('open').hide().prev('.trigger_betterselect').removeClass('open').show();
 	}
 	

@@ -1,7 +1,92 @@
 class ListsController < ApplicationController
 
   @to_include = [:items, :views]
+  
+  def edit
+    org = Org.find_by_slug(params[:org_name]).id
+    @list = List.find_by_org_and_slug(org, params[:list_name])
+    authorize! :manage, @list.org, :message => 'You don\'t have access to that List'
+
+    @fields = @list.fields
+    unless @list.operators.nil?  
+      unless @list.operators[:order].nil?
+        new_fields = []
+        order = @list.operators[:order].class == String ? @list.operators[:order].split(' ') : @list.operators[:order]
+        order.each do |o|
+          int = o.class == String ? o.to_i : o
+          pos = @fields.index{ |f| f.id == int }
+          new_fields.push( @fields.slice(pos) ) unless pos.nil?
+        end
+        @fields = new_fields.concat( @fields.select{ |f| @list.operators[:order].index(f.id).nil? } )
+        @fields = @fields.uniq
+      end
+    end
+
+    respond_to do |format|
+      format.html # show.html.erb
+    end
+
+  end
+
+  def update_list
+    org = Org.find_by_slug(params[:org_name]).id
+    @list = List.find_by_org_and_slug(org, params[:list_name])
+    authorize! :manage, @list.org, :message => 'You don\'t have access to that List'
+
+    fields = params[:fields]
+    response = { :fields => [], :list => {} }
     
+    fields.each do |field_posted|
+      field_post = field_posted[1]
+      temp_id =  field_post['id'].class == Float ? field_post['id'].to_s.index('new_') : field_post['id'].index('new_')
+      
+      if temp_id.nil?
+        field = @list.fields.find(field_post['id'])
+        if field.nil?
+          response[:fields].push( {:success => false, :id => field.id, :name => field.name} )
+        else
+          if field_post['_destroy'].nil?
+            success = field.update_attributes(field_post)
+            response[:fields].push( {:success => success, :id => field.id, :name => field.name} )
+          else
+            success = field.delete
+            response[:fields].push( {:success => success, :id => field.id, :destroy => true } )
+          end
+        end
+      else
+        field = @list.fields.new( field_post )
+        success = field.save
+        response[:fields].push( {:success => success, :temp_id => temp_id, :id => field.id, :name => field.name, :error => field.errors } )
+      end
+      
+    end
+
+    computables = []
+    fucked_computables = params['computables']
+    fucked_computables.each do |fucked_computable|
+      computable = {}
+      computable[:field] = fucked_computable[1]['field']
+      computable[:operations] = []
+      fucked_computable[1]['operations']['0'].each do |fucked_operation|
+        operation = {}
+        operation[:report] = fucked_operation[1]['report']
+        operation[:label] = fucked_operation[1]['label']
+        computable[:operations].push(operation )
+      end
+      computables.push(computable)
+    end
+
+    @list.operators = { 
+      :order => params['order'], 
+      :groupables => params['groupables'], 
+      :computables => computables
+    }
+    response[:list] = {:success => @list.save }
+    
+    render :json => response, :callback  => params['callback']
+    
+  end
+  
   def show
     
     if params[:list_name].nil?
@@ -21,7 +106,7 @@ class ListsController < ApplicationController
     @size = @query[:size]
     @views = @list.views
 
-    unless @list.operators.nil?
+    unless @list.operators.nil?  
       unless @list.operators[:order].nil?
         new_fields = []
         order = @list.operators[:order].class == String ? @list.operators[:order].split(' ') : @list.operators[:order]
@@ -31,6 +116,7 @@ class ListsController < ApplicationController
           new_fields.push( @fields.slice(pos) ) unless pos.nil?
         end
         @fields = new_fields.concat( @fields.select{ |f| @list.operators[:order].index(f.id).nil? } )
+        @fields = @fields.uniq
       end
     end
     

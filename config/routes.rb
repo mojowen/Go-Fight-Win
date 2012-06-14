@@ -25,6 +25,8 @@ Gfw::Application.routes.draw do
 
   #List management routes
   match '/:org_name/:list_name/update' => 'lists#update', :constraints => lambda{|req| !services.include?(req.params[:list_name]) && !administrative.include?(req.params[:org_name]) }, :as => 'list_update', :via => [:put, :post]
+  match '/:org_name/:list_name/edit' => 'lists#edit', :constraints => lambda{|req| !services.include?(req.params[:list_name]) && !administrative.include?(req.params[:org_name]) }, :as => 'list_edit'
+  match '/:org_name/:list_name/edit/update' => 'lists#update_list', :constraints => lambda{|req| !services.include?(req.params[:list_name]) && !administrative.include?(req.params[:org_name]) }, :as => 'list_admin_update', :via => [:put, :post]
   match '/:org_name/:list_name' => 'lists#show', :constraints => lambda{|req| !services.include?(req.params[:list_name]) && !administrative.include?(req.params[:org_name])}, :as => 'list'
   
   #Views with list

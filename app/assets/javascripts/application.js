@@ -8,6 +8,7 @@
 //= require jquery-ui
 //= require jquery_ujs
 //= require knockout-latest.debug
+//= require knockout-sortable.js
 //= require jquery.multiselect.js
 //= require scrollsync.js
 //= require_tree ./lib
