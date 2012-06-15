@@ -9,7 +9,7 @@
 	<h1>Edit <%= @list.name %></h1>
 	<h2><%= link_to 'View List', list_path(@list.org.to_param, @list.to_param) %></h1>
 
-	<div data-bind="sortable: editModel.fields ">
+	<div data-bind="sortable: {data: editModel.fields, allowDrop: false} ">
 		<div class="field" data-bind=" css: { disabled: $data.disabled }">
 			<p class="locked" data-bind="visible: $data.disabled"> <strong>LOCKED</strong> You cannot edit</p>
 			<div class="drag">
@@ -27,7 +27,7 @@
 			</div>
 			<div class="field_options_options" data-bind="if: $data.type() == 'select' || $data.type() == 'multiselect' ">
 				<h3>Field Options</h3>
-				<ul data-bind="sortable: { data: $data.options, isEnabled: $data.disabled }">
+				<ul data-bind="sortable: { data: $data.options, isEnabled: $data.disabled,allowDrop: false} }">
 					<li><input type="text" data-bind="value: $data, disable: $parent.disabled"> <span data-bind="visible: !$parent.disabled"><span class="clickable remove delete_option">(x)</span></span></li>
 				</ul>
 				<span class="clickable add_option" data-bind="visible: !$data.disabled">+Add</span>
