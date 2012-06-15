@@ -16,6 +16,11 @@
 
 #edit_list .field_options_options li {
 	width: 130px;
+	height: 23px;
+	border: 1px solid #ddd;
+	padding: 2px 4px 2px 32px;
+	border-radius: 4px;
+	margin: 5px 0;
 }
 #edit_list .field_options_options {
 	width: 180px;
