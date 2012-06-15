@@ -125,7 +125,7 @@
 		id: _fields[i].id,
 		type: ko.observable(_fields[i].field_type), 
 		options: _fields[i].field_typ == 'select' || _fields[i].field_typ == 'multiselect' ? ko.observableArray( _fields[i].field_options ) : ko.observable(_fields[i].field_options),
-		groupable: ko.observable( typeof _operators['groupables'] == 'undefined' || _operators['groupables'] == null  || _operators['groupables'].indexOf( _fields[0].name.replace(/ /g,'_') ) !== -1 ),
+		groupable: ko.observable( typeof _operators['groupables'] == 'undefined' || _operators == null  || _operators['groupables'].indexOf( _fields[0].name.replace(/ /g,'_') ) !== -1 ),
 		computables: assign_computables(_fields[i], _operators == null ? [] : _operators.computables),
 		disabled: _fields[i].disabled
 	})
