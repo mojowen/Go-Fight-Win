@@ -23,7 +23,7 @@
 			<div class="field_options">
 				<span class="error">You Need a New Name</span>
 				<h3 class="name" >
-					Field Name: <input type="text" data-bind="value: $data.name, disable: $data.disabled"> 
+					Field Name: <input type="text" data-bind="valueUpdate: 'afterkeydown', value: $data.name, disable: $data.disabled"> 
 				</h3>
 				<h3>Type: <select data-bind="options: $parent.types(), value: $data.type, disable: $data.disabled"></select></h3>
 				<p data-bind="text: editModel.all_types[ $data.type() ] "></p>
@@ -31,7 +31,7 @@
 			<div class="field_options_options" data-bind="if: $data.type() == 'select' || $data.type() == 'multiselect' ">
 				<h3>Field Options</h3>
 				<ul data-bind="sortable: { data: $data.options, isEnabled: $data.disabled, allowDrop: false }">
-					<li><input type="text" data-bind="value: $data, disable: $parent.disabled"> <span data-bind="visible: !$parent.disabled"><span class="clickable remove delete_option">(x)</span></span></li>
+					<li><input type="text" data-bind="valueUpdate: 'afterkeydown', value: $data.name, disable: $parent.disabled"> <span data-bind="visible: !$parent.disabled"><span class="clickable remove delete_option">(x)</span></span></li>
 				</ul>
 				<span class="clickable add_option" data-bind="visible: !$data.disabled">+Add</span>
 			</div>
@@ -69,12 +69,13 @@
 			}, this),
 			all_types: { 
 				'text': 'For small amounts of text',
+				'suggest': 'For a small amounts of text, with suggestions based on what was previously entered',
 				'number': 'For numbers, can + or -',
 				'block': 'For paragraphic text',
 				'date': 'For dates',
 				'select': 'For some option, can pick one',
 				'multiselect': 'For some options, can pick many',
-				'array': 'For a list of things that can be clicked on',
+				'array': 'For a list of things that can be clicked on'
 			},
 			types: function() {
 				var all_types = []
@@ -110,7 +111,6 @@
 		}
 		if( !all_on && typeof field.name != 'undefined' ) {
 			var this_field = computables.filter( function(el) { return el.field == field.name.replace(/ /g,'_') })[0]
-			console.log( this_field )
 				for (var i=0; i < options.length; i++) {
 					var this_option = typeof this_field != 'undefined' ? this_field.operations.filter( function(el) { return el.report == options[i].report }) : []
 					if( this_option.length > 0 ) {
@@ -123,16 +123,16 @@
 		return options;
 	}
 
-	for (var i=0; i < _fields.length; i++)  editModel.fields.push({
-		name: ko.observable(_fields[i].name),
-		id: _fields[i].id,
-		type: ko.observable(_fields[i].field_type), 
-		options: _fields[i].field_typ == 'select' || _fields[i].field_typ == 'multiselect' ? ko.observableArray( _fields[i].field_options ) : ko.observable(_fields[i].field_options),
-		groupable: ko.observable( typeof _operators['groupables'] == 'undefined' || _operators == null  || _operators['groupables'].indexOf( _fields[0].name.replace(/ /g,'_') ) !== -1 ),
-		computables: assign_computables(_fields[i], _operators == null ? [] : _operators.computables),
-		disabled: _fields[i].disabled,
-		error: ko.observable('')
-	})
+	for (var i=0; i < _fields.length; i++) editModel.fields.push({
+			name: ko.observable(_fields[i].name),
+			id: _fields[i].id,
+			type: ko.observable(_fields[i].field_type), 
+			options: ko.observableArray( _fields[i].field_options == 'null' ? [] : _fields[i].field_options.map( function(el) { return { name: ko.observable(el) } } ) ),
+			groupable: ko.observable( typeof _operators['groupables'] == 'undefined' || _operators == null  || _operators['groupables'].indexOf( _fields[0].name.replace(/ /g,'_') ) !== -1 ),
+			computables: assign_computables(_fields[i], _operators == 'null' ? [] : _operators.computables),
+			disabled: _fields[i].disabled,
+			error: ko.observable('')
+		})
 	
 	editModel.saving = ko.computed( function() {
 		var order = [],
@@ -156,7 +156,8 @@
 	
 			if( !field.disabled ) {
 				post_field.field_type = field.type
-				post_field.field_options = field.options
+				post_field.field_options = editModel.fields()[i].options().map( function(el) { return ko.toJS( el.name() ) } );
+				console.log( post_field.field_options )
 				post_field.id = field.id
 				post_field.name = field.name	
 				save_fields.push( post_field )
@@ -185,7 +186,7 @@
 		})
 		.on('click','.add_option',function(e) {
 			var ctx = ko.contextFor(this)
-			ctx.$data.options.push('new option')
+			ctx.$data.options.push( {name: ko.observable(el) } )
 		})
 		.on('click','.delete_option',function(e) {
 			var ctx = ko.contextFor(this)
