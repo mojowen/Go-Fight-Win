@@ -21,7 +21,7 @@
 			</div>
 			<span class="clickable remove delete_field">Delete</span>
 			<div class="field_options">
-				<h3 class="name" >Field Name: <input data-bind="value: $data.name, disable: $data.disabled"> </h3>
+				<h3 class="name" >Field Name: <input type="text" data-bind="value: $data.name, disable: $data.disabled"> </h3>
 				<h3>Type: <select data-bind="options: $parent.types(), value: $data.type, disable: $data.disabled"></select></h3>
 				<p data-bind="text: editModel.all_types[ $data.type() ] "></p>
 			</div>
@@ -43,7 +43,7 @@
 						<ul data-bind="foreach: $data.computables" >
 							<li data-bind="css: {'disabled': !$data.enabled() }">
 								<p data-bind="html: editModel.report_definitions[$data.report]"></p>
-								<strong>Label:</strong><input data-bind="value: $data.label, disable: !$data.enabled() "><strong>Enabled:</strong><input data-bind="checked: $data.enabled" type="checkbox">
+								<strong>Label:</strong><input  type="text"  data-bind="value: $data.label, disable: !$data.enabled() "><strong>Enabled:</strong><input data-bind="checked: $data.enabled" type="checkbox">
 							</li>
 						</ul>
 				</div>

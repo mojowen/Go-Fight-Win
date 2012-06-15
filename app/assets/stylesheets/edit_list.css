@@ -14,8 +14,14 @@
 	color: #747474;
 }
 
+#edit_list .field_options_options li:before {
+	content: '⇳';
+	margin-left: -28px;
+	margin-right: 14px;
+}
 #edit_list .field_options_options li {
 	width: 130px;
+	cursor: move;
 	height: 23px;
 	border: 1px solid #ddd;
 	padding: 2px 4px 2px 32px;
