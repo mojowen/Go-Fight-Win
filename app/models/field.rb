@@ -2,7 +2,7 @@ class Field < ActiveRecord::Base
   belongs_to :list
   
   before_validation :fix_name
-#  validates_uniqueness_of :name, :scope => :list_id  
+  validates_uniqueness_of :name, :scope => :list_id  
   validates_presence_of :name, :list_id, :field_type
   
   def fix_name

@@ -115,3 +115,7 @@
 	margin: 10px auto;
 	padding: 0 0 0;
 }
+
+span.error { display: none; }
+.error span.error { float: right; display: block; color: red; font-weight: bold; margin: 30px -60px 0 0 }
+#edit_list .field.error { border: 2px solid red; }

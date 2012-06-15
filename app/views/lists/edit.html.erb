@@ -10,7 +10,7 @@
 	<h2><%= link_to 'View List', list_path(@list.org.to_param, @list.to_param) %></h1>
 
 	<div data-bind="sortable: {data: editModel.fields, allowDrop: false} ">
-		<div class="field" data-bind=" css: { disabled: $data.disabled }">
+		<div class="field" data-bind=" css: { disabled: $data.disabled, error: $data.error }">
 			<p class="locked" data-bind="visible: $data.disabled"> <strong>LOCKED</strong> You cannot edit</p>
 			<div class="drag">
 				<div class="top_arrow arrow"></div>
@@ -21,7 +21,10 @@
 			</div>
 			<span class="clickable remove delete_field">Delete</span>
 			<div class="field_options">
-				<h3 class="name" >Field Name: <input type="text" data-bind="value: $data.name, disable: $data.disabled"> </h3>
+				<span class="error">You Need a New Name</span>
+				<h3 class="name" >
+					Field Name: <input type="text" data-bind="value: $data.name, disable: $data.disabled"> 
+				</h3>
 				<h3>Type: <select data-bind="options: $parent.types(), value: $data.type, disable: $data.disabled"></select></h3>
 				<p data-bind="text: editModel.all_types[ $data.type() ] "></p>
 			</div>
@@ -127,7 +130,8 @@
 		options: _fields[i].field_typ == 'select' || _fields[i].field_typ == 'multiselect' ? ko.observableArray( _fields[i].field_options ) : ko.observable(_fields[i].field_options),
 		groupable: ko.observable( typeof _operators['groupables'] == 'undefined' || _operators == null  || _operators['groupables'].indexOf( _fields[0].name.replace(/ /g,'_') ) !== -1 ),
 		computables: assign_computables(_fields[i], _operators == null ? [] : _operators.computables),
-		disabled: _fields[i].disabled
+		disabled: _fields[i].disabled,
+		error: ko.observable('')
 	})
 	
 	editModel.saving = ko.computed( function() {
@@ -170,7 +174,8 @@
 				type: ko.observable('Text'), 
 				options: ko.observableArray([]),
 				groupable: ko.observable( true ),
-				computables: assign_computables( {}, _operators == null ? [] : _operators.computables)
+				computables: assign_computables( {}, _operators == null ? [] : _operators.computables),
+				error: ko.observable('')
 			})
 		})
 		.on('click','.delete_field',function(e) {
@@ -204,8 +209,12 @@
 						}
 						if( typeof returned_field._destroy != 'undefined') editModel.fields.remove(field)
 						else {
-							field.id = returned_field.id
-							field.name( returned_field.name )
+							if( returned_field.success ) {
+								field.id = returned_field.id
+								field.name( returned_field.name )
+							} else {
+								field.error( true ) 
+							}
 						}
 						$this.addClass('make_save').addClass('clickable').text('save')
 					};
