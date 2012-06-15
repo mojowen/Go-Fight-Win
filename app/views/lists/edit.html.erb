@@ -27,7 +27,7 @@
 			</div>
 			<div class="field_options_options" data-bind="if: $data.type() == 'select' || $data.type() == 'multiselect' ">
 				<h3>Field Options</h3>
-				<ul data-bind="sortable: { data: $data.options, isEnabled: $data.disabled,allowDrop: false} }">
+				<ul data-bind="sortable: { data: $data.options, isEnabled: $data.disabled, allowDrop: false }">
 					<li><input type="text" data-bind="value: $data, disable: $parent.disabled"> <span data-bind="visible: !$parent.disabled"><span class="clickable remove delete_option">(x)</span></span></li>
 				</ul>
 				<span class="clickable add_option" data-bind="visible: !$data.disabled">+Add</span>
