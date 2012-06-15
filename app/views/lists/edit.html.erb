@@ -58,7 +58,7 @@
 
 <script type="text/javascript" charset="utf-8">
 	var _fields = <%= raw @fields.each{ |f| f['disabled'] = true if f.list_id != @list.id }.to_json %>,
-		_operators = <%= raw @list.operators.to_json %>
+		_operators = <%= raw @list.operators.to_json %> == null ? [] : <%= raw @list.operators.to_json %>
 		editModel = {
 			fields: ko.observableArray([]),
 			operatirs: ko.computed( function() {
