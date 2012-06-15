@@ -2,8 +2,7 @@ function good_other_bindings (argument) {
 	// Bindings that don't deploy with the knockout app
 	$('#msg #container .clear').live('click',function(e) {
 		var $this = $(this);
-		$this.parent().find('p').text('')
-		$this.hide();
+		$this.parent().remove()
 	});
 	$('.overlayer').live('click', function() {
 		var $this = $(this);
