@@ -15,6 +15,7 @@
 //= require_tree ./models
 //= require_tree ./dependents
 //= require_tree ./bindings
+//= require_tree ./non-list
 
 // console.log('--------------------------------');
 window.onload=function() {

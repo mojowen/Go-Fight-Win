@@ -18,7 +18,7 @@ function good_other_bindings (argument) {
 	});
 	$('.overlay_close').live('click', function() {
 		$('.overlayer').removeClass('on');
-		$('#overlay, #overlay div:visible').hide();
+		$('#overlay, #overlay div:visible').remove();
 		$('#header, #footer').css('position','fixed');
 	});
 	
