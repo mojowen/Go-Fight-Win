@@ -15,8 +15,8 @@
 		</li>
 		<% end %>
 	</ul>
-	<%= link_to 'New List', list_new_path(@org.id), :class => 'button', :style => 'padding: 6px 30px; height: 10px; margin: 0; line-height: 5em;' %>
 <% end %>
+<%= link_to 'New List', list_new_path(@org.id), :class => 'button', :style => 'padding: 6px 30px; height: 10px; margin: 0; line-height: 5em;' if can? :manage, @org %>
 
 
 <% unless @org.users.empty? %>
