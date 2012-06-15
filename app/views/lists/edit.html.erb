@@ -186,7 +186,7 @@
 		})
 		.on('click','.add_option',function(e) {
 			var ctx = ko.contextFor(this)
-			ctx.$data.options.push( {name: ko.observable(el) } )
+			ctx.$data.options.push( {name: ko.observable('New Option') } )
 		})
 		.on('click','.delete_option',function(e) {
 			var ctx = ko.contextFor(this)
