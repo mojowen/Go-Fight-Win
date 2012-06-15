@@ -1,0 +1,95 @@
+<div id="create_list">
+	<h2>New List</h2>
+
+	<%= form_for @list, :url => list_create_path(@org.id) do |f| %>
+
+		<h3><%= f.label :name %> <%= f.text_field :name %></h3>
+	 	<p>This is the name of your list. It cannot have the same name as any other list in your org. You cannot change this again, so do not screw it up.</p>
+	  <h3><%= f.label :parent_id %> <%= f.select(:parent_id, current_user.orgs.map{ |o|  o.lists  }.flatten().collect {|p| [ p.org.name+': '+p.name, p.id ] } ,  {:prompt => '-- Optional: Select Parent List'}) %></h3>
+		<p>Lists can have <em>parents</em>. If a list has a <em>parent</em>, they inherit all of their <em>parent's</em> fields. Any row created on a child list flows upward, so the parent gets anything the child creates, but only for parent's fields.</p>
+		<h3 class="clickable" onclick="$(this).next('div').slideToggle()">Still Confused?</h3>
+		<div class="explain">
+			<p>Because this is confusing, I've provided a helpful example of two lists: <strong>Mufasa</strong> and <strong>Simba</strong></p>
+			<p><strong>Mufasa</strong> has the following structure:</p>
+			<table>
+				<tr>
+					<th></th>
+					<th>Pride Name</th>
+					<th>Lions in Pride</th>
+					<th>Hyena Kills</th>
+				</tr>
+				<tr>
+					<td>1</td>
+					<td>Awesome Pride</td>
+					<td>3</td>
+					<td>20</td>
+				</tr>
+				<tr>
+					<td>2</td>
+					<td>Pride Pride</td>
+					<td>3</td>
+					<td>20</td>
+				</tr>
+			</table>
+			<p>Now if we create a child list, called <b>Simba</b> it will inherit all of the fields from it's parent, <strong>Mufasa</strong></p>
+			<table>
+				<tr>
+					<th>Pride Name</th>
+					<th>Lions in Pride</th>
+					<th>Hyena Kills</th>
+				</tr>
+			</table>
+			<p>And now we add some fields to <strong>Simba</strong> and create a new row</p>
+			<table>
+				<tr>
+					<th></th>
+					<th>Pride Name</th>
+					<th>Lions in Pride</th>
+					<th>Hyena Kills</th>
+					<th>Bugs Eaten</th>
+					<th>Date of Last Song Sung</th>
+				</tr>
+				<tr>
+					<td>1</td>
+					<td>Outkast Pride</td>
+					<td>4</td>
+					<td>0</td>
+					<td>300</td>
+					<td>June 15, 1994</td>
+				</tr>
+			</table>
+			<p>It will create a new row in on <strong>Mufasa</strong> but ONLY with the fields from <strong>Mufasa</strong></p>
+			<table>
+				<tr>
+					<th></th>
+					<th>Pride Name</th>
+					<th>Lions in Pride</th>
+					<th>Hyena Kills</th>
+				</tr>
+				<tr>
+					<td>1</td>
+					<td>Awesome Pride</td>
+					<td>3</td>
+					<td>20</td>
+				</tr>
+				<tr>
+					<td>2</td>
+					<td>Pride Pride</td>
+					<td>3</td>
+					<td>20</td>
+				</tr>
+				<tr>
+					<td>3</td>
+					<td>Outkast Pride</td>
+					<td>4</td>
+					<td>0</td>
+				</tr>
+			</table>
+			<p>Lists can only have only one parent and can have multiple children, and there can be multiple generations of lists (parent > child > grand child)</p>
+			<h3 ><a style="color: yellow" onclick="$(this).parents('div.explain').slideToggle()" href="http://www.youtube.com/watch?v=xB5ceAruYrI" target="_blank">Got it!</a> ... or <a style="color: yellow" onclick="$(this).parents('div.explain').slideToggle()" href="http://www.youtube.com/watch?v=vX07j9SDFcc" target="_blank">Still Confused?</a></h3>
+		</div>
+	  <div class="actions">
+	    <%= f.submit %>
+	  </div>
+	<% end %>
+</div>

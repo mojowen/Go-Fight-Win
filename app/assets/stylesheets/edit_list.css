@@ -1,3 +1,42 @@
+#create_list h2 {
+	margin: 20px 0;
+}
+#create_list h3 {
+	margin: 10px 15px;
+}
+#create_list form {
+	padding: 0 30px;
+}
+#create_list table,#create_list td, #create_list th {
+	border: 1px solid #ddd;
+	color: #fff;
+	text-align: center;
+	padding: 2px;
+}
+#create_list .explain {
+	display: none; 
+	padding: 20px;
+	background: #666;
+	color: yellow;
+	border-radius: 15px;
+	border: 2px solid #ddd;
+	margin: 30px 0 60px;
+}
+.button:hover {
+	background-color: #226;
+	color: #fff;
+}
+.button {
+	margin: 30px 0 0 100px;
+	border: 2px solid #ddd;
+	padding: 10px 2px;
+	text-align: center;
+	border-radius: 15px;
+	text-decoration: none;
+	color: #333;
+	cursor: pointer;
+}
+
 #edit_list .field {
 	border: 1px solid #ddd;
 	margin: 20px 10px;

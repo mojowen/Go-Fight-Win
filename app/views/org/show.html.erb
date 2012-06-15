@@ -11,9 +11,11 @@
 		<% @org.lists.each do |list| %>
 		<li>
 			<%= link_to list.name, list_path(@org.to_param, list.to_param) %>
+			<em><%= link_to 'Edit', list_path(@org.to_param, list.to_param) if can? :manage, @org%></em>
 		</li>
 		<% end %>
 	</ul>
+	<%= link_to 'New List', list_new_path(@org.id), :class => 'button', :style => 'padding: 6px 30px; height: 10px; margin: 0; line-height: 5em;' %>
 <% end %>
 
 

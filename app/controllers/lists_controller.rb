@@ -2,10 +2,40 @@ class ListsController < ApplicationController
 
   @to_include = [:items, :views]
   
+  
+  def new
+    @org = Org.find(params[:org_id])
+    authorize! :manage, @org, :alert => 'NO, you can\'t do that!'
+    
+    @list = @org.lists.new
+    
+    respond_to do |format|
+      format.html # new.html.erb
+    end
+    
+  end
+  
+  def create
+    @org = Org.find(params[:org_id])
+    
+    authorize! :manage, @org, :alert => 'NO, you can\'t do that!'
+    
+    @list = @org.lists.new( params[:list] )
+    
+    if @list.save
+      @msg = 'Yessss list '+@list.name.capitalize+' was created. NOW MAKE SOMETHING OF IT'
+      redirect_to list_edit_path( @org.to_param, @list.to_param ), :notice =>  @msg
+    else
+      @msg = '#fail cause '+@list.errors.map{ |k,v| k.to_s.capitalize+' '+v }.join(',')
+      redirect_to list_new_path( @org.id ), :alert =>  @msg
+    end
+    
+  end
+  
   def edit
     org = Org.find_by_slug(params[:org_name]).id
     @list = List.find_by_org_and_slug(org, params[:list_name])
-    authorize! :manage, @list.org, :message => 'You don\'t have access to that List'
+    authorize! :manage, @list.org, :alert => 'You don\'t have access to that List'
 
     @fields = @list.fields
     unless @list.operators.nil?  
@@ -31,7 +61,7 @@ class ListsController < ApplicationController
   def update_list
     org = Org.find_by_slug(params[:org_name]).id
     @list = List.find_by_org_and_slug(org, params[:list_name])
-    authorize! :manage, @list.org, :message => 'You don\'t have access to that List'
+    authorize! :manage, @list.org, :alert => 'You don\'t have access to that List'
 
     fields = params[:fields]
     response = { :fields => [], :list => {} }
@@ -56,7 +86,7 @@ class ListsController < ApplicationController
       else
         field = @list.fields.new( field_post )
         success = field.save
-        response[:fields].push( {:success => success, :temp_id => temp_id, :id => field.id, :name => field.name, :error => field.errors } )
+        response[:fields].push( {:success => success, :temp_id => field_post['id'], :id => field.id, :name => field.name, :error => field.errors } )
       end
       
     end
@@ -96,7 +126,7 @@ class ListsController < ApplicationController
       @list = List.find_by_org_and_slug(org, params[:list_name], :include => @to_include )
     end
     
-    authorize! :show, @list.org, :message => 'You don\'t have access to that List'
+    authorize! :show, @list.org, :alert => 'You don\'t have access to that List'
     
 
     @current_view = @list.views.index{|v| v.to_param == params[:view_name] || v.slug == params[:view_slug] }
@@ -121,7 +151,7 @@ class ListsController < ApplicationController
     end
     
     #TODO: Add some sort of paging function when querying rows via a sort
-    authorize! :show, @list.org, :message => 'You don\'t have access to that List'
+    authorize! :show, @list.org, :alert => 'You don\'t have access to that List'
 
     respond_to do |format|
       format.html # show.html.erb
@@ -143,7 +173,7 @@ class ListsController < ApplicationController
     @rows_results = []
     @views_results = []
     
-    authorize! :show, @list.org, :message => 'You don\'t have access to that List'
+    authorize! :show, @list.org, :alert => 'You don\'t have access to that List'
     begin
       params[:rows] = params[:rows].class == String ? JSON.parse(params[:rows]) : params[:rows]
       unless params[:rows].nil? || params[:rows].empty? 
