@@ -127,7 +127,7 @@
 			name: ko.observable(_fields[i].name),
 			id: _fields[i].id,
 			type: ko.observable(_fields[i].field_type), 
-			options: ko.observableArray( _fields[i].field_options == 'null' ? [] : _fields[i].field_options.map( function(el) { return { name: ko.observable(el) } } ) ),
+			options: ko.observableArray( _fields[i].field_options == 'null' || _fields[i].field_options == null  ? [] : _fields[i].field_options.map( function(el) { return { name: ko.observable(el) } } ) ),
 			groupable: ko.observable( typeof _operators['groupables'] == 'undefined' || _operators == null  || _operators['groupables'].indexOf( _fields[0].name.replace(/ /g,'_') ) !== -1 ),
 			computables: assign_computables(_fields[i], _operators == 'null' ? [] : _operators.computables),
 			disabled: _fields[i].disabled,
