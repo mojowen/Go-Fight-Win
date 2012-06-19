@@ -22,6 +22,7 @@ function appDataModel() {
 		form: ko.observable(true),
 		height: ko.observable(600),
 		table: {},
+		quickSearch: ko.observable('')
 	};
 	var current = this.current
 
