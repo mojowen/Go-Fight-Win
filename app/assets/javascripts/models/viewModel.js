@@ -4,50 +4,6 @@ function viewModel( data ) {
 	if( data.View || data.view ) { var view = data.View || data.view; }
 	else { var view = data }
 
-	this.now = ko.observable(0);
-	this.end = ko.observable(90);
-	this.start =  ko.observable(0);
-	
-	this.jump = function(row,args) {
-		var view = ko.toJS(dataModel.current.view),
-			length = viewModel.filteredRows().length,
-			new_top = view.start,
-			args  = args || {};
-
-		row = row == 'bottom' ?  length : row;
-		row = row == 'top' ? 0 : row;
-		
-		// Setting the top bound, don't mess with it if you've already rendered that row
-		if( row > view.end || row < view.start ) { new_top = row - 30; }
-		// Don't let the top bound be less than 0
-		if( new_top < 0 ) { new_top = 0; }
-
-		// Setting the bottom bound to not exceed the row length
-		var bottom = row+17 > length ? length : row+60;
-		// The order here matters. Updating one of these triggers the dependent variable
-		// and is evaluated using slice( top, bottom)
-
-		// Should update into a zero array (e.g. .slice(100,0) )
-		// not a huge array (e.g. .slice(0,130) )
-		if( new_top > bottom ) {
-			dataModel.current.view().start( new_top);
-			dataModel.current.view().end(bottom);
-		} else {
-			dataModel.current.view().end(bottom);
-			dataModel.current.view().start( new_top);
-		}
-
-		$('#scrolling').scrollTop(row*26);
-
-
-		if( typeof args.callback != 'undefined' ) {
-			args.callback();
-		}
-	}
-
-	this.reset = function() { 
-			this.jump('top');
-		}
 
 // Filtering
 	this.filters = ko.observableArray([]);
