@@ -12,7 +12,7 @@ function fieldModel(data) {
 	} else {
 		this.plural = field.name.capitalize();
 	}
-	this.to_param = field.name.replace(/ /,'_');
+	this.to_param = field.name.replace(/ /g,'_');
 	this.id = field.id;
 
 	this.field_type = field.field_type || 'text';
