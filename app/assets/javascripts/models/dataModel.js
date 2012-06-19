@@ -20,15 +20,10 @@ function appDataModel() {
 		state: ko.observable('explore'),
 		filtered: ko.observable(false),
 		form: ko.observable(true),
-		height: ko.observable(800),
-		width: ko.observable(1040)
+		height: ko.observable(600),
+		table: {},
 	};
-	this.current.height.scroll = ko.computed( function() {
-		return Math.round(this.height() / 33 ) - 1
-	},this.current)
-	
-	var current = this.current,
-		loaded = this.loaded;
+	var current = this.current
 
 
 	views.find = function(search) { var flat_views = views().map( function(elem) { return  ko.toJS(elem); }); var results = seek(search, flat_views, 'name'); return results === -1 ? false : views()[results]; }
@@ -36,6 +31,7 @@ function appDataModel() {
 	rows.find_temp = function(search) { var flat_rows = rows().map( function(elem) { return  ko.toJS(elem); });  var results = seek(search, flat_rows,'_tempkey'); return results === -1 ? false : rows()[results]; }
 
 	load = function() {
+		current.height(document.documentElement.clientHeight - 260)
 		if( typeof _fields != 'undefined' ) { 
 			for (var i=0; i < _fields.length; i++) {
 				fields.push( new fieldModel(_fields[i]) ); 
@@ -80,9 +76,6 @@ function appDataModel() {
 		// 	// _operators = null;
 		// }
 
-		// Setting height and width
-		current.height( $(window).height() - 200 )
-		current.width( $('#scrolling').width() )
 	}
 	setCurrentView = function(newView) {
 		if( newView.constructor.name == 'viewModel' ) {

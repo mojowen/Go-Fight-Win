@@ -52,7 +52,7 @@ class List < ActiveRecord::Base
         return Field.new(args)
       end
     end
-    fields.push( Field.new(:name => 'children', :field_type => 'children' ) ) if self.has_children
+    fields.push( Field.new(:name => 'children', :field_type => 'array' ) ) if self.has_children
     return fields
   end
   

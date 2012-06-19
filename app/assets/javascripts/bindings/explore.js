@@ -1,0 +1,1 @@
+$(document).on('click','.quicksearch button',function(e) { e.preventDefault(); e.target.innerText == 'x'; dataModel.current.quickSearch('') })

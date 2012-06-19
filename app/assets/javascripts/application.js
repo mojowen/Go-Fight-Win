@@ -8,24 +8,24 @@
 //= require jquery-ui
 //= require jquery_ujs
 //= require knockout-latest.debug
-//= require knockout-sortable.js
-//= require jquery.multiselect.js
-//= require scrollsync.js
 //= require_tree ./lib
 //= require_tree ./models
 //= require_tree ./dependents
 //= require_tree ./bindings
+//= require_tree ./templates
 //= require_tree ./non-list
 
-// console.log('--------------------------------');
+
 window.onload=function() {
 	if( typeof _list != 'undefined' ) {
 // var t = new Date();
 		load();
 		ko.applyBindings(dataModel);
 		setBindings();
-// var d = new Date();
-// console.log('load: '+(d-t));
+		
+		dataModel.current.table = new tableModel( viewModel.filteredRows, fields().concat( {name: 'menu',to_param: '_menu', field_type:'menu'}), {field: { name: 'name', data: 'to_param', type: 'field_type', options: 'field_options'}, widths: { ender: 100,field: 100 } })
+		dataModel.current.table.bind()
+		
 	} else {
 		other_bindings();
 	}
