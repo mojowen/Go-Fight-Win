@@ -20,19 +20,21 @@
 			<input data-bind="value: dataModel.current.quickSearch, valueUpdate: 'change'"  placeholder="Quicksearch">
 			<button data-bind="text: dataModel.current.quickSearch() == '' ? 'search' : 'x' "></button>
 		</div>
+		<div class="table gfTable" id="table" data-bind="template: {name: 'gfTable', data: dataModel.current.table}, style: { height: dataModel.current.height() +'px' } "></div>
 	</div>
-	<div id="add" data-bind="visible: dataModel.current.state() == 'add' ">
+
+	<div id="add" data-bind="visible: dataModel.current.state() == 'add'">
 		<h2 data-bind="text: 'New Row'+newRows.plurl()"></h2>
-			<%= render :partial => 'newRow' %>
-		<div class="table" id="table" data-bind="gfTable: dataModel.current.table, style: { height: dataModel.current.height() +'px' } "></div>
-		
+		<div class="forms gfTable" data-bind="template: {foreach: newRows, name:'form'}, visible: dataModel.current.form()"></div>
+		<div class="table gfTable" id="newTable" data-bind="template: {name: 'gfTable', data: dataModel.current.newTable}, visible: !dataModel.current.form()"></div>
+		<h3 class="clickable awesome_button add_new_rows">Add</h3>
 	</div>
 
 	<div id="analyze" data-bind="visible: dataModel.current.state() == 'analyze' ">
 		<%= render :partial => 'analyze' %>
 	</div>
 
-<%= render :partial => 'row' %>
+
 <%= render :partial => 'filter' %>
 <%= render :partial => 'grouped' %>
 <%= render :partial => 'groupedRow' %>

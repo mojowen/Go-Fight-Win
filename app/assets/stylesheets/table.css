@@ -69,10 +69,10 @@
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
 }
-.gfTable .entry textarea:focus {
+.gfTable textarea:focus {
 	border: 2px solid #333; 
 }
-.gfTable .ui-multiselect-menu, .gfTable .ui-multiselect-menu > *, .gfTable .entry .field_controller, .gfTable .entry .field_controller > * {
+.gfTable .ui-multiselect-menu, .gfTable .ui-multiselect-menu > *, .gfTable .field_controller, .gfTable .field_controller > * {
 	-webkit-user-select: none;
 	-khtml-user-select: none;
 	-moz-user-select: none;
@@ -80,11 +80,11 @@
 	user-select: none;
 }
 
-.gfTable .entry.number { width: 80px; }
+.gfTable .entry.number { width: 80px; text-align: right; }
 .gfTable .entry.number textarea { width: 35px; position: relative }
-.gfTable .entry.number .number_controller { width: 23px; float: right; padding: 4px 0; }
-.gfTable .entry .number_controller span { cursor: pointer; opacity: 0.4; }
-.gfTable .entry .number_controller span:hover { opacity: 1; }
+.gfTable .number .number_controller { width: 23px; float: right; padding: 4px 0; }
+.gfTable .number_controller span { cursor: pointer; opacity: 0.4; }
+.gfTable .number_controller span:hover { opacity: 1; }
 
 
 .gfTable .entry.block { width: 200px; }
@@ -197,5 +197,6 @@
 .gfTable .entry.array .array a { white-space: nowrap; float: left; text-decoration: none; background-color: #622; border-radius: 4px; cursor: pointer; padding: 1px 4px 2px; margin: 2px; color: #fff; }
 .gfTable .entry.array .array a:hover { background-color: #226; }
 
-.gfTable .menu { width: 70px; border-color: transparent; padding: 8px 0 0 8px; }
+.gfTable .menu { width: 90px; border-color: transparent; padding: 8px 0 0 8px; font-size: 10px;  }
+.gfTable .menu span { margin: 0 14px 0 -6px }
 .gfTable .title.menu { font-size: 0; border-bottom-color: transparent; }

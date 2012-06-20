@@ -3,8 +3,8 @@ $(document).on({
 	focusin: function() {
 		var ctx = ko.contextFor(this)
 		$(this).autocomplete({
-			source: ko.utils.arrayGetDistinctValues( ctx.$root.rows().map( function(elem) { return elem[ ctx.$data[ ctx.$root.__options.field.data] ]() } )),
-			appendTo: $(this).parents('.inner')
+			source: ko.utils.arrayGetDistinctValues( rows().map( function(elem) { return elem[ ctx.$data.to_param]() } )),
+			appendTo: $(this).parents('.body')
 		});
 	},
 	focusout: function() {

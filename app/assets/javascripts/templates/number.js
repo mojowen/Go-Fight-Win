@@ -1,6 +1,6 @@
 // Number
 $(document).on('click','.number_controller span', function(e) { 
-	var ctx = ko.contextFor(this), observable = ctx.$parent[ ctx.$data[ctx.$root.__options.field.data] ], value = observable(), amount = $(this).hasClass('numberUp') ? 1 : -1
+	var ctx = ko.contextFor(this), observable = ctx.$parent[ ctx.$data.to_param ], value = observable(), amount = $(this).hasClass('numberUp') ? 1 : -1
 	if( value == '' ) value = 0
 	if( isNaN(parseInt(value)) ) return false;
 	observable(value+amount); 

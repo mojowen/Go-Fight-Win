@@ -20,11 +20,17 @@ window.onload=function() {
 	if( typeof _list != 'undefined' ) {
 // var t = new Date();
 		load();
-		ko.applyBindings(dataModel);
 		setBindings();
-		
+
 		dataModel.current.table = new tableModel( viewModel.filteredRows, fields().concat( {name: 'menu',to_param: '_menu', field_type:'menu'}), {field: { name: 'name', data: 'to_param', type: 'field_type', options: 'field_options'}, widths: { ender: 100,field: 100 } })
-		dataModel.current.table.bind()
+		dataModel.current.table.bind({bind:false, template_source: ko.templates, element: document.getElementById('table')})
+
+		dataModel.current.newTable = new tableModel( newRows, fields().concat( {name: 'menu',to_param: '_menu', field_type:'menu'}), {field: { name: 'name', data: 'to_param', type: 'field_type', options: 'field_options'}, widths: { ender: 100,field: 100 } })
+		dataModel.current.newTable.bind({bind:false, template_source: ko.templates, element: document.getElementById('newTable')})
+
+
+		ko.applyBindingsAndRegister(dataModel);
+
 		
 	} else {
 		other_bindings();

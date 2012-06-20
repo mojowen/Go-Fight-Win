@@ -1,0 +1,45 @@
+.forms.gfTable {
+	
+}
+.forms.gfTable .body {
+	border: none;
+}
+.gfTable.forms .row { width: 400px; }
+
+.forms .input { width: 100px; float: right; }
+.forms .input textarea { padding: 2px 6px 0; width: 100px; resize: none; border: 2px solid #ddd; height: 1.5em; overflow: hidden; }
+.forms .input textarea, .gfTable.forms .input button { margin-bottom: 10px }
+.forms .input.block textarea { height: 3em; width: 200px; padding: 2px }
+.forms .input.date textarea { width: 130px; text-align: left;  text-align: center }
+.forms .input .date_controller.hasDatepicker {
+	width: 170px;
+	margin-top: -6px;
+	position: absolute;
+	background: #fff;
+	z-index: 1;
+	border: 2px solid #ddd;
+}
+.forms.gfTable .ui-widget-header ul li {
+	margin: -34px 4px 36px 0;
+}
+.forms.gfTable .ui-widget-header li.ui-multiselect-close {
+	margin: -32px 8px 38px 0;
+}
+.forms.gfTable .ui-multiselect-menu {
+	width: 160px !important;
+	max-width: 160px !important;
+}
+.forms .input .number_controller {
+	margin: -2px 0 0;
+	font-size: 16px;
+}
+.gfTable .input.number textarea {width: 43px; text-align: right }
+.forms .label { float: left; width: 200px; }
+
+#newTable.gfTable .body .entry:first-child {
+	border-left: 1px solid #ddd;
+}
+#newTable.gfTable .body {
+	height: 300px;
+	border-left: none;
+}
