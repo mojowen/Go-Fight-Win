@@ -19,7 +19,7 @@ tableModel = function(rows, fields, options) {
 		gfT_header: '<div class="title entry" data-bind="setTemplateClass: $data.'+this.__options.field.type+'"><span data-bind="text: $data.'+this.__options.field.name+'"></span></div>',
 		gfT_row: '<div class="row" data-bind="template: {name: \'gfT_entry\', foreach: $parent.fields() }"></div>',
 		gfT_entry: '<div class="entry" data-bind="entryTemplate: {field: $data, row: $parent }, setTemplateClass: $data.'+this.__options.field.type+'"></div>',
-		gfT_text: '<textarea data-bind="value: $parent[$data.'+this.__options.field.data+'], valueUpdate: \'afterkeydown\'"></textarea>'
+		text: '<textarea data-bind="value: $parent[$data.'+this.__options.field.data+'], valueUpdate: \'afterkeydown\'"></textarea>'
 	})
 	this.__widths = ko.observable({})
 	
@@ -45,60 +45,90 @@ tableModel = function(rows, fields, options) {
 		return width
 	},this)
 
-	this.__addTemplate = function(obj) {
-		var templates = ko.toJS(this.__templates ), widths = ko.toJS(this.__widths )
+	this.__addTemplate = function(obj, templateSource ) { 
 		if( typeof obj.template != 'undefined' ) {
-			templates[obj.name] = obj.template.replace(/{data_field}/g,this.__options.field.data).replace(/{option_field}/g,this.__options.field.options)
-			this.__templates(templates)
+			if( ko.isObservable(templateSource) ) {
+				var templates = ko.toJS(templateSource)
+				templates[obj.name] = obj.template.replace(/{data_field}/g,this.__options.field.data).replace(/{option_field}/g,this.__options.field.options)
+				templateSource(templates)
+			} else {
+				templateSource[obj.name] = obj.template.replace(/{data_field}/g,this.__options.field.data).replace(/{option_field}/g,this.__options.field.options)
+			}
 		}
 		if( typeof obj.width != 'undefined' ) {
+			var widths = ko.toJS(this.__widths )
 			widths[obj.name] = obj.width
 			this.__widths( widths)
 		}
 	}
-	this.bind = function(no_ko,element) {
-		
-		ko.templateSources.stringTemplate = function(template, templates) {
-			this.templateName = template;
-			this.templates = templates;
-		}
 
-		ko.utils.extend(ko.templateSources.stringTemplate.prototype, {
-			data: function(key, value) {
-				this.templates._data = this.templates._data || {};
-				this.templates._data[this.templateName] = this.templates._data[this.templateName] || {};
-				if (arguments.length === 1)  return this.templates._data[this.templateName][key]; 
-				this.templates._data[this.templateName][key] = value;
-			},
-			text: function(value) {
-				if (arguments.length === 0) return this.templates[this.templateName]; 
-				this.templates[this.templateName] = value;   
+	this.bind = function(settings) {
+
+		var settings = settings || {},
+			options = {
+				bind: typeof settings.bind != 'undefined' ? settings.bind : true,
+				element: settings.element || document.body,
+				templating: typeof settings.template_source == 'undefined',
+				templateSource: settings.template_source || this.__templates
 			}
-		});
-
-		var __templates = this.__templates()
-		//modify an existing templateEngine to work with string templates
-		function createStringTemplateEngine(templateEngine, templates) {
-
-			templateEngine.makeTemplateSource = function(template) {
-				var elem = document.getElementById(template);
-				if( elem ) return new ko.templateSources.domElement(elem); // Checks and makes sure it doesn't exist in the Dom
-				else if ((template.nodeType == 1) || (template.nodeType == 8)) return new ko.templateSources.anonymousTemplate(template); // Can still render anonymous templates
-				else if ( __templates[template] != 'undefined' ) return new ko.templateSources.stringTemplate(template, templates); // If not, renders it out using our templating system
-				else throw new Error("Unknown template type: " + template);
-			}   
-			return templateEngine;
-		}
 
 		if( typeof this.constructor.__addedTemplates != 'undefined' ) {
 			for (var i=0; i < this.constructor.__addedTemplates.length; i++) {
-				this.__addTemplate( this.constructor.__addedTemplates[i] )
+				this.__addTemplate( this.constructor.__addedTemplates[i], options.templateSource )
 			};
 		}
-		ko.setTemplateEngine(createStringTemplateEngine(new ko.nativeTemplateEngine(), this.__templates()));
 
-		element = typeof element == 'undefined' ? document.body : element
-		if( !no_ko ) ko.applyBindings( this, element );
+		if( options.templating ) {
+			ko.templateSources.stringTemplate = function(template, templates) {
+				this.templateName = template;
+				this.templates = templates;
+			}
+
+			ko.utils.extend(ko.templateSources.stringTemplate.prototype, {
+				data: function(key, value) {
+					this.templates._data = this.templates._data || {};
+					this.templates._data[this.templateName] = this.templates._data[this.templateName] || {};
+					if (arguments.length === 1)  return this.templates._data[this.templateName][key]; 
+					this.templates._data[this.templateName][key] = value;
+				},
+				text: function(value) {
+					if (arguments.length === 0) return this.templates[this.templateName]; 
+					this.templates[this.templateName] = value;   
+				}
+			});
+
+			var __templates = this.__templates()
+
+			//modify an existing templateEngine to work with string templates
+			function createStringTemplateEngine(templateEngine, templates) {
+
+				templateEngine.makeTemplateSource = function(template) {
+					var elem = document.getElementById(template);
+					if( elem ) return new ko.templateSources.domElement(elem); // Checks and makes sure it doesn't exist in the Dom
+					else if ((template.nodeType == 1) || (template.nodeType == 8)) return new ko.templateSources.anonymousTemplate(template); // Can still render anonymous templates
+					else if ( __templates[template] != 'undefined' ) return new ko.templateSources.stringTemplate(template, templates); // If not, renders it out using our templating system
+					else throw new Error("Unknown template type: " + template);
+				}   
+				return templateEngine;
+			}
+
+			ko.setTemplateEngine(createStringTemplateEngine(new ko.nativeTemplateEngine(), this.__templates()));
+
+		} else {
+			var templates = ko.toJS(this.__templates)
+			for (var i in templates ) {
+				if( ko.isObservable( options.templateSource ) ) {
+					var sources = ko.toJS( options.templateSource )
+					options.templateSource(sources)
+					sources[i] = templates[i]
+				} else {
+					options.templateSource[i] = templates[i]
+				}
+			}
+			this.__templates( options.templateSource )
+		}
+
+		if( options.bind ) ko.applyBindings( this, options.element );
 	}
 
 
@@ -106,7 +136,7 @@ tableModel = function(rows, fields, options) {
 	ko.bindingHandlers.gfTable = {  init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) { 
 		var all = allBindingsAccessor(),
 			value = valueAccessor()
-		all.template = {name: 'gfTable', with: value}
+		//all.template = {name: 'gfTable', data: value}
 		$(element).addClass('gfTable')
 	}}
 	ko.bindingHandlers.fillTable = {  init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
@@ -121,7 +151,7 @@ tableModel = function(rows, fields, options) {
 		var $element = $(element)
 		$element.scroll(function (e) { $element.parents('.table').find('.header').scrollLeft( e.target.scrollLeft ) });
 	}};
-	ko.bindingHandlers.setTemplateClass = {  init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) { if( typeof bindingContext.$root.__templates()[valueAccessor()] != 'undefined' ) $(element).addClass( valueAccessor() ); } }
+	ko.bindingHandlers.setTemplateClass = {  init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) { if( typeof bindingContext.$parents.filter( function(el) { return typeof el.__templates != 'undefined' })[0].__templates()[valueAccessor()] != 'undefined' ) $(element).addClass( valueAccessor() ); }}
 	ko.bindingHandlers.entryTemplate = {  
 		init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) { 
 			var options = valueAccessor(),
@@ -129,7 +159,7 @@ tableModel = function(rows, fields, options) {
 				field = options.field
 				other = allBindingsAccessor(),
 				ctx = bindingContext,
-				template = typeof ctx.$root.__templates()[ field[bindingContext.$root.__options.field.type] ] != 'undefined' ? field[ bindingContext.$root.__options.field.type] : 'gfT_text'
+				template = typeof ctx.$parentContext.$parent.__templates()[ field[ctx.$parentContext.$parent.__options.field.type] ] != 'undefined' ? field[ ctx.$parentContext.$parent.__options.field.type] : 'text'
 			other.template = {name: template }
 		}
 	}
