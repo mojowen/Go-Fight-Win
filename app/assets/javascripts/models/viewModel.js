@@ -49,8 +49,6 @@ function viewModel( data ) {
 // Sorting
 	this.sorts = ko.observableArray([]);
 	this.sortRows = function(temp_field) {
-// var t = new Date();
-		this.reset();
 		var _sorts = ko.toJS( this.sorts() );
 		if( typeof temp_field != 'undefined' ) { 
 			if( typeof temp_field == 'object' ){
