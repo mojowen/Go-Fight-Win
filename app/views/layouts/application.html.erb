@@ -69,5 +69,8 @@
 	<div id="footer">
 		<%= yield(:footer) %>
 	</div>
+	<script type="text/javascript">
+		current_user = <%= raw current_user.to_json %>;
+	</script>
 </body>
 </html>

@@ -200,3 +200,6 @@
 .gfTable .menu { width: 90px; border-color: transparent; padding: 8px 0 0 8px; font-size: 10px;  }
 .gfTable .menu span { margin: 0 14px 0 -6px }
 .gfTable .title.menu { font-size: 0; border-bottom-color: transparent; }
+
+.gfTable .user { width: 130px; }
+.gfTable .user-value { font-size: 9px; padding-top: 7px; font-style: italic; color: #747474; text-align: center; }
