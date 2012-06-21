@@ -23,7 +23,28 @@ viewModel.filteredRows = ko.computed(
 
 
 		if( quickSearch == '' || typeof quickSearch == 'undefined' ) return returningRows;
-		else return returningRows.filter( function(el) { return el._flatten('json').slice(1,-1).replace(/\w+(?=":)(?!::)/g,'').replace(/"":/g,' ').replace(/",/g,'').toLowerCase().search(quickSearch.toLowerCase()) !== -1 })
+		else { 
+			if( quickSearch.search(':') !== -1 ) {
+				return returningRows.filter( function(el) { 
+					var flat = '';
+					for( var i in el._flatten() ) {
+						var val = el._flatten()[i]()
+						if( val instanceof Array && val.length > 0 ) {
+							values = val[0].split(',')
+							for (var ii=0; ii < values.length; ii++) {
+								flat += ' '+i+':'+values[ii]
+							};
+						}
+						else flat += ' '+i+':'+val;
+					}
+					flat += flat += ' key:'+el.key()
+					return flat.replace(/_/g,' ').toLowerCase().search(quickSearch.toLowerCase()) !== -1
+				})
+			} else {
+				return returningRows.filter( function(el) { return (el._flatten('json').slice(1,-1).replace(/\w+(?=":)(?!::)/g,'').replace(/"":/g,' ').replace(/",/g,'').toLowerCase()+' '+el.key() ).search(quickSearch.toLowerCase()) !== -1 })
+			}
+
+		}
 	}, 
 	deferEvaluation: true
 },
