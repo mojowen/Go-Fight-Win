@@ -1,0 +1,52 @@
+.goal { 
+	margin: 20px 0;
+}
+.goal_box, .graph {
+	width: 800px;
+	margin: 0 auto;
+	overflow-x: auto;
+}
+.goal_box .section {
+	width: 226px;
+	margin: 10px 10px;
+	padding: 0 10px;
+	float: left;
+	height: 300px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+.goal h4 em {
+	font-size: 10px;
+}
+.goal h4, .goal .big_input {
+	font-size: 1.4em;
+	color: #747474;
+}
+.goal .lil_input, .goal .big_input {
+	border: 0;
+	text-align: center;
+	width: 60px;
+	border-bottom: 2px solid #747474;
+}
+.big_input.date {
+	font-size: .6em;
+}
+.goal .lil_input {
+	border-bottom: 1px solid #ddd;
+}
+.goal .subgoals li { 
+	border: 2px solid #ddd;
+	padding: 10px;
+	border-radius: 5px;
+}
+
+.goal .subgoals {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.small_input {
+	font-size: .8em;
+	width: 80px;
+}

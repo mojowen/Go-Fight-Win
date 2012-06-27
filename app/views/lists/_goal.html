@@ -1,0 +1,53 @@
+<script type="text/html" id="goal">
+	<div class="goal">
+		<span class="remove clickable">remove</span>
+		<div data-bind="gfGraph: graph " class="graph"></div>
+		<div class="goal_box menu">
+			<div class="section">
+				<h4>Goal: <input class="big_input" data-bind="value: goal, valueUpdate: 'afterkeydown' "></h4> <br />
+				<p>
+					<label>Unit:</label> <select data-bind="value: field, options: fields.reports, optionsText:'long_label'"></select><br />
+					<em>Choose the unit you want this goal to be based on</em>
+				</p>
+				<p>
+					<label>Name:</label> <input class="small_input" data-bind="value: name, valueUpdate: 'afterkeydown' "><br />
+					<em>Name your goal (this will make it real!)</em>
+				</p>
+			</div>
+			<div class="section">
+				<h4>From: <input  class="big_input date" data-bind="value: minUser "> <em>to</em> <input  class="big_input date" data-bind="value: maxUser "> </h4><br />
+				
+
+				<label>Date Field</label><br /><select data-bind="value: date, options: fields.dates, optionsText:'name'"></select>
+
+			<!-- ko if: typeof dateGrouped()[0] != 'undefined' -->
+				
+				<em>By</em> <select data-bind="value: option, options: availableOptions "></select><br />
+				<p>
+					<em>Specify what date you want to set your goal by</em>
+					<span data-bind="visible: availableOptions().length < 1 " style="color: red;">Set a smaller date range to see a graph</span>
+				</p>
+
+			<!-- /ko -->
+			
+			</div>
+			
+			<div class="section">
+				<!-- ko if: typeof dateGrouped()[0] != 'undefined' -->
+					<ul class="subgoals" data-bind="foreach: subgoals">
+						<li class="subgoal">
+							<span class="remove clickable">remove</span>
+							<label>Subgoal:</label> <input class="lil_input" data-bind="value: enteredValue "><br />
+							<label>By</label> <input class="lil_input date" data-bind="value: enteredDate ">
+							<p><em>Name: </em><input data-bind="value: name " class="small_input"></p>
+							
+							
+						</li>
+					</ul>
+					<span class="add clickable add_subgoal">+Subgoal</span>
+				<!-- /ko -->
+			</div>
+			<div style="clear:both"></div>
+		</div>
+	</div>
+</script>
