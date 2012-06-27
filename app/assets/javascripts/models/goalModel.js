@@ -83,7 +83,7 @@ function goalModel(options) {
 	this.availableOptions = ko.computed(function() {
 		var options = [], diffs = this.diffs()
 		for( var i in diffs ) {
-			if( diffs[i] < 28 ) options.push(i)
+			if( diffs[i] < 32 ) options.push(i)
 		}
 		return options.reverse()
 	},this)
@@ -105,7 +105,7 @@ function goalModel(options) {
 					summed = 0,
 					start = new Date( min )
 
-				if( diff < 20 && typeof option != 'undefined' ) for (var i=0; i < diff+1; i++) {
+				if( typeof option != 'undefined' ) for (var i=0; i < diff+1; i++) {
 					var label = dateFormatter(option,start)
 
 					var pos = labels.indexOf(label)
