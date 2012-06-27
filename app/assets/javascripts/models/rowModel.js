@@ -8,6 +8,8 @@ function rowModel(data) {
 	if( typeof row.key == 'undefined' || typeof row.list == 'undefined' ) { throw new Error("mising some vital row data"); }
 	this.key = ko.observable( row.key );
 	this.list = row.list;
+	this.created_at = row.created_at;
+	this.updated_at = row.updated_at;
 	var _fields = ko.toJS(fields);
 
 	for( var i = 0; i < _fields.length; i++ ) {
