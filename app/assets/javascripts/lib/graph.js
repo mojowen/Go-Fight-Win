@@ -70,8 +70,8 @@ graphModel = function(columns,options) {
 	this.sort = options.sort || this.label
 	this.width = {
 		total: options.width || 1000,
-		left: 20,	
-		right: 0
+		left: 30,	
+		right: 30
 	}
 	this.height = {
 		total: options.height || 300,
