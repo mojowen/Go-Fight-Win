@@ -42,7 +42,7 @@
 }
 
 .goal ul.subgoals {
-	height: 270px;
+	max-height: 270px;
 	overflow: auto;
 	margin-bottom: -40px !important;
 	list-style: none;
