@@ -110,7 +110,8 @@ function goalModel(options) {
 
 					var pos = labels.indexOf(label)
 					if(  pos !== -1 ) {
-						summed += rows[pos][ field.name ][ field.report ]
+						var val = rows[pos][ field.name ][ field.report ]
+						summed += !isNaN(val) && typeof val != 'undefined' ? val : 9
 					}
 
 					returning_rows.push( { sort: start, label: label, value: summed} )
