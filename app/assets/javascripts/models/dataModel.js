@@ -41,7 +41,10 @@ function appDataModel() {
 	var current = this.current
 
 
-	views.find = function(search) { var flat_views = views().map( function(elem) { return  ko.toJS(elem); }); var results = seek(search, flat_views, 'name'); return results === -1 ? false : views()[results]; }
+	views.find = function(search) {
+		var results = views().map( function(elem) { return  elem.name(); }).indexOf(search);
+		return results === -1 ? false : views()[results]; 
+	}
 	rows.find = function(search) { var flat_rows = rows().map( function(elem) { return  ko.toJS(elem); }); var results = seek(search, flat_rows,'key'); return results === -1 ? false : rows()[results]; }
 	rows.find_temp = function(search) { var flat_rows = rows().map( function(elem) { return  ko.toJS(elem); });  var results = seek(search, flat_rows,'_tempkey'); return results === -1 ? false : rows()[results]; }
 
