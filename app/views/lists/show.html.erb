@@ -46,6 +46,7 @@
 	var _list = <%= raw @list.name.to_json %>;
 	var _url = '<%= '/'+@list.org.to_param+'/'+@list.to_param %>';
 	var _views = <%= raw @views.to_json %>;
+	var _quicksearch = <%= raw params[:q].to_json %>;
 	<% unless @current_view.nil? %>
 	var _currentView = <%= raw @current_view.to_json %>;
 	<% end %>
@@ -62,3 +63,4 @@
 <% content_for :footer do %>
 	<%= render :partial => 'menu' %>
 <% end %>
+
