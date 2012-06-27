@@ -12,8 +12,7 @@
 	padding: 0 10px;
 	float: left;
 	height: 300px;
-	overflow-y: auto;
-	overflow-x: hidden;
+	overflow: hidden;
 }
 
 .goal h4 em {
@@ -39,9 +38,13 @@
 	border: 2px solid #ddd;
 	padding: 10px;
 	border-radius: 5px;
+	margin: 0 0 10px;
 }
 
-.goal .subgoals {
+.goal ul.subgoals {
+	height: 270px;
+	overflow: auto;
+	margin-bottom: -40px !important;
 	list-style: none;
 	padding: 0;
 	margin: 0;
