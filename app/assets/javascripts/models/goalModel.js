@@ -43,6 +43,7 @@ function goalModel(options) {
 	}, this)
 
 	this.groupedRows = ko.computed( function() {
+		if( dataModel.current.state() != 'analyze' ) return { rows: [] };
 		return grouper( ko.toJS(viewModel.filteredRows),  ko.toJS( this.dateGrouped ) ) ;
 	},this)
 
@@ -91,6 +92,7 @@ function goalModel(options) {
 
 
 	this.rows = ko.computed( function() {
+		if( dataModel.current.state() != 'analyze' ) return [];
 		var field = ko.toJS( this.field )
 		if( typeof field != 'undefined' ) {
 			var rows = this.groupedRows()
