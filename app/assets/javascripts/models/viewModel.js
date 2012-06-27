@@ -154,21 +154,26 @@ function viewModel( data ) {
 	this.addGoal = function() {
 		this.goals.push( new goalModel() )
 	}
+	if( typeof view.goal != 'undefined' && view.goal != null ) {
+		var t_goals = [];
+		for (var i in view.goal) {
+			t_goals.push( new goalModel( view.goal[i] ) );
+		};
+		this.goals(t_goals);
+	} 
 
-	
 
 // Flatten and Dirty Flag
 	this._flatten = function(return_type) {
 		var returnable = new Object;
 		returnable.name = this.name,
 			returnable.id = this.id;
-//			returnable.report_on = this.reportOn,
-//			returnable.pivot = this.groups.pivot();
 
 		if( typeof this._destroy != 'undefined' ) { returnable._destroy = true; }
 
 
 		returnable.filters = _flatten( this.filters() );
+		returnable.goal = _flatten( this.goals() );
 		returnable.groups = _flatten( this.groupings() );
 
 		if( return_type == 'json' ) {return ko.toJSON( returnable );}
