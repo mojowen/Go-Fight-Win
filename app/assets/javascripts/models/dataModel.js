@@ -13,6 +13,20 @@ function appDataModel() {
 		};
 		return computed;
 	});
+
+	fields.reports = ko.computed( function() {
+		var _fields = fields();
+		var options = [];
+		for (var i=0; i < _fields.length; i++) {
+			var _field = _fields[i];
+			options = options.concat(_field.fieldReports())
+		};
+		return options;
+	},this);
+	fields.dates = ko.computed( function() {
+		return fields().filter( function(el) { return el.field_type == 'date' }).concat( [{to_param:'created_at',name:'created at'},{to_param:'updated_at',name:'updated at'}])
+	},this)
+
 	this.loaded = false,
 	this.current = {
 		me: this,
@@ -68,10 +82,16 @@ function appDataModel() {
 			dataModel.current.state('explore');
 		} else if( document.location.hash == '#add' || document.location.hash == '#edit') {
 			dataModel.current.state('add');
+		} else if ( document.location.hash == '#analyze') {
+			dataModel.current.state('analyze');
 		}
 
 		if( rows().length >= _size ) { loaded = true; }
 		else { loadAll(); }
+		if( _quicksearch != null ) {
+			dataModel.current.quickSearch(_quicksearch)
+			_quicksearch = null
+		}
 		// if( typeof _operators != 'undefined' ) {
 		// 	this.operators = _operators;
 		// 	// _operators = null;
