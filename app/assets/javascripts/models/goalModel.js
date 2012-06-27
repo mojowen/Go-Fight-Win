@@ -35,9 +35,11 @@ function goalModel(options) {
 		date = findDate.length > 0 ? findDate[0] : undefined
 	this.date = ko.observable(date)
 
+	this.option = ko.observable(options.option)
+
 	this.dateGrouped = ko.computed( function() {
-		var date = ko.toJS(this.date), option = ko.toJS( this.option ), option = typeof option == 'undefined' ? 'year' : this.option
-		return typeof date == 'undefined' ? []: [ new groupModel({field: date.to_param, option: option }) ]
+		var date = ko.toJS(this.date), option = this.option(), selected_option = typeof option == 'undefined' ? 'year' : option
+		return typeof date == 'undefined' ? []: [ new groupModel({field: date.to_param, option: selected_option }) ]
 	}, this)
 
 	this.groupedRows = ko.computed( function() {
@@ -85,9 +87,6 @@ function goalModel(options) {
 		}
 		return options.reverse()
 	},this)
-	var findOption = this.availableOptions().filter( function(el) { return el == options.option } )
-		option = findOption.length > 0 ? findOption[0] : undefined
-	this.option = ko.observable(option)
 
 
 
