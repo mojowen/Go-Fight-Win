@@ -8,6 +8,7 @@
 //= require jquery-ui
 //= require jquery_ujs
 //= require knockout-latest.debug
+//= require kinnect
 //= require_tree ./lib
 //= require_tree ./models
 //= require_tree ./dependents
