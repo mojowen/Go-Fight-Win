@@ -8,5 +8,5 @@ function subGoal(data) {
 		if( date.length == 4 ) date = 'Jan 1 '+date
 		return new Date( date )
 	},this)
-	this.enabled = ko.computed( function() { return this.date != 'Invalid Date' && this.enteredValue() > 0 },this)
+	this.enabled = ko.computed( function() { return this.enteredDate() != '' && this.date() != 'Invalid Date' && this.enteredValue() > 0 },this)
 }
