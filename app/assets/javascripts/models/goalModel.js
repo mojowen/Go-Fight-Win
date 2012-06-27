@@ -1,11 +1,16 @@
 function goalModel(options) {
-	this.goal = ko.observable(0)
-	this.name = ko.observable('My Goal')
-	this.minUser = ko.observable()
-	this.maxUser = ko.observable()
+	var options = options || {}
+
+
+	this.goal = ko.observable( options.goal || 0)
+	this.name = ko.observable( options.name || 'My Goal')
+	this.minUser = ko.observable( options.minUser )
+	this.maxUser = ko.observable( options.maxUser )
 	this.subgoals = ko.observableArray([])
 	this.subgoalsGood = ko.computed( function() { return this.subgoals().filter( function(el) { return el.enabled() }) }, this)
-	
+	if( typeof options.subgoals != 'undefined' ) for (var i in options.subgoals ) {
+		this.subgoals.push( new subGoal( options.subgoals[i] ) )
+	};
 
 	this.stepper = stepper = { 
 		day: 1,
@@ -19,17 +24,21 @@ function goalModel(options) {
 		week: function(d) { return new Date(d.setDate(d.getDate() + 7 ) ) },
 		month: function(d) { return new Date(d.setMonth(d.getMonth() + 1 ) ) },
 		year: function(d) { return new Date(d.setFullYear(d.getFullYear() + 1 ) )}
-	},
+	}
+
+
+	var findField = fields.reports().filter( function(el) { return el.long_label == options.field } )
+		field = findField.length > 0 ? findField[0] : undefined
+	this.field = ko.observable(field)
 	
+	var findDate = fields.dates().filter( function(el) { return el.to_param == options.date } )
+		date = findDate.length > 0 ? findDate[0] : undefined
+	this.date = ko.observable(date)
 
-	this.field = ko.observable()
-	this.date = ko.observable()
 	this.dateGrouped = ko.computed( function() {
-		var date = ko.toJS(this.date)
-		return typeof date == 'undefined' ? []: [ new groupModel({field: date.to_param, option: this.option() }) ]
+		var date = ko.toJS(this.date), option = ko.toJS( this.option ), option = typeof option == 'undefined' ? 'year' : this.option
+		return typeof date == 'undefined' ? []: [ new groupModel({field: date.to_param, option: option }) ]
 	}, this)
-	this.option = ko.observable()
-
 
 	this.groupedRows = ko.computed( function() {
 		return grouper( ko.toJS(viewModel.filteredRows),  ko.toJS( this.dateGrouped ) ) ;
@@ -76,6 +85,9 @@ function goalModel(options) {
 		}
 		return options.reverse()
 	},this)
+	var findOption = this.availableOptions().filter( function(el) { return el == options.option } )
+		option = findOption.length > 0 ? findOption[0] : undefined
+	this.option = ko.observable(option)
 
 
 
@@ -136,5 +148,21 @@ function goalModel(options) {
 			line: this.line
 		}
 	)
+
+	this._flatten = function() {
+		var returnme = {}
+			returnme.subgoals = ko.toJS( this.subgoalsGood ).map( function(el) { return { name: el.name, enteredValue: el.enteredValue, enteredDate: el.enteredDate}} )
+			returnme.goal = this.goal()
+			returnme.maxUser = this.maxUser()
+			returnme.minUser = this.minUser()
+			returnme.name = this.name()
+			var field = ko.toJS(this.field)
+			if( typeof field != 'undefined' ) returnme.field = field.long_label
+			var date = ko.toJS(this.date)
+			if( typeof date != 'undefined' ) returnme.date = date.to_param
+			returnme.option = this.option()
+
+		return returnme
+	}
 
 }
