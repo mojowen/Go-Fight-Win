@@ -4,7 +4,6 @@ function setBindings (argument) {
 	appDataModel.views_template();
 
 	appDataModel.groups_template();
-	appDataModel.graph_template();
 	
 	appDataModel.navigation();
 	appDataModel.analyze_template();

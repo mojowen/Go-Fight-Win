@@ -6,8 +6,24 @@ appDataModel.analyze_template = function() {
 		var filter = ko.dataFor(this);
 		dataModel.current.view().addGrouping();
 	});
+	$(document).on('click', '.add_goal', function(e) {
+		var filter = ko.dataFor(this);
+		dataModel.current.view().addGoal();
+	});
 	$(document).on('click', '.filter .remove', function(e) {
 		var filter = ko.dataFor(this);
 		dataModel.current.view().removeFilter( filter );
+	});
+	$(document).on('click', '.goal .remove', function(e) {
+		var goal = ko.dataFor(this);
+		dataModel.current.view().goals.remove( goal );
+	});
+	$(document).on('click', '.goal .add_subgoal', function(e) {
+		var ctx = ko.contextFor(this);
+		ctx.$data.subgoals.push( new subGoal() )
+	});
+	$(document).on('click', '.goal .subgoals .remove', function(e) {
+		var ctx = ko.contextFor(this);
+		ctx.$parent.subgoals.remove( ctx.$data )
 	});
 }

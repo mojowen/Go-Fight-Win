@@ -150,56 +150,12 @@ function viewModel( data ) {
 	this.slug = view.slug
 
 // Goals
-	this.goal = ko.observable({field: ko.observable(undefined), value: ko.observable('')});
-	if( typeof view.goal != 'undefined' ) {
-		if(  typeof view.goal.value != 'undefined' && !isNaN(parseInt(view.goal.value)) ) {
-			this.goal().value(view.goal.value);
-		}
-		if(  typeof view.goal.field != 'undefined' ) {
-			var pos = viewModel.pivotedRows().map(function(elem) {return elem.label+elem.name}).indexOf( view.goal.field.label+view.goal.field.name);
-			this.goal().field = pos !== -1 ? ko.observable( viewModel.pivotedRows()[pos] ) : ko.observable( undefined ); 
-		}
+	this.goals = ko.observableArray();
+	this.addGoal = function() {
+		this.goals.push( new goalModel() )
 	}
 
-
-	this.goal.label = ko.dependentObservable({ 
-		read: function() {
-			if( this.goal().field() == undefined || this.goal().value() == '' || this.goal().value() <= 0 || isNaN(parseInt(this.goal().value())) ) {
-				return false;
-			} else {
-				return 'goal '+this.goal().field().long_label
-			}
-		},
-		deferEvaluation: true 
-	}, 
-	this);
-	this.goal.field = ko.dependentObservable({ 
-		read: function() {
-			if( this.goal().field() == undefined ) {
-				return '';
-			} else {
-				return this.goal().field().to_param;
-			}
-		},
-	deferEvaluation: true 
-	}, 
-	this);
 	
-	this.pivotValues = ko.dependentObservable({ 
-		read: function() {
-			var options = ko.toJS(viewModel.pivotedRows());
-			if( this.goal.label() ) {
-				_goal = ko.toJS(this.goal().field() );
-				_goal.long_label = this.goal.label();
-				_goal.label = 'goal';
-				options.push(_goal);
-			}
-			return options; 
-		},
-	deferEvaluation: true 
-	}, 
-	this);
-
 
 // Flatten and Dirty Flag
 	this._flatten = function(return_type) {
@@ -211,11 +167,6 @@ function viewModel( data ) {
 
 		if( typeof this._destroy != 'undefined' ) { returnable._destroy = true; }
 
-		if( typeof this.goal == 'function' ) { 
-			returnable.goal = this.goal().value() == '' && ( this.goal().field() == '' ||  this.goal().field() == undefined ) ? '' : this.goal();
-		} else { 
-			returnable.goal = this.goal.value == '' && ( this.goal.field == '' ||  this.goal.field == undefined ) ? '' : this.goal;
-		}
 
 		returnable.filters = _flatten( this.filters() );
 		returnable.groups = _flatten( this.groupings() );
