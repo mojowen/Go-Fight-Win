@@ -27,6 +27,7 @@ function fieldModel(data) {
 		this.id = 0;
 	}
 
+
 	var field = this;
 	this.fieldReports = ko.dependentObservable({ 
 		read: function() {
@@ -35,7 +36,7 @@ function fieldModel(data) {
 				var pos = _operators.computables == null ? -1 : _operators.computables.map(function(elem) {return elem.field }).indexOf(this.to_param)
 				if( pos !== -1 ) {
 					for (var i=0; i < _operators.computables[pos].operations.length; i++) {
-						options.push( {label: _operators.computables[pos].operations[i].label, name: this.to_param, report: _operators.computables[pos].operations[i].report } );
+						options.push( {label: _operators.computables[pos].operations[i].label, name: this.to_param, report: _operators.computables[pos].operations[i].report, id: this.id  } );
 					};
 				}
 			} else {
