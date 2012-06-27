@@ -12,6 +12,7 @@ appDataModel.navigation = function() {
 				state = $this.text().toLowerCase().replace(/\+/,'').trim()
 			e.preventDefault();
 			dataModel.current.state(state);
+			dataModel.current.quickSearch('');
 			if( dataModel.current.view().id != 'new' ) {
 				var new_url = state != 'analyze' ? '#'+state : '';
 				try { window.history.pushState('', "Title", _url+'/'+dataModel.current.view().to_param()+new_url); } catch(e) { document.location.hash = state }
