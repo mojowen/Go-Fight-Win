@@ -203,3 +203,36 @@
 
 .gfTable .user { width: 130px; }
 .gfTable .user-value { font-size: 9px; padding-top: 7px; font-style: italic; color: #747474; text-align: center; }
+
+
+.gfTable .entry.location { width: 200px; }
+
+.location textarea.locating, .location textarea.locating:focus { background: blue !important }
+.location textarea.locating.fail, .location textarea.fail.locating:focus { background: red !important }
+
+.gfTable .entry.location.open textarea { border: 2px solid #333; }
+
+.gfTable .entry textarea.location { width: 200px; text-align: left; }
+.gfTable .entry.location.open textarea { position: relative; z-index: 8; background: #fff; height: 4em; }
+
+.location .location_controller span {  display: none; }
+.location .location_controller.located span {  display: block; }
+
+.gfTable .entry.location .location_controller.located { float: none;
+	clear: both;
+	opacity: 1;
+	background-image: none; 
+	width: 220px;
+	font-size: 10px;
+	background-color: white;
+	padding: 4px;
+	border: 2px solid #ddd;
+	display: block;
+	position: relative;
+	display: block;
+	float: left;
+	margin: 0 0 0 -2px;
+	z-index: 8;
+	height: auto;
+	width: 188px;
+}
