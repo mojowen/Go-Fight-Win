@@ -15,6 +15,23 @@ function rowModel(data) {
 	for( var i = 0; i < _fields.length; i++ ) {
 		var field = _fields[i].to_param;
 		this[field] = prepareValue(row[field], _fields[i].field_type);
+		if( _fields[i].field_type == 'location' ) {
+			var address = this[field]().address()
+			this[field]._initalAddress = address
+			this[field]._googlePoint = ''
+			this[field]._fail = ko.observable(false)
+			this[field]._located = ko.computed( function() { 
+				var address = this[field]().address(), initialAddress = this[field]._initalAddress, latlng = this[field]().latlng()
+				return address == initialAddress && latlng != ''
+			},this)
+			this[field]._locator = ko.computed( function() { 
+				var address = this[field]().address(), initialAddress = this[field]._initalAddress, latlng = this[field]().latlng(), located = this[field]._located()
+				if( !located && address != '' ) {
+					new mapModel()
+					map.geolocate( this[field] )
+				}
+			},this).extend( {throttle: 2000 })
+		}
 	}
 
 	this._flatten = function(return_type) {
