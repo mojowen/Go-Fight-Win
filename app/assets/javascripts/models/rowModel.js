@@ -30,7 +30,15 @@ function rowModel(data) {
 					new mapModel()
 					map.geolocate( this[field] )
 				}
-			},this).extend( {throttle: 2000 })
+			},this).extend( {throttle: 500 })
+			this[field]._preview = ko.computed(function() {
+				if( this[field]._located() && !this[field]._fail() ) {
+					var latlng = this[field]().latlng()
+					return 'http://maps.googleapis.com/maps/api/staticmap?center='+latlng+'&zoom=12&size=190x100&maptype=roadmap&markers=color:blue%7C40.702147,-74.015794&markers=color:red%7C'+latlng+'&sensor=true'
+				} else {
+					return null
+				}
+			},this)
 		}
 	}
 

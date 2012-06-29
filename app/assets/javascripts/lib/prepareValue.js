@@ -28,15 +28,20 @@ function prepareValue (value, field_type, args) {
 				}; 
 				break;
 			case 'location':
+				
 				if( typeof value  == 'string' ) {
-					var temp = value.replace(/\n\n/g,'&&').split(/\n/)
-					value = {}
-					for( var i=0;i < temp.length; i++ ) { 
-						var decon = temp[i].split(':'); 
-						if( decon.length > 1 ) value[decon[0].trim()] = decon[1].replace("! '","'").trim().replace(/'/g,'').replace(/&&/g,"\n").replace(/\n  /g,"\n");
+					if( value.search('---') === -1 ) value = { address: value }
+					else {
+						var temp = value.replace(/\n\n/g,'&&').split(/\n/)
+						value = {}
+						for( var i=0;i < temp.length; i++ ) { 
+							var decon = temp[i].split(':'); 
+							if( decon.length > 1 ) value[decon[0].trim()] = decon[1].replace("! '","'").trim().replace(/'/g,'').replace(/&&/g,"\n").replace(/\n  /g,"\n");
+						}
 					}
 				}
 				var address = value.address || '', latlng = value.latlng || ''
+				if( address == '' ) latlng = ''
 				returning = {address: !args['no_ko'] ? ko.observable(address) : address, latlng: !args['no_ko'] ? ko.observable(latlng) : latlng }
 				break;
 			default:

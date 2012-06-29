@@ -31,7 +31,7 @@
 	height: 30px;
 }
 .gfTable .body {
-	height: auto;
+	height: 100%;
 	max-height: 100%;
 	width: 100%;
 	overflow-y: auto;
@@ -215,8 +215,8 @@
 .gfTable .entry textarea.location { width: 200px; text-align: left; }
 .gfTable .entry.location.open textarea { position: relative; z-index: 8; background: #fff; height: 4em; }
 
-.location .location_controller span {  display: none; }
-.location .location_controller.located span {  display: block; }
+.location .location_controller img {  display: none; }
+.location .location_controller.located img {  display: block; }
 
 .gfTable .entry.location .location_controller.located { float: none;
 	clear: both;
