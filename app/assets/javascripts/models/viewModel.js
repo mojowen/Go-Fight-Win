@@ -162,6 +162,19 @@ function viewModel( data ) {
 		this.goals(t_goals);
 	} 
 
+// Goals
+	this.maps = ko.observableArray();
+	this.addMap = function() {
+		this.maps.push( new mapModel() )
+	}
+	if( typeof view.maps != 'undefined' && view.maps != null ) {
+		var t_maps = [];
+		for (var i in view.goal) {
+			t_maps.push( new mapModel( view.maps[i] ) );
+		};
+		this.maps(_maps);
+	} 
+
 
 // Flatten and Dirty Flag
 	this._flatten = function(return_type) {

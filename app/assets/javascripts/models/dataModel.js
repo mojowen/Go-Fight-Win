@@ -26,6 +26,9 @@ function appDataModel() {
 	fields.dates = ko.computed( function() {
 		return fields().filter( function(el) { return el.field_type == 'date' }).concat( [{to_param:'created_at',name:'created at'},{to_param:'updated_at',name:'updated at'}])
 	},this)
+	fields.locations = ko.computed( function() {
+		return fields().filter( function(el) { return el.field_type == 'location' })
+	},this)
 
 	this.loaded = false,
 	this.current = {

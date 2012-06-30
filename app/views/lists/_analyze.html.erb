@@ -22,13 +22,22 @@
 		</div>
 		<span class="add clickable add_goal">+Add</span>
 	</div>
-
-<!--
 	<div class="section">
 		<h3>Map</h3>
 		<em>Your data on the world</em>
-		<span class="add clickable">+Add</span>
+		<div data-bind="foreach: $data.maps ">
+			<div class="map">
+				<span class="remove clickable">remove</span>
+				<div class="map_container" data-bind="gfMap: $data.map "></div>
+				<div class="map_menu">
+					<select data-bind="value: $data.field, options: fields.locations, optionsText: 'name' "></select>
+				</div>
+			</div>
+		</div>
+		<span class="add clickable add_map">+Add</span>
 	</div>
+
+<!--
 
 	<div class="section">
 		<h3>Cloud</h3>

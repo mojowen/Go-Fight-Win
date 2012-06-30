@@ -14,6 +14,13 @@ appDataModel.analyze_template = function() {
 		var filter = ko.dataFor(this);
 		dataModel.current.view().removeFilter( filter );
 	});
+	$(document).on('click', '.add_map', function(e) {
+		dataModel.current.view().addMap();
+	});
+	$(document).on('click', '.map .remove', function(e) {
+		var map = ko.dataFor(this);
+		dataModel.current.view().maps.remove( map );
+	});
 	$(document).on('click', '.goal .remove', function(e) {
 		var goal = ko.dataFor(this);
 		dataModel.current.view().goals.remove( goal );
