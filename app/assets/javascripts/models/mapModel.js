@@ -6,7 +6,8 @@ function mapModel(options) {
 		else return ko.toJS( viewModel.filteredRows )
 	},this)
 
-	this.field = ko.observable( options.field || fields.locations()[0] )
+	var field = fields.locations().filter( function(el) { return el.id === parseInt(options.field) })[0]
+	this.field = ko.observable( field || fields.locations()[0] )
 
 	new gfMap()
 	this.map =  gfMap.map.makeMap(this.rows,this.field().to_param, { obj: this.map,
@@ -29,4 +30,8 @@ function mapModel(options) {
 		return content
 	} })
 	
+	this._flatten = function() {
+		return { field: this.field().id }
+	}
+	return this
 }

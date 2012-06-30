@@ -169,10 +169,10 @@ function viewModel( data ) {
 	}
 	if( typeof view.maps != 'undefined' && view.maps != null ) {
 		var t_maps = [];
-		for (var i in view.goal) {
+		for (var i in view.maps) {
 			t_maps.push( new mapModel( view.maps[i] ) );
 		};
-		this.maps(_maps);
+		this.maps(t_maps);
 	} 
 
 
@@ -188,6 +188,7 @@ function viewModel( data ) {
 		returnable.filters = _flatten( this.filters() );
 		returnable.goal = _flatten( this.goals() );
 		returnable.groups = _flatten( this.groupings() );
+		returnable.maps = _flatten( this.maps() );
 
 		if( return_type == 'json' ) {return ko.toJSON( returnable );}
 		else { return ko.toJS( returnable ); }

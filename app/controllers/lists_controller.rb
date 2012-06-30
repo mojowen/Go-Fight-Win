@@ -217,7 +217,7 @@ class ListsController < ApplicationController
                 @view = @list.views.new(v)
                 success = @view.save
               else
-                ['sorts','filters','groups','columns'].each do |array|
+                ['sorts','filters','groups','columns','maps'].each do |array|
                   v[array] = [] if v[array].nil?
                 end
                 @view = View.find_by_id_and_list_id(v['id'], @list.id)
