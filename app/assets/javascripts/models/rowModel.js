@@ -27,8 +27,8 @@ function rowModel(data) {
 			this[field]._locator = ko.computed( function() { 
 				var address = this[field]().address(), initialAddress = this[field]._initalAddress, latlng = this[field]().latlng(), located = this[field]._located()
 				if( !located && address != '' ) {
-					new mapModel()
-					map.geolocate( this[field] )
+					new gfMap()
+					gfMap.map.geolocate( this[field] )
 				}
 			},this).extend( {throttle: 500 })
 			this[field]._preview = ko.computed(function() {
