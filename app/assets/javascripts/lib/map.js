@@ -109,7 +109,7 @@ function gfMap(options) {
 		this.markers = []
 		for (var i=0; i < rawPoints.length; i++) {
 			var row = rawPoints[i], latlng = row[this.field].latlng
-			if( latlng != '' ) {
+			if( latlng != '' && latlng != 'error' ) {
 				var parse = latlng.split(','),
 					point = new google.maps.LatLng(parse[0], parse[1]),
 					content = this.infoContent(row)
