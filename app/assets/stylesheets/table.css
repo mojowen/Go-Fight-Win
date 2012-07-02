@@ -207,8 +207,6 @@
 
 .gfTable .entry.location { width: 200px; }
 
-.location textarea.locating, .location textarea.locating:focus { background: blue !important }
-.location textarea.locating.fail, .location textarea.fail.locating:focus { background: red !important }
 
 .gfTable .entry.location.open textarea { border: 2px solid #333; }
 

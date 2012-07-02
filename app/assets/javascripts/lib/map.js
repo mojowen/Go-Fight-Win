@@ -43,6 +43,7 @@ function gfMap(options) {
 						setTimeout( function() { queue.push( {observable: observable, address: address } ) }, 10000 )
 					} else {
 						observable._initalAddress = address
+						observable().latlng('error')
 						observable._fail(true)
 					}
 				})
@@ -160,9 +161,12 @@ function gfMap(options) {
 					newCenter = new google.maps.LatLng( ( maxLats + minLats ) / 2, ( maxLngs + minLngs ) / 2 ),
 					newZoom = Math.floor(Math.log(960 * 360 / angle / globe) / Math.LN2) - 2
 					
-			} else {
-				newCenter = new google.maps.LatLng( points[0].lat, points[0].lng )
+			} else if( points.length == 1 ) {
+				var newCenter = new google.maps.LatLng( points[0].lat, points[0].lng ),
 				newZoom = 14
+			} else {
+				var newCenter =  new google.maps.LatLng(45, -122),
+				newZoom = 4
 			}
 
 			 	gMap.setCenter(newCenter)

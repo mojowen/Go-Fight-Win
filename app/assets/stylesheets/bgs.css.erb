@@ -2,3 +2,6 @@
 .cal { background: transparent url(<%= asset_path 'icons.png' %>) no-repeat center; }
 #edit_list .locked { background: transparent url(<%= asset_path 'lock.png' %>) no-repeat top left; }
 .quicksearch input { background: transparent url(<%= asset_path 'search.png' %>) no-repeat center left; }
+.location textarea.locating, .location textarea.locating:focus { background: white url(<%= asset_path 'loading.gif' %>) no-repeat 160px 4px !important; }
+.location textarea.locating.fail, .location textarea.fail.locating:focus { background: white url(<%= asset_path 'mapError.png' %>) no-repeat 164px 4px !important; }
+.location textarea.located, .location textarea.located:focus { background: white url(<%= asset_path 'mapped.png' %>) no-repeat 160px 4px !important; }

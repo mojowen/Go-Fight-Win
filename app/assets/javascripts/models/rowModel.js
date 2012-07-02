@@ -16,17 +16,17 @@ function rowModel(data) {
 		var field = _fields[i].to_param;
 		this[field] = prepareValue(row[field], _fields[i].field_type);
 		if( _fields[i].field_type == 'location' ) {
-			var locationRow = this[field], address = locationRow().address()
+			var locationRow = this[field], address = locationRow().address(), latlng = locationRow().latlng()
 			locationRow._initalAddress = address
 			locationRow._googlePoint = ''
-			locationRow._fail = ko.observable(false)
+			locationRow._fail = ko.observable( latlng == 'error' )
 			locationRow._located = ko.computed( function() {
 				var address = this().address(), initialAddress = this._initalAddress, latlng = this().latlng()
-				return address == initialAddress && latlng != ''
+				return address == initialAddress && latlng != '' && !this._fail()
 			},locationRow)
 			locationRow._locator = ko.computed( function() { 
 				var address = this().address(), initialAddress = this._initalAddress, latlng = this().latlng(), located = this._located()
-				if( !located && address != '' ) {
+				if( !located && address != '' && latlng != 'error' ) {
 					new gfMap()
 					gfMap.map.geolocate( this )
 				}
