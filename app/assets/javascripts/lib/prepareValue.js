@@ -28,10 +28,11 @@ function prepareValue (value, field_type, args) {
 				}; 
 				break;
 			case 'location':
-				
 				if( typeof value  == 'string' ) {
-					if( value.search('---') === -1 ) value = { address: value }
-					else {
+					if( value.search('---') === -1 ) {
+						var temp = value
+						value = { address: temp, latlng: '' }
+					} else {
 						var temp = value.replace(/\n\n/g,'&&').split(/\n/)
 						value = {}
 						for( var i=0;i < temp.length; i++ ) { 

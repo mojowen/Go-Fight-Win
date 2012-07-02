@@ -16,29 +16,29 @@ function rowModel(data) {
 		var field = _fields[i].to_param;
 		this[field] = prepareValue(row[field], _fields[i].field_type);
 		if( _fields[i].field_type == 'location' ) {
-			var address = this[field]().address()
-			this[field]._initalAddress = address
-			this[field]._googlePoint = ''
-			this[field]._fail = ko.observable(false)
-			this[field]._located = ko.computed( function() { 
-				var address = this[field]().address(), initialAddress = this[field]._initalAddress, latlng = this[field]().latlng()
+			var locationRow = this[field], address = locationRow().address()
+			locationRow._initalAddress = address
+			locationRow._googlePoint = ''
+			locationRow._fail = ko.observable(false)
+			locationRow._located = ko.computed( function() {
+				var address = this().address(), initialAddress = this._initalAddress, latlng = this().latlng()
 				return address == initialAddress && latlng != ''
-			},this)
-			this[field]._locator = ko.computed( function() { 
-				var address = this[field]().address(), initialAddress = this[field]._initalAddress, latlng = this[field]().latlng(), located = this[field]._located()
+			},locationRow)
+			locationRow._locator = ko.computed( function() { 
+				var address = this().address(), initialAddress = this._initalAddress, latlng = this().latlng(), located = this._located()
 				if( !located && address != '' ) {
 					new gfMap()
-					gfMap.map.geolocate( this[field] )
+					gfMap.map.geolocate( this )
 				}
-			},this).extend( {throttle: 500 })
-			this[field]._preview = ko.computed(function() {
-				if( this[field]._located() && !this[field]._fail() ) {
-					var latlng = this[field]().latlng()
+			},locationRow).extend( {throttle: 500 })
+			locationRow._preview = ko.computed(function() {
+				if( this._located() && !this._fail() ) {
+					var latlng = this().latlng()
 					return 'http://maps.googleapis.com/maps/api/staticmap?center='+latlng+'&zoom=12&size=190x100&maptype=roadmap&markers=color:blue%7C40.702147,-74.015794&markers=color:red%7C'+latlng+'&sensor=true'
 				} else {
 					return null
 				}
-			},this)
+			},locationRow)
 		}
 	}
 
