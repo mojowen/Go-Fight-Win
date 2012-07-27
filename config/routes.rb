@@ -12,6 +12,7 @@ Gfw::Application.routes.draw do
   # If logged in will take to org index, otherwise home page
   root :to => "home#index", :constraints => lambda{|req| req.session['warden.user.user.key'].blank?}
   root :to => "org#index", :constraints => lambda{|req| !req.session['warden.user.user.key'].blank?}
+  match '/notice' => "home#notice", :as => 'notice'
   
   # Allows for discrete and non-discrete linking to orgs
   match '/:org_id' => 'org#show', :constraints => lambda {|req| /^[-+]?[0-9]+$/ === req.params[:org_id]}, :as => 'org_discrete'

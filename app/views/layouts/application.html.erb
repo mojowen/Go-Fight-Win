@@ -31,6 +31,16 @@
 			<h1 class="title"><%=h yield(:page_title) %></h1>
 		<% end %>
 		
+		<% if @dsd.nil? %>
+			<p style="background-color: #fff;
+			width: 220px;
+			padding: 6px;
+			border-radius: 5px;
+			position: absolute;
+			<%= 'top: 14px; right: 140px;' unless yield(:extra).empty? %>
+			<%= 'top: -4px; right: 340px;' if yield(:extra).empty? %>
+			font-size: 7px;"><strong>NOTICE:</strong> <a style="color: #747474" href="<%= notice_path %>" >GFW is no longer in active development</a></p>
+		<% end %>
 		<%=h yield(:extra) %>
 		<div id="msg">
 			<div id="container">

@@ -11,7 +11,7 @@
 		<% @org.lists.each do |list| %>
 		<li>
 			<%= link_to list.name, list_path(@org.to_param, list.to_param) %>
-			<em><%= link_to 'Edit', list_path(@org.to_param, list.to_param) if can? :manage, @org%></em>
+			<em><%= link_to 'Edit', list_edit_path(@org.to_param, list.to_param) if can? :manage, @org%></em>
 		</li>
 		<% end %>
 	</ul>
